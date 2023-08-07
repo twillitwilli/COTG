@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Wall
+  - Ground
+  - RoomOpening
+  - RoomSpawner
+  - Room
+  - ItemScroll
+  - Finger
+  - Head
+  - Pocket
+  - Right Hand
+  - Left Hand
+  - Map
+  - Off Hand
+  - CastSpell
+  - Primary Hand
+  - projectile
+  - Enemy Body
+  - RockSpell
+  - Fire
+  - Wallet
+  - Enemy
+  - Grabbable
+  - UITag
+  - Climb Point
+  - Key
+  - Big Grabbable
+  - Heavy Grabbable
+  - Pushable
+  - Water
+  - MapBlock
+  - Rock
+  - Left Controller Origin
+  - Right Controller Origin
+  - hallway
+  - EnemyShield
+  - Pedastal
+  - Target
+  - Chest
+  - Staff
+  - RitualRune
+  - Bow
+  - BowString
+  - Minion
+  - Wand
+  - Bomb
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Hands
+  - Head
+  - PlayerCollisionOnly
+  - IgnorePlayer
+  - PlayerEquipSocket
+  - PlayerAndGrabbable
+  - Environment
+  - Ground
+  - Wall
+  - Grabbable
+  - OnlyCollidesWithGround
+  - Enemy
+  - CustomPostEffectIgnore
+  - Reaper
+  - ReaperGround
+  - EnemyBody
+  - HandCollisionOnly
+  - FlyingEnemiesOnly
+  - PlayerMinion
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

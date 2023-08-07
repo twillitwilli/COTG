@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4790003548b88f6448d0d6ad529e3aee, type: 3}
+  m_Name: Sorcerer
+  m_EditorClassIdentifier: 
+  playerClass: 0
+  maxHealth: 125
+  currentHealth: 125
+  playerSpeed: 5
+  sprintMultiplier: 2
+  crouchSpeedReduction: 2
+  jumpVelocity: 5
+  dashDistance: 10
+  dashCooldown: 3
+  minAttackDamage: 14
+  maxAttackDamage: 16
+  attackRange: 1
+  attackCooldown: 6
+  damageUpgrades: 0
+  rangeUpgrades: 0
+  magicFocus: 3
+  elementalEffectChance: 10
+  luck: 0
+  critChance: 20
+  critDamage: 0.35
+  specialEffectChance: 20
+  aimAssist: 5
+  dashPillar: 0
+  teleportBurst: 0
+  piercing: 0
+  bouncing: 0
+  explosion: 1
+  rain: 0
+  summoning: 0
+  burst: 0
+  pillar: 0
+  aoeGround: 0
+  controllable: 0
+  sorcererSpells: 1
+  wizardStaff: 0
+  conjurerBow: 0

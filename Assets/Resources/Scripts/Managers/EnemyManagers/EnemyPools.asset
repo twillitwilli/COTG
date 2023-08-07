@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da69253fd255ac409db149430ce4890, type: 3}
+  m_Name: EnemyPools
+  m_EditorClassIdentifier: 
+  spawnableEnemies:
+  - {fileID: 5493455784727332593, guid: 2ff7f294f99988240814fa571caa2aba, type: 3}
+  - {fileID: 5493455784727332593, guid: 8850ad69a74cfb140b010054e5a377ad, type: 3}
+  - {fileID: 5493455784727332593, guid: 2a7f6e343078f754d8c64c331b50ab84, type: 3}
+  - {fileID: 5493455784727332593, guid: 35dbcb4c2254dc346895b40f160e8ba5, type: 3}
+  - {fileID: 5493455784727332593, guid: 895725815da2e084caaa4fc95c1df203, type: 3}
+  - {fileID: 5493455784727332593, guid: 0c9414f722f6d65488dd322ed22439c1, type: 3}
+  - {fileID: 5493455784727332593, guid: 862cbdc37a5909c4dbfd8a542b3ca194, type: 3}
+  enemyStatManagers:
+  - {fileID: 11400000, guid: 9acb2570964c7e2488a7db7a971943b8, type: 2}
+  - {fileID: 11400000, guid: 762a9eff06649604e868529fcfa07c41, type: 2}
+  - {fileID: 11400000, guid: a5213892427bff24ab703659dbde7b55, type: 2}
+  - {fileID: 11400000, guid: e46c3bcae04edac46a260ae9783cdd1e, type: 2}
+  - {fileID: 11400000, guid: d956bac24f9cb224a881e6704ea1880d, type: 2}
+  - {fileID: 11400000, guid: ab4da6d8e16dc6e4e8aa3092de2ee2e9, type: 2}
+  - {fileID: 11400000, guid: 638d51e6102a76c48b7582a2de5f5789, type: 2}
+  enemySkins:
+  - {fileID: 11400000, guid: 6c0f452237edfdd4fb25742654c0f655, type: 2}
+  bossLists:
+  - {fileID: 11400000, guid: ef15533f455beec45a068bc51dcead2c, type: 2}
+  - {fileID: 11400000, guid: 5483dfc7ba555bf4e8d90702f3f1d0a7, type: 2}
+  - {fileID: 11400000, guid: a6bcf2db1624ee946824189104766ba2, type: 2}
+  - {fileID: 11400000, guid: d833a520f95fe634eb87fdb7c1161899, type: 2}

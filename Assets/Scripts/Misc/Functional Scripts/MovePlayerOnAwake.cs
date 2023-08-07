@@ -1,0 +1,16 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MovePlayerOnAwake : MonoBehaviour
+{
+    private VRPlayerController _player;
+
+    private void Awake()
+    {
+        _player = LocalGameManager.instance.player;
+
+        _player.transform.position = transform.position;
+        _player.transform.rotation = transform.rotation;
+    }
+}

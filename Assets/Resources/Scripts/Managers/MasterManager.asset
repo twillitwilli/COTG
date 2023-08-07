@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd0bb469abeec143b223b1197527f89, type: 3}
+  m_Name: MasterManager
+  m_EditorClassIdentifier: 
+  gameSceneManager: {fileID: 11400000, guid: 52cad4a5dfae760408f065108596809a, type: 2}
+  playerManagerObject: {fileID: 11400000, guid: 49a308ac239bdb54a8dfc8438b1ee5a1, type: 2}
+  controllerSettings: {fileID: 11400000, guid: 59daabedebc084546b31e6823d63cf34, type: 2}
+  gameTimer: {fileID: 0}
+  itemPools: {fileID: 11400000, guid: 144609c6cd2dfa04a8547f6628e2d19f, type: 2}
+  enemyPools: {fileID: 11400000, guid: 7a54ac5252d3ceb4681241b5eedd38c2, type: 2}
+  bossArenas: {fileID: 11400000, guid: 2dcf491cca9611e4f80cc813056df13d, type: 2}
+  playerClasses: {fileID: 11400000, guid: 886adb51d3c3fbd4e84a16c9f559f2c5, type: 2}
+  magicController: {fileID: 11400000, guid: 2421dd3e518a2844ba0c61ee7d2a05ce, type: 2}
+  pets: {fileID: 11400000, guid: 7a95802fb3133cb45968b5723aeec675, type: 2}
+  menuMaterials: {fileID: 11400000, guid: b45aebb434d99e2428c521da05371297, type: 2}
+  spawnableObjects:
+  - {fileID: 313763609214117215, guid: 722455c1454844149a1907c37ff2bbd8, type: 3}
+  - {fileID: 753793712080639878, guid: e433b3e0e0c99f943b6e34213c0903fe, type: 3}

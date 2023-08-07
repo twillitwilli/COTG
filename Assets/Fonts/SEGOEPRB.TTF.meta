@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: dcd92e3f9125ff643b13acc073d06171
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Segoe Print
+  fontNames:
+  - Segoe Print
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c60dd5cc14c4f6b459964c8f447ff34d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

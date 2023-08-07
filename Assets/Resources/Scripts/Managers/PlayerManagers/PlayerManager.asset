@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31db411858e90e4cb3269ada94883a3, type: 3}
+  m_Name: PlayerManager
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 2612309523533628045, guid: c05213f6413cdcc4496af036a61adae9, type: 3}
+  mapInHand: {fileID: 3543063234708984007, guid: d5cfad0de9baabc4d8b12bd109c2e74d, type: 3}
+  mapCamera: {fileID: 313763609214117215, guid: 722455c1454844149a1907c37ff2bbd8, type: 3}
+  rolledUpMap: {fileID: 1166711391669870666, guid: 2f824ae212874964a91d9fef3d09a4e7, type: 3}
+  wallet: {fileID: 5745691818160567510, guid: 05eed6b46f3772847b4a47251bbcd8fc, type: 3}
+  keyDisplay: {fileID: 4655538442842746522, guid: 20f180e5701236c4abd6e0b7d04d4146, type: 3}
+  chat: {fileID: 2498626966509262468, guid: 0c1c180c951c0404784922788774c8e9, type: 3}
+  chatKeyboard: {fileID: 4839509015645171491, guid: d4c4de9cbabdd01439fd3ecb46ae04f6, type: 3}
+  bombCrystal: {fileID: 0}
+  keyCrystal: {fileID: 0}
+  bombCrystalForHand: {fileID: 3077538179648760055, guid: 3e9c478b2fd4b49428cd2622aa710ca7, type: 3}
+  keyCrystalForHand: {fileID: 9193148299206516199, guid: 91fa5837c2d34144bb345f0a020a4081, type: 3}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5da73b210a551e4e849a8482a97a873, type: 3}
+  m_Name: LockedItems
+  m_EditorClassIdentifier: 
+  itemScrolls:
+  - {fileID: 11400000, guid: 5b444517ff28317439b546c69528a7cd, type: 2}
+  - {fileID: 11400000, guid: 651f105906a122343824984d41666c0c, type: 2}
+  - {fileID: 11400000, guid: 96029df1da771c44e8a82d42e2ea422a, type: 2}
+  chests:
+  - {fileID: 11400000, guid: 5655c4fa5cb5bb14f840ee61e037d706, type: 2}
+  potions:
+  - {fileID: 11400000, guid: 2cb6a6a11c3b56f46905f7a50ebb2b31, type: 2}

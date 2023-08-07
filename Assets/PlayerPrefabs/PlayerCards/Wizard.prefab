@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &539026631362538693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8687257921891430922}
+  - component: {fileID: 7878671645066416015}
+  - component: {fileID: 5044036028624058286}
+  m_Layer: 0
+  m_Name: Wizard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8687257921891430922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539026631362538693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2855256865838866426}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7878671645066416015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539026631362538693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  playerSpeed: 4
+  sprintMultiplier: 2
+  _crouchSpeedReduction: 2
+  jumpVelocity: 5
+  dashDistance: 8
+  dashCooldown: 3
+  throwingForce: 5
+  minAttackDamage: 12
+  maxAttackDamage: 14.5
+  attackRange: 1.5
+  attackCooldown: 1.5
+  magicFocus: 4
+  elementalEffectChance: 10
+  luck: 1
+  critChance: 15
+  critDamage: 20
+  specialEffectChance: 20
+  aimAssist: 1.5
+  currentMagicFocus: 0
+  weapons:
+  - {fileID: 2852147586762484432}
+--- !u!114 &5044036028624058286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539026631362538693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abb53824bbad614bb68c1d9a71a4d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _staffController: {fileID: 0}
+--- !u!1001 &543525513539493060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8687257921891430922}
+    m_Modifications:
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00076
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00362
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00035
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5731358
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5767206
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.4181071
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.40508673
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 161.196
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 89.102
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90.399
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314323049602954772, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+      propertyPath: m_Name
+      value: WizardStaff
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+--- !u!1 &2852147586762484432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2314323049602954772, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+  m_PrefabInstance: {fileID: 543525513539493060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2855256865838866426 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2311777550045545278, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+  m_PrefabInstance: {fileID: 543525513539493060}
+  m_PrefabAsset: {fileID: 0}

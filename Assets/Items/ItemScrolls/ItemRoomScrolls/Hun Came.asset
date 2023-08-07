@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c000d3b1cfb1555499eff6228b6b780f, type: 3}
+  m_Name: Hun Came
+  m_EditorClassIdentifier: 
+  scrollName: Gift of Hun Came
+  scrollDescription: Increase magic focus.
+  itemPicture: {fileID: 2100000, guid: 200767bcad8428f429270204ff11897c, type: 2}
+  changeSpell: 0
+  whichMagic: 0
+  changeCastingType: 0
+  whichCastingType: 0
+  addCollisionEffect: 0
+  piercing: 0
+  explosion: 0
+  burst: 0
+  bouncing: 0
+  aoeGround: 0
+  summoning: 0
+  rain: 0
+  addDashEffect: 0
+  dashPillar: 0
+  teleportBurst: 0
+  giveDungeonAbility: 0
+  tempMapReveal: 0
+  mapReveal: 0
+  tempCompassReveal: 0
+  compassReveal: 0
+  changeBaseStat: 1
+  movementSpeed: 0
+  movementValue: 0
+  currentHealth: 0
+  currentHealthValue: 0
+  maxHealth: 0
+  maxHealthValue: 0
+  attackDamage: 0
+  attackValue: 0
+  magicFocus: 1
+  magicFocusValue: 1
+  attackRange: 0
+  rangeValue: 0
+  attackCooldown: 0
+  attackCDValue: 0
+  critChance: 0
+  critChanceValue: 0
+  aimAssist: 0
+  aimAssistValue: 0
+  luck: 0
+  luckValue: 0
+  arcaneOrb: 0
+  arcaneOrbValue: 0
+  gold: 0
+  goldValue: 0

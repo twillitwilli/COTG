@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa68c2db73b38047aa922131851919b, type: 3}
+  m_Name: ShopItems
+  m_EditorClassIdentifier: 
+  basicItems:
+  - {fileID: 5998989277692908776, guid: 897e3eeb988894249a4e0be2ff088a75, type: 3}
+  - {fileID: 5624301512310558660, guid: 267d9d3f8f9038d4c87592a8affb156a, type: 3}
+  - {fileID: 5875809837748216745, guid: ca2a01e89adbc8b40bc2998c1eedb02b, type: 3}
+  potions:
+  - {fileID: 100000, guid: 9fdb432083adf6a4d8acfb41a39320b3, type: 3}
+  - {fileID: 100000, guid: d269c1b9ee390b8449595309b47c9829, type: 3}
+  - {fileID: 100000, guid: 7f42f7b0528d5b446a024d06e28159de, type: 3}
+  - {fileID: 100000, guid: c6c02620fe5b5a14ab26f00ba1afd3e8, type: 3}
+  - {fileID: 100000, guid: ef27f7d461009564c9f4cd44be27146b, type: 3}
+  - {fileID: 100000, guid: b30991a023e1eea46be90439c5a643fd, type: 3}
+  - {fileID: 100000, guid: 85fd0e5ca55ce00448e9cfd6e89f59d5, type: 3}
+  - {fileID: 100000, guid: 6f857d5715fd6684ab43b4f471c8f1ca, type: 3}
+  - {fileID: 100000, guid: 71f2d7eeee143b842983f5d35d0b07ce, type: 3}
+  - {fileID: 100000, guid: 155326c28487b2942afbdd00e25be3f4, type: 3}

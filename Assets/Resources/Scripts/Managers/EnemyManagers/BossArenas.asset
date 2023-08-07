@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7947e29c4e44d94d8d1d311484199ae, type: 3}
+  m_Name: BossArenas
+  m_EditorClassIdentifier: 
+  bossArenas:
+  - {fileID: 3938939029582296251, guid: 9b848ae49c03e3b448dc881deeb37097, type: 3}
+  spawnedBossArena: {fileID: 0}

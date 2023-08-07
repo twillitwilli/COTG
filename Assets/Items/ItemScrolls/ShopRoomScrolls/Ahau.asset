@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c000d3b1cfb1555499eff6228b6b780f, type: 3}
+  m_Name: Ahau
+  m_EditorClassIdentifier: 
+  scrollName: Ahau
+  scrollDescription: All stats increased.
+  itemPicture: {fileID: 2100000, guid: 6804c55e08efe9d44ad84f50376447cf, type: 2}
+  changeSpell: 0
+  whichMagic: 0
+  addCollisionEffect: 0
+  piercing: 0
+  explosion: 0
+  burst: 0
+  bouncing: 0
+  aoeGround: 0
+  summoning: 0
+  rain: 0
+  addDashEffect: 0
+  dashPillar: 0
+  teleportBurst: 0
+  giveDungeonAbility: 0
+  tempMapReveal: 0
+  mapReveal: 0
+  tempCompassReveal: 0
+  compassReveal: 0
+  changeBaseStat: 1
+  movementSpeed: 1
+  currentHealth: 1
+  maxHealth: 1
+  attackDamage: 1
+  magicFocus: 1
+  attackRange: 1
+  attackCooldown: 1
+  gold: 0
+  arcaneOrb: 0
+  luck: 1
+  critChance: 1
+  aimAssist: 1
+  movementValue: 0.25
+  currentHealthValue: 25
+  maxHealthValue: 25
+  attackValue: 5
+  magicFocusValue: 1
+  rangeValue: 0.25
+  attackCDValue: -0.25
+  goldValue: 0
+  arcaneOrbValue: 0
+  luckValue: 5
+  critChanceValue: 5
+  aimAssistValue: 1

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c776fa0d681cb4f47b8605b652b4beb3, type: 3}
+  m_Name: MenuMaterials
+  m_EditorClassIdentifier: 
+  normalMenuBackground: {fileID: 2100000, guid: c0e6af90b9a1081469161e468a62e78f, type: 2}
+  highlightedBackground: {fileID: 2100000, guid: 242e4efecbf695b478f31f0c7a268121, type: 2}

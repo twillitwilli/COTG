@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd9653c5a571c2468671224499f9273, type: 3}
+  m_Name: ItemPools
+  m_EditorClassIdentifier: 
+  dungeonItems: {fileID: 11400000, guid: 4e23d06e48b939245a9336b7dd2e241d, type: 2}
+  droppableItems: {fileID: 11400000, guid: 92452bd252978b249a67b696add9c5df, type: 2}
+  shopItems: {fileID: 11400000, guid: 720351b0915938047844e044ff54e9ad, type: 2}
+  blankNormalScroll: {fileID: 6829101370419629298, guid: 16d7757aa8382df4782550d6e56fd45b, type: 3}
+  blankCursedScroll: {fileID: 6829101370419629298, guid: 1376f23d3a012a844854220c94a39fc3, type: 3}
+  itemScrolls:
+  - {fileID: 11400000, guid: c33400dcd28d0fb4e90b5d5c4cc7655b, type: 2}
+  - {fileID: 11400000, guid: 211d0cfaa5c18d54ca6e42ec2b8fd53f, type: 2}
+  - {fileID: 11400000, guid: 258e357d97c076c48a283648b6fa7655, type: 2}
+  lockedItems: {fileID: 11400000, guid: 833d98434e6252c44b2babc5d194e861, type: 2}
+  spawnedFromPool: 
+  spawnedScrolls: 
+  spawnedDrops: []

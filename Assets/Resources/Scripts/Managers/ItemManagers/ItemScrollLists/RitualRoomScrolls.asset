@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6211d8a8da9c14f4292e354592de051d, type: 3}
+  m_Name: RitualRoomScrolls
+  m_EditorClassIdentifier: 
+  scrolls:
+  - {fileID: 11400000, guid: 7f8c606c06a70614bbd62cffe62d74e7, type: 2}
+  - {fileID: 11400000, guid: c79a1ea1c16111a4b94ea942dc6f0017, type: 2}
+  - {fileID: 11400000, guid: e41725ecd250d3443b8bccc6b6fed357, type: 2}
+  - {fileID: 11400000, guid: 46e03bc704411be4c82c1c2f669ae198, type: 2}
+  - {fileID: 11400000, guid: e50e4907df7bc554ab20ebc969271f4d, type: 2}
+  - {fileID: 11400000, guid: 5726976ee09c98c4a825f38f0c790c2b, type: 2}
+  - {fileID: 11400000, guid: 76d6b04c5b489db49a903c3a3cd70b57, type: 2}
+  - {fileID: 11400000, guid: 89f13b6d49f3dec449feb4818addf221, type: 2}

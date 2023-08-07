@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b45a0a6fe7334ec45bfdb4ec02893306, type: 3}
+  m_Name: CheckControllerType
+  m_EditorClassIdentifier: 
+  oculusPos:
+  - {x: -0.0351207, y: -0.0294343, z: -0.1078744}
+  - {x: 0.032556, y: -0.02604732, z: -0.1039829}
+  oculusRot:
+  - {x: -8.629, y: 189.754, z: -8.006}
+  - {x: 4.653, y: -7.732, z: 194.377}
+  indexPos:
+  - {x: 0.0097066, y: 0.0331771, z: -0.0091484}
+  - {x: -0.0047962, y: 0.0310975, z: -0.0210611}
+  indexRot:
+  - {x: 291.6162, y: 147.6852, z: 47.64479}
+  - {x: 55.57109, y: 16.61884, z: 211.4596}
+  wmrPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  wmrRot:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  vivePos:
+  - {x: 0.0097066, y: 0.0331771, z: -0.0091484}
+  - {x: -0.0047962, y: 0.0310975, z: -0.0210611}
+  viveRot:
+  - {x: 291.6162, y: 147.6852, z: 47.64479}
+  - {x: 55.57109, y: 16.61884, z: 211.4596}
+  quest2Pos:
+  - {x: -0.0016633, y: 0.000274, z: -0.0148396}
+  - {x: -0.0045839, y: 0.0019115, z: 0.000777}
+  quest2Rot:
+  - {x: 354.3273, y: 197.1795, z: 354.6525}
+  - {x: 1.550367, y: 347.5053, z: 176.9926}
