@@ -8,6 +8,7 @@ public class ExitGame : MonoBehaviour
     {
         if (!resetPlayer) { LocalGameManager.instance.GetPlayerPrefsSaveData().SaveData(); }
         else { PlayerPrefs.SetInt("NewPlayer", (false ? 1 : 0)); }
+
         Application.Quit();
     }
 }

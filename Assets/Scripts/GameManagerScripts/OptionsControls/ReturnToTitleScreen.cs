@@ -5,12 +5,15 @@ using UnityEngine;
 public class ReturnToTitleScreen : MonoBehaviour
 {
     private LocalGameManager _gameManager;
-    private VRPlayerController _player;
+
+    [SerializeField] private bool _inMenu;
+    [SerializeField] private GameObject _buttonParent;
 
     private void Start()
     {
         _gameManager = LocalGameManager.instance;
-        _player = _gameManager.player;
+
+        if (_inMenu && !_gameManager.inDungeon) { _buttonParent.SetActive(false); }
     }
 
     public void ReturnTitleScreen()

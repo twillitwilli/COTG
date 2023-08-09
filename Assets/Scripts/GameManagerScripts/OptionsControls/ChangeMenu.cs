@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class ChangeMenu : MonoBehaviour
 {
@@ -11,16 +12,21 @@ public class ChangeMenu : MonoBehaviour
 
     public void ChangeMenuDisplay()
     {
-        Debug.Log("Changing Menu");
         buttonPress = true;
+
+
+
         foreach (GameObject disableObj in disableObjects) { disableObj.SetActive(false); }
     }
 
-    private void OnDisable()
+    private async void OnDisable()
     {
         if (buttonPress) 
-        { 
-            Invoke("EnableNewMenus", 0.5f);
+        {
+            await Task.Delay(500);
+
+            EnableNewMenus();
+
             buttonPress = false;
         }
     }

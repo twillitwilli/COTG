@@ -721,16 +721,16 @@ public class PlayerOptions : MonoBehaviour
             switch (_visualSettings.shadowQuality)
             {
                 case ShadowResolution.VeryHigh:
-                    _textBox.text = "ShadowQuality:\nVery High";
+                    _textBox.text = "Shadow Quality:\nVery High";
                     break;
                 case ShadowResolution.High:
-                    _textBox.text = "ShadowQuality:\nHigh";
+                    _textBox.text = "Shadow Quality:\nHigh";
                     break;
                 case ShadowResolution.Medium:
-                    _textBox.text = "ShadowQuality:\nMedium";
+                    _textBox.text = "Shadow Quality:\nMedium";
                     break;
                 case ShadowResolution.Low:
-                    _textBox.text = "ShadowQuality:\nLow";
+                    _textBox.text = "Shadow Quality:\nLow";
                     break;
             }
         }
@@ -741,19 +741,19 @@ public class PlayerOptions : MonoBehaviour
             {
                 case ShadowResolution.VeryHigh:
                     _visualSettings.shadowQuality = ShadowResolution.High;
-                    _textBox.text = "ShadowQuality:\nHigh";
+                    _textBox.text = "Shadow Quality:\nHigh";
                     break;
                 case ShadowResolution.High:
                     _visualSettings.shadowQuality = ShadowResolution.Medium;
-                    _textBox.text = "ShadowQuality:\nMedium";
+                    _textBox.text = "Shadow Quality:\nMedium";
                     break;
                 case ShadowResolution.Medium:
                     _visualSettings.shadowQuality = ShadowResolution.Low;
-                    _textBox.text = "ShadowQuality:\nLow";
+                    _textBox.text = "Shadow Quality:\nLow";
                     break;
                 case ShadowResolution.Low:
                     _visualSettings.shadowQuality = ShadowResolution.VeryHigh;
-                    _textBox.text = "ShadowQuality:\nVery High";
+                    _textBox.text = "Shadow Quality:\nVery High";
                     break;
             }
             
