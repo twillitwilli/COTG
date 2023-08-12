@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,8 @@ using System.Threading.Tasks;
 
 public class ChangeMenu : MonoBehaviour
 {
-    public GameObject[] enableObjects;
-    public GameObject[] disableObjects;
+    [SerializeField] public GameObject[] enableObjects;
+    [SerializeField] public GameObject[] disableObjects;
 
     private bool buttonPress;
 
@@ -14,9 +15,9 @@ public class ChangeMenu : MonoBehaviour
     {
         buttonPress = true;
 
+        // foreach (GameObject disableObj in disableObjects) { disableObj.SetActive(false); }
 
-
-        foreach (GameObject disableObj in disableObjects) { disableObj.SetActive(false); }
+        Array.ForEach(disableObjects, disableObj => disableObj.SetActive(false));
     }
 
     private async void OnDisable()
@@ -33,7 +34,8 @@ public class ChangeMenu : MonoBehaviour
 
     private void EnableNewMenus()
     {
-        foreach (GameObject enableObj in enableObjects) { enableObj.SetActive(true); }
+        // foreach (GameObject enableObj in enableObjects) { enableObj.SetActive(true); }
 
+        Array.ForEach(disableObjects, disableObj => disableObj.SetActive(false));
     }
 }

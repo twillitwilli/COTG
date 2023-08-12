@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class ControllerType : MonoBehaviour
 {
     public string currentController { get; private set; }
+    public string controllerFullName { get; private set; }
 
     private CheckControllerType _controllerType;
     private VRPlayerController _player;
@@ -109,45 +110,15 @@ public class ControllerType : MonoBehaviour
         {
             case "Oculus":
                 currentControllerType = controllerType.oculusRift;
+                controllerFullName = "Oculus Rift";
                 break;
 
             case "Valve":
                 currentControllerType = controllerType.index;
+                controllerFullName = "Valve Index";
                 break;
 
-            default: Debug.Log("Controller Not Supported");
-                break;
-        }
-
-        ChangeControllerType();
-    }
-
-    public void ChangeControllerType()
-    {
-        switch (currentControllerType)
-        {
-            case controllerType.oculusRift:
-                ChangeControllerValues(0, "Oculus");
-                Debug.Log("Controller Set To Oculus");
-                break;
-
-            case controllerType.index:
-                ChangeControllerValues(1, "Index");
-                Debug.Log("Controller Set To Index");
-                break;
-
-            case controllerType.wmr:
-                ChangeControllerValues(2, "WMR");
-                Debug.Log("Controller Set To WMR");
-                break;
-
-            case controllerType.vive:
-                ChangeControllerValues(3, "Vive");
-                Debug.Log("Controller Set To Vive");
-                break;
-
-            case controllerType.quest2:
-                ChangeControllerValues(4, "Quest2");
+            default: controllerFullName = "Controller Not Supported";
                 break;
         }
 
@@ -159,12 +130,6 @@ public class ControllerType : MonoBehaviour
         }
 
         playerComponents.GetControllerInputManager().EnableControls();
-    }
-
-    public void ChangeControllerValues(int ID, string name)
-    {
-        controllerID = ID;
-        controllerName = name;
     }
 
     public void ResetHandToControllerDefault(VRPlayerHand hand)

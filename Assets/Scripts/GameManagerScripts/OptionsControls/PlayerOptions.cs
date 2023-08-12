@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -280,6 +281,11 @@ public class PlayerOptions : MonoBehaviour
         }
     }
 
+    private void ChangeText(string newText)
+    {
+        _textBox.text = newText;
+    }
+
     private void ChangePlayMode()
     {
         if (!_checkStatusOnly)
@@ -293,96 +299,110 @@ public class PlayerOptions : MonoBehaviour
             }
             else _player.playerStanding = true;
         }
-        if (_player.playerStanding) { _textBox.text = "Playmode:\nStanding"; }
-        else _textBox.text = "Playmode:\nSitting";
+
+        ChangeText(_player.playerStanding ? "Playmode:\nStanding" : "Playmode:\nSitting");
     }
 
     private void ChangePrimaryHand()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.isLeftHanded) { _player.isLeftHanded = false; }
-            else { _player.isLeftHanded = true; }
+            //if (_player.isLeftHanded) { _player.isLeftHanded = false; }
+            //else { _player.isLeftHanded = true; }
 
-            _playerComponents.GetHand(0).SetPrimaryHand();
-            _playerComponents.GetHand(1).SetPrimaryHand();
+            bool leftHanded = _player.isLeftHanded ? false : true;
+            _player.isLeftHanded = leftHanded;
+
+            //_playerComponents.GetHand(0).SetPrimaryHand();
+            //_playerComponents.GetHand(1).SetPrimaryHand();
+
+            Array.ForEach(_playerComponents.GetBothHands(), setPrimaryHand => setPrimaryHand.SetPrimaryHand());
 
             switch (_magicController.GetClassType())
             {
                 case MagicController.ClassType.Wizard:
-                    if (Wizard.instance != null)
-                    {
-                        Wizard.instance.GetStaffController().ResetStaff();
-                    }
+                    Wizard.instance.GetStaffController().ResetStaff();
                     break;
 
                 case MagicController.ClassType.Conjurer:
-                    if (Conjurer.instance != null)
-                    {
-                        Conjurer.instance.GetBowController().ResetBow();
-                    }
+                    Conjurer.instance.GetBowController().ResetBow();
                     break;
             }
         }
 
-        if (!_player.isLeftHanded) { _textBox.text = "Right Handed"; }
-        else _textBox.text = "Left Handed";
+        ChangeText(_player.isLeftHanded ? "Left Handed" : "Right Handed");
     }
 
     private void ChangeTimeDisplay()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.militaryTime) { _player.militaryTime = false; }
-            else _player.militaryTime = true;
+            //if (_player.militaryTime) { _player.militaryTime = false; }
+            //else _player.militaryTime = true;
+
+            bool timeFormat = _player.militaryTime ? false : true;
+            _player.militaryTime = timeFormat;
         }
-        if (_player.militaryTime) { _textBox.text = "24 Hour Clock"; }
-        else _textBox.text = "12 Hour Clock";
+
+        ChangeText(_player.militaryTime ? "Time Format:\n24hr" : "Time Format:\n12hr");
     }
 
     private void ChangePlayerOrientation()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.headOrientation) { _player.headOrientation = false; }
-            else _player.headOrientation = true;
+            //if (_player.headOrientation) { _player.headOrientation = false; }
+            //else _player.headOrientation = true;
+
+            bool playerOrientation = _player.headOrientation ? false : true;
+            _player.headOrientation = playerOrientation;
+
             _player.OrientationSource();
         }
-        if (_player.headOrientation) { _textBox.text = "Orientation:\nHead"; }
-        else _textBox.text = "Orientation:\nHand";
+
+        ChangeText(_player.headOrientation ? "Orientation:\nHead" : "Orientation:\nHand");
     }
 
     private void ChangePlayerRotation()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.snapTurnOn) { _player.snapTurnOn = false; }
-            else _player.snapTurnOn = true;
+            //if (_player.snapTurnOn) { _player.snapTurnOn = false; }
+            //else _player.snapTurnOn = true;
+
+            bool snapRotation = _player.snapTurnOn ? false : true;
+            _player.snapTurnOn = snapRotation;
         }
-        if (_player.snapTurnOn) { _textBox.text = "Snap Turning"; }
-        else _textBox.text = "Smooth Turning";
+
+        ChangeText(_player.snapTurnOn ? "Snap Turning" : "Smooth Turning");
     }
 
     private void ToggleRoomScale()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.roomScale) { _player.roomScale = false; }
-            else _player.roomScale = true;
+            //if (_player.roomScale) { _player.roomScale = false; }
+            //else _player.roomScale = true;
+
+            bool roomScale = _player.roomScale ? false : true;
+            _player.roomScale = roomScale;
         }
-        if (_player.roomScale) { _textBox.text = "Roomscale:\nOn"; }
-        else _textBox.text = "Roomscale:\nOff";
+
+        ChangeText(_player.roomScale ? "Roomscale:\nOn" : "Roomscale:\nOff");
     }
 
     private void ChangeGrip()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.toggleGrip) { _player.toggleGrip = false; }
-            else _player.toggleGrip = true;
+            //if (_player.toggleGrip) { _player.toggleGrip = false; }
+            //else _player.toggleGrip = true;
+
+            bool toggleGrip = _player.toggleGrip ? false : true;
+            _player.toggleGrip = toggleGrip;
         }
-        if (_player.toggleGrip) { _textBox.text = "Toggle Grip"; }
-        else _textBox.text = "Hold Grip";
+
+        ChangeText(_player.toggleGrip ? "Toggle Grip" : "Hold Grip");
     }
 
     private void LeftControllerSensitivty()
@@ -390,10 +410,13 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _player.leftJoystickDeadzoneAdjustment += _valueAdjustment;
+
             if (_player.leftJoystickDeadzoneAdjustment >= .9f) { _player.leftJoystickDeadzoneAdjustment = .9f; }
             else if (_player.leftJoystickDeadzoneAdjustment <= 0) { _player.leftJoystickDeadzoneAdjustment = 0; }
         }
-        _textBox.text = "Left Sensitivity:\n" + Mathf.RoundToInt(_player.leftJoystickDeadzoneAdjustment * 100) + "%";
+
+        int deadzoneValue = Mathf.RoundToInt(_player.leftJoystickDeadzoneAdjustment * 100);
+        ChangeText("Left Sensitivity:\n" + deadzoneValue + "%");
     }
 
     private void RightControllerSensitivty()
@@ -401,10 +424,13 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _player.rightJoystickDeadzoneAdjustment += _valueAdjustment;
+
             if (_player.rightJoystickDeadzoneAdjustment >= .9f) { _player.rightJoystickDeadzoneAdjustment = .9f; }
             else if (_player.rightJoystickDeadzoneAdjustment <= 0) { _player.rightJoystickDeadzoneAdjustment = 0; }
         }
-        _textBox.text = "Right Sensitivity:\n" + Mathf.RoundToInt(_player.rightJoystickDeadzoneAdjustment * 100) + "%";
+
+        int deadzoneValue = Mathf.RoundToInt(_player.rightJoystickDeadzoneAdjustment * 100);
+        ChangeText("Right Sensitivity:\n" + deadzoneValue + "%");
     }
 
     private void SmoothTurningAdjustment()
@@ -412,10 +438,13 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _player.turnSpeedAdjustment += _valueAdjustment;
+
             if (_player.turnSpeedAdjustment >= 4f) { _player.turnSpeedAdjustment = 4f; }
             else if (_player.turnSpeedAdjustment <= .1f) { _player.turnSpeedAdjustment = .1f; }
         }
-        _textBox.text = "Smooth Turning:\n" + Mathf.RoundToInt(_player.turnSpeedAdjustment * 100) + "%";
+
+        int turnSpeed = Mathf.RoundToInt(_player.turnSpeedAdjustment * 100);
+        ChangeText("Smooth Turning:\n" + turnSpeed + "%");
     }
 
     private void SnapTurningAdjustment()
@@ -423,31 +452,33 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _player.snapTurnRotationAdjustment += _valueAdjustment;
+
             if (_player.snapTurnRotationAdjustment >= 90f) { _player.snapTurnRotationAdjustment = 90f; }
             else if (_player.snapTurnRotationAdjustment <= 10f) { _player.snapTurnRotationAdjustment = 10f; }
         }
-        _textBox.text = "Snap Turning:\n" + Mathf.RoundToInt(_player.snapTurnRotationAdjustment);
+        
+        ChangeText("Snap Turning:\n" + Mathf.RoundToInt(_player.snapTurnRotationAdjustment));
     }
 
     private void ChangeMusicVolume()
     {
         if (!_checkStatusOnly) { _audioController.AdjustMusicVolume(_valueAdjustment); }
 
-        _textBox.text = "Music: " + Mathf.RoundToInt(_audioController.GetMusicVolume() * 100);
+        ChangeText("Music: " + Mathf.RoundToInt(_audioController.GetMusicVolume() * 100));
     }
 
     private void ChangeSFXVolume()
     {
         if (!_checkStatusOnly) { _audioController.AdjustSFXVolume(_valueAdjustment); }
 
-        _textBox.text = "SFX: " + Mathf.RoundToInt(_audioController.GetSFXVolume() * 100);
+        ChangeText("SFX: " + Mathf.RoundToInt(_audioController.GetSFXVolume() * 100));
     }
 
     private void ChangeCreatureSFXVolume()
     {
         if (!_checkStatusOnly) { _audioController.AdjustCreatureSFXVolume(_valueAdjustment); }
 
-        _textBox.text = "Creature SFX: " + Mathf.RoundToInt(_audioController.GetCreatureSFXVolume() * 100);
+        ChangeText("Creature SFX: " + Mathf.RoundToInt(_audioController.GetCreatureSFXVolume() * 100));
     }
 
     private void AdjustHandPositioning()
@@ -458,27 +489,37 @@ public class PlayerOptions : MonoBehaviour
 
     private void ChangeControllerType()
     {
-        //auto-detected
+        if (_checkStatusOnly)
+        {
+            ChangeText("Controller Type:\n" + _gameManager.GetControllerType().controllerFullName);
+        }
     }
 
     private void ResetHandAlignment()
     {
-        foreach (VRPlayerHand hand in _playerComponents.GetBothHands())
-        {
-            _gameManager.GetControllerType().ResetHandToControllerDefault(hand);
-        }
+        //foreach (VRPlayerHand hand in _playerComponents.GetBothHands())
+        //{
+        //    _gameManager.GetControllerType().ResetHandToControllerDefault(hand);
+        //}
+
+        Array.ForEach(_playerComponents.GetBothHands(), resetHands => _gameManager.GetControllerType().ResetHandToControllerDefault(resetHands));
     }
 
     private void SprintToggle()
     {
         if (!_checkStatusOnly)
         {
-            if (_player.toggleSprint) { _player.toggleSprint = false; }
-            else _player.toggleSprint = true;
+            //if (_player.toggleSprint) { _player.toggleSprint = false; }
+            //else _player.toggleSprint = true;
+
+            bool toggleSprint = _player.toggleSprint ? false : true;
+            _player.toggleSprint = toggleSprint;
         }
 
-        if (_player.toggleSprint) { _textBox.text = "Toggle Sprint:\nOn"; }
-        else _textBox.text = "Toggle Sprint:\nOff";
+        //if (_player.toggleSprint) { _textBox.text = "Toggle Sprint:\nOn"; }
+        //else _textBox.text = "Toggle Sprint:\nOff";
+
+        ChangeText(_player.toggleSprint ? "Toggle Sprint:\nOn" : "Toggle Sprint:\nOff");
     }
 
     private void PlayerCalibration()
@@ -491,30 +532,43 @@ public class PlayerOptions : MonoBehaviour
 
     private void ClearHands()
     {
-        _playerComponents.GetHand(0).EmptyHand();
-        _playerComponents.GetHand(1).EmptyHand();
+        //_playerComponents.GetHand(0).EmptyHand();
+        //_playerComponents.GetHand(1).EmptyHand();
+
+        Array.ForEach(_playerComponents.GetBothHands(), emptyHands => emptyHands.EmptyHand());
     }
 
     private void KeyboardTyping()
     {
         if (_menu != null)
         {
-            if (_stringName == "Erase") { _menu.multiplayerRoomName = null; }
-            else { _menu.multiplayerRoomName = _menu.multiplayerRoomName + _stringName; }
-            _textBox.text = _menu.multiplayerRoomName;
+            //if (_stringName == "Erase") { _menu.multiplayerRoomName = null; }
+            //else { _menu.multiplayerRoomName = _menu.multiplayerRoomName + _stringName; }
+
+            string roomName = _stringName == "Erase" ? null : _menu.multiplayerRoomName + _stringName;
+
+            ChangeText(roomName);
         }
 
         else
         {
-            if (_stringName == "Erase") { _textBox.text = null; }
-            else if (_stringName == "Send")
+            switch (_stringName)
             {
-                _chatManager.ChatMessage("[You] " + _textBox.text);
+                case "Erase":
+                    ChangeText(null);
+                    break;
 
-                if (CoopManager.instance != null) { CoopManager.instance.SendChatMessage(_textBox.text); }
+                case "Send":
+                    _chatManager.ChatMessage("[You] " + _textBox.text);
+
+                    if (CoopManager.instance != null) { CoopManager.instance.SendChatMessage(_textBox.text); }
+                    break;
+
+                default:
+                    string newText = _textBox.text += _stringName;
+                    ChangeText(newText);
+                    break;
             }
-
-            else { _textBox.text += _stringName; }
         }
     }
 
@@ -522,8 +576,10 @@ public class PlayerOptions : MonoBehaviour
     {
         if (_checkStatusOnly)
         {
-            if (CoopManager.instance == null) { _textBox.text = "Join/Create\n" + "Room"; }
-            else _textBox.text = "Leave\n" + "Room";
+            //if (CoopManager.instance == null) { _textBox.text = "Join/Create\n" + "Room"; }
+            //else _textBox.text = "Leave\n" + "Room";
+
+            string newText = CoopManager.instance == null ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
         }
 
         else
@@ -534,6 +590,7 @@ public class PlayerOptions : MonoBehaviour
                 _networkManager.ConnectToServer();
                 _textBox.text = "Leave\n" + "Room";
             }
+
             else
             {
                 _networkManager.LeaveRoom();
@@ -544,117 +601,151 @@ public class PlayerOptions : MonoBehaviour
 
     private void ChatOptions()
     {
-        if (_stringName == "PreviousMessage") { _chatManager.DisplayPreviousMessage(); }
-        else if (_stringName == "NextMessage") { _chatManager.DisplayNextMessage(); }
-        else if (_stringName == "Keyboard")
+        switch (_stringName)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                ChatWindow chatWindow;
-                if (_playerComponents.GetHand(i).chatDisplay.chatSystem.TryGetComponent<ChatWindow>(out chatWindow))
+            case "PreviousMessage":
+                _chatManager.DisplayPreviousMessage();
+                break;
+
+            case "NextMessage":
+                _chatManager.DisplayNextMessage();
+                break;
+
+            case "Keyboard":
+                for (int i = 0; i < 2; i++)
                 {
-                    if (chatWindow.spawnedKeyboard == null)
+                    ChatWindow chatWindow;
+                    if (_playerComponents.GetHand(i).chatDisplay.chatSystem.TryGetComponent<ChatWindow>(out chatWindow))
                     {
-                        chatWindow.spawnedKeyboard = Instantiate(MasterManager.playerManager.chatKeyboard, chatWindow.keyboardSpawn);
+                        if (chatWindow.spawnedKeyboard == null)
+                        {
+                            chatWindow.spawnedKeyboard = Instantiate(MasterManager.playerManager.chatKeyboard, chatWindow.keyboardSpawn);
+                        }
+                        else { Destroy(chatWindow.spawnedKeyboard); }
                     }
-                    else { Destroy(chatWindow.spawnedKeyboard); }
                 }
-            }
+                break;
+
+            case "Erase":
+                _chatManager.DeleteMessageHistory();
+                break;
         }
-        else if (_stringName == "Erase") { _chatManager.DeleteMessageHistory(); }
     }
 
     private void ToggleTextChat()
     {
-        if (_chatManager.textChat)
+        //if (_chatManager.textChat)
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Text Chat:\nEnabled"; }
+        //    else
+        //    {
+        //        _chatManager.textChat = false;
+        //        _textBox.text = "Text Chat:\nDisabled";
+        //    }
+        //}
+
+        //else
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Text Chat:\nDisabled"; }
+        //    else
+        //    {
+        //        _chatManager.textChat = true;
+        //        _textBox.text = "Text Chat:\nEnabled";
+        //    }
+        //}
+
+        if (!_checkStatusOnly)
         {
-            if (_checkStatusOnly) { _textBox.text = "Text Chat:\nEnabled"; }
-            else
-            {
-                _chatManager.textChat = false;
-                _textBox.text = "Text Chat:\nDisabled";
-            }
+            bool textChat = _chatManager.textChat ? false : true;
+            _chatManager.textChat = textChat;
         }
 
-        else
-        {
-            if (_checkStatusOnly) { _textBox.text = "Text Chat:\nDisabled"; }
-            else
-            {
-                _chatManager.textChat = true;
-                _textBox.text = "Text Chat:\nEnabled";
-            }
-        }
+        ChangeText(_chatManager.textChat ? "Text Chat:\nEnabled" : "Text Chat:\nDisabled");
     }
 
     private void ChangeChatHand()
     {
-        if (!_chatManager.chatOnRightHand)
-        {
-            if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nRight Hand"; }
-            else
-            {
-                _chatManager.chatOnRightHand = true;
-                _textBox.text = "Chat Hand:\nLeft Hand";
-            }
-        }
+        //if (!_chatManager.chatOnRightHand)
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nRight Hand"; }
+        //    else
+        //    {
+        //        _chatManager.chatOnRightHand = true;
+        //        _textBox.text = "Chat Hand:\nLeft Hand";
+        //    }
+        //}
 
-        else
-        {
-            if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nLeft Hand"; }
-            else
-            {
-                _chatManager.chatOnRightHand = false;
-                _textBox.text = "Chat Hand:\nRight Hand";
-            }
-        }
+        //else
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nLeft Hand"; }
+        //    else
+        //    {
+        //        _chatManager.chatOnRightHand = false;
+        //        _textBox.text = "Chat Hand:\nRight Hand";
+        //    }
+        //}
+
+        bool chatHand = _chatManager.chatOnRightHand ? false : true;
+        _chatManager.chatOnRightHand = chatHand;
+
+        ChangeText(_chatManager.chatOnRightHand ? "Chat Hand:\nRight Hand" : "Chat Hand:\nLeft Hand");
     }
 
     private void ToggleDebugChat()
     {
-        if (_chatManager.allowDebugMessages)
-        {
-            if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nEnabled"; }
-            else
-            {
-                _chatManager.allowDebugMessages = false;
-                _textBox.text = "Debug Chat:\nDisabled";
-            }
-        }
+        //if (_chatManager.allowDebugMessages)
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nEnabled"; }
+        //    else
+        //    {
+        //        _chatManager.allowDebugMessages = false;
+        //        _textBox.text = "Debug Chat:\nDisabled";
+        //    }
+        //}
 
-        else
-        {
-            if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nDisabled"; }
-            else
-            {
-                _chatManager.allowDebugMessages = true;
-                _textBox.text = "Debug Chat:\nEnabled";
-                _chatManager.DebugMessage("Debug messages allowed");
-            }
-        }
+        //else
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nDisabled"; }
+        //    else
+        //    {
+        //        _chatManager.allowDebugMessages = true;
+        //        _textBox.text = "Debug Chat:\nEnabled";
+        //        _chatManager.DebugMessage("Debug messages allowed");
+        //    }
+        //}
+
+        bool debugMessages = _chatManager.allowDebugMessages ? false : true;
+        _chatManager.allowDebugMessages = debugMessages;
+
+        ChangeText(_chatManager.allowDebugMessages ? "Debug Chat:\nEnabled" : "Debug Chat:\nDisabled");
     }
 
     private void ToggleVoiceChat()
     {
-        if (_chatManager.voiceChat)
-        {
-            if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
-            else
-            {
-                _chatManager.voiceChat = false;
-                _textBox.text = "Voice Chat:\nn/a";
-            }
-        }
+        //if (_chatManager.voiceChat)
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
+        //    else
+        //    {
+        //        _chatManager.voiceChat = false;
+        //        _textBox.text = "Voice Chat:\nn/a";
+        //    }
+        //}
 
-        else
-        {
-            if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
-            else
-            {
-                _chatManager.voiceChat = true;
-                _textBox.text = "Voice Chat:\nn/a";
-            }
-        }
+        //else
+        //{
+        //    if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
+        //    else
+        //    {
+        //        _chatManager.voiceChat = true;
+        //        _textBox.text = "Voice Chat:\nn/a";
+        //    }
+        //}
+
+        bool voiceChat = _chatManager.voiceChat ? false : true;
+        _chatManager.voiceChat = voiceChat;
+
+        ChangeText(_chatManager.voiceChat ? "Voice Chat:\nEnabled" : "Voice Chat:\nDisabled");
     }
 
     private void ToggleNotifications()
@@ -1037,16 +1128,16 @@ public class PlayerOptions : MonoBehaviour
             _playerComponents.backAttachments.transform.localPosition = new Vector3(0, 0, _playerComponents.belt.backAttachments);
         }
 
-        _textBox.text = "Back Attachments:\n" + _playerComponents.backAttachments.transform.localPosition.z;
+        _textBox.text = "Back Position:\n" + _playerComponents.backAttachments.transform.localPosition.z;
     }
 
     private void BeltAdjustment()
     {
         PlayerBelt belt = _playerComponents.belt;
 
-        if (_player.playerStanding)
+        if (!_checkStatusOnly)
         {
-            if (!_checkStatusOnly)
+            if (_player.playerStanding)
             {
                 belt.heightStandingPlayer += _valueAdjustment;
 
@@ -1054,21 +1145,19 @@ public class PlayerOptions : MonoBehaviour
                 else if (belt.heightStandingPlayer < 0) { belt.heightStandingPlayer = 0; }
             }
 
-            _textBox.text = "Belt Adjustment:\n" + belt.heightStandingPlayer;
-        }
-
-        else
-        {
-            if (!_checkStatusOnly)
+            else
             {
-                belt.heightSittingPlayer += _valueAdjustment;
+                if (!_checkStatusOnly)
+                {
+                    belt.heightSittingPlayer += _valueAdjustment;
 
-                if (belt.heightSittingPlayer > 1) { belt.heightSittingPlayer = 1; }
-                else if (belt.heightSittingPlayer < 0) { belt.heightSittingPlayer = 0; }
+                    if (belt.heightSittingPlayer > 1) { belt.heightSittingPlayer = 1; }
+                    else if (belt.heightSittingPlayer < 0) { belt.heightSittingPlayer = 0; }
+                }
             }
-
-            _textBox.text = "Belt Adjustment:\n" + belt.heightSittingPlayer;
         }
+
+        _textBox.text = "Belt Adjustment:\n" + belt.heightSittingPlayer;
     }
 
     private void BeltOffset()
