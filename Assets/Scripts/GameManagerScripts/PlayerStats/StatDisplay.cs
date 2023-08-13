@@ -93,7 +93,7 @@ public class StatDisplay : MonoBehaviour
                 break;
 
             case stats.magicType:
-                _thisDisplay.text = "Magic Type: " + _magicController.GetMagicName();
+                _thisDisplay.text = "Magic Type: " + _magicController.magicName;
                 break;
 
             case stats.castingType:

@@ -64,7 +64,7 @@ public class SpellCastingForHands : MonoBehaviour
 
     public void SorcererMagic()
     {
-        currentMagic = _magicController.GetCurrentMagicIndex();
+        currentMagic = _magicController.magicIdx;
         magicFocusCharges = spellReadyVisual.GetComponent<ParticleSystem>();
         var maxParticles = magicFocusCharges.main;
         if (maxParticles.maxParticles == _playerStats.GetMagicFocus()) { maxCharge = true; }
@@ -99,7 +99,7 @@ public class SpellCastingForHands : MonoBehaviour
         {
             _playerStats.AdjustCurrentMagicFocus(-1);
 
-            CastChargedSpell(_magicController.GetCurrentMagicIndex());
+            CastChargedSpell(_magicController.magicIdx);
 
             Invoke("CastSorcererSpells", 0.25f);
         }

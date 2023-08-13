@@ -35,6 +35,6 @@ public class CurrentMinion : MonoBehaviour
 
     public void SpawnNewMinion()
     {
-        currentMinion = Instantiate(MasterManager.playerMagicController.minions[currentMinionStage].minion[LocalGameManager.instance.GetMagicController().GetCurrentMagicIndex()]);
+        currentMinion = Instantiate(MasterManager.playerMagicController.minions[currentMinionStage].minion[LocalGameManager.instance.GetMagicController().magicIdx]);
     }
 }

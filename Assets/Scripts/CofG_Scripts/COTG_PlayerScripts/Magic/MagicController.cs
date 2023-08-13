@@ -11,8 +11,8 @@ public class MagicController : MonoBehaviour
     //MAGIC SELECTION
     [System.Flags] public enum MagicType { arcane = 1, fire = 2, water = 4, earth = 8, dark = 16, light = 32, blood = 64, cupcakes = 128 }
     [SerializeField] private MagicType _currentMagic;
-    private string _magicName;
-    private int _magicIdx;
+    public string magicName { get; private set; }
+    public int magicIdx { get; private set; }
 
     //STATUS
     [System.Flags] public enum StatusEffects { none = 0, burning = 1, blinded = 2, frozen = 4, electrocuted = 8, slowed = 16, rooted = 32, lifeDraining = 64, poisoned = 128 }
@@ -46,9 +46,7 @@ public class MagicController : MonoBehaviour
     //GET REFERENCES
     public ClassType GetClassType() { return _currentClass; }
     public MagicType GetMagicType() { return _currentMagic; }
-    public string GetMagicName() { return _magicName; }
-    public int GetCurrentMagicIndex() { return _magicIdx; }
-    public void SetCurrentMagicIndex(int newMagicIndex) { _magicIdx = newMagicIndex; }
+
     public StatusEffects GetCurrentStatusEffect() { return _currentStatusEffect; }
     public DashEffects GetDashEffect() { return _currentDashEffects; }
     public CollisionEffects GetCollisionEffect() { return _currentCollisionEffects; }
@@ -153,316 +151,277 @@ public class MagicController : MonoBehaviour
     public void SetToSpecificMagic(MagicType newMagic)
     {
         _currentMagic = newMagic;
-        UpdateMagic();
+        UpdateMagic(false, 0);
     }
 
     public void AddMagic(MagicType magicToAdd)
     {
         _currentMagic |= magicToAdd;
-        UpdateMagic();
+        UpdateMagic(false, 0);
     }
 
     public void RemoveMagic(MagicType magicToRemove)
     {
         _currentMagic &= ~magicToRemove;
-        UpdateMagic();
+        UpdateMagic(false, 0);
     }
 
-    private void UpdateMagic()
+    private void SetMagicProperties(string name, int index)
     {
-        switch (_currentMagic)
+        magicName = name;
+        magicIdx = index;
+    }
+
+    public void UpdateMagic(bool loadMagic, int loadMagicIndex)
+    {
+        int magicInt = loadMagic ? loadMagicIndex : (int)_currentMagic;
+
+        switch (magicInt)
         {
-            case MagicType.cupcakes:
-                _magicName = "Cupcakes";
-                _magicIdx = 33;
+            // Cupcakes
+            case 128:
+                SetMagicProperties("Cupcakes", 32);
+
                 AddStatusEffect(StatusEffects.slowed);
                 break;
 
-            case MagicType.blood:
-                _magicName = "Blood";
-                _magicIdx = 32;
+            // Blood
+            case 64:
+                SetMagicProperties("Blood", 31);
+
                 AddStatusEffect(StatusEffects.lifeDraining);
                 break;
 
-            case MagicType.fire:
-                switch(_currentMagic)
-                {
-                    case MagicType.water:
-                        switch(_currentMagic)
-                        {
-                            case MagicType.earth:
-                                switch (_currentMagic)
-                                {
-                                    case MagicType.dark:
-                                        switch (_currentMagic)
-                                        {
-                                            case MagicType.light:
-                                                _magicName = "DIVINE POWER";
-                                                _magicIdx = 31;
-                                                AddStatusEffect(StatusEffects.blinded | StatusEffects.burning | StatusEffects.electrocuted | StatusEffects.frozen | StatusEffects.lifeDraining | StatusEffects.poisoned | StatusEffects.rooted | StatusEffects.slowed);
-                                                AddDashEffect(DashEffects.dashAOETrail | DashEffects.dashPillars | DashEffects.teleportBurst);
-                                                AddSpecialEffect(SpecialEffects.AOEGround | SpecialEffects.burst | SpecialEffects.explosion | SpecialEffects.pillar | SpecialEffects.rain | SpecialEffects.summoning);
-                                                break;
+            // Fire, Water, Earth, Dark, Light
+            case 62:
+                SetMagicProperties("DIVINE POWER", 30);
 
-                                            default:
-                                                _magicName = "Demonic Infused Metal";
-                                                _magicIdx = 26;
-                                                AddStatusEffect(StatusEffects.blinded | StatusEffects.slowed);
-                                                SwitchCollisionType(CollisionEffects.peircing);
-                                                break;
-                                        }
-                                        break;
-
-                                    case MagicType.light:
-                                        _magicName = "Angelic Infused Metal";
-                                        _magicIdx = 27;
-                                        AddStatusEffect(StatusEffects.slowed);
-                                        SwitchCollisionType(CollisionEffects.peircing);
-                                        AddSpecialEffect(SpecialEffects.summoning);
-                                        break;
-
-                                    default:
-                                        _magicName = "Metal";
-                                        _magicIdx = 16;
-                                        AddStatusEffect(StatusEffects.slowed);
-                                        SwitchCollisionType(CollisionEffects.peircing);
-                                        break;
-                                }
-
-                                break;
-                            case MagicType.dark:
-                                switch (_currentMagic)
-                                {
-                                    case MagicType.light:
-                                        _magicName = "Electrified Blue Fire";
-                                        _magicIdx = 28;
-                                        AddStatusEffect(StatusEffects.electrocuted | StatusEffects.burning);
-                                        break;
-                                        
-                                    default:
-                                        _magicName = "Red Ice";
-                                        _magicIdx = 17;
-                                        AddStatusEffect(StatusEffects.burning | StatusEffects.frozen);
-                                        break;
-                                }
-                                break;
-                            case MagicType.light:
-                                _magicName = "Angelic Blue Fire";
-                                _magicIdx = 18;
-                                AddStatusEffect(StatusEffects.burning);
-                                AddSpecialEffect(SpecialEffects.summoning);
-                                break;
-
-                            default:
-                                _magicName = "Blue Fire";
-                                _magicIdx = 6;
-                                AddStatusEffect(StatusEffects.burning);
-                                break;
-                        }
-                        break;
-
-                    case MagicType.earth:
-                        switch(_currentMagic)
-                        {
-                            case MagicType.dark:
-                                switch (_currentMagic)
-                                {
-                                    case MagicType.light:
-                                        _magicName = "Electrified Meteor";
-                                        _magicIdx = 30;
-                                        AddStatusEffect(StatusEffects.electrocuted | StatusEffects.rooted | StatusEffects.slowed);
-                                        AddSpecialEffect(SpecialEffects.explosion);
-                                        break;
-
-                                    default:
-                                        _magicIdx = 19;
-                                        _magicName = "Dark Fire Meteor";
-                                        AddStatusEffect(StatusEffects.burning | StatusEffects.blinded | StatusEffects.slowed);
-                                        AddSpecialEffect(SpecialEffects.explosion);
-                                        break;
-                                }
-                                break;
-
-                            case MagicType.light:
-                                _magicName = "Holy Fire Meteor";
-                                _magicIdx = 21;
-                                AddStatusEffect(StatusEffects.burning | StatusEffects.slowed);
-                                AddSpecialEffect(SpecialEffects.explosion);
-                                break;
-
-                            default:
-                                _magicName = "Meteor";
-                                _magicIdx = 7;
-                                AddStatusEffect(StatusEffects.burning | StatusEffects.slowed);
-                                AddSpecialEffect(SpecialEffects.explosion);
-                                break;
-                        }
-                        break;
-
-                    case MagicType.dark:
-                        switch (_currentMagic)
-                        {
-                            case MagicType.light:
-                                _magicName = "Pure White Fire";
-                                _magicIdx = 20;
-                                AddStatusEffect(StatusEffects.burning | StatusEffects.electrocuted);
-                                break;
-
-                            default:
-                                _magicName = "Dark Fire";
-                                _magicIdx = 8;
-                                AddStatusEffect(StatusEffects.burning | StatusEffects.blinded);
-                                break;
-                        }
-                        break;
-
-                    case MagicType.light:
-                        _magicName = "Holy Fire";
-                        _magicIdx = 9;
-                        AddStatusEffect(StatusEffects.burning);
-                        AddSpecialEffect(SpecialEffects.summoning);
-                        break;
-
-                    default:
-                        _magicName = "Fire";
-                        _magicIdx = 1;
-                        AddStatusEffect(StatusEffects.burning);
-                        break;
-                }
+                AddStatusEffect(StatusEffects.blinded | StatusEffects.burning | StatusEffects.electrocuted | StatusEffects.frozen | StatusEffects.lifeDraining | StatusEffects.poisoned | StatusEffects.rooted | StatusEffects.slowed);
+                AddDashEffect(DashEffects.dashAOETrail | DashEffects.dashPillars | DashEffects.teleportBurst);
+                AddSpecialEffect(SpecialEffects.AOEGround | SpecialEffects.burst | SpecialEffects.explosion | SpecialEffects.pillar | SpecialEffects.rain | SpecialEffects.summoning);
                 break;
 
-            case MagicType.water:
-                switch (_currentMagic)
-                {
-                    case MagicType.earth:
-                        switch (_currentMagic)
-                        {
-                            case MagicType.dark:
-                                switch (_currentMagic)
-                                {
-                                    case MagicType.light:
-                                        _magicName = "Electrified Nature";
-                                        _magicIdx = 29;
-                                        AddStatusEffect(StatusEffects.rooted | StatusEffects.electrocuted);
-                                        break;
+            // Fire, Earth, Dark, Light
+            case 58:
+                SetMagicProperties("Electrified Meteor", 29);
 
-                                    default:
-                                        _magicIdx = 22;
-                                        _magicName = "Withered Nature";
-                                        AddStatusEffect(StatusEffects.blinded | StatusEffects.poisoned | StatusEffects.rooted);
-                                        break;
-                                }
-                                break;
-
-                            case MagicType.light:
-                                _magicName = "Angelic Nature";
-                                _magicIdx = 23;
-                                AddStatusEffect(StatusEffects.rooted);
-                                AddSpecialEffect(SpecialEffects.summoning);
-                                break;
-
-                            default:
-                                _magicName = "Nature";
-                                _magicIdx = 10;
-                                AddStatusEffect(StatusEffects.rooted);
-                                break;
-                        }
-                        break;
-                    case MagicType.dark:
-                        switch (_currentMagic)
-                        {
-                            case MagicType.light:
-                                _magicName = "Etheral Ice";
-                                _magicIdx = 24;
-                                AddStatusEffect(StatusEffects.frozen);
-                                AddSpecialEffect(SpecialEffects.AOEGround);
-                                break;
-
-                            default:
-                                _magicName = "Ice";
-                                _magicIdx = 11;
-                                AddStatusEffect(StatusEffects.frozen);
-                                break;
-                        }
-                        break;
-                    case MagicType.light:
-                        _magicName = "Spirit Water";
-                        _magicIdx = 12;
-                        AddSpecialEffect(SpecialEffects.summoning | SpecialEffects.pillar);
-                        break;
-                    default:
-                        _magicName = "Water";
-                        _magicIdx = 2;
-                        AddSpecialEffect(SpecialEffects.AOEGround);
-                        break;
-                }
+                AddStatusEffect(StatusEffects.electrocuted | StatusEffects.rooted | StatusEffects.slowed);
+                AddSpecialEffect(SpecialEffects.explosion);
                 break;
 
-            case MagicType.earth:
-                switch (_currentMagic)
-                {
-                    case MagicType.dark:
-                        switch (_currentMagic)
-                        {
-                            case MagicType.light:
-                                _magicName = "Electrified Earth";
-                                _magicIdx = 25;
-                                AddStatusEffect(StatusEffects.electrocuted | StatusEffects.slowed);
-                                break;
+            // Water, Earth, Dark, Light
+            case 60:
+                SetMagicProperties("Electrified Nature", 28);
 
-                            default:
-                                _magicName = "Demonic Infuse Earth";
-                                _magicIdx = 13;
-                                AddStatusEffect(StatusEffects.blinded | StatusEffects.slowed);
-                                break;
-                        }
-                        break;
-
-                    case MagicType.light:
-                        _magicName = "Angelic Infused Earth";
-                        _magicIdx = 14;
-                        AddStatusEffect(StatusEffects.slowed);
-                        AddSpecialEffect(SpecialEffects.summoning);
-                        break;
-
-                    default:
-                        _magicName = "Earth";
-                        _magicIdx = 3;
-                        AddStatusEffect(StatusEffects.slowed);
-                        break;
-                }
+                AddStatusEffect(StatusEffects.rooted | StatusEffects.electrocuted);
                 break;
 
-            case MagicType.dark:
-                switch (_currentMagic)
-                {
-                    case MagicType.light:
-                        _magicName = "Lightning";
-                        _magicIdx = 15;
-                        AddStatusEffect(StatusEffects.electrocuted);
-                        break;
+            // Fire, Water, Light, Dark
+            case 54:
+                SetMagicProperties("Electrified Blue Fire", 27);
 
-                    default:
-                        _magicName = "Shadow";
-                        _magicIdx = 4;
-                        AddStatusEffect(StatusEffects.blinded);
-                        break;
-                }
+                AddStatusEffect(StatusEffects.electrocuted | StatusEffects.burning);
                 break;
 
-            case MagicType.light:
-                _magicName = "Holy Light";
-                _magicIdx = 5;
+            // Fire, Water, Earth Light
+            case 46:
+                SetMagicProperties("Angelic Infused Metal", 26);
+
+                AddStatusEffect(StatusEffects.slowed);
+                SwitchCollisionType(CollisionEffects.peircing);
+                AddSpecialEffect(SpecialEffects.summoning);
+                break;
+
+            // Fire, Water, Earth, Dark
+            case 30:
+                SetMagicProperties("Demonic Infused Metal", 25);
+
+                AddStatusEffect(StatusEffects.blinded | StatusEffects.slowed);
+                SwitchCollisionType(CollisionEffects.peircing);
+                break;
+
+            // Earth, Dark, Light
+            case 56:
+                SetMagicProperties("Electrified Earth", 24);
+
+                AddStatusEffect(StatusEffects.electrocuted | StatusEffects.slowed);
+                break;
+
+            // Water, Dark, Light
+            case 52:
+                SetMagicProperties("Etheral Ice", 23);
+
+                AddStatusEffect(StatusEffects.frozen);
+                AddSpecialEffect(SpecialEffects.AOEGround);
+                break;
+
+            // Water, Earth, Light
+            case 44:
+                SetMagicProperties("Angelic Nature", 22);
+
+                AddStatusEffect(StatusEffects.rooted);
+                AddSpecialEffect(SpecialEffects.summoning);
+                break;
+
+            // Water, Earth, Dark
+            case 28:
+                SetMagicProperties("Withered Nature", 21);
+
+                AddStatusEffect(StatusEffects.blinded | StatusEffects.poisoned | StatusEffects.rooted);
+                break;
+
+            // Fire, Dark, Light
+            case 50:
+                SetMagicProperties("Pure Fire", 20);
+
+                AddStatusEffect(StatusEffects.burning | StatusEffects.electrocuted);
+                break;
+
+            // Fire, Earth, Dark
+            case 26:
+                SetMagicProperties("Dark Fire Meteors", 19);
+
+                AddStatusEffect(StatusEffects.burning | StatusEffects.blinded | StatusEffects.slowed);
+                AddSpecialEffect(SpecialEffects.explosion);
+                break;
+
+            // Fire, Water, Light
+            case 38:
+                SetMagicProperties("Angelic Blue Fire", 18);
+
+                AddStatusEffect(StatusEffects.burning);
+                AddSpecialEffect(SpecialEffects.summoning);
+                break;
+
+            // Fire, Water, Dark
+            case 22:
+                SetMagicProperties("Red Ice", 17);
+
+                AddStatusEffect(StatusEffects.burning | StatusEffects.frozen);
+                break;
+
+            // Fire, Water, Earth
+            case 14:
+                SetMagicProperties("Metal", 16);
+
+                AddStatusEffect(StatusEffects.slowed);
+                SwitchCollisionType(CollisionEffects.peircing);
+                break;
+
+            // Dark, Light
+            case 48:
+                SetMagicProperties("Lightning", 15);
+
+                AddStatusEffect(StatusEffects.electrocuted);
+                break;
+
+            // Earth, Light
+            case 40:
+                SetMagicProperties("Angelic Infused Earth", 14);
+
+                AddStatusEffect(StatusEffects.slowed);
+                AddSpecialEffect(SpecialEffects.summoning);
+                break;
+
+            // Earth, Dark
+            case 24:
+                SetMagicProperties("Demoic Infused Earth", 13);
+
+                AddStatusEffect(StatusEffects.blinded | StatusEffects.slowed);
+                break;
+
+            // Water, Light
+            case 36:
+                SetMagicProperties("Spirit Water", 12);
+
+                AddSpecialEffect(SpecialEffects.summoning | SpecialEffects.pillar);
+                break;
+
+            // Water, Dark
+            case 20:
+                SetMagicProperties("Ice", 11);
+
+                AddStatusEffect(StatusEffects.frozen);
+                break;
+
+            // Water, Earth
+            case 12:
+                SetMagicProperties("Nature", 10);
+
+                AddStatusEffect(StatusEffects.rooted);
+                break;
+
+            // Fire, Light
+            case 34:
+                SetMagicProperties("Holy Fire", 9);
+
+                AddStatusEffect(StatusEffects.burning);
+                AddSpecialEffect(SpecialEffects.summoning);
+                break;
+
+            // Fire, Dark
+            case 18:
+                SetMagicProperties("Dark Fire", 8);
+
+                AddStatusEffect(StatusEffects.burning | StatusEffects.blinded);
+                break;
+
+            // Fire, Earth
+            case 10:
+                SetMagicProperties("Meteor", 7);
+
+                AddStatusEffect(StatusEffects.burning | StatusEffects.slowed);
+                AddSpecialEffect(SpecialEffects.explosion);
+                break;
+
+            // Fire, Water
+            case 6:
+                SetMagicProperties("Blue Fire", 6);
+
+                AddStatusEffect(StatusEffects.burning);
+                break;
+
+            // Light
+            case 32:
+                SetMagicProperties("Holy Light", 5);
+
                 AddSpecialEffect(SpecialEffects.pillar);
                 break;
 
+            // Dark
+            case 16:
+                SetMagicProperties("Shadow", 4);
+
+                AddStatusEffect(StatusEffects.blinded);
+                break;
+
+            // Earth
+            case 8:
+                SetMagicProperties("Earth", 3);
+
+                AddStatusEffect(StatusEffects.slowed);
+                break;
+
+            // Water
+            case 4:
+                SetMagicProperties("Water", 2);
+
+                AddSpecialEffect(SpecialEffects.AOEGround);
+                break;
+
+            //Fire
+            case 2:
+                SetMagicProperties("Fire", 1);
+
+                AddStatusEffect(StatusEffects.burning);
+                break;
+
+            // Arcane
             default:
-                _magicName = "Arcane";
-                _magicIdx = 0;
+                SetMagicProperties("Arcane", 0);
                 break;
         }
     }
-
 
     // -----------------------------------------------------------------------------------------------
 

@@ -49,7 +49,7 @@ public class BowMagicController : MonoBehaviour
 
     public void SpawnBow()
     {
-        GameObject newBow = Instantiate(MasterManager.playerMagicController.bows[_magicController.GetCurrentMagicIndex()]);
+        GameObject newBow = Instantiate(MasterManager.playerMagicController.bows[_magicController.magicIdx]);
         _currentBow = newBow.GetComponent<PlayerBow>();
         ResetToBack();
     }

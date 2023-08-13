@@ -27,7 +27,7 @@ public class RealTimeDisplay : MonoBehaviour
     private void LateUpdate()
     {
         if (!_player.militaryTime) { TweleveHourClock(); }
-        else { TwentyFourHourClock(); }
+        else TwentyFourHourClock();
     }
 
     private void TweleveHourClock()

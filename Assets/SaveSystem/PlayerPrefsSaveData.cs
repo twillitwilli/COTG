@@ -161,7 +161,7 @@ public class PlayerPrefsSaveData : MonoBehaviour
     private void SaveClassInfo()
     {
         PlayerPrefs.SetInt("PlayerClass", (int)_magicController.GetClassType());
-        PlayerPrefs.SetInt("MagicType", _magicController.GetCurrentMagicIndex());
+        PlayerPrefs.SetInt("MagicType", (int)_magicController.GetMagicType());
         PlayerPrefs.SetInt("CastingType", (int)_magicController.GetCurrentCastingType());
     }
 
@@ -170,8 +170,8 @@ public class PlayerPrefsSaveData : MonoBehaviour
         if (CheckIfSaveFileExists("PlayerClass")) { _magicController.LoadClass(PlayerPrefs.GetInt("PlayerClass")); }
         else { _magicController.LoadClass(0); }
 
-        if (CheckIfSaveFileExists("MagicType")) { _magicController.SetCurrentMagicIndex(PlayerPrefs.GetInt("MagicType")); }
-        else { _magicController.SetCurrentMagicIndex(0); }
+        if (CheckIfSaveFileExists("MagicType")) { _magicController.UpdateMagic(true, PlayerPrefs.GetInt("MagicType")); }
+        else { _magicController.UpdateMagic(false, 0); }
 
         if (CheckIfSaveFileExists("CastingType")) { _magicController.LoadCastingType(PlayerPrefs.GetInt("CastingType")); }
         else { _magicController.LoadCastingType(0); }

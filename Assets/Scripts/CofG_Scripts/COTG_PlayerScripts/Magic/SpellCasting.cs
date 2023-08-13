@@ -49,7 +49,7 @@ public class SpellCasting : MonoBehaviour
                 float distance = Vector3.Distance(handCenter[0].position, handCenter[1].position);
 
                 if (distance > distanceForSpellCharge) { ResetSpellCharge(); }
-                else if (distance <= distanceForSpellCharge) { ChargeSpell(_magicController.GetCurrentMagicIndex()); }
+                else if (distance <= distanceForSpellCharge) { ChargeSpell(_magicController.magicIdx); }
             }
         }
     }

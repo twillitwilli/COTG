@@ -55,7 +55,7 @@ public class MinionAnimator : MonoBehaviour
 
     public void ShootProjectile()
     {
-        GameObject newProjectile = Instantiate(MasterManager.playerMagicController.petAttack[_magicController.GetCurrentMagicIndex()], minionController.spellSpawnLocation);
+        GameObject newProjectile = Instantiate(MasterManager.playerMagicController.petAttack[_magicController.magicIdx], minionController.spellSpawnLocation);
         newProjectile.transform.SetParent(null);
         BasicProjectile projectileSettings = newProjectile.GetComponent<BasicProjectile>();
 

@@ -307,14 +307,8 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.isLeftHanded) { _player.isLeftHanded = false; }
-            //else { _player.isLeftHanded = true; }
-
             bool leftHanded = _player.isLeftHanded ? false : true;
             _player.isLeftHanded = leftHanded;
-
-            //_playerComponents.GetHand(0).SetPrimaryHand();
-            //_playerComponents.GetHand(1).SetPrimaryHand();
 
             Array.ForEach(_playerComponents.GetBothHands(), setPrimaryHand => setPrimaryHand.SetPrimaryHand());
 
@@ -337,9 +331,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.militaryTime) { _player.militaryTime = false; }
-            //else _player.militaryTime = true;
-
             bool timeFormat = _player.militaryTime ? false : true;
             _player.militaryTime = timeFormat;
         }
@@ -351,9 +342,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.headOrientation) { _player.headOrientation = false; }
-            //else _player.headOrientation = true;
-
             bool playerOrientation = _player.headOrientation ? false : true;
             _player.headOrientation = playerOrientation;
 
@@ -367,9 +355,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.snapTurnOn) { _player.snapTurnOn = false; }
-            //else _player.snapTurnOn = true;
-
             bool snapRotation = _player.snapTurnOn ? false : true;
             _player.snapTurnOn = snapRotation;
         }
@@ -381,9 +366,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.roomScale) { _player.roomScale = false; }
-            //else _player.roomScale = true;
-
             bool roomScale = _player.roomScale ? false : true;
             _player.roomScale = roomScale;
         }
@@ -395,9 +377,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.toggleGrip) { _player.toggleGrip = false; }
-            //else _player.toggleGrip = true;
-
             bool toggleGrip = _player.toggleGrip ? false : true;
             _player.toggleGrip = toggleGrip;
         }
@@ -497,11 +476,6 @@ public class PlayerOptions : MonoBehaviour
 
     private void ResetHandAlignment()
     {
-        //foreach (VRPlayerHand hand in _playerComponents.GetBothHands())
-        //{
-        //    _gameManager.GetControllerType().ResetHandToControllerDefault(hand);
-        //}
-
         Array.ForEach(_playerComponents.GetBothHands(), resetHands => _gameManager.GetControllerType().ResetHandToControllerDefault(resetHands));
     }
 
@@ -509,15 +483,9 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            //if (_player.toggleSprint) { _player.toggleSprint = false; }
-            //else _player.toggleSprint = true;
-
             bool toggleSprint = _player.toggleSprint ? false : true;
             _player.toggleSprint = toggleSprint;
         }
-
-        //if (_player.toggleSprint) { _textBox.text = "Toggle Sprint:\nOn"; }
-        //else _textBox.text = "Toggle Sprint:\nOff";
 
         ChangeText(_player.toggleSprint ? "Toggle Sprint:\nOn" : "Toggle Sprint:\nOff");
     }
@@ -532,9 +500,6 @@ public class PlayerOptions : MonoBehaviour
 
     private void ClearHands()
     {
-        //_playerComponents.GetHand(0).EmptyHand();
-        //_playerComponents.GetHand(1).EmptyHand();
-
         Array.ForEach(_playerComponents.GetBothHands(), emptyHands => emptyHands.EmptyHand());
     }
 
@@ -542,9 +507,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (_menu != null)
         {
-            //if (_stringName == "Erase") { _menu.multiplayerRoomName = null; }
-            //else { _menu.multiplayerRoomName = _menu.multiplayerRoomName + _stringName; }
-
             string roomName = _stringName == "Erase" ? null : _menu.multiplayerRoomName + _stringName;
 
             ChangeText(roomName);
@@ -576,9 +538,6 @@ public class PlayerOptions : MonoBehaviour
     {
         if (_checkStatusOnly)
         {
-            //if (CoopManager.instance == null) { _textBox.text = "Join/Create\n" + "Room"; }
-            //else _textBox.text = "Leave\n" + "Room";
-
             string newText = CoopManager.instance == null ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
         }
 
@@ -634,26 +593,6 @@ public class PlayerOptions : MonoBehaviour
 
     private void ToggleTextChat()
     {
-        //if (_chatManager.textChat)
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Text Chat:\nEnabled"; }
-        //    else
-        //    {
-        //        _chatManager.textChat = false;
-        //        _textBox.text = "Text Chat:\nDisabled";
-        //    }
-        //}
-
-        //else
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Text Chat:\nDisabled"; }
-        //    else
-        //    {
-        //        _chatManager.textChat = true;
-        //        _textBox.text = "Text Chat:\nEnabled";
-        //    }
-        //}
-
         if (!_checkStatusOnly)
         {
             bool textChat = _chatManager.textChat ? false : true;
@@ -665,110 +604,46 @@ public class PlayerOptions : MonoBehaviour
 
     private void ChangeChatHand()
     {
-        //if (!_chatManager.chatOnRightHand)
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nRight Hand"; }
-        //    else
-        //    {
-        //        _chatManager.chatOnRightHand = true;
-        //        _textBox.text = "Chat Hand:\nLeft Hand";
-        //    }
-        //}
-
-        //else
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Chat Hand:\nLeft Hand"; }
-        //    else
-        //    {
-        //        _chatManager.chatOnRightHand = false;
-        //        _textBox.text = "Chat Hand:\nRight Hand";
-        //    }
-        //}
-
-        bool chatHand = _chatManager.chatOnRightHand ? false : true;
-        _chatManager.chatOnRightHand = chatHand;
+        if (!_checkStatusOnly)
+        {
+            bool chatHand = _chatManager.chatOnRightHand ? false : true;
+            _chatManager.chatOnRightHand = chatHand;
+        }
 
         ChangeText(_chatManager.chatOnRightHand ? "Chat Hand:\nRight Hand" : "Chat Hand:\nLeft Hand");
     }
 
     private void ToggleDebugChat()
     {
-        //if (_chatManager.allowDebugMessages)
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nEnabled"; }
-        //    else
-        //    {
-        //        _chatManager.allowDebugMessages = false;
-        //        _textBox.text = "Debug Chat:\nDisabled";
-        //    }
-        //}
-
-        //else
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Debug Chat:\nDisabled"; }
-        //    else
-        //    {
-        //        _chatManager.allowDebugMessages = true;
-        //        _textBox.text = "Debug Chat:\nEnabled";
-        //        _chatManager.DebugMessage("Debug messages allowed");
-        //    }
-        //}
-
-        bool debugMessages = _chatManager.allowDebugMessages ? false : true;
-        _chatManager.allowDebugMessages = debugMessages;
+        if (!_checkStatusOnly)
+        {
+            bool debugMessages = _chatManager.allowDebugMessages ? false : true;
+            _chatManager.allowDebugMessages = debugMessages;
+        }
 
         ChangeText(_chatManager.allowDebugMessages ? "Debug Chat:\nEnabled" : "Debug Chat:\nDisabled");
     }
 
     private void ToggleVoiceChat()
     {
-        //if (_chatManager.voiceChat)
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
-        //    else
-        //    {
-        //        _chatManager.voiceChat = false;
-        //        _textBox.text = "Voice Chat:\nn/a";
-        //    }
-        //}
-
-        //else
-        //{
-        //    if (_checkStatusOnly) { _textBox.text = "Voice Chat:\nn/a"; }
-        //    else
-        //    {
-        //        _chatManager.voiceChat = true;
-        //        _textBox.text = "Voice Chat:\nn/a";
-        //    }
-        //}
-
-        bool voiceChat = _chatManager.voiceChat ? false : true;
-        _chatManager.voiceChat = voiceChat;
-
+        if (!_checkStatusOnly)
+        {
+            bool voiceChat = _chatManager.voiceChat ? false : true;
+            _chatManager.voiceChat = voiceChat;
+        }
+        
         ChangeText(_chatManager.voiceChat ? "Voice Chat:\nEnabled" : "Voice Chat:\nDisabled");
     }
 
     private void ToggleNotifications()
     {
-        if (_chatManager.notifications)
+        if (!_checkStatusOnly)
         {
-            if (_checkStatusOnly) { _textBox.text = "Notifications:\nEnabled"; }
-            else
-            {
-                _chatManager.notifications = false;
-                _textBox.text = "Notifications:\nDisabled";
-            }
+            bool notifications = _chatManager.notifications ? false : true;
+            _chatManager.notifications = notifications;
         }
 
-        else
-        {
-            if (_checkStatusOnly) { _textBox.text = "Notifications:\nDisabled"; }
-            else
-            {
-                _chatManager.notifications = true;
-                _textBox.text = "Notifications:\nEnabled";
-            }
-        }
+        ChangeText(_checkStatusOnly ? "Notifications:\nEnabled" : "Notifications:\nDisabled");
     }
 
     private void ToggleShadowType()
@@ -780,9 +655,11 @@ public class PlayerOptions : MonoBehaviour
                 case LightShadows.Soft:
                     _visualSettings.shadowSetting = LightShadows.Hard;
                     break;
+
                 case LightShadows.Hard:
                     _visualSettings.shadowSetting = LightShadows.None;
                     break;
+
                 case LightShadows.None:
                     _visualSettings.shadowSetting = LightShadows.Soft;
                     break;
@@ -794,13 +671,15 @@ public class PlayerOptions : MonoBehaviour
         switch (_visualSettings.shadowSetting)
         {
             case LightShadows.Soft:
-                _textBox.text = "Soft Shadows";
+                ChangeText("Soft Shadows");
                 break;
+
             case LightShadows.Hard:
-                _textBox.text = "Hard Shadows";
+                ChangeText("Hard Shadows");
                 break;
+
             case LightShadows.None:
-                _textBox.text = "No Shadows";
+                ChangeText("No Shadows");
                 break;
         }
     }
@@ -812,16 +691,19 @@ public class PlayerOptions : MonoBehaviour
             switch (_visualSettings.shadowQuality)
             {
                 case ShadowResolution.VeryHigh:
-                    _textBox.text = "Shadow Quality:\nVery High";
+                    ChangeText("Shadow Quality:\nVery High");
                     break;
+
                 case ShadowResolution.High:
-                    _textBox.text = "Shadow Quality:\nHigh";
+                    ChangeText("Shadow Quality:\nHigh");
                     break;
+
                 case ShadowResolution.Medium:
-                    _textBox.text = "Shadow Quality:\nMedium";
+                    ChangeText("Shadow Quality:\nMedium");
                     break;
+
                 case ShadowResolution.Low:
-                    _textBox.text = "Shadow Quality:\nLow";
+                    ChangeText("Shadow Quality:\nLow");
                     break;
             }
         }
@@ -832,19 +714,22 @@ public class PlayerOptions : MonoBehaviour
             {
                 case ShadowResolution.VeryHigh:
                     _visualSettings.shadowQuality = ShadowResolution.High;
-                    _textBox.text = "Shadow Quality:\nHigh";
+                    ChangeText("Shadow Quality:\nHigh");
                     break;
+
                 case ShadowResolution.High:
                     _visualSettings.shadowQuality = ShadowResolution.Medium;
-                    _textBox.text = "Shadow Quality:\nMedium";
+                    ChangeText("Shadow Quality:\nMedium");
                     break;
+
                 case ShadowResolution.Medium:
                     _visualSettings.shadowQuality = ShadowResolution.Low;
-                    _textBox.text = "Shadow Quality:\nLow";
+                    ChangeText("Shadow Quality:\nLow");
                     break;
+
                 case ShadowResolution.Low:
                     _visualSettings.shadowQuality = ShadowResolution.VeryHigh;
-                    _textBox.text = "Shadow Quality:\nVery High";
+                    ChangeText("Shadow Quality:\nVery High");
                     break;
             }
             
@@ -864,7 +749,7 @@ public class PlayerOptions : MonoBehaviour
 
         int range = Mathf.RoundToInt(_visualSettings.lightRange);
 
-        _textBox.text = "Light Range:\n" + range;
+        ChangeText("Light Range:\n" + range);
     }
 
     private void AdjustLightingBrightness()
@@ -879,49 +764,46 @@ public class PlayerOptions : MonoBehaviour
 
         int brightnessPercentage = Mathf.RoundToInt(100 * _visualSettings.brightness);
 
-        _textBox.text = "Light Brightness:\n" + brightnessPercentage + "%";
+        ChangeText("Light Brightness:\n" + brightnessPercentage + "%");
     }
 
     private void AmbientOcclusionToggle()
     {
         if (!_checkStatusOnly)
         {
-            if (_postProcessingController.ambientOcclusion) { _postProcessingController.ambientOcclusion = false; }
-            else _postProcessingController.ambientOcclusion = true;
+            bool ambientOcclusion = _postProcessingController.ambientOcclusion ? false : true;
+            _postProcessingController.ambientOcclusion = ambientOcclusion;
 
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        if (_postProcessingController.ambientOcclusion) { _textBox.text = "Ambient Occlusion On"; }
-        else _textBox.text = "Ambient Occlusion Off";
+        ChangeText(_postProcessingController.ambientOcclusion ? "Ambient Occlusion On" : "Ambient Occlusion Off");
     }
 
     private void BloomToggle()
     {
         if (!_checkStatusOnly)
         {
-            if (_postProcessingController.bloom) { _postProcessingController.bloom = false; }
-            else _postProcessingController.bloom = true;
+            bool bloom = _postProcessingController.bloom ? false : true;
+            _postProcessingController.bloom = bloom;
 
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        if (_postProcessingController.bloom) { _textBox.text = "Bloom On"; }
-        else _textBox.text = "Bloom Off";
+        ChangeText(_postProcessingController.bloom ? "Bloom On" : "Bloom Off");
     }
 
     private void ColorGradingToggle()
     {
         if (!_checkStatusOnly)
         {
-            if (_postProcessingController.colorGrading) { _postProcessingController.colorGrading = false; }
-            else _postProcessingController.colorGrading = true;
+            bool colorGrading = _postProcessingController.colorGrading ? false : true;
+            _postProcessingController.colorGrading = colorGrading;
 
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        if (_postProcessingController.colorGrading) { _textBox.text = "Color Grading On"; }
-        else _textBox.text = "Color Grading Off";
+        ChangeText(_postProcessingController.colorGrading ? "Color Grading On" : "Color Grading Off");
     }
 
     private void AmbientOcclusionIntensity()
@@ -936,7 +818,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        _textBox.text = "Intensity:\n" + _postProcessingController.AOIntensity;
+        ChangeText("Intensity:\n" + _postProcessingController.AOIntensity);
     }
 
     private void AmbientOcclusionThickness()
@@ -951,7 +833,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        _textBox.text = "Thickness:\n" + _postProcessingController.thickness;
+        ChangeText("Thickness:\n" + _postProcessingController.thickness);
     }
 
     private void BloomIntensity()
@@ -959,10 +841,11 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _postProcessingController.Bintensity += _valueAdjustment;
+
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        _textBox.text = "Intensity:\n" + Mathf.RoundToInt(_postProcessingController.Bintensity);
+        ChangeText("Intensity:\n" + Mathf.RoundToInt(_postProcessingController.Bintensity));
     }
 
     private void BloomThreshold()
@@ -970,10 +853,11 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _postProcessingController.threshold += _valueAdjustment;
+
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        _textBox.text = "Threshold:\n" + _postProcessingController.threshold;
+        ChangeText("Threshold:\n" + _postProcessingController.threshold);
     }
 
     private void BloomDiffusion()
@@ -988,7 +872,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        _textBox.text = "Diffusion:\n" + _postProcessingController.diffusion;
+        ChangeText("Diffusion:\n" + _postProcessingController.diffusion);
     }
 
     private void ColorGradingTonemapper()
@@ -1016,15 +900,15 @@ public class PlayerOptions : MonoBehaviour
         switch (_postProcessingController.tonemapping)
         {
             case UnityEngine.Rendering.PostProcessing.Tonemapper.None:
-                _textBox.text = "Tonemapper:\nNone";
+                ChangeText("Tonemapper:\nNone");
                 break;
 
             case UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral:
-                _textBox.text = "Tonemapper:\nNeutral";
+                ChangeText("Tonemapper:\nNeutral");
                 break;
 
             case UnityEngine.Rendering.PostProcessing.Tonemapper.ACES:
-                _textBox.text = "Tonemapper:\nACES";
+                ChangeText("Tonemapper:\nACES");
                 break;
         }
     }
@@ -1041,7 +925,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Temperature:\n" + Mathf.RoundToInt(_postProcessingController.temperature);
+        ChangeText("Temperature:\n" + Mathf.RoundToInt(_postProcessingController.temperature));
     }
 
     private void ColorGradingTint()
@@ -1056,7 +940,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Tint:\n" + Mathf.RoundToInt(_postProcessingController.tint);
+        ChangeText("Tint:\n" + Mathf.RoundToInt(_postProcessingController.tint));
     }
 
     private void ColorGradingPostExposure()
@@ -1064,10 +948,11 @@ public class PlayerOptions : MonoBehaviour
         if (!_checkStatusOnly)
         {
             _postProcessingController.postExposure += _valueAdjustment;
+
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Post Exposure:\n" + _postProcessingController.postExposure;
+        ChangeText("Post Exposure:\n" + _postProcessingController.postExposure);
     }
 
     private void ColorGradingHueShift()
@@ -1082,7 +967,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Hue Shift:\n" + Mathf.RoundToInt(_postProcessingController.hueShift);
+        ChangeText("Hue Shift:\n" + Mathf.RoundToInt(_postProcessingController.hueShift));
     }
 
     private void ColorGradingSaturation()
@@ -1097,7 +982,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Saturation:\n" + Mathf.RoundToInt(_postProcessingController.saturation);
+        ChangeText("Saturation:\n" + Mathf.RoundToInt(_postProcessingController.saturation));
     }
 
     private void ColorGradingContrast()
@@ -1112,7 +997,7 @@ public class PlayerOptions : MonoBehaviour
             _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        _textBox.text = "Contrast:\n" + Mathf.RoundToInt(_postProcessingController.contrast);
+        ChangeText("Contrast:\n" + Mathf.RoundToInt(_postProcessingController.contrast));
     }
 
     private void BackAttachmentAdjustment()
@@ -1128,7 +1013,7 @@ public class PlayerOptions : MonoBehaviour
             _playerComponents.backAttachments.transform.localPosition = new Vector3(0, 0, _playerComponents.belt.backAttachments);
         }
 
-        _textBox.text = "Back Position:\n" + _playerComponents.backAttachments.transform.localPosition.z;
+        ChangeText("Back Position:\n" + _playerComponents.backAttachments.transform.localPosition.z);
     }
 
     private void BeltAdjustment()
@@ -1157,7 +1042,7 @@ public class PlayerOptions : MonoBehaviour
             }
         }
 
-        _textBox.text = "Belt Adjustment:\n" + belt.heightSittingPlayer;
+        ChangeText(_player.playerStanding ? "Belt Adjustment:\n" + belt.heightStandingPlayer : "Belt Adjustment:\n" + belt.heightSittingPlayer);
     }
 
     private void BeltOffset()
@@ -1172,7 +1057,7 @@ public class PlayerOptions : MonoBehaviour
             else if (belt.zAdjustmentForSittingPlayer < 0) { belt.zAdjustmentForSittingPlayer = 0; }
         }
 
-        _textBox.text = "Crouched Belt Offset:\n" + belt.zAdjustmentForSittingPlayer;
+        ChangeText("Crouched Belt Offset:\n" + belt.zAdjustmentForSittingPlayer);
     }
 
     private void OnScreenTextPosition()
@@ -1194,11 +1079,11 @@ public class PlayerOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            if (!_player.physicalJumping) { _player.physicalJumping = true; }
-            else { _player.physicalJumping = false; }
+            bool physicalJumping = _player.physicalJumping ? false : true;
+            _player.physicalJumping = physicalJumping;
         }
-        if (_player.physicalJumping) { _textBox.text = "Physical Jumping:\nOn"; }
-        else { _textBox.text = "Physical Jumping:\nOff"; }
+
+        ChangeText(_player.physicalJumping ? "Physical Jumping:\nOn" : "Physical Jumping:\nOff");
     }
 
     private void OpenDiscordLink()

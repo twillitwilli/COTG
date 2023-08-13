@@ -36,7 +36,7 @@ public class PlayerStaff : MonoBehaviour
     {
         if (_magicFocus == null)
         {
-            GameObject newParticles = Instantiate(_playerMagicController.spellCharges[_magicController.GetCurrentMagicIndex()], _magicFocusSpawn);
+            GameObject newParticles = Instantiate(_playerMagicController.spellCharges[_magicController.magicIdx], _magicFocusSpawn);
             _magicFocus = newParticles.GetComponent<ParticleSystem>();
         }
 
@@ -46,7 +46,7 @@ public class PlayerStaff : MonoBehaviour
 
     public bool AttackCharge()
     {
-        int currentSpell = _magicController.GetCurrentMagicIndex();
+        int currentSpell = _magicController.magicIdx;
 
         if (_setAttackCooldown)
         {
@@ -84,7 +84,7 @@ public class PlayerStaff : MonoBehaviour
             switch (_magicController.GetCurrentCastingType())
             {
                 case MagicController.CastingType.charge:
-                    newProjectile = Instantiate(_playerMagicController.wizardChargedSpells[_magicController.GetCurrentMagicIndex()], _spellSpawn);
+                    newProjectile = Instantiate(_playerMagicController.wizardChargedSpells[_magicController.magicIdx], _spellSpawn);
 
                     BasicProjectile chargedAttack = newProjectile.GetComponent<BasicProjectile>();
                     chargedAttack.player = _player;
@@ -94,11 +94,11 @@ public class PlayerStaff : MonoBehaviour
                     break;
 
                 case MagicController.CastingType.beam:
-                    newProjectile = Instantiate(_playerMagicController.wizardConstantSpells[_magicController.GetCurrentMagicIndex()], _spellSpawn);
+                    newProjectile = Instantiate(_playerMagicController.wizardConstantSpells[_magicController.magicIdx], _spellSpawn);
                     break;
 
                 case MagicController.CastingType.rapidFire:
-                    newProjectile = Instantiate(_playerMagicController.wizardRapidFireSpells[_magicController.GetCurrentMagicIndex()], _spellSpawn);
+                    newProjectile = Instantiate(_playerMagicController.wizardRapidFireSpells[_magicController.magicIdx], _spellSpawn);
 
                     BasicProjectile rapidFireAttack = newProjectile.GetComponent<BasicProjectile>();
                     rapidFireAttack.player = _player;

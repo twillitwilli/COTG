@@ -49,7 +49,7 @@ public class StaffMagicController : MonoBehaviour
 
     public void SpawnStaff()
     {
-        GameObject newStaff = Instantiate(MasterManager.playerMagicController.staffs[_magicController.GetCurrentMagicIndex()]);
+        GameObject newStaff = Instantiate(MasterManager.playerMagicController.staffs[_magicController.magicIdx]);
         _currentStaff = newStaff.GetComponent<PlayerStaff>();
         ResetOnBack();
     }

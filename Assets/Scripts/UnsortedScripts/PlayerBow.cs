@@ -116,7 +116,7 @@ public class PlayerBow : MonoBehaviour
     {
         if (NormalChargeCooldown())
         {
-            int currentSpell = _magicController.GetCurrentMagicIndex();
+            int currentSpell = _magicController.magicIdx;
 
             if (DoubleChargeCooldown()) { ShootArrow(true, currentSpell); }
 
@@ -132,7 +132,7 @@ public class PlayerBow : MonoBehaviour
         switch (_magicController.GetCurrentCastingType())
         {
             case MagicController.CastingType.charge:
-                newProjectile = Instantiate(_playerMagicController.conjurerChargedSpells[_magicController.GetCurrentMagicIndex()], _arrowSpellSpawn.position, _arrowSpellSpawn.rotation);
+                newProjectile = Instantiate(_playerMagicController.conjurerChargedSpells[_magicController.magicIdx], _arrowSpellSpawn.position, _arrowSpellSpawn.rotation);
                 newProjectile.transform.SetParent(null);
 
                 BasicProjectile arrowAttack = newProjectile.GetComponent<BasicProjectile>();
@@ -210,7 +210,7 @@ public class PlayerBow : MonoBehaviour
 
     public void GrabString()
     {
-        _spawnedChargingEffect = Instantiate(_playerMagicController.chargedVisual[_magicController.GetCurrentMagicIndex()], _chargingEffectSpawn);
+        _spawnedChargingEffect = Instantiate(_playerMagicController.chargedVisual[_magicController.magicIdx], _chargingEffectSpawn);
 
         _spawnedChargingEffect.transform.SetParent(_chargingEffectSpawn);
         _spawnedChargingEffect.transform.localScale = new Vector3(6, 6, 6);
