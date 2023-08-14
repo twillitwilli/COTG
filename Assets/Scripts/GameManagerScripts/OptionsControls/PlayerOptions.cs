@@ -63,49 +63,13 @@ public class PlayerOptions : MonoBehaviour
 
         switch (playerOptions)
         {
+            /// Main Menu Options ///
+
             case Options.playmode:
                 ChangePlayMode();
                 break;
 
-            case Options.primaryHand:
-                ChangePrimaryHand();
-                break;
-
-            case Options.clockFormat:
-                ChangeTimeDisplay();
-                break;
-
-            case Options.playerOrientation:
-                ChangePlayerOrientation();
-                break;
-
-            case Options.playerRotation:
-                ChangePlayerRotation();
-                break;
-
-            case Options.roomScale:
-                ToggleRoomScale();
-                break;
-
-            case Options.gripType:
-                ChangeGrip();
-                break;
-
-            case Options.leftJoystickSensitivty:
-                LeftControllerSensitivty();
-                break;
-
-            case Options.rightJoystickSensitivty:
-                RightControllerSensitivty();
-                break;
-
-            case Options.smoothTurning:
-                SmoothTurningAdjustment();
-                break;
-
-            case Options.snapTurning:
-                SnapTurningAdjustment();
-                break;
+            /// Audio Options ///
 
             case Options.musicVolume:
                 ChangeMusicVolume();
@@ -115,65 +79,13 @@ public class PlayerOptions : MonoBehaviour
                 ChangeSFXVolume();
                 break;
 
-            case Options.adjustHandPositioning:
-                AdjustHandPositioning();
-                break;
-
-            case Options.changeControllerType:
-                ChangeControllerType();
-                break;
-
-            case Options.sprintToggle:
-                SprintToggle();
-                break;
-
-            case Options.playerCalibration:
-                PlayerCalibration();
-                break;
-
-            case Options.clearHands:
-                ClearHands();
-                break;
-
-            case Options.openDiscordLink:
-                OpenDiscordLink();
-                break;
-
             case Options.creatureSFX:
                 ChangeCreatureSFXVolume();
                 break;
 
-            case Options.resetHandAlignment:
-                ResetHandAlignment();
-                break;
+            /// Graphics Options ///
 
-            case Options.keyboard:
-                KeyboardTyping();
-                break;
-
-            case Options.joinCreateServer:
-                JoinCreateServer();
-                break;
-
-            case Options.chat:
-                ChatOptions();
-                break;
-
-            case Options.textChat:
-                ToggleTextChat();
-                break;
-
-            case Options.debugChat:
-                ToggleDebugChat();
-                break;
-
-            case Options.voiceChat:
-                ToggleVoiceChat();
-                break;
-
-            case Options.notifications:
-                ToggleNotifications();
-                break;
+            // Lighting Options //
 
             case Options.shadowType:
                 ToggleShadowType();
@@ -190,6 +102,8 @@ public class PlayerOptions : MonoBehaviour
             case Options.lightBrightness:
                 AdjustLightingBrightness();
                 break;
+
+            // Post Processing Settings //
 
             case Options.ambientOcclusionToggle:
                 AmbientOcclusionToggle();
@@ -251,6 +165,36 @@ public class PlayerOptions : MonoBehaviour
                 ColorGradingContrast();
                 break;
 
+            /// Control Settings ///
+
+            // Player Calibration Settings //
+
+            case Options.primaryHand:
+                ChangePrimaryHand();
+                break;
+
+            case Options.adjustHandPositioning:
+                AdjustHandPositioning();
+                break;
+
+            case Options.changeControllerType:
+                ChangeControllerType();
+                break;
+
+            case Options.playerCalibration:
+                PlayerCalibration();
+                break;
+
+            case Options.clearHands:
+                ClearHands();
+                break;
+
+            case Options.resetHandAlignment:
+                ResetHandAlignment();
+                break;
+
+            // Player Attachments //
+
             case Options.backAttachments:
                 BackAttachmentAdjustment();
                 break;
@@ -263,6 +207,68 @@ public class PlayerOptions : MonoBehaviour
                 BeltOffset();
                 break;
 
+            // Locomotion Settings //
+
+            case Options.playerOrientation:
+                ChangePlayerOrientation();
+                break;
+
+            case Options.roomScale:
+                ToggleRoomScale();
+                break;
+
+            case Options.playerRotation:
+                ChangePlayerRotation();
+                break;
+
+            case Options.sprintToggle:
+                SprintToggle();
+                break;
+
+            case Options.physicalJumpingToggle:
+                PhysicalJumpingToggle();
+                break;
+
+            // Controller Options //
+
+            case Options.gripType:
+                ChangeGrip();
+                break;
+
+            case Options.leftJoystickSensitivty:
+                LeftControllerSensitivty();
+                break;
+
+            case Options.rightJoystickSensitivty:
+                RightControllerSensitivty();
+                break;
+
+            case Options.smoothTurning:
+                SmoothTurningAdjustment();
+                break;
+
+            case Options.snapTurning:
+                SnapTurningAdjustment();
+                break;
+
+            /// Multiplayer & Notification Settings///
+
+            case Options.textChat:
+                ToggleTextChat();
+                break;
+
+            case Options.debugChat:
+                ToggleDebugChat();
+                break;
+
+            case Options.voiceChat:
+                ToggleVoiceChat();
+                break;
+
+            case Options.notifications:
+                ToggleNotifications();
+                break;
+
             case Options.onScreenText:
                 OnScreenTextPosition();
                 break;
@@ -271,12 +277,32 @@ public class PlayerOptions : MonoBehaviour
                 ChangeChatHand();
                 break;
 
-            case Options.cheatOptions:
-                CheatOptions();
+            /// Misc Settings ///
+
+            case Options.clockFormat:
+                ChangeTimeDisplay();
                 break;
 
-            case Options.physicalJumpingToggle:
-                PhysicalJumpingToggle();
+            case Options.chat:
+                ChatOptions();
+                break;
+
+            case Options.openDiscordLink:
+                OpenDiscordLink();
+                break;
+
+            /// Keyboard Options ///
+
+            case Options.keyboard:
+                KeyboardTyping();
+                break;
+
+            case Options.joinCreateServer:
+                JoinCreateServer();
+                break;
+
+            case Options.cheatOptions:
+                CheatOptions();
                 break;
         }
     }
@@ -1083,7 +1109,7 @@ public class PlayerOptions : MonoBehaviour
             _player.physicalJumping = physicalJumping;
         }
 
-        ChangeText(_player.physicalJumping ? "Physical Jumping:\nOn" : "Physical Jumping:\nOff");
+        ChangeText(_player.physicalJumping ? "Physical Jump:\nOn" : "Physical Jump:\nOff");
     }
 
     private void OpenDiscordLink()
