@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 public class DevOptions : MonoBehaviour
 {
-    public enum DevOption { resetHandPos, adjustHandPositioning, flight, map, compass, gold, killEnemies, killReaper, 
-        spellCastAcceleration, spellCastDistance, spellCastStopForce, spellCastHandHead, giveHealth, resetPlayerSave, godMode, changeClass, magicType, castingType }
+    public enum DevOption { flight, map, giveItems, killEnemies, killReaper, giveHealth, resetPlayerSave, 
+        godMode, changeClass, magicType, castingType }
     
     public DevOption playerDevOptions;
 
     [SerializeField] private Text _textBox;
     [SerializeField] private bool _checkStatusOnly;
-    [SerializeField] private float _valueAdjustment;
-    [SerializeField] private bool _enableObjs, _disableObjs;
-    [SerializeField] private List<GameObject> _objsToEnable, _objsToDisable;
+
+    [SerializeField] private MagicController.ClassType _classType;
+    [SerializeField] private MagicController.MagicType _magicType;
+    [SerializeField] private MagicController.CastingType _castingType;
 
     private LocalGameManager _gameManager;
     private EnemyTrackerController _enemyTrackerController;
 
     private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
     private PlayerStats _playerStats;
 
     private DungeonBuildParent _dungeonBuildParent;
@@ -31,7 +31,6 @@ public class DevOptions : MonoBehaviour
         _enemyTrackerController = _gameManager.GetEnemyTrackerController();
 
         _player = _gameManager.player;
-        _playerComponents = _player.GetPlayerComponents();
         _playerStats = _gameManager.GetPlayerStats();
 
         if (DungeonBuildParent.instance != null) { _dungeonBuildParent = DungeonBuildParent.instance; }
@@ -43,12 +42,6 @@ public class DevOptions : MonoBehaviour
     {
         switch(playerDevOptions)
         {
-            case DevOption.resetHandPos:
-                break;
-
-            case DevOption.adjustHandPositioning:
-                break;
-
             case DevOption.flight:
                 FlightToggle();
                 break;
@@ -57,12 +50,8 @@ public class DevOptions : MonoBehaviour
                 RevealMap();
                 break;
 
-            case DevOption.compass:
-                RevealCompass();
-                break;
-
-            case DevOption.gold:
-                GiveItem(Mathf.RoundToInt(_valueAdjustment));
+            case DevOption.giveItems:
+                GiveItem();
                 break;
 
             case DevOption.killEnemies:
@@ -73,24 +62,8 @@ public class DevOptions : MonoBehaviour
                 KillReaper();
                 break;
 
-            case DevOption.spellCastAcceleration:
-                SpellCastAcceleraion(_valueAdjustment);
-                break;
-
-            case DevOption.spellCastDistance:
-                SpellCastDistance(_valueAdjustment);
-                break;
-
-            case DevOption.spellCastStopForce:
-                SpellCastStopForce(_valueAdjustment);
-                break;
-
-            case DevOption.spellCastHandHead:
-                SpellCastHandHeadDistance(_valueAdjustment);
-                break;
-
             case DevOption.giveHealth:
-                GiveHealth(_valueAdjustment);
+                GiveHealth();
                 break;
 
             case DevOption.resetPlayerSave:
@@ -106,51 +79,29 @@ public class DevOptions : MonoBehaviour
                 break;
 
             case DevOption.magicType:
-                ChangeMagicType(Mathf.RoundToInt(_valueAdjustment));
+                ChangeMagicType();
                 break;
 
             case DevOption.castingType:
                 ChangeCastingType();
                 break;
         }
+    }
 
-        if (_enableObjs)
-        {
-            foreach (GameObject obj in _objsToEnable)
-            {
-                obj.SetActive(true);
-            }
-        }
-
-        if (_disableObjs)
-        {
-            foreach (GameObject obj in _objsToDisable)
-            {
-                obj.SetActive(false);
-            }
-        }
+    private void ChangeText(string newText)
+    {
+        _textBox.text = newText;
     }
 
     private void FlightToggle()
     {
-        if (_player.canFly)
+        if (!_checkStatusOnly)
         {
-            if (!_checkStatusOnly) 
-            {
-                _player.canFly = false;
-                _textBox.text = "Flight:\nOff";
-            }
-            else _textBox.text = "Flight:\nOn";
+            bool flight = _player.canFly ? false : true;
+            _player.canFly = flight;
         }
-        else
-        {
-            if (!_checkStatusOnly) 
-            {
-                _player.canFly = true;
-                _textBox.text = "Flight:\nOn";
-            }
-            else _textBox.text = "Flight:\nOff";
-        }
+        
+        ChangeText(_player.canFly ? "Flight:\nOn" : "Flight:\nOff");
     }
 
     private void RevealMap()
@@ -162,16 +113,11 @@ public class DevOptions : MonoBehaviour
         }
     }
 
-    private void RevealCompass()
+    private void GiveItem()
     {
-        if (_dungeonBuildParent != null) { _dungeonBuildParent.GetCompassController().CompassReveal(); }
-    }
-
-    private void GiveItem(int amount)
-    {
-        _playerStats.AdjustGoldAmount(amount);
-        _playerStats.AdjustArcaneCrystalAmount(amount);
-        _playerStats.AdjustKeyAmount(amount);
+        _playerStats.AdjustGoldAmount(999);
+        _playerStats.AdjustArcaneCrystalAmount(999);
+        _playerStats.AdjustKeyAmount(999);
     }
 
     private void KillEnemies()
@@ -184,74 +130,55 @@ public class DevOptions : MonoBehaviour
         _enemyTrackerController.KillReaper();
     }
 
-    private void SpellCastAcceleraion(float adjustmentValue)
+    private void GiveHealth()
     {
-        //if (!_checkStatusOnly) { _playerComponents.spellCasting.accelerationReq += adjustmentValue; }
-        //_textBox.text = "Acceleration:\n" + Mathf.RoundToInt(_playerComponents.spellCasting.accelerationReq *100);
-    }
-
-    private void SpellCastDistance(float adjustmentValue)
-    {
-        //if (!_checkStatusOnly) { _playerComponents.spellCasting.distanceReq += adjustmentValue; }        
-        //_textBox.text = "Distance:\n" + Mathf.RoundToInt(_playerComponents.spellCasting.distanceReq *100);
-    }
-
-    private void SpellCastStopForce(float adjustmentValue)
-    {
-        //if (!_checkStatusOnly) { _playerComponents.spellCasting.stoppingForce += adjustmentValue; }
-        //_textBox.text = "Stopping Force:\n" + Mathf.RoundToInt(_playerComponents.spellCasting.stoppingForce *100);
-    }
-
-    private void SpellCastHandHeadDistance(float adjustmentValue)
-    {
-        //if (!_checkStatusOnly) { _playerComponents.spellCasting.distanceBetweenHandAndChest += adjustmentValue; }
-        //_textBox.text = "Hand Away From Head Distance:\n" + Mathf.RoundToInt(_playerComponents.spellCasting.distanceBetweenHandAndChest *100);
-    }
-
-    private void GiveHealth(float adjustmentValue)
-    {
-        _playerStats.AdjustHealth(adjustmentValue, "*@#&$&%#&@!#@)*)#@!!");
+        _playerStats.AdjustHealth(9999, "*@#&$&%#&@!#@)*)#@!!");
     }
 
     private void ResetPlayerSave()
     {
         PlayerPrefs.DeleteKey("ReturningPlayer");
+        Application.Quit();
     }
 
     private void ToggleGodMode()
     {
-        if (_checkStatusOnly)
+        if (!_checkStatusOnly)
         {
-            if (_player.godMode) { _textBox.text = "God Mode:\nOn"; }
-            else { _textBox.text = "God Mode:\nOff"; }
+            bool godMode = _player.godMode ? false : true;
+            _player.godMode = godMode;
         }
-        else
-        {
-            if (_player.godMode)
-            {
-                _textBox.text = "God Mode:\nOff";
-                _player.godMode = false;
-            }
-            else
-            {
-                _textBox.text = "God Mode:\nOn";
-                _player.godMode = true;
-            }
-        }
+
+        ChangeText(_player.godMode ? "God Mode:\nOn" : "God Mode:\nOff");
     }
 
     private void ChangeClass()
     {
+        if (!_checkStatusOnly)
+        {
+            _gameManager.GetMagicController().ChangeClass(_classType);
+        }
 
+        ChangeText("Current Class:\n" + _gameManager.GetMagicController().GetClassType());
     }
 
-    private void ChangeMagicType(int magicIdx)
+    private void ChangeMagicType()
     {
+        if (!_checkStatusOnly)
+        {
+            _gameManager.GetMagicController().AddMagic(_magicType);
+        }
 
+        ChangeText("Current Magic:\n" + _gameManager.GetMagicController().magicName);
     }
 
     private void ChangeCastingType()
     {
+        if (!_checkStatusOnly)
+        {
+            _gameManager.GetMagicController().ChangeCastingType(_castingType);
+        }
 
+        ChangeText("Casting Type:\n" + _gameManager.GetMagicController().GetCurrentCastingType());
     }
 }

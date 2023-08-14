@@ -156,7 +156,17 @@ public class MagicController : MonoBehaviour
 
     public void AddMagic(MagicType magicToAdd)
     {
-        _currentMagic |= magicToAdd;
+        switch (magicToAdd)
+        {
+            case MagicType.arcane | MagicType.blood | MagicType.cupcakes:
+                _currentMagic = magicToAdd;
+                break;
+
+            default:
+                _currentMagic |= magicToAdd;
+                break;
+        }
+
         UpdateMagic(false, 0);
     }
 
