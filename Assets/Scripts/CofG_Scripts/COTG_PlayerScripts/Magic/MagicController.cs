@@ -156,17 +156,7 @@ public class MagicController : MonoBehaviour
 
     public void AddMagic(MagicType magicToAdd)
     {
-        switch (magicToAdd)
-        {
-            case MagicType.arcane | MagicType.blood | MagicType.cupcakes:
-                _currentMagic = magicToAdd;
-                break;
-
-            default:
-                _currentMagic |= magicToAdd;
-                break;
-        }
-
+        _currentMagic |= magicToAdd;
         UpdateMagic(false, 0);
     }
 
@@ -184,6 +174,18 @@ public class MagicController : MonoBehaviour
 
     public void UpdateMagic(bool loadMagic, int loadMagicIndex)
     {
+        // Will remove Arcane if any other magic type is selected
+        if (_currentMagic != MagicType.arcane && (_currentMagic & MagicType.arcane) != 0)
+        {
+            _currentMagic &= ~MagicType.arcane;
+        }
+
+        // Will remove all other magic types if Blood or Cupcakes is selected
+        if ((_currentMagic & (MagicType.blood | MagicType.cupcakes)) != 0)
+        {
+            _currentMagic = _currentMagic & (MagicType.blood | MagicType.cupcakes);
+        }
+
         int magicInt = loadMagic ? loadMagicIndex : (int)_currentMagic;
 
         switch (magicInt)
@@ -427,7 +429,7 @@ public class MagicController : MonoBehaviour
                 break;
 
             // Arcane
-            default:
+            case 1 | 0:
                 SetMagicProperties("Arcane", 0);
                 break;
         }
