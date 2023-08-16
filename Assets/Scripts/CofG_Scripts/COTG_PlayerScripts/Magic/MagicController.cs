@@ -151,19 +151,19 @@ public class MagicController : MonoBehaviour
     public void SetToSpecificMagic(MagicType newMagic)
     {
         _currentMagic = newMagic;
-        UpdateMagic(false, 0);
+        UpdateMagic();
     }
 
     public void AddMagic(MagicType magicToAdd)
     {
         _currentMagic |= magicToAdd;
-        UpdateMagic(false, 0);
+        UpdateMagic();
     }
 
     public void RemoveMagic(MagicType magicToRemove)
     {
         _currentMagic &= ~magicToRemove;
-        UpdateMagic(false, 0);
+        UpdateMagic();
     }
 
     private void SetMagicProperties(string name, int index)
@@ -172,7 +172,7 @@ public class MagicController : MonoBehaviour
         magicIdx = index;
     }
 
-    public void UpdateMagic(bool loadMagic, int loadMagicIndex)
+    public void UpdateMagic(bool loadMagic = false, int loadMagicIndex = 0)
     {
         // Will remove Arcane if any other magic type is selected
         if (_currentMagic != MagicType.arcane && (_currentMagic & MagicType.arcane) != 0)

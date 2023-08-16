@@ -12,21 +12,21 @@ public class PostProcessingController : MonoBehaviour
     private ColorGrading _colorGradingEffect;
 
     //Post Processing Options
-    public bool ambientOcclusion { get; set; }
-    public bool bloom { get; set; }
-    public bool colorGrading { get; set; }
 
     [HideInInspector] public enum PostEffectAdjustment { ambientOcc, bloomEffect, color }
 
     //Ambient Occlusion Settings
+    public bool ambientOcclusion { get; set; }
     [HideInInspector] public float AOIntensity = 1.15f;
     [HideInInspector] public float thickness = 1;
 
     //Bloom Settings
+    public bool bloom { get; set; }
     [HideInInspector] public float Bintensity = 14;
     [HideInInspector] public float threshold = 1, diffusion = 7;
 
     //Color Grading Settings
+    public bool colorGrading { get; set; }
     [HideInInspector] public Tonemapper tonemapping;
     [HideInInspector] public float temperature = -75, tint = -55, postExposure = 0, hueShift = 0, saturation = 100, contrast = 20;
 

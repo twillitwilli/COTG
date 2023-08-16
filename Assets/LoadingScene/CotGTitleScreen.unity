@@ -119211,7 +119211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1980132958
 Transform:
   m_ObjectHideFlags: 0
@@ -147075,7 +147075,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25f5c46e2930c649b6cb72da13deaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentController: 
+  currentControllerType: 0
+  controllerName: 
+  controllerID: 0
+  roomID: 0
 --- !u!4 &8860301013097018124
 Transform:
   m_ObjectHideFlags: 0

@@ -33,6 +33,7 @@ public class PlayerPrefsSaveData : MonoBehaviour
         {
             Debug.Log("New Player");
              _player.DefaultPlayerSettings();
+            _audioController.LoadVolumeStats();
             _visualSettings.DefaultLighting();
             _postProcessingController.DefaultSettings();
             _chatManager.DefaultChatSettings();
@@ -103,59 +104,26 @@ public class PlayerPrefsSaveData : MonoBehaviour
 
     public void LoadBasePlayerSettings()
     {
-        if (CheckIfSaveFileExists("LeftDeadzone")) { _player.leftJoystickDeadzoneAdjustment = PlayerPrefs.GetFloat("LeftDeadzone"); }
-        else { _player.leftJoystickDeadzoneAdjustment = 0.25f; }
+        _player.leftJoystickDeadzoneAdjustment = CheckIfSaveFileExists("LeftDeadzone") ? PlayerPrefs.GetFloat("LeftDeadzone") : 0.25f;
+        _player.rightJoystickDeadzoneAdjustment = CheckIfSaveFileExists("RightDeadzone") ? PlayerPrefs.GetFloat("RightDeadzone") : 0.5f;
+        _player.turnSpeedAdjustment = CheckIfSaveFileExists("TurnSpeed") ? PlayerPrefs.GetFloat("TurnSpeed") : 1;
+        _player.snapTurnRotationAdjustment = CheckIfSaveFileExists("SnapTurnRotation") ? PlayerPrefs.GetFloat("SnapTurnRotation") : 45;
+        _player.headOrientation = CheckIfSaveFileExists("HeadOrientation") ? (PlayerPrefs.GetInt("HeadOrientation") != 0) : true;
+        _player.snapTurnOn = CheckIfSaveFileExists("SnapTurn") ? (PlayerPrefs.GetInt("SnapTurn") != 0) : false;
+        _player.playerStanding = CheckIfSaveFileExists("PlayMode") ? (PlayerPrefs.GetInt("PlayMode") != 0) : true;
+        _player.toggleGrip = CheckIfSaveFileExists("ToggleGrip") ? (PlayerPrefs.GetInt("ToggleGrip") != 0) : false;
+        _player.roomScale = CheckIfSaveFileExists("Roomscale") ? (PlayerPrefs.GetInt("Roomscale") != 0) : false;
+        _player.toggleSprint = CheckIfSaveFileExists("SprintToggle") ? (PlayerPrefs.GetInt("SprintToggle") != 0) : false;
+        _player.physicalJumping = CheckIfSaveFileExists("PhysicalJumping") ? (PlayerPrefs.GetInt("PhysicalJumping") != 0) : false;
+        _player.isLeftHanded = CheckIfSaveFileExists("PrimaryHand") ? (PlayerPrefs.GetInt("PrimaryHand") != 0) : false;
+        _player.militaryTime = CheckIfSaveFileExists("TimeFormat") ? (PlayerPrefs.GetInt("TimeFormat") != 0) : false;
 
-        if (CheckIfSaveFileExists("RightDeadzone")) { _player.rightJoystickDeadzoneAdjustment = PlayerPrefs.GetFloat("RightDeadzone"); }
-        else { _player.rightJoystickDeadzoneAdjustment = 0.5f; }
-
-        if (CheckIfSaveFileExists("TurnSpeed")) { _player.turnSpeedAdjustment = PlayerPrefs.GetFloat("TurnSpeed"); }
-        else { _player.turnSpeedAdjustment = 1; }
-
-        if (CheckIfSaveFileExists("SnapTurnRotation")) { _player.snapTurnRotationAdjustment = PlayerPrefs.GetFloat("SnapTurnRotation"); }
-        else { _player.snapTurnRotationAdjustment = 45; }
-
-        if (CheckIfSaveFileExists("HeadOrientation")) { _player.headOrientation = (PlayerPrefs.GetInt("HeadOrientation") != 0); }
-        else { _player.headOrientation = true; }
-
-        if (CheckIfSaveFileExists("SnapTurn")) { _player.snapTurnOn = (PlayerPrefs.GetInt("SnapTurn") != 0); }
-        else { _player.snapTurnOn = false; }
-
-        if (CheckIfSaveFileExists("PlayMode")) { _player.playerStanding = (PlayerPrefs.GetInt("PlayMode") != 0); }
-        else { _player.playerStanding = true; }
-
-        if (CheckIfSaveFileExists("ToggleGrip")) { _player.toggleGrip = (PlayerPrefs.GetInt("ToggleGrip") != 0); }
-        else { _player.toggleGrip = false; }
-
-        if (CheckIfSaveFileExists("Roomscale")) { _player.roomScale = (PlayerPrefs.GetInt("Roomscale") != 0); }
-        else { _player.roomScale = false; }
-
-        if (CheckIfSaveFileExists("SprintToggle")) { _player.toggleSprint = (PlayerPrefs.GetInt("SprintToggle") != 0); }
-        else { _player.toggleSprint = false; }
-
-        if (CheckIfSaveFileExists("PhysicalJumping")) { _player.physicalJumping = (PlayerPrefs.GetInt("PhysicalJumping") != 0); }
-        else { _player.physicalJumping = false; }
-
-        if (CheckIfSaveFileExists("PrimaryHand")) { _player.isLeftHanded = (PlayerPrefs.GetInt("PrimaryHand") != 0); }
-        else { _player.isLeftHanded = false; }
-
-        if (CheckIfSaveFileExists("TimeFormat")) { _player.militaryTime = (PlayerPrefs.GetInt("TimeFormat") != 0); }
-        else { _player.militaryTime = false; }
-
-        _audioController.LoadVolumeStats();
-
-        if (CheckIfSaveFileExists("BackAttachments")) { _playerComponents.belt.backAttachments = PlayerPrefs.GetFloat("BackAttachments"); }
-        else { _playerComponents.belt.backAttachments = 0; }
+        PlayerBelt belt = _playerComponents.belt;
+        belt.backAttachments = CheckIfSaveFileExists("BackAttachments") ? PlayerPrefs.GetFloat("BackAttachments") : 0;
+        belt.heightStandingPlayer = CheckIfSaveFileExists("StandingBeltAdjustment") ? PlayerPrefs.GetFloat("StandingBeltAdjustment") : 0.65f;
+        belt.heightSittingPlayer = CheckIfSaveFileExists("SittingBeltAdjustment") ? PlayerPrefs.GetFloat("StandingBeltAdjustment") : 0.185f;
+        belt.zAdjustmentForSittingPlayer = CheckIfSaveFileExists("CrouchSittingOffset") ? PlayerPrefs.GetFloat("CrouchSittingOffset") : 0.145f;
         _playerComponents.belt.AdjustBackAttachments();
-
-        if (CheckIfSaveFileExists("StandingBeltAdjustment")) { _playerComponents.belt.heightStandingPlayer = PlayerPrefs.GetFloat("StandingBeltAdjustment"); }
-        else { _playerComponents.belt.heightStandingPlayer = 0.65f; }
-
-        if (CheckIfSaveFileExists("SittingBeltAdjustment")) { _playerComponents.belt.heightSittingPlayer = PlayerPrefs.GetFloat("SittingBeltAdjustment"); }
-        else { _playerComponents.belt.heightSittingPlayer = 0.185f; }
-
-        if (CheckIfSaveFileExists("CrouchSittingOffset")) { _playerComponents.belt.zAdjustmentForSittingPlayer = PlayerPrefs.GetFloat("CrouchSittingOffset"); }
-        else { _playerComponents.belt.zAdjustmentForSittingPlayer = 0.145f; }
     }
 
     private void SaveClassInfo()
@@ -167,14 +135,12 @@ public class PlayerPrefsSaveData : MonoBehaviour
 
     private void LoadClassInfo()
     {
-        if (CheckIfSaveFileExists("PlayerClass")) { _magicController.LoadClass(PlayerPrefs.GetInt("PlayerClass")); }
-        else { _magicController.LoadClass(0); }
+        _magicController.LoadClass(CheckIfSaveFileExists("PlayerClass") ? PlayerPrefs.GetInt("PlayerClass") : 0);
 
         if (CheckIfSaveFileExists("MagicType")) { _magicController.UpdateMagic(true, PlayerPrefs.GetInt("MagicType")); }
-        else { _magicController.UpdateMagic(false, 0); }
+        else { _magicController.UpdateMagic(); }
 
-        if (CheckIfSaveFileExists("CastingType")) { _magicController.LoadCastingType(PlayerPrefs.GetInt("CastingType")); }
-        else { _magicController.LoadCastingType(0); }
+        _magicController.LoadCastingType(CheckIfSaveFileExists("CastingType") ? PlayerPrefs.GetInt("CastingType") : 0);
     }
 
     private void SaveMultiplayerSettings()
@@ -187,17 +153,10 @@ public class PlayerPrefsSaveData : MonoBehaviour
 
     private void LoadMultiplayerSettings()
     {
-        if (CheckIfSaveFileExists("TextChat")) { _chatManager.textChat = (PlayerPrefs.GetInt("TextChat") != 0); }
-        else { _chatManager.textChat = true; }
-
-        if (CheckIfSaveFileExists("DebugChat")) { _chatManager.allowDebugMessages = (PlayerPrefs.GetInt("DebugChat") != 0); }
-        else { _chatManager.allowDebugMessages = true; }
-
-        if (CheckIfSaveFileExists("VoiceChat")) { _chatManager.voiceChat = (PlayerPrefs.GetInt("VoiceChat") != 0); }
-        else { _chatManager.voiceChat = false; }
-
-        if (CheckIfSaveFileExists("Notifications")) { _chatManager.notifications = (PlayerPrefs.GetInt("Notifications") != 0); }
-        else { _chatManager.notifications = true; }
+        _chatManager.textChat = CheckIfSaveFileExists("TextChat") ? (PlayerPrefs.GetInt("TextChat") != 0) : true;
+        _chatManager.allowDebugMessages = CheckIfSaveFileExists("DebugChat") ? (PlayerPrefs.GetInt("DebugChat") != 0) : false;
+        _chatManager.voiceChat = CheckIfSaveFileExists("VoiceChat") ? (PlayerPrefs.GetInt("VoiceChat") != 0) : true;
+        _chatManager.notifications = CheckIfSaveFileExists("Notifications") ? (PlayerPrefs.GetInt("Notifications") != 0) : true;
     }
 
     private void SaveVisualSettings()
@@ -271,13 +230,29 @@ public class PlayerPrefsSaveData : MonoBehaviour
 
     private void LoadVisualSettings()
     {
+        // Lighting //
+
+        _visualSettings.lightRange = CheckIfSaveFileExists("LightRange") ? PlayerPrefs.GetFloat("LightRange") : 30;
+        _visualSettings.brightness = CheckIfSaveFileExists("Brightness") ? PlayerPrefs.GetFloat("Brightness") : 1;
+
         if (CheckIfSaveFileExists("ShadowType"))
         {
             string shadowType = PlayerPrefs.GetString("ShadowType");
 
-            if (shadowType == "Soft") { _visualSettings.shadowSetting = LightShadows.Soft; }
-            else if (shadowType == "Hard") { _visualSettings.shadowSetting = LightShadows.Hard; }
-            else { _visualSettings.shadowSetting = LightShadows.None; }
+            switch (shadowType)
+            {
+                case "Soft":
+                    _visualSettings.shadowSetting = LightShadows.Soft;
+                    break;
+
+                case "Hard":
+                    _visualSettings.shadowSetting = LightShadows.Hard;
+                    break;
+
+                default:
+                    _visualSettings.shadowSetting = LightShadows.None;
+                    break;
+            }
         }
         else { _visualSettings.shadowSetting = LightShadows.Soft; }
 
@@ -305,36 +280,30 @@ public class PlayerPrefsSaveData : MonoBehaviour
         }
         else { _visualSettings.shadowQuality = ShadowResolution.VeryHigh; }
 
-        if (CheckIfSaveFileExists("LightRange")) { _visualSettings.lightRange = PlayerPrefs.GetFloat("LightRange"); }
-        else { _visualSettings.lightRange = 30; }
+        //Post Processing //
 
-        if (CheckIfSaveFileExists("Brightness")) { _visualSettings.brightness = PlayerPrefs.GetFloat("Brightness"); }
-        else { _visualSettings.brightness = 1; }
+        /// Ambient Occlusion ///
+        
+        _postProcessingController.ambientOcclusion = CheckIfSaveFileExists("AmbientOcclusion") ? (PlayerPrefs.GetInt("AmbientOcclusion") != 0) : true;
+        _postProcessingController.AOIntensity = CheckIfSaveFileExists("AOIntensity") ? PlayerPrefs.GetFloat("AOIntensity") : 1.15f;
+        _postProcessingController.thickness = CheckIfSaveFileExists("Thickness") ? PlayerPrefs.GetFloat("Thickness") : 1;
 
-        //Post Processing
-        if (CheckIfSaveFileExists("AmbientOcclusion")) { _postProcessingController.ambientOcclusion = (PlayerPrefs.GetInt("AmbientOcclusion") != 0); }
-        else { _postProcessingController.ambientOcclusion = true; }
+        /// Bloom ///
 
-        if (CheckIfSaveFileExists("Bloom")) { _postProcessingController.bloom = (PlayerPrefs.GetInt("Bloom") != 0); }
-        else { _postProcessingController.bloom = true; }
+        _postProcessingController.bloom = CheckIfSaveFileExists("Bloom") ? (PlayerPrefs.GetInt("Bloom") != 0) : true;
+        _postProcessingController.Bintensity = CheckIfSaveFileExists("BIntensity") ? PlayerPrefs.GetFloat("BIntensity") : 14;
+        _postProcessingController.threshold = CheckIfSaveFileExists("Threshold") ? PlayerPrefs.GetFloat("Threshold") : 1;
+        _postProcessingController.diffusion = CheckIfSaveFileExists("Diffusion") ? PlayerPrefs.GetFloat("Diffusion") : 7;
 
-        if (CheckIfSaveFileExists("ColorGrading")) { _postProcessingController.colorGrading = (PlayerPrefs.GetInt("ColorGrading") != 0); }
-        else { _postProcessingController.colorGrading = true; }
+        /// Color Grading ///
 
-        if (CheckIfSaveFileExists("AOIntensity")) { _postProcessingController.AOIntensity = PlayerPrefs.GetFloat("AOIntensity"); }
-        else { _postProcessingController.AOIntensity = 1.15f; }
-
-        if (CheckIfSaveFileExists("Thickness")) { _postProcessingController.thickness = PlayerPrefs.GetFloat("Thickness"); }
-        else { _postProcessingController.thickness = 1; }
-
-        if (CheckIfSaveFileExists("BIntensity")) { _postProcessingController.Bintensity = PlayerPrefs.GetFloat("BIntensity"); }
-        else { _postProcessingController.Bintensity = 14; }
-
-        if (CheckIfSaveFileExists("Threshold")) { _postProcessingController.threshold = PlayerPrefs.GetFloat("Threshold"); }
-        else { _postProcessingController.threshold = 1; }
-
-        if (CheckIfSaveFileExists("Diffusion")) { _postProcessingController.diffusion = PlayerPrefs.GetFloat("Diffusion"); }
-        else { _postProcessingController.diffusion = 7; }
+        _postProcessingController.colorGrading = CheckIfSaveFileExists("ColorGrading") ? (PlayerPrefs.GetInt("ColorGrading") != 0) : true;
+        _postProcessingController.temperature = CheckIfSaveFileExists("Temperature") ? PlayerPrefs.GetFloat("Temperature") : -75;
+        _postProcessingController.tint = CheckIfSaveFileExists("Tint") ? PlayerPrefs.GetFloat("Tint") : -55;
+        _postProcessingController.postExposure = CheckIfSaveFileExists("PostExposure") ? PlayerPrefs.GetFloat("PostExposure") : 0;
+        _postProcessingController.hueShift = CheckIfSaveFileExists("HueShift") ? PlayerPrefs.GetFloat("HueShift") : 0;
+        _postProcessingController.saturation = CheckIfSaveFileExists("Saturation") ? PlayerPrefs.GetFloat("Saturation") : 100;
+        _postProcessingController.contrast = CheckIfSaveFileExists("Contrast") ? PlayerPrefs.GetFloat("Contrast") : 20;
 
         if (CheckIfSaveFileExists("Tonemapper")) 
         {
@@ -356,30 +325,12 @@ public class PlayerPrefsSaveData : MonoBehaviour
         }
         else { _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES; }
 
-        if (CheckIfSaveFileExists("Temperature")) { _postProcessingController.temperature = PlayerPrefs.GetFloat("Temperature"); }
-        else { _postProcessingController.temperature = -75; }
-
-        if (CheckIfSaveFileExists("Tint")) { _postProcessingController.tint = PlayerPrefs.GetFloat("Tint"); }
-        else { _postProcessingController.tint = -55; }
-
-        if (CheckIfSaveFileExists("PostExposure")) { _postProcessingController.postExposure = PlayerPrefs.GetFloat("PostExposure"); }
-        else { _postProcessingController.postExposure = 0; }
-
-        if (CheckIfSaveFileExists("HueShift")) { _postProcessingController.hueShift = PlayerPrefs.GetFloat("HueShift"); }
-        else { _postProcessingController.hueShift = 0; }
-
-        if (CheckIfSaveFileExists("Saturation")) { _postProcessingController.saturation = PlayerPrefs.GetFloat("Saturation"); }
-        else { _postProcessingController.saturation = 100; 
-        }
-        if (CheckIfSaveFileExists("Contrast")) { _postProcessingController.contrast = PlayerPrefs.GetFloat("Contrast"); }
-        else { _postProcessingController.contrast = 20; }
-
         _postProcessingController.LoadSettings();
     }
 
     public bool CheckIfSaveFileExists(string saveFile)
     {
-        if (PlayerPrefs.HasKey(saveFile)) { return true; }
-        else return false;
+        bool fileExists = PlayerPrefs.HasKey(saveFile) ? true : false;
+        return fileExists;
     }
 }

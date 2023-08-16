@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SaveFileSelector : MonoBehaviour
 {
-    public int saveFile;
+    [SerializeField] private int saveFile;
     public Text textBox;
     [HideInInspector] public bool fileExists;
 
