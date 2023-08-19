@@ -13,21 +13,61 @@ public class PlayerTotalStats : MonoBehaviour
         potionsDrank, chestsOpened, roomsExplored, puzzlesCompleted, enemiesKilled, bossesKilled, reapersKilled, jarsBroken, rocksBroken, batsKilled, 
         beesKilled, bunniesKilled, goblinsKilled, mushroomsKilled, plantsKilled, wolvesKilled, golemsKilled, treantsKilled, dragonsKilled, 
         babyReaperKills, princeReapersKilled, godReapersKilled, magicSealsBroken }
+
     public PlayerProgressStats progressStats;
-    [HideInInspector] public double totalPlayTime;
-    [HideInInspector] public int totalRuns, completedRuns, bestRunStreak, deaths, goldCollected, soulsCollected, runesUsed, scrollsAbsorbed, itemsBought, 
-        potionsDrank, chestsOpened, roomsExplored, puzzlesCompleted, enemiesKilled, bossesKilled, reapersKilled, jarsBroken, rocksBroken, 
-        magicSealsBroken;
-    [HideInInspector] public int batLevel, beeLevel, bunnyLevel, goblinLevel, mushroomLevel, plantLevel, wolfLevel;
-    [HideInInspector] public int batsKilled, beesKilled, bunniesKilled, goblinsKilled, mushroomsKilled, plantsKilled, wolvesKilled;
-    [HideInInspector] public int golemsKilled, treantGuardsKilled, dragonsKilled, babyReapersKilled, princeReapersKilled, godReapersKilled;
+
+
+    // Player Stats
+    public float totalPlayTime { get; private set; }
+    public int totalRuns { get; private set; }
+    public int completedRuns { get; private set; }
+    public int bestRunStreak { get; private set; }
+    public int deaths { get; private set; }
+    public int goldCollected { get; private set; }
+    public int soulsCollected { get; private set; }
+    public int runesUsed { get; private set; }
+    public int scrollsAbsorbed { get; private set; }
+    public int itemsBought { get; private set; }
+    public int potionsDrank { get; private set; }
+    public int chestsOpened { get; private set; }
+    public int roomsExplored { get; private set; }
+    public int puzzlesCompleted { get; private set; }
+    public int jarsBroken { get; private set; }
+    public int rocksBroken { get; private set; }
+    public int magicSealsBroken { get; private set; }
+
+
+    // Total Enemy Kills
+    public int enemiesKilled { get; private set; }
+    public int bossesKilled { get; private set; }
+    public int reapersKilled { get; private set; }
+
+
+    // Enemies Killed
+    public int batsKilled { get; private set; }
+    public int beesKilled { get; private set; }
+    public int bunniesKilled { get; private set; }
+    public int goblinsKilled { get; private set; }
+    public int mushroomsKilled { get; private set; }
+    public int plantsKilled { get; private set; }
+    public int wolvesKilled { get; private set; }
+
+
+    // Boss / Reapers Killed
+    public int golemsKilled { get; private set; }
+    public int treantGuardsKilled { get; private set; }
+    public int dragonsKilled { get; private set; }
+    public int babyReapersKilled { get; private set; }
+    public int princeReapersKilled { get; private set; }
+    public int godReapersKilled { get; private set; }
+
 
     private void Start()
     {
         _gameManager = LocalGameManager.instance;
     }
 
-    public void AdjustStat(StatType statType, int value)
+    public void AdjustStats(StatType statType, int value = 0)
     {
         if (!_gameManager.inTutorial)
         {
@@ -37,96 +77,127 @@ public class PlayerTotalStats : MonoBehaviour
                 case StatType.totalRuns:
                     totalRuns++;
                     break;
+
                 case StatType.completedRuns: //not implemented
                     completedRuns++;
                     break;
+
                 case StatType.bestStreak: //not implemented
                     bestRunStreak++;
                     break;
+
                 case StatType.deaths:
                     deaths++;
                     break;
+
                 case StatType.totalGold:
                     goldCollected += value;
                     break;
+
                 case StatType.totalSouls:
                     soulsCollected++;
                     break;
+
                 case StatType.runesUsed:
                     runesUsed++;
                     break;
+
                 case StatType.scrollsAbsorbed:
                     scrollsAbsorbed++;
                     break;
+
                 case StatType.itemsBought:
                     itemsBought++;
                     break;
+
                 case StatType.potionsDrank:
                     potionsDrank++;
                     break;
+
                 case StatType.chestsOpened:
                     chestsOpened++;
                     break;
+
                 case StatType.roomsExplored:
                     roomsExplored++;
                     break;
+
                 case StatType.puzzlesCompleted:
                     puzzlesCompleted++;
                     break;
+
                 case StatType.enemiesKilled:
                     enemiesKilled++;
                     break;
+
                 case StatType.bossesKilled:
                     bossesKilled++;
                     break;
+
                 case StatType.reapersKilled:
                     reapersKilled++;
                     break;
+
                 case StatType.jarsBroken:
                     jarsBroken++;
                     break;
+
                 case StatType.rocksBroken:
                     rocksBroken++;
                     break;
+
                 case StatType.batsKilled:
                     batsKilled++;
                     break;
+
                 case StatType.beesKilled:
                     beesKilled++;
                     break;
+
                 case StatType.bunniesKilled:
                     bunniesKilled++;
                     break;
+
                 case StatType.goblinsKilled:
                     goblinsKilled++;
                     break;
+
                 case StatType.mushroomsKilled:
                     mushroomsKilled++;
                     break;
+
                 case StatType.plantsKilled:
                     plantsKilled++;
                     break;
+
                 case StatType.wolvesKilled:
                     wolvesKilled++;
                     break;
+
                 case StatType.golemsKilled:
                     golemsKilled++;
                     break;
+
                 case StatType.treantsKilled:
                     treantGuardsKilled++;
                     break;
+
                 case StatType.dragonsKilled:
                     dragonsKilled++;
                     break;
+
                 case StatType.babyReaperKills:
                     babyReapersKilled++;
                     break;
+
                 case StatType.princeReapersKilled:
                     princeReapersKilled++;
                     break;
+
                 case StatType.godReapersKilled:
                     godReapersKilled++;
                     break;
+
                 case StatType.magicSealsBroken:
                     magicSealsBroken++;
                     break;
@@ -134,53 +205,109 @@ public class PlayerTotalStats : MonoBehaviour
         }
     }
 
-    public void Save()
+    public void SavePlayerProgress(int saveFileIndex)
     {
-        Debug.Log("Game Saving...");
-        totalPlayTime = _gameTimer.currentTime;
-        BinarySaveSystem.SaveTotalStats(_gameManager);
+        _chatManager.DebugMessage("Saving File: " + saveFileIndex);
+
+        BinarySaveSystem.SavePlayerProgressStats(CreateNewSaveData(), saveFileIndex);
     }
 
-    public void Load(int saveFile)
+    private PlayerProgressSaveData CreateNewSaveData()
     {
-        _chatManager.DebugMessage("Save File " + saveFile + " Loading");
+        PlayerProgressSaveData newData = new PlayerProgressSaveData();
 
-        PlayerTotalStatsData stats = BinarySaveSystem.LoadTotalStats(saveFile);
-        totalPlayTime = stats.totalPlayTime; //not implemented
-        totalRuns = stats.totalRuns; //not implemented
-        completedRuns = stats.completedRuns; //not implemented
-        bestRunStreak = stats.bestRunStreak; //not implemented
-        deaths = stats.deaths;
-        goldCollected = stats.goldCollected;
-        soulsCollected = stats.soulsCollected;
-        runesUsed = stats.runesUsed;
-        scrollsAbsorbed = stats.scrollsAbsorbed;
-        itemsBought = stats.itemsBought;
-        potionsDrank = stats.potionsDrank;
-        chestsOpened = stats.chestsOpened;
-        roomsExplored = stats.roomsExplored;
-        puzzlesCompleted = stats.puzzlesCompleted; //not implemented
-        enemiesKilled = stats.enemiesKilled;
-        bossesKilled = stats.bossesKilled;
-        reapersKilled = stats.reapersKilled;
-        jarsBroken = stats.jarsBroken;
-        rocksBroken = stats.rocksBroken;
-        batsKilled = stats.batsKilled;
-        beesKilled = stats.beesKilled;
-        bunniesKilled = stats.bunniesKilled;
-        goblinsKilled = stats.goblinsKilled;
-        mushroomsKilled = stats.mushroomsKilled;
-        plantsKilled = stats.plantsKilled;
-        wolvesKilled = stats.wolvesKilled;
-        golemsKilled = stats.golemsKilled;
-        treantGuardsKilled = stats.treantGuardsKilled;
-        dragonsKilled = stats.dragonsKilled;
-        babyReapersKilled = stats.babyReapersKilled;
-        princeReapersKilled = stats.princeReapersKilled;
-        godReapersKilled = stats.godReapersKilled;
+        // Player Totals
+        newData.totalPlayTime = totalPlayTime;
+        newData.totalRuns = totalRuns;
+        newData.completedRuns = completedRuns;
+        newData.bestRunStreak = bestRunStreak;
+        newData.deaths = deaths;
+        newData.goldCollected = goldCollected;
+        newData.soulsCollected = soulsCollected;
+        newData.runesUsed = runesUsed;
+        newData.scrollsAbsorbed = scrollsAbsorbed;
+        newData.itemsBought = itemsBought;
+        newData.potionsDrank = potionsDrank;
+        newData.chestsOpened = chestsOpened;
+        newData.roomsExplored = roomsExplored;
+        newData.puzzlesCompleted = puzzlesCompleted;
+        newData.jarsBroken = jarsBroken;
+        newData.rocksBroken = rocksBroken;
+
+        // Total Enemy Kills
+        newData.enemiesKilled = enemiesKilled;
+        newData.bossesKilled = bossesKilled;
+        newData.reapersKilled = reapersKilled;
+
+        // Enemies Killed
+        newData.batsKilled = batsKilled;
+        newData.beesKilled = beesKilled;
+        newData.bunniesKilled = bunniesKilled;
+        newData.goblinsKilled = goblinsKilled;
+        newData.mushroomsKilled = mushroomsKilled;
+        newData.plantsKilled = plantsKilled;
+        newData.wolvesKilled = wolvesKilled;
+
+        // Bosses / Elites Killed
+        newData.golemsKilled = golemsKilled;
+        newData.treantGuardsKilled = treantGuardsKilled;
+        newData.dragonsKilled = dragonsKilled;
+        newData.babyReapersKilled = babyReapersKilled;
+        newData.princeReapersKilled = princeReapersKilled;
+        newData.godReapersKilled = godReapersKilled;
+
+        return newData;
+    }
+
+    public void LoadPlayerProgress(int saveFileIndex)
+    {
+        _chatManager.DebugMessage("Save File " + saveFileIndex + " Loading");
+
+        PlayerProgressSaveData loadedData = BinarySaveSystem.LoadPlayerProgressStats(saveFileIndex);
+
+        // Player Totals
+        totalPlayTime = loadedData.totalPlayTime; //not implemented
+        totalRuns = loadedData.totalRuns; //not implemented
+        completedRuns = loadedData.completedRuns; //not implemented
+        bestRunStreak = loadedData.bestRunStreak; //not implemented
+        deaths = loadedData.deaths;
+        goldCollected = loadedData.goldCollected;
+        soulsCollected = loadedData.soulsCollected;
+        runesUsed = loadedData.runesUsed;
+        scrollsAbsorbed = loadedData.scrollsAbsorbed;
+        itemsBought = loadedData.itemsBought;
+        potionsDrank = loadedData.potionsDrank;
+        chestsOpened = loadedData.chestsOpened;
+        roomsExplored = loadedData.roomsExplored;
+        puzzlesCompleted = loadedData.puzzlesCompleted; //not implemented
+        jarsBroken = loadedData.jarsBroken;
+        rocksBroken = loadedData.rocksBroken;
+
+        // Total Enemy Kills
+        enemiesKilled = loadedData.enemiesKilled;
+        bossesKilled = loadedData.bossesKilled;
+        reapersKilled = loadedData.reapersKilled;
+        
+        // Enemies Killed
+        batsKilled = loadedData.batsKilled;
+        beesKilled = loadedData.beesKilled;
+        bunniesKilled = loadedData.bunniesKilled;
+        goblinsKilled = loadedData.goblinsKilled;
+        mushroomsKilled = loadedData.mushroomsKilled;
+        plantsKilled = loadedData.plantsKilled;
+        wolvesKilled = loadedData.wolvesKilled;
+
+        // Bosses / Elites Killed
+        golemsKilled = loadedData.golemsKilled;
+        treantGuardsKilled = loadedData.treantGuardsKilled;
+        dragonsKilled = loadedData.dragonsKilled;
+        babyReapersKilled = loadedData.babyReapersKilled;
+        princeReapersKilled = loadedData.princeReapersKilled;
+        godReapersKilled = loadedData.godReapersKilled;
 
         CheckProgressUnlocks();
-        _chatManager.DebugMessage("Game Loaded");
+
+        _chatManager.DebugMessage("Player Progress Stats Loaded");
     }
 
     public void CheckProgressUnlocks()

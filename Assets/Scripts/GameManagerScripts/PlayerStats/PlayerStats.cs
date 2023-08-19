@@ -40,7 +40,7 @@ public class PlayerStats : MonoBehaviour
     private int _currentSouls;
 
     //Save References
-    private int _saveFile;
+    public int saveFile { get; private set; }
 
     private void Awake()
     {
@@ -52,8 +52,7 @@ public class PlayerStats : MonoBehaviour
         if (_iFrame && IFrameCooldown()) { _iFrame = false; }
     }
 
-    public void SetSaveFileIndex(int file) { _saveFile = file;  }
-    public int GetSaveFileIndex() { return _saveFile; }
+    public void SetSaveFileIndex(int file) { saveFile = file;  }
 
     public void SetNewPlayer(VRPlayerController player)
     {
@@ -126,13 +125,13 @@ public class PlayerStats : MonoBehaviour
 
     public void PlayerDead(string deathMessage)
     {
-        _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.deaths, 0);
+        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.deaths);
         _playerComponents.onScreenText.PrintText(deathMessage, true);
         _isDead = true;
 
         if (CoopManager.instance == null) 
         {
-            _playerTotalStats.Save();
+            _playerTotalStats.SavePlayerProgress(saveFile);
             _playerComponents.resetPlayer.ResetPlayer(true); 
         }
         else { CoopManager.instance.PlayerDied(); }
@@ -328,54 +327,39 @@ public class PlayerStats : MonoBehaviour
 
     public int GetCurrentSouls() { return _currentSouls; }
 
-    public void SaveStats()
+    public void LoadStats(PlayerDungeonData loadedData)
     {
-        Debug.Log("Saving Player Data...");
-        BinarySaveSystem.SavePlayer(this);
-        Debug.Log("Player Data Saved");
-    }
+        // Base Stats
+        _maxHealth = loadedData.maxHealth;
+        _currentHealth = loadedData.currentHealth;
+        _playerSpeed = loadedData.playerSpeed;
+        _sprintMultiplier = loadedData.sprintMultiplier;
+        _crouchSpeedReduction = loadedData.crouchSpeedReduction;
+        _jumpVelocity = loadedData.jumpVelocity;
+        _dashDistance = loadedData.dashDistance;
 
-    public void LoadStats()
-    {
-        Debug.Log("Loading Player Data...");
-        if (BinarySaveSystem.LoadPlayerStats(_player.playerSaveFile) != null)
-        {
-            Debug.Log("Player Data Found");
-            PlayerSavedStats stats = BinarySaveSystem.LoadPlayerStats(_player.playerSaveFile);
-            _maxHealth = stats.maxHealth;
-            _currentHealth = stats.currentHealth;
-            _playerSpeed = stats.speed;
-            _sprintMultiplier = stats.sprint;
-            _crouchSpeedReduction = stats.crouchReduction;
-            _jumpVelocity = stats.jump;
-            _dashDistance = stats.dash;
-            _attackDamage = stats.attackDmg;
-            _attackRange = stats.attRange;
-            _attackCooldown = stats.attCooldown;
-            _damageUpgrades = stats.dmgUpgrades;
-            _rangeUpgrades = stats.rangeUpgrades;
-            _magicFocus = stats.magicFocus;
-            _elementalEffectChance = stats.elementalChance;
-            _luck = stats.luck;
-            _critChance = stats.critChance;
-            _critDamage = stats.critDamage;
-            _specialEffectChance = stats.specialEffectChance;
-            _aimAssist = stats.aimAssist;
-            _currentGold = stats.currentGold;
-            _currentArcaneCrystals = stats.currentArcaneCrystals;
-            _currentKeys = stats.currentKeys;
-            _currentSouls = stats.currentSouls;
-        }
-        Debug.Log("Player Data Loaded");
-    }
 
-    public void SetStats()
-    {
+        // Attack Stats
+        _attackDamage = loadedData.attackDamage;
+        _minAttackDamage = loadedData.minAttackDamage;
+        _maxAttackDamage = loadedData.maxAttackDamage;
+        _attackRange = loadedData.attackRange;
+        _attackCooldown = loadedData.attackCooldown;
+        _damageUpgrades = loadedData.damageUpgrades;
+        _rangeUpgrades = loadedData.rangeUpgrades;
+        _magicFocus = loadedData.magicFocus;
+        _elementalEffectChance = loadedData.elementalEffectChance;
+        _luck = loadedData.luck;
+        _critChance = loadedData.critChance;
+        _critDamage = loadedData.critDamage;
+        _specialEffectChance = loadedData.specialEffectChance;
+        _aimAssist = loadedData.aimAssist;
 
-    }
 
-    public void ResetStats()
-    {
-
+        // Gold, Bombs, Keys, Souls
+        _currentGold = loadedData.currentGold;
+        _currentArcaneCrystals = loadedData.currentArcaneCrystals;
+        _currentKeys = loadedData.currentKeys;
+        _currentSouls = loadedData.currentSouls;
     }
 }

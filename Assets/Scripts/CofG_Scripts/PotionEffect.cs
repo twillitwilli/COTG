@@ -31,7 +31,7 @@ public class PotionEffect : MonoBehaviour
 
             if (_gameManager.inDungeon)
             {
-                _totalStats.AdjustStat(PlayerTotalStats.StatType.potionsDrank, 0);
+                _totalStats.AdjustStats(PlayerTotalStats.StatType.potionsDrank);
             }
 
             grabController = GetComponentInParent<GrabController>();

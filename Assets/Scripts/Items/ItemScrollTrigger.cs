@@ -33,7 +33,7 @@ public class ItemScrollTrigger : MonoBehaviour
             {
                 AbsorbScrollKnowledge();
                 _playerStats.AdjustGoldAmount(-_scrollPrice);
-                _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.itemsBought, 0);
+                _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.itemsBought);
             }
         }
     }
@@ -42,7 +42,7 @@ public class ItemScrollTrigger : MonoBehaviour
     {
         if (_gameManager.inDungeon)
         {
-            _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.scrollsAbsorbed, 0);
+            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.scrollsAbsorbed);
         }
 
         Destroy(_scrollParent);

@@ -80,49 +80,63 @@ public class EnemyHealth : MonoBehaviour
     public void AdjustTotalStats()
     {
         PlayerTotalStats totalStats = LocalGameManager.instance.GetTotalStats();
+
         switch (enemyController.enemyName)
         {
             case EnemyController.Enemy.bat:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.batsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.batsKilled);
                 break;
+
             case EnemyController.Enemy.bee:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.beesKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.beesKilled);
                 break;
+
             case EnemyController.Enemy.bunny:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.bunniesKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.bunniesKilled);
                 break;
+
             case EnemyController.Enemy.goblin:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.goblinsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.goblinsKilled);
                 break;
+
             case EnemyController.Enemy.mushroom:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.mushroomsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.mushroomsKilled);
                 break;
+
             case EnemyController.Enemy.plant:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.plantsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.plantsKilled);
                 break;
+
             case EnemyController.Enemy.wolf:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.wolvesKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.wolvesKilled);
                 break;
+
             case EnemyController.Enemy.golem:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.golemsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.golemsKilled);
                 break;
+
             case EnemyController.Enemy.treant:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.treantsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.treantsKilled);
                 break;
+
             case EnemyController.Enemy.dragon:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.dragonsKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.dragonsKilled);
                 break;
+
             case EnemyController.Enemy.babyReaper:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.babyReaperKills, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.babyReaperKills);
                 break;
+
             case EnemyController.Enemy.princeReaper:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.princeReapersKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.princeReapersKilled);
                 break;
+
             case EnemyController.Enemy.godReaper:
-                totalStats.AdjustStat(PlayerTotalStats.StatType.godReapersKilled, 0);
+                totalStats.AdjustStats(PlayerTotalStats.StatType.godReapersKilled);
                 break;
         }
-        totalStats.AdjustStat(PlayerTotalStats.StatType.enemiesKilled, 0);
+
+        totalStats.AdjustStats(PlayerTotalStats.StatType.enemiesKilled);
     }
 
     public virtual void Dead()

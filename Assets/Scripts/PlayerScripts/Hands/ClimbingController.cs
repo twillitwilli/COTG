@@ -32,6 +32,7 @@ public class ClimbingController : MonoBehaviour
     {
         if (!isTrigger) { _canClimbGrab = true; }
         else { _canClimbTrigger = true; ; }
+
         if (_canClimbGrab && _canClimbTrigger) 
         {
             _isClimbing = true;

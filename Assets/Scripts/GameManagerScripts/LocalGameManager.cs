@@ -6,6 +6,9 @@ public class LocalGameManager : MonoBehaviour
 {
     public static LocalGameManager instance;
 
+    public enum GameMode { inLobby = 0, tutorial = 1, normal = 2, master = 3 }
+    public GameMode currentGameMode;
+
     [SerializeField] private GameObject playerPrefab;
 
     public VRPlayerController player { get; private set; }
@@ -44,8 +47,7 @@ public class LocalGameManager : MonoBehaviour
 
     private EyeManager _eyeManager;
 
-    [HideInInspector] public bool hasCalibrated, inLobby, isHost, savedDungeon, hardMode, dungeonBuildCompleted, loadDungeon, inDungeon, 
-        inTitleScreen, inTutorial;
+    [HideInInspector] public bool hasCalibrated, isHost, dungeonBuildCompleted, loadDungeon;
 
     [HideInInspector] public List<Vector2Int> spawnedScrolls = new List<Vector2Int>();
 
@@ -71,7 +73,7 @@ public class LocalGameManager : MonoBehaviour
         if (player == null) { PlayerSpawner(); }
         MovePlayer(0);
 
-        inLobby = true;
+        currentGameMode = GameMode.inLobby;
 
         if (devMode) { Debug.Log("Dev Mode Active"); }
         if (demoMode) { Debug.Log("Demo Mode Active"); }
@@ -148,23 +150,22 @@ public class LocalGameManager : MonoBehaviour
         {
             case SceneSelection.tutorial:
                 Loader.Load(Loader.Scene.CotGTutorial);
-                inLobby = false;
-                inDungeon = false;
+                currentGameMode = GameMode.tutorial;
                 break;
+
             case SceneSelection.titleScene:
                 Loader.Load(Loader.Scene.CotGTitleScreen);
-                inDungeon = false;
+                currentGameMode = GameMode.inLobby;
                 break;
+
             case SceneSelection.dungeon:
                 CheckDungeonType();
                 Loader.Load(Loader.Scene.DungeonGeneration_V3_1);
-                inLobby = false;
-                inDungeon = true;
                 break;
+
             case SceneSelection.testArea:
                 Loader.Load(Loader.Scene.VRPlayer_Test_Scene);
-                inLobby = false;
-                inDungeon = false;
+                currentGameMode = GameMode.inLobby;
                 break;
         }
 

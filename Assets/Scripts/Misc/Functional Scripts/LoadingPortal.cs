@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class LoadingPortal : MonoBehaviour
@@ -56,7 +57,7 @@ public class LoadingPortal : MonoBehaviour
         _eyeManager = _player.GetPlayerComponents().GetEyeManager();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
         VRPlayerController player;
         if (other.TryGetComponent<VRPlayerController>(out player)) 
@@ -65,12 +66,14 @@ public class LoadingPortal : MonoBehaviour
             {
                 _eyeManager.EyesClosing();
 
-                if (GameMode == GameType.ExitGame)
+                if (GameMode == GameType.ExitGame) { Application.Quit(); }
+
+                else 
                 {
-                    _playerPrefSaveData.SaveData();
-                    Application.Quit();
+                    await Task.Delay(1000);
+
+                    PortalSettings();
                 }
-                else { Invoke("PortalSettings", 1); }
             }
             else PortalSettings();
         }
@@ -81,18 +84,17 @@ public class LoadingPortal : MonoBehaviour
         switch (GameMode)
         {
             case GameType.beginnerDungeon:
-                _gameManager.hardMode = false;
-                _gameManager.inTutorial = true;
+                _gameManager.currentGameMode = LocalGameManager.GameMode.tutorial;
                 NewDungeonSettings();
                 break;
 
             case GameType.Normal:
-                _gameManager.hardMode = false;
+                _gameManager.currentGameMode = LocalGameManager.GameMode.normal;
                 NewDungeonSettings();
                 break;
 
             case GameType.Hard:
-                _gameManager.hardMode = true;
+                _gameManager.currentGameMode = LocalGameManager.GameMode.master;
                 NewDungeonSettings();
                 break;
 
@@ -133,10 +135,6 @@ public class LoadingPortal : MonoBehaviour
                 _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
                 break;
 
-            case GameType.LoadSavedDungeon:
-                _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
-                break;
-
             case GameType.moveToSpawn:
                 EnableObjects();
                 _gameManager.MovePlayer(whichSpawnLocation);
@@ -144,12 +142,19 @@ public class LoadingPortal : MonoBehaviour
                 break;
 
             case GameType.titleScreen:
-                _playerPrefSaveData.SaveData();
                 _gameManager.PlayerBackToTitleScreen();
                 break;
 
             case GameType.saveDungeon:
-                SaveDungeon();
+                SavePlayerDungeonStats saveSystem = GetComponent<SavePlayerDungeonStats>();
+                saveSystem.SaveDungeon();
+                break;
+
+            case GameType.LoadSavedDungeon:
+                SavePlayerDungeonStats loadSystem = GetComponent<SavePlayerDungeonStats>();
+                loadSystem.LoadDungeon();
+
+                _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
                 break;
         }
     }
@@ -171,21 +176,16 @@ public class LoadingPortal : MonoBehaviour
 
 
         BasePlayerSettings(_player);
-        _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.totalRuns, 0);
+        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalRuns);
 
         _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
-    }
-
-    public void SaveDungeon()
-    {
-
     }
 
     private void CoopPortalSettings()
     {
         CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
         CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
-        CoopManager.instance.isHardMode = LocalGameManager.instance.hardMode;
+        CoopManager.instance.isHardMode = LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master ? true : false;
         CoopManager.instance.portalActive = true;
         CoopManager.instance.PortalStatus();
     }
@@ -193,8 +193,6 @@ public class LoadingPortal : MonoBehaviour
     private void BasePlayerSettings(VRPlayerController player)
     {
         player.GetPlayerComponents().resetPlayer.ResetPlayer(false);
-        _gameManager.savedDungeon = false;
-        _playerPrefSaveData.SaveData();
     }
 
     public void SpawnBossArena()

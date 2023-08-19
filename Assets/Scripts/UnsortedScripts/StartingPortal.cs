@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class StartingPortal : MonoBehaviour
             portal.movePlayerInScene = true;
             portal.GameMode = LoadingPortal.GameType.moveToSpawn;
         }
-        foreach (GameObject objs in portalObjs) { objs.SetActive(true); }
+
+        //foreach (GameObject objs in portalObjs) { objs.SetActive(true); }
+
+        Array.ForEach(portalObjs, enableObjects => enableObjects.SetActive(true));
     }
 }

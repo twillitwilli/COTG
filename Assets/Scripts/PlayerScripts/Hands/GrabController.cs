@@ -18,7 +18,6 @@ public class GrabController : MonoBehaviour
     private HandBombKeyController _bombKeyController;
     private PlayerPotionController _potionController;
 
-    private PlayerItemGrabbable.PlayerItem _currentGrabbable;
     [HideInInspector] public GameObject currentGrabbableObj;
 
     public Transform grabbableSpawnLocation;
@@ -60,7 +59,7 @@ public class GrabController : MonoBehaviour
                 if (currentGrabbableObj == null && GetNearestGrabbable() != null) { currentGrabbableObj = GetNearestGrabbable(); }
                 if (currentGrabbableObj != null)
                 {
-                    switch (_currentGrabbable)
+                    switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
                     {
                         case PlayerItemGrabbable.PlayerItem.map:
                             _mapWalletController.GrabMap(this);
@@ -121,7 +120,7 @@ public class GrabController : MonoBehaviour
         {
             if (currentGrabbableObj != null)
             {
-                switch (_currentGrabbable)
+                switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
                 {
                     case PlayerItemGrabbable.PlayerItem.bomb:
                         _bombKeyController.IgniteBomb(_hand);
@@ -148,7 +147,7 @@ public class GrabController : MonoBehaviour
                     currentGrabbableObj = GetNearestGrabbable();
                     if (currentGrabbableObj == null) { return; }
 
-                    switch (_currentGrabbable)
+                    switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
                     {
                         case PlayerItemGrabbable.PlayerItem.bowString:
                             if (_hand.IsPrimaryHand())
@@ -170,7 +169,7 @@ public class GrabController : MonoBehaviour
         {
             if (currentGrabbableObj != null)
             {
-                switch (_currentGrabbable)
+                switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
                 {
                     case PlayerItemGrabbable.PlayerItem.bomb:
                         _bombKeyController.ThrowBomb(_hand);
@@ -195,7 +194,7 @@ public class GrabController : MonoBehaviour
 
     public void ReleaseGrip()
     {
-        switch (_currentGrabbable)
+        switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
         {
             case PlayerItemGrabbable.PlayerItem.map:
                 _holdingItem[1] = false;
@@ -267,12 +266,7 @@ public class GrabController : MonoBehaviour
             }
         }
 
-        if (nearest == null) { _currentGrabbable = PlayerItemGrabbable.PlayerItem.nothingToGrab; }
-        else 
-        { 
-            _currentGrabbable = nearest.GetComponent<PlayerItemGrabbable>().whichItem;
-            nearest.GetComponent<PlayerItemGrabbable>().currentHand = _hand;
-        }
+        if (nearest != null) { nearest.GetComponent<PlayerItemGrabbable>().currentHand = _hand; }
 
         return nearest;
     }
@@ -310,8 +304,6 @@ public class GrabController : MonoBehaviour
 
     public void GrabbableReset()
     {
-        _currentGrabbable = PlayerItemGrabbable.PlayerItem.nothingToGrab;
-
         if (currentGrabbableObj != null)
         {
             currentGrabbableObj.GetComponent<PlayerItemGrabbable>().currentHand = null;

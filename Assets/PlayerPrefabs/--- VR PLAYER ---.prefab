@@ -10630,10 +10630,10 @@ GameObject:
   - component: {fileID: 2612309522413009753}
   - component: {fileID: 7174959553745958201}
   - component: {fileID: 5996992909242889205}
-  - component: {fileID: 215837883730171661}
-  - component: {fileID: 1589489862447900407}
   - component: {fileID: 7716719472775625082}
   - component: {fileID: 7598426965800901315}
+  - component: {fileID: 215837883730171661}
+  - component: {fileID: 1589489862447900407}
   m_Layer: 6
   m_Name: Right Controller(withTrigger)
   m_TagString: Right Hand
@@ -10757,6 +10757,38 @@ MonoBehaviour:
   itemFixedToHand: {fileID: 9182282290168272527}
   chatSpawn: {fileID: 1133409197128895444}
   chatDisplay: {fileID: 0}
+--- !u!114 &7716719472775625082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612309522413009746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd52979d1a86a84499fec0c3de8652f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGrabbableObj: {fileID: 0}
+  grabbableSpawnLocation: {fileID: 1775298500362347819}
+  _holdingItem: 
+  holdingIgnitedBomb: 0
+  telekinesisController: {fileID: 6621242417893722095}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 16581631
+--- !u!114 &7598426965800901315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612309522413009746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ea2cbc53a12da469bd56bd6c368165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &215837883730171661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10792,38 +10824,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f2a26700d5d564bba9aa0ec7b0c0ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7716719472775625082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612309522413009746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd52979d1a86a84499fec0c3de8652f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentGrabbableObj: {fileID: 0}
-  grabbableSpawnLocation: {fileID: 1775298500362347819}
-  _holdingItem: 
-  holdingIgnitedBomb: 0
-  telekinesisController: {fileID: 6621242417893722095}
-  ignoreLayers:
-    serializedVersion: 2
-    m_Bits: 16581631
---- !u!114 &7598426965800901315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612309522413009746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ea2cbc53a12da469bd56bd6c368165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2612309522971513280
@@ -11256,9 +11256,6 @@ MonoBehaviour:
   playerSaveFile: 0
   collisionRange: 0.75
   sittingPlayerAnim: {fileID: 0}
-  currentControllerType: 0
-  controllerName: 
-  controllerID: 0
   roomID: 0
 --- !u!95 &1085385368365857014
 Animator:
@@ -11415,10 +11412,10 @@ GameObject:
   - component: {fileID: 2612309524134268550}
   - component: {fileID: 7873048870989949189}
   - component: {fileID: 7787922754023635727}
-  - component: {fileID: 967647860193980423}
-  - component: {fileID: 2126508652788651603}
   - component: {fileID: 7122791236034813875}
   - component: {fileID: 169214130379961533}
+  - component: {fileID: 967647860193980423}
+  - component: {fileID: 2126508652788651603}
   m_Layer: 6
   m_Name: Left Controller(withTrigger)
   m_TagString: Left Hand
@@ -11542,6 +11539,38 @@ MonoBehaviour:
   itemFixedToHand: {fileID: 8796354562848278057}
   chatSpawn: {fileID: 776384271301811058}
   chatDisplay: {fileID: 0}
+--- !u!114 &7122791236034813875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612309524134268547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd52979d1a86a84499fec0c3de8652f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGrabbableObj: {fileID: 0}
+  grabbableSpawnLocation: {fileID: 2152659452896212365}
+  _holdingItem: 
+  holdingIgnitedBomb: 0
+  telekinesisController: {fileID: 6818318085744727881}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 16581631
+--- !u!114 &169214130379961533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612309524134268547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ea2cbc53a12da469bd56bd6c368165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &967647860193980423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11577,38 +11606,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f2a26700d5d564bba9aa0ec7b0c0ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7122791236034813875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612309524134268547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd52979d1a86a84499fec0c3de8652f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentGrabbableObj: {fileID: 0}
-  grabbableSpawnLocation: {fileID: 2152659452896212365}
-  _holdingItem: 
-  holdingIgnitedBomb: 0
-  telekinesisController: {fileID: 6818318085744727881}
-  ignoreLayers:
-    serializedVersion: 2
-    m_Bits: 16581631
---- !u!114 &169214130379961533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612309524134268547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ea2cbc53a12da469bd56bd6c368165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2672548154658648462

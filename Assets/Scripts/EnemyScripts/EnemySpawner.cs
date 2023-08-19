@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using unityEngine = UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -58,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
         mapExplored.SetActive(true);
         if (!fromConnectedRoom)
         {
-            _gameManager.GetTotalStats().AdjustStat(PlayerTotalStats.StatType.roomsExplored, 0);
+            _gameManager.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.roomsExplored);
             if (connectedSpawners != null)
             {
                 foreach (EnemySpawner spawners in connectedSpawners) { spawners.ExploredRoom(true); }
@@ -75,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
         if (!room.otherPlayerEnteredRoom)
         {
             if (CoopManager.instance != null) { CoopManager.instance.coopEnemyController.EnteredRoom(room.roomID); }
-            int enemySpawnChance = Random.Range(0, 100);
+            int enemySpawnChance = unityEngine::Random.Range(0, 100);
             if (!spawnedEnemies && enemySpawnChance > 10) { SpawnEnemy(connectedSpawner); }
             else if (connectedSpawner && !spawnedEnemies)
             {
@@ -85,7 +87,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                int puzzleSpawnChance = Random.Range(0, 100);
+                int puzzleSpawnChance = unityEngine::Random.Range(0, 100);
                 if (puzzleSpawnChance > 25) { SpawnPuzzle(); }
                 else { UnlockRoom(false); }
                 spawnedEnemies = true;
@@ -116,14 +118,14 @@ public class EnemySpawner : MonoBehaviour
         int spawnCount;
         if (!smallRoom)
         {
-            if (LocalGameManager.instance.hardMode) { spawnCount = Random.Range(4, 6); }
-            else spawnCount = Random.Range(2, 4);
-            spawnCount += Random.Range(0, LocalGameManager.instance.currentLevel);
+            if (LocalGameManager.instance.hardMode) { spawnCount = unityEngine::Random.Range(4, 6); }
+            else spawnCount = unityEngine::Random.Range(2, 4);
+            spawnCount += unityEngine::Random.Range(0, LocalGameManager.instance.currentLevel);
         }
-        else { spawnCount = Random.Range(2, (4 + LocalGameManager.instance.currentLevel)); }
+        else { spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.instance.currentLevel)); }
         for (int i = 0; i < spawnCount; i++)
         {
-            int randomSpawn = Random.Range(0, spawnLocations.Count);
+            int randomSpawn = unityEngine::Random.Range(0, spawnLocations.Count);
             _enemyTrackerController.GetNewEnemy(spawnLocations[randomSpawn], false, 0, 0, 0, room.roomID);
         }
         spawnedEnemies = true;

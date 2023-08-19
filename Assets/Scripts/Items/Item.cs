@@ -116,7 +116,7 @@ public class Item : MonoBehaviour
 
                     if (_gameManager.inDungeon)
                     {
-                        _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.itemsBought, 0);
+                        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.itemsBought);
                     }
                 }
             }
@@ -186,7 +186,7 @@ public class Item : MonoBehaviour
                 _playerStats.AdjustGoldAmount(_valueOfItem);
                 if (_gameManager.inDungeon)
                 {
-                    _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.totalGold, _valueOfItem);
+                    _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalGold, _valueOfItem);
                 }
                 break;
 
@@ -204,7 +204,7 @@ public class Item : MonoBehaviour
 
             case ItemType.soul:
                 _playerStats.AdjustSoulAmount(1);
-                _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.totalSouls, 0);
+                _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalSouls);
                 break;
         }
     }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class LoadFile : MonoBehaviour
 {
-    [SerializeField] private SaveFileManager fileManager;
-    public int saveFile;
+    [SerializeField] private SaveFileManager _fileManager;
+    [SerializeField] private int _saveFile;
 
     public void LoadSelectedFile()
     {
-        fileManager.LoadFile(saveFile);
+        bool fileExists = BinarySaveSystem.LoadPlayerProgressStats(_saveFile) != null ? true : false;
+        _fileManager.LoadFile(_saveFile, fileExists);
     }
 }
