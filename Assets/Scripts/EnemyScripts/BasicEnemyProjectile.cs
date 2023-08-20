@@ -25,7 +25,12 @@ public class BasicEnemyProjectile : MonoBehaviour
     public virtual void Start()
     {
         rb.velocity = transform.forward * projectileSpeed;
-        if (LocalGameManager.instance.hardMode) { attackDamage += (attackDamage * 0.5f); }
+
+        if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+        { 
+            attackDamage += (attackDamage * 0.5f); 
+        }
+
         Invoke("DestroyAttack", projectileRange);
     }
 

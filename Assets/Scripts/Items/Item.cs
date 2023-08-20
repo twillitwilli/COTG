@@ -114,9 +114,11 @@ public class Item : MonoBehaviour
 
                     if (_storePrices.CheckStoreRefill()) { _storePrices.StoreRefill(); }
 
-                    if (_gameManager.inDungeon)
+                    switch (_gameManager.currentGameMode)
                     {
-                        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.itemsBought);
+                        case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
+                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.itemsBought);
+                            break;
                     }
                 }
             }
@@ -184,10 +186,14 @@ public class Item : MonoBehaviour
 
             case ItemType.gold:
                 _playerStats.AdjustGoldAmount(_valueOfItem);
-                if (_gameManager.inDungeon)
+
+                switch (_gameManager.currentGameMode)
                 {
-                    _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalGold, _valueOfItem);
+                    case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
+                        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalGold, _valueOfItem);
+                        break;
                 }
+
                 break;
 
             case ItemType.arcaneEnergy:
@@ -211,14 +217,16 @@ public class Item : MonoBehaviour
 
     public int HealthValue()
     {
-        if (!LocalGameManager.instance.hardMode) { return Mathf.RoundToInt(Random.Range(25, 35 + (_playerStats.GetLuck() * 2))); }
-        else return Mathf.RoundToInt(Random.Range(20, 25 + (_playerStats.GetLuck() * 2)));
+        int healthValue = LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master ?
+            Random.Range(25, 35) : Random.Range(20, 25);
+
+        return Mathf.RoundToInt(healthValue + (_playerStats.GetLuck() * 0.5f));
     }
 
     public int GoldValue()
     {
         int goldValue = (Random.Range(3, 10) + Mathf.RoundToInt(_playerStats.GetLuck() * 3));
-        return Random.Range(3, (10 + Mathf.RoundToInt(_playerStats.GetLuck())));
+        return goldValue;
     }
 
     public int ArcaneValue()

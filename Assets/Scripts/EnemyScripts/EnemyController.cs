@@ -68,13 +68,16 @@ public class EnemyController : MonoBehaviour
         animationController.ChangeAnimation(EnemyAnimationController.AnimationState.spawn);
         idleAnim = true;
         wanderPoint.SetParent(null);
+
         if (CoopManager.instance == null) { playerTarget = _playerComponents.playerTarget; }
         else if (CoopManager.instance != null && !otherPlayerSpawned && DistanceAgroCheck()) 
         { 
             if (DistanceAgroCheck()) { SetPlayerTarget(); }
             else { ChangePlayerTarget(); }
         }
+
         if (!otherPlayerSpawned) { currentTarget = playerTarget; }
+
         if (!enemyTracker.otherPlayerSpawned)
         {
             agentStartSpeed = agent.speed;
@@ -89,7 +92,11 @@ public class EnemyController : MonoBehaviour
             rb.isKinematic = true;
             enemyReady = true;
         }
-        if (LocalGameManager.instance.hardMode) { agent.speed += (agent.speed * 0.25f); }
+
+        if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+        { 
+            agent.speed += (agent.speed * 0.25f); 
+        }
     }
 
     public void AdjustEnemyStats()
@@ -117,6 +124,7 @@ public class EnemyController : MonoBehaviour
                     else { stopMovement = true; agent.isStopped = true; }
                     enemyAttack.AttackController(distanceFromPlayer);
                 }
+
                 if (CoopManager.instance != null)
                 {
                     CoopManager.instance.coopEnemyController.SendTrackingInfo(spawnID, transform.position, transform.localEulerAngles, agroCurrentPlayer);
@@ -126,6 +134,7 @@ public class EnemyController : MonoBehaviour
         else 
         {
             if (enemyAttack.castingSpellEffect.activeSelf) { enemyAttack.castingSpellEffect.SetActive(false); }
+
             if (!otherPlayerSpawned)
             {
                 agent.isStopped = true;

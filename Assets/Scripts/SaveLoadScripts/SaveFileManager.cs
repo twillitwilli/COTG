@@ -39,7 +39,7 @@ public class SaveFileManager : MonoBehaviour
         else
         {
             startingPortal.newSaveFile = true;
-            LocalGameManager.instance.inTutorial = true;
+            LocalGameManager.instance.currentGameMode = LocalGameManager.GameMode.tutorial;
         }
 
         startingPortal.gameObject.SetActive(false);

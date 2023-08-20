@@ -1300,9 +1300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53e1818a06b14e45b558d5b408d5827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFile: 3
-  textBox: {fileID: 849016469}
-  fileExists: 0
+  _saveFile: 0
+  _textBox: {fileID: 0}
 --- !u!1001 &99091687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29744,8 +29743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa2625883ba4084591dda3d413fc972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileManager: {fileID: 1607630257}
-  saveFile: 3
+  _fileManager: {fileID: 0}
+  _saveFile: 0
 --- !u!114 &522104419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31055,9 +31054,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53e1818a06b14e45b558d5b408d5827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFile: 4
-  textBox: {fileID: 1856318130}
-  fileExists: 0
+  _saveFile: 0
+  _textBox: {fileID: 0}
 --- !u!1 &658736586
 GameObject:
   m_ObjectHideFlags: 0
@@ -59492,8 +59490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa2625883ba4084591dda3d413fc972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileManager: {fileID: 1607630257}
-  saveFile: 2
+  _fileManager: {fileID: 0}
+  _saveFile: 0
 --- !u!114 &1056602137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75710,46 +75708,6 @@ MonoBehaviour:
   _gameTimer: {fileID: 0}
   _chatManager: {fileID: 0}
   progressStats: {fileID: 0}
-  totalPlayTime: 0
-  totalRuns: 0
-  completedRuns: 0
-  bestRunStreak: 0
-  deaths: 0
-  goldCollected: 0
-  soulsCollected: 0
-  runesUsed: 0
-  scrollsAbsorbed: 0
-  itemsBought: 0
-  potionsDrank: 0
-  chestsOpened: 0
-  roomsExplored: 0
-  puzzlesCompleted: 0
-  enemiesKilled: 0
-  bossesKilled: 0
-  reapersKilled: 0
-  jarsBroken: 0
-  rocksBroken: 0
-  magicSealsBroken: 0
-  batLevel: 0
-  beeLevel: 0
-  bunnyLevel: 0
-  goblinLevel: 0
-  mushroomLevel: 0
-  plantLevel: 0
-  wolfLevel: 0
-  batsKilled: 0
-  beesKilled: 0
-  bunniesKilled: 0
-  goblinsKilled: 0
-  mushroomsKilled: 0
-  plantsKilled: 0
-  wolvesKilled: 0
-  golemsKilled: 0
-  treantGuardsKilled: 0
-  dragonsKilled: 0
-  babyReapersKilled: 0
-  princeReapersKilled: 0
-  godReapersKilled: 0
 --- !u!4 &1196699597
 Transform:
   m_ObjectHideFlags: 0
@@ -88481,8 +88439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa2625883ba4084591dda3d413fc972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileManager: {fileID: 1607630257}
-  saveFile: 4
+  _fileManager: {fileID: 0}
+  _saveFile: 0
 --- !u!114 &1370885619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102127,9 +102085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53e1818a06b14e45b558d5b408d5827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFile: 2
-  textBox: {fileID: 877084325}
-  fileExists: 0
+  _saveFile: 0
+  _textBox: {fileID: 0}
 --- !u!1001 &1626264283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126583,9 +126540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53e1818a06b14e45b558d5b408d5827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFile: 1
-  textBox: {fileID: 1224984694018245484}
-  fileExists: 0
+  _saveFile: 0
+  _textBox: {fileID: 0}
 --- !u!1 &1224984694018262214
 GameObject:
   m_ObjectHideFlags: 0
@@ -126655,8 +126611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa2625883ba4084591dda3d413fc972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileManager: {fileID: 1607630257}
-  saveFile: 1
+  _fileManager: {fileID: 0}
+  _saveFile: 0
 --- !u!114 &1224984694018268800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145699,14 +145655,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5674824607561916751}
   - component: {fileID: 5674824607561916752}
-  - component: {fileID: 5674824607561916753}
   m_Layer: 0
   m_Name: TitleScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5674824607561916751
 Transform:
   m_ObjectHideFlags: 0
@@ -145744,18 +145699,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   on: 0
---- !u!114 &5674824607561916753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5674824607561916750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfbd3845542a384d84a51bccf4bdbba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5674824607886585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -146474,46 +146417,6 @@ MonoBehaviour:
   _gameTimer: {fileID: 7576350748578033935}
   _chatManager: {fileID: 7576350748578033934}
   progressStats: {fileID: 5836403584199542906}
-  totalPlayTime: 0
-  totalRuns: 0
-  completedRuns: 0
-  bestRunStreak: 0
-  deaths: 0
-  goldCollected: 0
-  soulsCollected: 0
-  runesUsed: 0
-  scrollsAbsorbed: 0
-  itemsBought: 0
-  potionsDrank: 0
-  chestsOpened: 0
-  roomsExplored: 0
-  puzzlesCompleted: 0
-  enemiesKilled: 0
-  bossesKilled: 0
-  reapersKilled: 0
-  jarsBroken: 0
-  rocksBroken: 0
-  magicSealsBroken: 0
-  batLevel: 0
-  beeLevel: 0
-  bunnyLevel: 0
-  goblinLevel: 0
-  mushroomLevel: 0
-  plantLevel: 0
-  wolfLevel: 0
-  batsKilled: 0
-  beesKilled: 0
-  bunniesKilled: 0
-  goblinsKilled: 0
-  mushroomsKilled: 0
-  plantsKilled: 0
-  wolvesKilled: 0
-  golemsKilled: 0
-  treantGuardsKilled: 0
-  dragonsKilled: 0
-  babyReapersKilled: 0
-  princeReapersKilled: 0
-  godReapersKilled: 0
 --- !u!1 &7576350748048569620
 GameObject:
   m_ObjectHideFlags: 0
@@ -146621,6 +146524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6b4b7af15a11a43835c0af38e60e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentGameMode: 0
   playerPrefab: {fileID: 2612309523533628045, guid: c05213f6413cdcc4496af036a61adae9, type: 3}
   hardResetPlayerData: 0
   devMode: 0
@@ -146651,15 +146555,9 @@ MonoBehaviour:
   _networkManager: {fileID: 7576350748578033930}
   _chatManager: {fileID: 7576350748578033934}
   hasCalibrated: 0
-  inLobby: 0
   isHost: 0
-  savedDungeon: 0
-  hardMode: 0
   dungeonBuildCompleted: 0
   loadDungeon: 0
-  inDungeon: 0
-  inTitleScreen: 0
-  inTutorial: 0
   spawnedScrolls: []
   loadingBox: {fileID: 0}
   spawnedBossArena: {fileID: 0}

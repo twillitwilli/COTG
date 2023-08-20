@@ -69,7 +69,7 @@ public class PlayerTotalStats : MonoBehaviour
 
     public void AdjustStats(StatType statType, int value = 0)
     {
-        if (!_gameManager.inTutorial)
+        if (_gameManager.currentGameMode != LocalGameManager.GameMode.tutorial || _gameManager.currentGameMode != LocalGameManager.GameMode.inLobby)
         {
             Debug.Log("Adjusting Progress Stat");
             switch (statType)

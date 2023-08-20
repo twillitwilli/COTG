@@ -11,24 +11,29 @@ public class ActivatePortal : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (!portalActivated && CoopManager.instance != null)
+        if (!portalActivated && CoopManager.instance != null && !LocalGameManager.instance.isHost && CoopManager.instance.portalActive)
         {
-            if (!LocalGameManager.instance.isHost && CoopManager.instance.portalActive)
+            EnableObjects(activatePortal, true);
+            if (CoopManager.instance.closeOtherPortals)
             {
-                EnableObjects(activatePortal, true);
-                if (CoopManager.instance.closeOtherPortals)
+                switch (LocalGameManager.instance.currentGameMode)
                 {
-                    if (hardModePortal && LocalGameManager.instance.hardMode)
-                    {
-                        EnableObjects(otherPortals, false);
-                    }
-                    else if (!hardModePortal && !LocalGameManager.instance.hardMode)
-                    {
-                        EnableObjects(otherPortals, false);
-                    }
+                    case LocalGameManager.GameMode.master:
+                        if (hardModePortal)
+                        {
+                            EnableObjects(otherPortals, false);
+                        }
+                        break;
+
+                    default:
+                        if (!hardModePortal)
+                        {
+                            EnableObjects(otherPortals, false);
+                        }
+                        break;
                 }
-                portalActivated = true;
             }
+            portalActivated = true;
         }
     }
 

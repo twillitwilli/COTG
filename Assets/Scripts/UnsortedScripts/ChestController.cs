@@ -27,12 +27,16 @@ public class ChestController : MonoBehaviour
     public void PickLoot()
     {
         int lootSelection = Random.Range(0, 100);
+
         if (lootSelection < 75) { SpawnSmallLoot(); }
         else if (lootSelection > 75 && lootSelection < 95) { SpawnPotion(); }
         else { SpawnItemPedastal(); }
-        if (LocalGameManager.instance.inDungeon)
+
+        switch (LocalGameManager.instance.currentGameMode)
         {
-            LocalGameManager.instance.GetTotalStats().AdjustStat(PlayerTotalStats.StatType.chestsOpened, 0);
+            case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                LocalGameManager.instance.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.chestsOpened);
+                break;
         }
     }
 

@@ -118,17 +118,24 @@ public class EnemySpawner : MonoBehaviour
         int spawnCount;
         if (!smallRoom)
         {
-            if (LocalGameManager.instance.hardMode) { spawnCount = unityEngine::Random.Range(4, 6); }
+            if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+            { 
+                spawnCount = unityEngine::Random.Range(4, 6); 
+            }
             else spawnCount = unityEngine::Random.Range(2, 4);
+
             spawnCount += unityEngine::Random.Range(0, LocalGameManager.instance.currentLevel);
         }
         else { spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.instance.currentLevel)); }
+
         for (int i = 0; i < spawnCount; i++)
         {
             int randomSpawn = unityEngine::Random.Range(0, spawnLocations.Count);
             _enemyTrackerController.GetNewEnemy(spawnLocations[randomSpawn], false, 0, 0, 0, room.roomID);
         }
+
         spawnedEnemies = true;
+
         if (connectedSpawners != null && !connectedSpawner)
         {
             foreach (EnemySpawner spawners in connectedSpawners)
@@ -138,6 +145,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         else { AllEnemiesSpawned(); }
+
         if (connectedSpawner)
         {
             masterSpawner.connectedSpawnersDone++;

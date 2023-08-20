@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class OptionsMenu : MonoBehaviour
@@ -82,11 +83,11 @@ public class OptionsMenu : MonoBehaviour
         }
     }
 
-    public void CloseMenu()
+    public async void CloseMenu()
     {
         if (spawnedMenu != null)
         {
-            _playerPrefSaveData.SaveData();
+            await _playerPrefSaveData.SavePlayerPrefs();
 
             Destroy(spawnedMenu);
             spawnedMenu = null;

@@ -133,7 +133,7 @@ public class CoopManager : MonoBehaviourPun
     [PunRPC]
     public void AllPlayersDead()
     {
-        _gameManager.GetTotalStats().Save();
+        _gameManager.GetTotalStats().SavePlayerProgress(_gameManager.GetPlayerStats().saveFile);
         _currentPlayer.GetPlayerComponents().resetPlayer.ResetPlayer(true);
     }
 
@@ -171,7 +171,9 @@ public class CoopManager : MonoBehaviourPun
         portalActive = active;
         isHardMode = isHard;
         closeOtherPortals = true;
-        _gameManager.hardMode = isHard;
+
+        if (isHard) { _gameManager.currentGameMode = LocalGameManager.GameMode.master; }
+        else { _gameManager.currentGameMode = LocalGameManager.GameMode.normal; }
     }
 
     public void MoveOtherPlayer()

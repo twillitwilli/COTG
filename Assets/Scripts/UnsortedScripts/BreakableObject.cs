@@ -92,22 +92,27 @@ public class BreakableObject : MonoBehaviour
 
     public void BreakObject(bool brokenByCurrentPlayer)
     {
-        if (_gameManager.inDungeon && brokenByCurrentPlayer)
+        switch (LocalGameManager.instance.currentGameMode)
         {
-            switch (objectType)
-            {
-                case BreakableObjectType.jar:
-                    _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.jarsBroken, 0);
-                    break;
+            case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                if (brokenByCurrentPlayer)
+                {
+                    switch (objectType)
+                    {
+                        case BreakableObjectType.jar:
+                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
+                            break;
 
-                case BreakableObjectType.rock:
-                    _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.rocksBroken, 0);
-                    break;
+                        case BreakableObjectType.rock:
+                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
+                            break;
 
-                case BreakableObjectType.magicSeal:
-                    _playerTotalStats.AdjustStat(PlayerTotalStats.StatType.magicSealsBroken, 0);
-                    break;
-            }
+                        case BreakableObjectType.magicSeal:
+                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.magicSealsBroken);
+                            break;
+                    }
+                }
+                break;
         }
 
         _spawnOnDestroyScript.disableSpawn = false;

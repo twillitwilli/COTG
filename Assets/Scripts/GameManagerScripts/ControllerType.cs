@@ -45,7 +45,7 @@ public class ControllerType : MonoBehaviour
 
         if (rightInput.manufacturer == null) 
         { 
-            RecheckController(player);
+            await RecheckController(player);
             return;
         }
         else { currentController = rightInput.manufacturer; }

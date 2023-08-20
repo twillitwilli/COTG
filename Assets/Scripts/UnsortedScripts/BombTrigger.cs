@@ -21,17 +21,21 @@ public class BombTrigger : MonoBehaviour
 
             if (player != null)
             {
-                switch (breakableObject.objectType)
+                switch (LocalGameManager.instance.currentGameMode)
                 {
-                    case BreakableObject.BreakableObjectType.jar:
-                        _totalStats.AdjustStat(PlayerTotalStats.StatType.jarsBroken, 0);
-                        break;
+                    case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                        switch (breakableObject.objectType)
+                        {
+                            case BreakableObject.BreakableObjectType.jar:
+                                _totalStats.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
+                                break;
 
-                    case BreakableObject.BreakableObjectType.rock:
-                        _totalStats.AdjustStat(PlayerTotalStats.StatType.rocksBroken, 0);
+                            case BreakableObject.BreakableObjectType.rock:
+                                _totalStats.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
+                                break;
+                        }
                         break;
                 }
-                
             }
             breakableObject.BreakObjectWithBomb();
         }

@@ -8,8 +8,16 @@ public class RoomSignController : MonoBehaviour
 
     private void Awake()
     {
-        if (LocalGameManager.instance.inTutorial) { ActivateSign(); }
-        else { signObj.SetActive(false); }
+        switch (LocalGameManager.instance.currentGameMode)
+        {
+            case LocalGameManager.GameMode.tutorial:
+                ActivateSign();
+                break;
+
+            default:
+                signObj.SetActive(false);
+                break;
+        }
     }
 
     public void ActivateSign()

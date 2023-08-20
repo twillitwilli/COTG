@@ -157,7 +157,7 @@ public class ControllerInputManager : MonoBehaviour
                 return;
             }
 
-            if (LocalGameManager.instance.inTitleScreen && triggerButtonDown)
+            if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.inLobby && triggerButtonDown)
             {
                 _hands[hand].GetMenuRaycast().ShootRaycast();
                 return;
@@ -222,10 +222,5 @@ public class ControllerInputManager : MonoBehaviour
     public ButtonDown GetCurrentButtonsDown()
     {
         return _currentButtonsDown;
-    }
-
-    private void ChangeHandAnimation()
-    {
-        bool isHoldingSomething = false;
     }
 }

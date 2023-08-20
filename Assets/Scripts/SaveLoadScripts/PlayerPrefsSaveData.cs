@@ -47,8 +47,6 @@ public class PlayerPrefsSaveData : MonoBehaviour
 
         SaveBasePlayerSettings();
 
-        PlayerPrefs.SetInt("SavedDungeon", (LocalGameManager.instance.savedDungeon ? 1 : 0));
-
         _playerComponents.GetHand(0).SaveHandPosition();
         _playerComponents.GetHand(1).SaveHandPosition();
 
@@ -64,8 +62,6 @@ public class PlayerPrefsSaveData : MonoBehaviour
         _playerComponents = _player.GetPlayerComponents();
 
         LoadBasePlayerSettings();
-
-        if (CheckIfSaveFileExists("SavedDungeon")) { LocalGameManager.instance.savedDungeon = (PlayerPrefs.GetInt("SavedDungeon") != 0); } 
 
         _playerComponents.GetHand(0).LoadHandPosition();
         _playerComponents.GetHand(1).LoadHandPosition();

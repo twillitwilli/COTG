@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerMenu : MonoBehaviour
@@ -19,9 +20,9 @@ public class PlayerMenu : MonoBehaviour
         _player.menuSpawned = true;
     }
 
-    private void OnDestroy()
+    private async void OnDestroy()
     {
         _player.menuSpawned = false;
-        LocalGameManager.instance.GetPlayerPrefsSaveData().SaveData();
+        await LocalGameManager.instance.GetPlayerPrefsSaveData().SavePlayerPrefs();
     }
 }

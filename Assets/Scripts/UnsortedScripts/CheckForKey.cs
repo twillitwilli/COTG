@@ -29,8 +29,12 @@ public class CheckForKey : MonoBehaviour
                 {
                     if (isForChest)
                     {
-                        _totalStats.chestsOpened++;
-                        _totalStats.AdjustStat(PlayerTotalStats.StatType.chestsOpened, 1);
+                        switch (LocalGameManager.instance.currentGameMode)
+                        {
+                            case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                                _totalStats.AdjustStats(PlayerTotalStats.StatType.chestsOpened);
+                                break;
+                        }
                     }
 
                     keyController.UnlockKeyLock();

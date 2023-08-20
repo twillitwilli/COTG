@@ -40,9 +40,11 @@ public class ItemScrollTrigger : MonoBehaviour
 
     public void AbsorbScrollKnowledge()
     {
-        if (_gameManager.inDungeon)
+        switch (_gameManager.currentGameMode)
         {
-            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.scrollsAbsorbed);
+            case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
+                _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.scrollsAbsorbed);
+                break;
         }
 
         Destroy(_scrollParent);

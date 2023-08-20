@@ -6,6 +6,6 @@ public class DisableIfNotHardMode : MonoBehaviour
 {
     private void Start()
     {
-        if (!LocalGameManager.instance.hardMode) { gameObject.SetActive(false); }
+        if (LocalGameManager.instance.currentGameMode != LocalGameManager.GameMode.master) { gameObject.SetActive(false); }
     }
 }

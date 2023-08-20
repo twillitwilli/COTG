@@ -28,7 +28,10 @@ public class EnemyHealth : MonoBehaviour
 
         statusController = GetComponent<EnemyStatusController>();
 
-        if (_gameManager.hardMode) { maxHealth += maxHealth * 0.25f; }
+        if (_gameManager.currentGameMode == LocalGameManager.GameMode.master) 
+        { 
+            maxHealth += maxHealth * 0.25f; 
+        }
     }
 
     private void Start()

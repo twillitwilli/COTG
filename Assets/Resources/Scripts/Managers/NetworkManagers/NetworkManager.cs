@@ -29,7 +29,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if (autoConnect)
         {
-            _gameManager.inLobby = true;
             roomName = "testRoom";
             ConnectToServer();
         }

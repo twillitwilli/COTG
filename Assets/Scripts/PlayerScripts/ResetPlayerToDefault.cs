@@ -71,10 +71,7 @@ public class ResetPlayerToDefault : MonoBehaviour
 
         //reset game manager
         LocalGameManager.instance.GetEnemyTrackerController().enemyNavMesh.RemoveData();
-        LocalGameManager.instance.savedDungeon = false;
         LocalGameManager.instance.GetGameTimer().EndTimer();
-
-        _gameManager.GetPlayerPrefsSaveData().SaveData();
 
         if (playerDied)
         {

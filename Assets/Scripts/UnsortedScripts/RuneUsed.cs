@@ -15,7 +15,12 @@ public class RuneUsed : MonoBehaviour
     {
         if (other.gameObject.CompareTag("RitualRune"))
         {
-            _totalStats.AdjustStat(PlayerTotalStats.StatType.runesUsed, 0);
+            switch (LocalGameManager.instance.currentGameMode)
+            {
+                case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                    _totalStats.AdjustStats(PlayerTotalStats.StatType.runesUsed);
+                    break;
+            }
         }
     }
 }

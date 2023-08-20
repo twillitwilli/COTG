@@ -6,6 +6,11 @@ public class PlayerInDungeonCheck : MonoBehaviour
 {
     public void Start()
     {
-        if (!LocalGameManager.instance.inDungeon) { gameObject.SetActive(false); }
+        switch (LocalGameManager.instance.currentGameMode)
+        {
+            case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
+                gameObject.SetActive(false);
+                break;
+        }
     }
 }
