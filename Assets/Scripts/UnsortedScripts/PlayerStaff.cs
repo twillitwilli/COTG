@@ -22,7 +22,7 @@ public class PlayerStaff : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
         _magicController = _gameManager.GetMagicController();
         _playerMagicController = MasterManager.playerMagicController;
@@ -81,7 +81,7 @@ public class PlayerStaff : MonoBehaviour
         {
             if (_currentMagicCircle != null) { Destroy(_currentMagicCircle); }
             GameObject newProjectile;
-            switch (_magicController.GetCurrentCastingType())
+            switch (_magicController.currentCastingType)
             {
                 case MagicController.CastingType.charge:
                     newProjectile = Instantiate(_playerMagicController.wizardChargedSpells[_magicController.magicIdx], _spellSpawn);

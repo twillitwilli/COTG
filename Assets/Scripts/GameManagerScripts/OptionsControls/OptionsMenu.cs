@@ -27,17 +27,17 @@ public class OptionsMenu : MonoBehaviour
         _player = player;
     }
 
-    public void OpenMenu(int hand)
+    public void OpenMenu()
     {
         _playerComponents = _player.GetPlayerComponents();
-        VRPlayerHand menuHand = _playerComponents.GetHand(hand);
+        VRPlayerHand menuHand = _player.isLeftHanded ? _playerComponents.GetHand(1) : _playerComponents.GetHand(0);
 
         if (spawnedMenu == null)
         {
             spawnedMenu = Instantiate(_menuPrefab, menuHand.GetMenuSpawnLocation());
             spawnedMenu.transform.SetParent(menuHand.GetMenuSpawnLocation());
 
-            if (hand == 1)
+            if (menuHand == _playerComponents.GetHand(1))
             {
                 spawnedMenu.transform.localScale = new Vector3(1, 1, -1);
                 HandSetup(1, 0);
@@ -45,6 +45,12 @@ public class OptionsMenu : MonoBehaviour
 
             else HandSetup(0, 1);
         }
+    }
+
+    public void HandSetup(int hand, int oppositeHand)
+    {
+        _playerComponents.GetHand(hand).HandIdleState();
+        _playerComponents.GetHand(oppositeHand).GetHandAnimationState().SwitchHandState(HandAnimationState.HandState.fingerPoint);
     }
 
     public void OpenHandAdjuster()
@@ -57,12 +63,6 @@ public class OptionsMenu : MonoBehaviour
 
         _playerComponents.GetHand(0).HandIdleState();
         _playerComponents.GetHand(1).HandIdleState();
-    }
-
-    public void HandSetup(int hand, int oppositeHand)
-    {
-        _playerComponents.GetHand(hand).HandIdleState();
-        _playerComponents.GetHand(oppositeHand).GetHandAnimationState().SwitchHandState(HandAnimationState.HandState.fingerPoint);
     }
 
     public void OpenPlayerCalibration()

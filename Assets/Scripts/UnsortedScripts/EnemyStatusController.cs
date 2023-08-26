@@ -119,6 +119,5 @@ public class EnemyStatusController : MonoBehaviour
         damageComponent.nameOfAttack = effectName;
         damageComponent.howLong = Random.Range(3, 8);
         damageComponent.damage = Random.Range(3.5f, 8.5f);
-        damageComponent.cooldownController.cooldownTimer = Random.Range(0.5f, 1);
     }
 }

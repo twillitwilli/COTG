@@ -24,7 +24,7 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void Awake()
     {
-        playerStats = LocalGameManager.instance.GetPlayerStats();
+        playerStats = LocalGameManager.Instance.GetPlayerStats();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -67,7 +67,7 @@ public class BasicProjectile : MonoBehaviour
     {
         if (!forDemoOnly) { AimAssist(); }
 
-        if (spawnParent != null && magicController.HasControllabeAttack()) { rb.velocity = spawnParent.transform.right * projectileSpeed; }
+        if (spawnParent != null && magicController.controllabeAttack) { rb.velocity = spawnParent.transform.right * projectileSpeed; }
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -151,7 +151,7 @@ public class BasicProjectile : MonoBehaviour
     {
         if (collisionEffect != null) { Instantiate(collisionEffect, transform.position, transform.rotation); }
 
-        switch (magicController.GetCollisionEffect())
+        switch (magicController.currentCollisionEffects)
         {
             case MagicController.CollisionEffects.none:
                 if (!tempPeircing) { Destroy(gameObject); }

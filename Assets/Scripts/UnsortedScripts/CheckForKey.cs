@@ -13,8 +13,8 @@ public class CheckForKey : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
-        _totalStats = LocalGameManager.instance.GetTotalStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+        _totalStats = LocalGameManager.Instance.GetTotalStats();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +29,7 @@ public class CheckForKey : MonoBehaviour
                 {
                     if (isForChest)
                     {
-                        switch (LocalGameManager.instance.currentGameMode)
+                        switch (LocalGameManager.Instance.currentGameMode)
                         {
                             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
                                 _totalStats.AdjustStats(PlayerTotalStats.StatType.chestsOpened);

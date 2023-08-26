@@ -25,7 +25,7 @@ public class MediationState : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
         previousHeadPosition = _player.head.transform.position;
         timerGoing = false;

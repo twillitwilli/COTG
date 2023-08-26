@@ -18,7 +18,7 @@ public class FacePlayer : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         target = _player.head;
     }
 

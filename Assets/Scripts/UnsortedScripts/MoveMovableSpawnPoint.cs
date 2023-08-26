@@ -8,7 +8,7 @@ public class MoveMovableSpawnPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameObject moveableSpawn = LocalGameManager.instance.GetSpawnLocations()[3].gameObject;
+            GameObject moveableSpawn = LocalGameManager.Instance.GetSpawnLocations()[3].gameObject;
             moveableSpawn.transform.position = other.transform.position;
             moveableSpawn.transform.rotation = other.transform.rotation;
         }

@@ -26,7 +26,7 @@ public class StatDisplay : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
         _magicController = _gameManager.GetMagicController();
         _playerCurse = _gameManager.GetCurseController();
@@ -89,7 +89,7 @@ public class StatDisplay : MonoBehaviour
                 break;
 
             case stats.playerClass:
-                _thisDisplay.text = "Class: " + _magicController.GetClassType();
+                _thisDisplay.text = "Class: " + _magicController.currentClass;
                 break;
 
             case stats.magicType:
@@ -97,7 +97,7 @@ public class StatDisplay : MonoBehaviour
                 break;
 
             case stats.castingType:
-                _thisDisplay.text = "Casting Type: " + _magicController.GetCurrentCastingType();
+                _thisDisplay.text = "Casting Type: " + _magicController.currentCastingType;
                 break;
 
             case stats.critDamage:
@@ -114,38 +114,48 @@ public class StatDisplay : MonoBehaviour
     {
         switch (_potionController.lastPotionDrank)
         {
-            case PlayerPotionController.PotionType.none:
-                _thisDisplay.text = "";
-                break;
             case PlayerPotionController.PotionType.death:
                 _thisDisplay.text = "Death Potion";
                 break;
+
             case PlayerPotionController.PotionType.sight:
                 _thisDisplay.text = "Sight Potion";
                 break;
+
             case PlayerPotionController.PotionType.movement:
                 _thisDisplay.text = "Movement Potion";
                 break;
+
             case PlayerPotionController.PotionType.strength:
                 _thisDisplay.text = "Strength Potion";
                 break;
+
             case PlayerPotionController.PotionType.fairy:
                 _thisDisplay.text = "Fairy Potion";
                 break;
+
             case PlayerPotionController.PotionType.arcane:
                 _thisDisplay.text = "Arcane Potion";
                 break;
+
             case PlayerPotionController.PotionType.rainbow:
                 _thisDisplay.text = "Rainbow Potion";
                 break;
+
             case PlayerPotionController.PotionType.health:
                 _thisDisplay.text = "Health Potion";
                 break;
+
             case PlayerPotionController.PotionType.angelic:
                 _thisDisplay.text = "Angelic Potion";
                 break;
+
             case PlayerPotionController.PotionType.lucky:
                 _thisDisplay.text = "Lucky Potion";
+                break;
+
+            default:
+                _thisDisplay.text = "";
                 break;
         }
     }

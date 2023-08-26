@@ -11,7 +11,7 @@ public class PlayerGroundChecker : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
     }
 
     public bool GroundCheck()

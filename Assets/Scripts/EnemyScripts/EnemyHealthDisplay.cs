@@ -13,7 +13,7 @@ public class EnemyHealthDisplay : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
 
         healthDisplay.SetActive(false);
     }

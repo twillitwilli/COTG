@@ -9,7 +9,7 @@ public class MapZoom : MonoBehaviour
 
     private void Awake()
     {
-        _mapCamera = LocalGameManager.instance.GetMapCamera();
+        _mapCamera = LocalGameManager.Instance.GetMapCamera();
     }
 
     private void OnTriggerEnter(Collider other)

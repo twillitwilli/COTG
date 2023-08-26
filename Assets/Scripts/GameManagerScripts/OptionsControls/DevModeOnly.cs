@@ -6,6 +6,6 @@ public class DevModeOnly : MonoBehaviour
 {
     private void Start()
     {
-        if (!LocalGameManager.instance.IsDevMode()) { Destroy(gameObject); }
+        if (!LocalGameManager.Instance.IsDevMode()) { Destroy(gameObject); }
     }
 }

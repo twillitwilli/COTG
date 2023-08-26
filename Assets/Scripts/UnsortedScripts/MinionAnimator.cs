@@ -21,8 +21,8 @@ public class MinionAnimator : MonoBehaviour
 
     private void Start()
     {
-        _magicController = LocalGameManager.instance.GetMagicController();
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _magicController = LocalGameManager.Instance.GetMagicController();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
     }
 
     public void ChangeAnimation(minionState whichAnimation)

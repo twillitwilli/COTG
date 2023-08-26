@@ -41,7 +41,7 @@ public class EnemyTrackerController : MonoBehaviour
     {
         if (!networkSpawn)
         {
-            int spawnEnemy = EnemySpawnSelection(LocalGameManager.instance.currentLevel);
+            int spawnEnemy = EnemySpawnSelection(LocalGameManager.Instance.currentLevel);
             EnemyController.Enemy enemyName = MasterManager.enemyPool.enemyStatManagers[spawnEnemy].enemyType;
             int enemyLevel = EnemySpawnLevel(enemyName);
             EnemySpawn(spawnEnemy, enemyLevel, spawnLocation, networkSpawn, ID, roomID);
@@ -183,7 +183,7 @@ public class EnemyTrackerController : MonoBehaviour
         }
         else if (!bossesDead && currentBosses <= 0)
         {
-            LocalGameManager.instance.spawnedBossArena.GetComponent<BossSpawn>().BossDead();
+            LocalGameManager.Instance.spawnedBossArena.GetComponent<BossSpawn>().BossDead();
             RoomCleared();
             bossesDead = true;
         }

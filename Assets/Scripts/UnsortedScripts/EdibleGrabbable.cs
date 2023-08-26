@@ -12,7 +12,7 @@ public class EdibleGrabbable : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
     }
 
     private void OnTriggerEnter(Collider other)

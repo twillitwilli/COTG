@@ -44,7 +44,7 @@ public class VRPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         if (_gameManager.player != null) { Destroy(gameObject); }
 
         _playerStats = _gameManager.GetPlayerStats();

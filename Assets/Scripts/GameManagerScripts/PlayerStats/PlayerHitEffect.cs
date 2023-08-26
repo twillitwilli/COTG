@@ -11,7 +11,7 @@ public class PlayerHitEffect : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
     }
 
     public void PlayerHit()

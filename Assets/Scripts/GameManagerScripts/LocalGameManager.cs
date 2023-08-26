@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalGameManager : MonoBehaviour
+public class LocalGameManager : MonoSingleton<LocalGameManager>
 {
-    public static LocalGameManager instance;
-
     public enum GameMode { inLobby = 0, tutorial = 1, normal = 2, master = 3 }
     public GameMode currentGameMode;
 
@@ -57,6 +55,8 @@ public class LocalGameManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (hardResetPlayerData && _playerPrefsSaveData.CheckIfSaveFileExists("ReturningPlayer"))
         {
             PlayerPrefs.SetInt("ReturningPlayer", (false ? 1 : 0));
@@ -65,11 +65,6 @@ public class LocalGameManager : MonoBehaviour
 
     private void Start()
     {
-        if (!instance) { instance = this; }
-        else Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-
         if (player == null) { PlayerSpawner(); }
         MovePlayer(0);
 

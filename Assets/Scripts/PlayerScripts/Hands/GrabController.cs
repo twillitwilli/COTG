@@ -31,7 +31,7 @@ public class GrabController : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _gearController = _gameManager.GetGearController();
         _magicController = _gameManager.GetMagicController();
 
@@ -45,7 +45,7 @@ public class GrabController : MonoBehaviour
 
         _mapWalletController = _player.GetPlayerComponents().mapWalletSpawner;
         _bombKeyController = _gearController.GetBombKeyController();
-        _potionController = LocalGameManager.instance.GetPotionController();
+        _potionController = LocalGameManager.Instance.GetPotionController();
     }
 
     public void UseGrabController(bool buttonDown)

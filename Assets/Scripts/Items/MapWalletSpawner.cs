@@ -14,9 +14,9 @@ public class MapWalletSpawner : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
 
         Invoke("NewPlayer", 1);
     }
@@ -24,7 +24,7 @@ public class MapWalletSpawner : MonoBehaviour
     private void NewPlayer()
     {
         SpawnNewMap();
-        SpawnNewWallet(LocalGameManager.instance.GetPlayerStats().GetCurrentGold());
+        SpawnNewWallet(LocalGameManager.Instance.GetPlayerStats().GetCurrentGold());
         GetComponent<HandBombKeyController>().ChangeCrystalHands();
     }
 

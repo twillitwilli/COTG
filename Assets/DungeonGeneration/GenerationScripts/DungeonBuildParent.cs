@@ -26,7 +26,7 @@ public class DungeonBuildParent : MonoBehaviour
         _compassController = GetComponent<CompassController>();
         _enemySpawnerTracker = GetComponent<EnemySpawnerTracker>();
 
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _chatManager = _gameManager.GetChatManager();
     }
 
@@ -40,13 +40,13 @@ public class DungeonBuildParent : MonoBehaviour
         RenderOff();
         rooms.AssignRoomID();
         _gameManager.dungeonBuildCompleted = true;
-        _chatManager.DebugMessage("Dungeon Build Ready: Level " + LocalGameManager.instance.currentLevel);
+        _chatManager.DebugMessage("Dungeon Build Ready: Level " + LocalGameManager.Instance.currentLevel);
         Debug.Log("Dungeon Build Completed");
 
         if (CoopManager.instance != null)
         {
             CoopManager.instance.coopDungeonBuild.dungeonFloorsCompleted.Add(true);
-            if (LocalGameManager.instance.isHost) 
+            if (LocalGameManager.Instance.isHost) 
             {
                 CoopManager.instance.coopDungeonBuild.dungeonCompleted = true;
                 CoopManager.instance.coopDungeonBuild.DungeonBuildCompleted(); 

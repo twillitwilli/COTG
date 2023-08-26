@@ -90,14 +90,14 @@ public class DungeonSaveSystem : MonoBehaviour
         {
             if (isDungeonRoom[i] == 0)
             {
-                GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[roomType[i]].rooms[roomSelection[i]]);
+                GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType[i]].rooms[roomSelection[i]]);
                 AdjustTransform(newRoom, i);
                 newRoom.transform.SetParent(_dungeonGeneration.spawnedRooms.transform);
                 AdjustRoom(newRoom);
             }
             else
             {
-                GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.instance.dungeonType].dungeonRoomList[roomType[i]].dungeonRooms[roomSelection[i]]);
+                GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].dungeonRoomList[roomType[i]].dungeonRooms[roomSelection[i]]);
                 newRoom.transform.SetParent(_dungeonBuildParent.transform);
                 AdjustTransform(newRoom, i);
             }

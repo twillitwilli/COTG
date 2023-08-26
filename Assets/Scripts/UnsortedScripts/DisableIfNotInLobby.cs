@@ -6,7 +6,7 @@ public class DisableIfNotInLobby : MonoBehaviour
 {
     private void Start()
     {
-        if (LocalGameManager.instance.currentGameMode != LocalGameManager.GameMode.inLobby) 
+        if (LocalGameManager.Instance.currentGameMode != LocalGameManager.GameMode.inLobby) 
         { 
             gameObject.SetActive(false); 
         }

@@ -11,7 +11,7 @@ public class ReturnToTitleScreen : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
     }
 
     public void ReturnTitleScreen()

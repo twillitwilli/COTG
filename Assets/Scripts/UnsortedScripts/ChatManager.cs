@@ -69,7 +69,7 @@ public class ChatManager : MonoBehaviour
 
     public void UpdateDisplayMessage(string message)
     {
-        foreach (VRPlayerHand hand in LocalGameManager.instance.player.GetPlayerComponents().GetBothHands())
+        foreach (VRPlayerHand hand in LocalGameManager.Instance.player.GetPlayerComponents().GetBothHands())
         {
             if (hand.chatDisplay.chatSystem != null)
             {

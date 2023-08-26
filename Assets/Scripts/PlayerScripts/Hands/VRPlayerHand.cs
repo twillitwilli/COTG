@@ -63,7 +63,7 @@ public class VRPlayerHand : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _magicController = _gameManager.GetMagicController();
         _playerComponents = _gameManager.player.GetPlayerComponents();
         _controllerType = _gameManager.GetControllerType();
@@ -83,7 +83,7 @@ public class VRPlayerHand : MonoBehaviour
             if (_climbingController.IsClimbing()) { _climbingController.Climbing(); }
             else
             {
-                switch (_magicController.GetClassType())
+                switch (_magicController.currentClass)
                 {
                     case MagicController.ClassType.Sorcerer:
                         if (!_grabController.CheckIfHoldingAnything() && _spellCasting.magicActive && _spellCasting.spellReadyVisual) { _spellCasting.SorcererMagic(); }

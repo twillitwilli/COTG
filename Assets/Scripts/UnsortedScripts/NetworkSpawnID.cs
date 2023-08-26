@@ -12,10 +12,10 @@ public class NetworkSpawnID : MonoBehaviour
 
     private void Start()
     {
-        if (CoopManager.instance != null && LocalGameManager.instance.isHost)
+        if (CoopManager.instance != null && LocalGameManager.Instance.isHost)
         {
             GameObject newTemplate = PhotonNetwork.Instantiate("NetworkSpawnTemplate", transform.position, transform.rotation);
-            spawnCountID = LocalGameManager.instance.GetNetworkManager().networkSpawnedObjects++;
+            spawnCountID = LocalGameManager.Instance.GetNetworkManager().networkSpawnedObjects++;
             TemplateSettings(newTemplate.GetComponent<NetworkSpawnTemplate>());
             CoopManager.instance.coopDungeonBuild.spawnedPrefabs.Add(newTemplate);
         }

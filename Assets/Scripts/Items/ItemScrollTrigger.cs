@@ -14,7 +14,7 @@ public class ItemScrollTrigger : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
         _playerTotalStats = _gameManager.GetTotalStats();
     }

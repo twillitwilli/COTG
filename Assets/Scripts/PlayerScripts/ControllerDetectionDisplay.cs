@@ -23,7 +23,7 @@ public class ControllerDetectionDisplay : MonoBehaviour
 
     private void ControllerType()
     {
-        _controllerType = LocalGameManager.instance.GetControllerType();
+        _controllerType = LocalGameManager.Instance.GetControllerType();
 
         if (_controllerType.currentController != null)
         {

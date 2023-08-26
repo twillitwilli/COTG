@@ -33,7 +33,7 @@ public class PlayerBow : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
         _magicController = _gameManager.GetMagicController();
         _playerMagicController = MasterManager.playerMagicController;
@@ -129,7 +129,7 @@ public class PlayerBow : MonoBehaviour
     public void ShootArrow(bool addPeircing, int whichSpell)
     {
         GameObject newProjectile;
-        switch (_magicController.GetCurrentCastingType())
+        switch (_magicController.currentCastingType)
         {
             case MagicController.CastingType.charge:
                 newProjectile = Instantiate(_playerMagicController.conjurerChargedSpells[_magicController.magicIdx], _arrowSpellSpawn.position, _arrowSpellSpawn.rotation);

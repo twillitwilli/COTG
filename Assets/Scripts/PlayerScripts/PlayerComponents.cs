@@ -65,7 +65,7 @@ public class PlayerComponents : MonoBehaviour
 
     private void Start()
     {
-        _playerPrefSaveData = LocalGameManager.instance.GetPlayerPrefsSaveData();
+        _playerPrefSaveData = LocalGameManager.Instance.GetPlayerPrefsSaveData();
 
         _controllerInput.gameObject.SetActive(true);
     }
@@ -86,7 +86,7 @@ public class PlayerComponents : MonoBehaviour
 
     public void LoadPlayerOrigins()
     {
-        _playerPrefSaveData = LocalGameManager.instance.GetPlayerPrefsSaveData();
+        _playerPrefSaveData = LocalGameManager.Instance.GetPlayerPrefsSaveData();
 
         if (_playerPrefSaveData.CheckIfSaveFileExists("originPosX"))
         {

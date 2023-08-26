@@ -13,14 +13,14 @@ public class ChatDisplay : MonoBehaviour
 
     public void Start()
     {
-        _chatManager = LocalGameManager.instance.GetChatManager();
+        _chatManager = LocalGameManager.Instance.GetChatManager();
 
         isRightHand = GetComponentInParent<VRPlayerHand>().IsRightHand();
     }
 
     private void FixedUpdate()
     {
-        if (LocalGameManager.instance.GetChatManager().textChat)
+        if (LocalGameManager.Instance.GetChatManager().textChat)
         {
             if (!chatOpened && spawnedChat == null)
             {

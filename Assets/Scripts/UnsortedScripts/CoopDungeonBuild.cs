@@ -91,7 +91,7 @@ public class CoopDungeonBuild : MonoBehaviour
     {
         if (coopManager.isMaster && dungeonCompleted)
         {
-            int floorCompleted = LocalGameManager.instance.currentLevel;
+            int floorCompleted = LocalGameManager.Instance.currentLevel;
             int totalRooms = totalSpawnedRooms;
             int totalDungeonRooms = dungeonRoomCount;
             int startingRoom = roomSpawnType[0];
@@ -126,7 +126,7 @@ public class CoopDungeonBuild : MonoBehaviour
     [PunRPC]
     public void StartCoopDungeonBuild(int floorCompleted, int totalRooms, int totalDungeonRooms, int startingRoom, int startingSelection, float posX, float posY, float posZ, float rotX, float rotY, float rotZ)
     {
-        LocalGameManager.instance.currentLevel = floorCompleted;
+        LocalGameManager.Instance.currentLevel = floorCompleted;
         totalSpawnedRooms = totalRooms;
         dungeonRoomCount = totalDungeonRooms;
         SpawnRoom(startingRoom, startingSelection, posX, posY, posZ, rotX, rotY, rotZ);
@@ -142,7 +142,7 @@ public class CoopDungeonBuild : MonoBehaviour
         }
         else
         {
-            GameObject newRoomSpawn = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[roomType].rooms[roomSelection]);
+            GameObject newRoomSpawn = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].rooms[roomSelection]);
             DisableSpawning(newRoomSpawn);
             Vector3 pos = new Vector3(posX, posY, posZ);
             Vector3 rot = new Vector3(rotX, rotY, rotZ);

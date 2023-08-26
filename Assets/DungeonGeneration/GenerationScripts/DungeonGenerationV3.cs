@@ -27,8 +27,8 @@ public class DungeonGenerationV3 : MonoBehaviour
     private void Start()
     {
         roomsObjs = RoomObjects.instance;
-        currentLevel = LocalGameManager.instance.currentLevel;
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.instance.isHost) { Invoke("DelayStart", 5); }
+        currentLevel = LocalGameManager.Instance.currentLevel;
+        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost) { Invoke("DelayStart", 5); }
     }
 
     private void DelayStart()
@@ -40,8 +40,8 @@ public class DungeonGenerationV3 : MonoBehaviour
 
     private void MakeStartingRoom()
     {
-        int startRoom = Random.Range(0, roomsObjs.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[4].roomCount);
-        GameObject spawnedStartingRoom = Instantiate(roomsObjs.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[4].rooms[startRoom]);
+        int startRoom = Random.Range(0, roomsObjs.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[4].roomCount);
+        GameObject spawnedStartingRoom = Instantiate(roomsObjs.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[4].rooms[startRoom]);
         //room save data
         Vector3 pos = spawnedStartingRoom.transform.localPosition;
         Vector3 rot = spawnedStartingRoom.transform.localEulerAngles;
@@ -70,7 +70,7 @@ public class DungeonGenerationV3 : MonoBehaviour
         }
         else
         {
-            if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.instance.isHost) { CheckDeadendRooms(); }
+            if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost) { CheckDeadendRooms(); }
             CheckRoomOpenings();
             Invoke("ConfigureDungeon", 2f);
         }
@@ -105,7 +105,7 @@ public class DungeonGenerationV3 : MonoBehaviour
     private void ConfigureDungeon()
     {
         Debug.Log("Configuring Dungeon...");
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.instance.isHost) 
+        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost) 
         {
             AssignDungeonRooms();
             SpawnDungeonRooms();
@@ -152,9 +152,9 @@ public class DungeonGenerationV3 : MonoBehaviour
         for (int i = 0; i < spawnedRooms.dungeonRooms.Count; i++)
         {
             Transform spawnLocation = spawnedRooms.dungeonRooms[i].transform;
-            int dungeonRoomSelection = Random.Range(0, roomsObjs.roomPrefabs[LocalGameManager.instance.dungeonType].dungeonRoomList[i].dungeonRooms.Count);
-            if (roomsObjs.roomPrefabs[LocalGameManager.instance.dungeonType].dungeonRoomList[i].dungeonRooms[dungeonRoomSelection] == null) { Debug.Log("dungeon room selection doesnt exist" + i); }
-            GameObject dungeonRoom = Instantiate(roomsObjs.roomPrefabs[LocalGameManager.instance.dungeonType].dungeonRoomList[i].dungeonRooms[dungeonRoomSelection], spawnLocation.position, spawnLocation.rotation);
+            int dungeonRoomSelection = Random.Range(0, roomsObjs.roomPrefabs[LocalGameManager.Instance.dungeonType].dungeonRoomList[i].dungeonRooms.Count);
+            if (roomsObjs.roomPrefabs[LocalGameManager.Instance.dungeonType].dungeonRoomList[i].dungeonRooms[dungeonRoomSelection] == null) { Debug.Log("dungeon room selection doesnt exist" + i); }
+            GameObject dungeonRoom = Instantiate(roomsObjs.roomPrefabs[LocalGameManager.Instance.dungeonType].dungeonRoomList[i].dungeonRooms[dungeonRoomSelection], spawnLocation.position, spawnLocation.rotation);
             _rooms.dungeonRooms.Add(dungeonRoom);
             dungeonRoom.transform.SetParent(_dungeonBuildParent.transform);
             dungeonRoom.GetComponent<RoomMarkerLink>().roomID = new Vector2(i, dungeonRoomSelection); //roomType, roomSelection

@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _player = _gameManager.player;
         _enemyTrackerController = _gameManager.GetEnemyTrackerController(); 
 
@@ -118,15 +118,15 @@ public class EnemySpawner : MonoBehaviour
         int spawnCount;
         if (!smallRoom)
         {
-            if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+            if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
             { 
                 spawnCount = unityEngine::Random.Range(4, 6); 
             }
             else spawnCount = unityEngine::Random.Range(2, 4);
 
-            spawnCount += unityEngine::Random.Range(0, LocalGameManager.instance.currentLevel);
+            spawnCount += unityEngine::Random.Range(0, LocalGameManager.Instance.currentLevel);
         }
-        else { spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.instance.currentLevel)); }
+        else { spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.Instance.currentLevel)); }
 
         for (int i = 0; i < spawnCount; i++)
         {

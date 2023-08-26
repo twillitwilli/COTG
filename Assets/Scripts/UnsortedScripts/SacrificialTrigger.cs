@@ -17,7 +17,7 @@ public class SacrificialTrigger : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
     }
 

@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _player = _gameManager.player;
         _playerStats = _gameManager.GetPlayerStats();
         _playerTotalStats = _gameManager.GetTotalStats();
@@ -217,7 +217,7 @@ public class Item : MonoBehaviour
 
     public int HealthValue()
     {
-        int healthValue = LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master ?
+        int healthValue = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ?
             Random.Range(25, 35) : Random.Range(20, 25);
 
         return Mathf.RoundToInt(healthValue + (_playerStats.GetLuck() * 0.5f));

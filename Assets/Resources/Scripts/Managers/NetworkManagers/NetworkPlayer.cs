@@ -20,7 +20,7 @@ public class NetworkPlayer : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
 
         photonView = GetComponent<PhotonView>();

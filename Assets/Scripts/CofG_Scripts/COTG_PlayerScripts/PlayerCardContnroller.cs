@@ -52,6 +52,6 @@ public class PlayerCardContnroller : MonoBehaviour
                 break;
         }
 
-        _currentPlayerCard.transform.SetParent(LocalGameManager.instance.player.transform);
+        _currentPlayerCard.transform.SetParent(LocalGameManager.Instance.player.transform);
     }
 }

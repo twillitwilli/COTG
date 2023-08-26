@@ -6,7 +6,7 @@ public class PlayerInDungeonCheck : MonoBehaviour
 {
     public void Start()
     {
-        switch (LocalGameManager.instance.currentGameMode)
+        switch (LocalGameManager.Instance.currentGameMode)
         {
             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
                 gameObject.SetActive(false);

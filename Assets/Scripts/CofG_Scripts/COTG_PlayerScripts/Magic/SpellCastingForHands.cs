@@ -26,14 +26,14 @@ public class SpellCastingForHands : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _player = LocalGameManager.Instance.player;
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
 
         _playerComponents = _player.GetPlayerComponents();
         _hand = GetComponent<VRPlayerHand>();
 
         _magicObjects = MasterManager.playerMagicController;
-        _magicController = LocalGameManager.instance.GetMagicController();
+        _magicController = LocalGameManager.Instance.GetMagicController();
 
         PlayerCardContnroller.newSorcerer += NewSorcerer;
     }

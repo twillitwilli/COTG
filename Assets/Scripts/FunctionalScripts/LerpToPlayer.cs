@@ -9,7 +9,7 @@ public class LerpToPlayer : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
     }
 
     private void LateUpdate()

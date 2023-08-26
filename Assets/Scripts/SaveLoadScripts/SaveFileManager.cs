@@ -18,8 +18,8 @@ public class SaveFileManager : MonoBehaviour
 
     public void CheckSaveFiles(VRPlayerController player)
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
-        _playerTotalStats = LocalGameManager.instance.GetTotalStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+        _playerTotalStats = LocalGameManager.Instance.GetTotalStats();
 
         // foreach (SaveFileSelector fileSelectors in saveFileSelectors) { fileSelectors.CheckSaveFile(); }
 
@@ -39,7 +39,7 @@ public class SaveFileManager : MonoBehaviour
         else
         {
             startingPortal.newSaveFile = true;
-            LocalGameManager.instance.currentGameMode = LocalGameManager.GameMode.tutorial;
+            LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.tutorial;
         }
 
         startingPortal.gameObject.SetActive(false);

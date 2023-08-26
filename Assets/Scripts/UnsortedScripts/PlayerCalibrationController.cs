@@ -17,7 +17,7 @@ public class PlayerCalibrationController : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
 
         _player.playerCalibrationOn = true;
@@ -51,7 +51,7 @@ public class PlayerCalibrationController : MonoBehaviour
     {
         foreach (GameObject obj in _playerComponents.GetAllOriginPoints()) { obj.GetComponent<MeshRenderer>().enabled = false; }
         _player.playerCalibrationOn = false;
-        LocalGameManager.instance.hasCalibrated = true;
+        LocalGameManager.Instance.hasCalibrated = true;
         if (menu != null) { closeMenuButton.ClosePlayerMenu(); }
     }
 }

@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Awake()
     {
-        player = LocalGameManager.instance.player;
+        player = LocalGameManager.Instance.player;
         _playerComponents = player.GetPlayerComponents();
 
         animationController = GetComponent<EnemyAnimationController>();
@@ -93,7 +93,7 @@ public class EnemyController : MonoBehaviour
             enemyReady = true;
         }
 
-        if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
         { 
             agent.speed += (agent.speed * 0.25f); 
         }

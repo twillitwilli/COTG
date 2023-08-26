@@ -24,10 +24,10 @@ public class SpellCasting : MonoBehaviour
 
     private void Awake()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
-        _magicController = LocalGameManager.instance.GetMagicController();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+        _magicController = LocalGameManager.Instance.GetMagicController();
 
         magic = MasterManager.playerMagicController;
         ResetSpellCharge();

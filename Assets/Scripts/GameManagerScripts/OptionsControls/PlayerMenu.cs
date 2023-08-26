@@ -16,13 +16,13 @@ public class PlayerMenu : MonoBehaviour
         if (instance == null) { instance = this; }
         else { Destroy(gameObject); }
 
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         _player.menuSpawned = true;
     }
 
     private async void OnDestroy()
     {
         _player.menuSpawned = false;
-        await LocalGameManager.instance.GetPlayerPrefsSaveData().SavePlayerPrefs();
+        await LocalGameManager.Instance.GetPlayerPrefsSaveData().SavePlayerPrefs();
     }
 }

@@ -13,7 +13,7 @@ public class ParticleHitPlayer : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
     }
 
     private void OnParticleCollision(GameObject other)

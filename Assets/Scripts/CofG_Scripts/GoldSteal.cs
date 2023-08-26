@@ -9,7 +9,7 @@ public class GoldSteal : MonoBehaviour
         VRPlayerController player;
         if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
-            LocalGameManager.instance.GetPlayerStats().AdjustGoldAmount(-RandomGoldAmount());
+            LocalGameManager.Instance.GetPlayerStats().AdjustGoldAmount(-RandomGoldAmount());
         }
     }
 

@@ -16,7 +16,7 @@ public class BossSpawn : MonoBehaviour
 
     public void Start()
     {
-        _gameManger = LocalGameManager.instance;
+        _gameManger = LocalGameManager.Instance;
         _gameManger.GetEnemyTrackerController().enemyNavMesh.BuildNavMesh();
         _gameManger.player.GetPlayerComponents().GetEyeManager().EyesOpening();
         Invoke("SpawnBoss", 3);

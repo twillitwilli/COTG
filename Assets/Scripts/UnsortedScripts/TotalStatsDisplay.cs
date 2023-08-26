@@ -16,7 +16,7 @@ public class TotalStatsDisplay : MonoBehaviour
 
     public void Start()
     {
-        PlayerTotalStats playerStats = LocalGameManager.instance.GetTotalStats();
+        PlayerTotalStats playerStats = LocalGameManager.Instance.GetTotalStats();
 
         switch (statToDisplay)
         {

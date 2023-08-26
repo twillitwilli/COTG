@@ -18,7 +18,7 @@ public class EnableOnVideoEnd : MonoBehaviour
 
     private void Start()
     {
-        _audioController = LocalGameManager.instance.GetAudioController();
+        _audioController = LocalGameManager.Instance.GetAudioController();
     }
 
     private void LateUpdate()

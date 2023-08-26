@@ -11,7 +11,7 @@ public class PlayerHealthDisplay : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
         _meshRenderer = GetComponent<SkinnedMeshRenderer>();
     }
 

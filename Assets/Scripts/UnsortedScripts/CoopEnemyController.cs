@@ -16,7 +16,7 @@ public class CoopEnemyController : MonoBehaviour
         coopManager = CoopManager.instance;
         photonComponent = coopManager.photonComponent;
 
-        _enemyTracker = LocalGameManager.instance.GetEnemyTrackerController();
+        _enemyTracker = LocalGameManager.Instance.GetEnemyTrackerController();
     }
 
     public void SendEnemySpawnInfo(int roomID)

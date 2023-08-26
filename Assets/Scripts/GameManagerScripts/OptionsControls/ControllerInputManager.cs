@@ -63,7 +63,7 @@ public class ControllerInputManager : MonoBehaviour
         controls.Right_Hand.JoystickTouch.performed += ctx => JoystickTouched(1, true);
         controls.Right_Hand.JoystickTouch.canceled += ctx => JoystickTouched(1, false);
 
-        _controllerType = LocalGameManager.instance.GetControllerType();
+        _controllerType = LocalGameManager.Instance.GetControllerType();
 
         //specific to controllers
         switch (_controllerType.currentControllerType)
@@ -145,19 +145,7 @@ public class ControllerInputManager : MonoBehaviour
                 _playerComponents.GetHand(hand).GetGrabController().UseTriggerController(triggerButtonDown);
             }
 
-            else if (_player.selectingClass)
-            {
-                _hands[hand].GetMenuRaycast().ShootRaycast();
-                return;
-            }
-
-            else if (!_player.selectingClass && triggerButtonDown && _player.menuSpawned)
-            {
-                _hands[hand].GetMenuRaycast().ShootRaycast();
-                return;
-            }
-
-            if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.inLobby && triggerButtonDown)
+            else if (_player.selectingClass || !_player.selectingClass && triggerButtonDown && _player.menuSpawned || LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.inLobby && triggerButtonDown)
             {
                 _hands[hand].GetMenuRaycast().ShootRaycast();
                 return;
@@ -169,13 +157,7 @@ public class ControllerInputManager : MonoBehaviour
     {
         if (PlayerMenu.instance == null && !_player.selectingClass && !_hands[0].GetGrabController().CheckIfHoldingAnything() && !_hands[1].GetGrabController().CheckIfHoldingAnything())
         {
-            for (int i = 0; i < _hands.Length; i++)
-            {
-                if (!_hands[i].IsPrimaryHand())
-                {
-                    LocalGameManager.instance.GetOptionsMenu().OpenMenu(i);
-                }
-            }
+            LocalGameManager.Instance.GetOptionsMenu().OpenMenu();
         }
         else if (PlayerMenu.instance != null)
         {

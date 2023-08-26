@@ -15,9 +15,9 @@ public class AreaNameDisplayer : MonoBehaviour
 
     private void DisplayAreaName(VRPlayerController player)
     {
-        if (LocalGameManager.instance.currentLevel > 0 && LocalGameManager.instance.currentLevel < 4)
+        if (LocalGameManager.Instance.currentLevel > 0 && LocalGameManager.Instance.currentLevel < 4)
         {
-            player.GetPlayerComponents().onScreenText.PrintText("Evernight Forest\nLevel " + LocalGameManager.instance.currentLevel, true);
+            player.GetPlayerComponents().onScreenText.PrintText("Evernight Forest\nLevel " + LocalGameManager.Instance.currentLevel, true);
         }
     }
 }

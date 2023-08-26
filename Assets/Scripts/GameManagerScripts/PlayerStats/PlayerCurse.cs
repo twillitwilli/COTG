@@ -30,7 +30,7 @@ public class PlayerCurse : MonoBehaviour
     {
         if (!hasCurseImmunity)
         {
-            int applyCurse = Random.Range(1, 6 + LocalGameManager.instance.GetPlayerStats().GetLuck());
+            int applyCurse = Random.Range(1, 6 + LocalGameManager.Instance.GetPlayerStats().GetLuck());
 
             if (applyCurse == 1)
             {

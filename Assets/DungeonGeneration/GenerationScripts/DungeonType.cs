@@ -10,7 +10,7 @@ public class DungeonType : MonoBehaviour
     {
         for (int i = 0; i < dungeonTypeObjects.Count; i++)
         {
-            if (LocalGameManager.instance.dungeonType != i) { Destroy(dungeonTypeObjects[i]); }
+            if (LocalGameManager.Instance.dungeonType != i) { Destroy(dungeonTypeObjects[i]); }
         }
     }
 }

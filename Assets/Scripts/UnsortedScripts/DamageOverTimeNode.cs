@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOverTimeNode : MonoBehaviour
+public class DamageOverTimeNode : Cooldown
 {
     [HideInInspector] public bool forPlayer;
     [HideInInspector] public VRPlayerController player;
@@ -10,37 +10,33 @@ public class DamageOverTimeNode : MonoBehaviour
     [HideInInspector] public string nameOfAttack;
     [HideInInspector] public float howLong;
     [HideInInspector] public float damage;
-    [HideInInspector] public Cooldown cooldownController;
 
     private PlayerStats _playerStats;
     private MagicController _magicController;
 
-    private void Awake()
-    {
-        cooldownController = GetComponent<Cooldown>();
-    }
-
     public void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
-        _magicController = LocalGameManager.instance.GetMagicController();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+        _magicController = LocalGameManager.Instance.GetMagicController();
 
         Destroy(gameObject, howLong);
     }
 
     private void LateUpdate()
     {
-        if (cooldownController.CooldownDone())
+        if (!CooldownCompleted())
         {
             if (forPlayer)
             {
                 _playerStats.AdjustHealth(-damage, nameOfAttack);
-                cooldownController.setCooldown = true;
+
+                CooldownCompleted(0.5f, true);
             }
             else
             {
                 enemy.enemyHealth.AdjustHealth(-damage, false);
-                cooldownController.setCooldown = true;
+
+                CooldownCompleted(0.5f, true);
             }
         }
     }

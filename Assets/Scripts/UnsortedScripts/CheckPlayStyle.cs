@@ -12,7 +12,7 @@ public class CheckPlayStyle : MonoBehaviour
 
     private void Start()
     {
-        player = LocalGameManager.instance.player;
+        player = LocalGameManager.Instance.player;
     }
 
     private void OnEnable()

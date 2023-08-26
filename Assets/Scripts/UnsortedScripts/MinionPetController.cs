@@ -28,12 +28,12 @@ public class MinionPetController : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
         _magicController = _gameManager.GetMagicController();
         _playerComponents = _gameManager.player.GetPlayerComponents();
 
-        if (_magicController.GetCurrentMinion() != null)
+        if (_magicController.currentMinion != null)
         {
             setAttackCooldown = true;
             setLifeDrainCD = true;

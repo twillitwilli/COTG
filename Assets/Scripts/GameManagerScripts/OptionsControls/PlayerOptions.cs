@@ -41,7 +41,7 @@ public class PlayerOptions : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _optionsMenu = _gameManager.GetOptionsMenu();
         _audioController = _gameManager.GetAudioController();
         _visualSettings = _gameManager.GetVisualSettings();
@@ -338,7 +338,7 @@ public class PlayerOptions : MonoBehaviour
 
             Array.ForEach(_playerComponents.GetBothHands(), setPrimaryHand => setPrimaryHand.SetPrimaryHand());
 
-            switch (_magicController.GetClassType())
+            switch (_magicController.currentClass)
             {
                 case MagicController.ClassType.Wizard:
                     Wizard.instance.GetStaffController().ResetStaff();
@@ -1098,7 +1098,7 @@ public class PlayerOptions : MonoBehaviour
 
     private void CheatOptions()
     {
-        if (_textBox.text == "EREBUSGOD") { LocalGameManager.instance.ActivateDevMode(); }
+        if (_textBox.text == "EREBUSGOD") { LocalGameManager.Instance.ActivateDevMode(); }
     }
 
     private void PhysicalJumpingToggle()

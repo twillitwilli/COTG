@@ -13,7 +13,7 @@ public class SpecialAttack : MonoBehaviour
 
     private void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
     }
 
     public virtual void Explosion()

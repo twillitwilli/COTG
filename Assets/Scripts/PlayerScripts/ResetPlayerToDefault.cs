@@ -14,7 +14,7 @@ public class ResetPlayerToDefault : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _player = _gameManager.player;
         _playerComponents = _player.GetPlayerComponents();
         _playerStats = _gameManager.GetPlayerStats();
@@ -37,9 +37,6 @@ public class ResetPlayerToDefault : MonoBehaviour
         _playerStats.AdjustArcaneCrystalAmount(1);
         _playerStats.AdjustKeyAmount(-999999);
 
-        //reset magic
-        _magicController.ResetAll();
-
         //reset has special item
         _gearController.ResetDungeonGear();
 
@@ -53,8 +50,8 @@ public class ResetPlayerToDefault : MonoBehaviour
         foreach (VRPlayerHand hand in _playerComponents.GetBothHands()) { hand.EmptyHand(); }
 
         //move player to spawn location
-        _player.gameObject.transform.position = LocalGameManager.instance.GetSpawnLocations()[0].position;
-        _player.gameObject.transform.rotation = LocalGameManager.instance.GetSpawnLocations()[0].rotation;
+        _player.gameObject.transform.position = LocalGameManager.Instance.GetSpawnLocations()[0].position;
+        _player.gameObject.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[0].rotation;
 
         //reset music to default
         _gameManager.GetAudioController().ChangeMusic(AudioController.MusicTracks.Forest);
@@ -70,8 +67,8 @@ public class ResetPlayerToDefault : MonoBehaviour
         
 
         //reset game manager
-        LocalGameManager.instance.GetEnemyTrackerController().enemyNavMesh.RemoveData();
-        LocalGameManager.instance.GetGameTimer().EndTimer();
+        LocalGameManager.Instance.GetEnemyTrackerController().enemyNavMesh.RemoveData();
+        LocalGameManager.Instance.GetGameTimer().EndTimer();
 
         if (playerDied)
         {
@@ -82,6 +79,6 @@ public class ResetPlayerToDefault : MonoBehaviour
 
     public void RespawnPlayer()
     {
-        LocalGameManager.instance.PlayerBackToTitleScreen();
+        LocalGameManager.Instance.PlayerBackToTitleScreen();
     }    
 }

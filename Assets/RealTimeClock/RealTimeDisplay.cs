@@ -20,7 +20,7 @@ public class RealTimeDisplay : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         currentTime = CurrentTime.instance;
     }
 

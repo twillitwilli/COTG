@@ -6,6 +6,6 @@ public class BGMPlayOnEnable : MonoBehaviour
 {
     private void OnEnable()
     {
-        LocalGameManager.instance.GetAudioController().ChangeMusic(AudioController.MusicTracks.Forest);
+        LocalGameManager.Instance.GetAudioController().ChangeMusic(AudioController.MusicTracks.Forest);
     }
 }

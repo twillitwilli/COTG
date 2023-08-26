@@ -1,59 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MagicController : MonoBehaviour
 {
     //CLASS SELECTION
     public enum ClassType { none = 0, Wizard = 1, Conjurer = 2, Sorcerer = 3, Mage = 4, Enchanter = 5, Warlock = 6, Witch = 7, Tarot = 8 }
-    [SerializeField] private ClassType _currentClass;
+    public ClassType currentClass { get; private set; }
 
     //MAGIC SELECTION
     [System.Flags] public enum MagicType { arcane = 1, fire = 2, water = 4, earth = 8, dark = 16, light = 32, blood = 64, cupcakes = 128 }
-    [SerializeField] private MagicType _currentMagic;
+    public MagicType currentMagic { get; private set; }
     public string magicName { get; private set; }
     public int magicIdx { get; private set; }
 
     //STATUS
     [System.Flags] public enum StatusEffects { none = 0, burning = 1, blinded = 2, frozen = 4, electrocuted = 8, slowed = 16, rooted = 32, lifeDraining = 64, poisoned = 128 }
-    [SerializeField] private StatusEffects _currentStatusEffect;
-    [SerializeField] private bool _hasStatusEffect;
-    
+    public StatusEffects currentStatusEffect { get; private set; }
+    public bool hasStatusEffect { get; private set; }
+
     //DASH EFFECTS
     [System.Flags] public enum DashEffects { none = 0, dashAOETrail = 1, teleportBurst = 2, dashPillars = 4 }
-    [SerializeField] private DashEffects _currentDashEffects;
+    public DashEffects currentDashEffects { get; private set; }
 
     //COLLISION EFFECTS
     public enum CollisionEffects { none = 0, peircing = 1, bouncing = 2, split = 3 }
-    [SerializeField] private CollisionEffects _currentCollisionEffects;
+    public CollisionEffects currentCollisionEffects { get; private set; }
 
     //SPECIAL EFFECTS
     [System.Flags] public enum SpecialEffects { none = 0, explosion = 1, rain = 2, summoning = 4, burst = 8, pillar = 16, AOEGround = 32 }
-    [SerializeField] private SpecialEffects _currentSpecialEffect;
+    public SpecialEffects currentSpecialEffect { get; private set; }
 
     //CASTING TYPE
-    public enum CastingType { charge, rapidFire, beam}
-    [SerializeField] private CastingType _currentCastingType;
-    [SerializeField] private bool _controllabeAttack;
+    public enum CastingType { none = 0, charge = 1, rapidFire = 2, beam = 3}
+    public CastingType currentCastingType { get; private set; }
+    public bool controllabeAttack { get; private set; }
 
     //PLAYER SUMMONED MINION
-    private GameObject _currentMinion;
-
-
-    // ------------------------------------------------------------------------------------
-
-
-    //GET REFERENCES
-    public ClassType GetClassType() { return _currentClass; }
-    public MagicType GetMagicType() { return _currentMagic; }
-
-    public StatusEffects GetCurrentStatusEffect() { return _currentStatusEffect; }
-    public DashEffects GetDashEffect() { return _currentDashEffects; }
-    public CollisionEffects GetCollisionEffect() { return _currentCollisionEffects; }
-    public SpecialEffects GetSpecialEffects() { return _currentSpecialEffect; }
-    public CastingType GetCurrentCastingType() { return _currentCastingType; }
-    public bool HasControllabeAttack() { return _controllabeAttack; }
-    public GameObject GetCurrentMinion() { return _currentMinion; }
+    public GameObject currentMinion { get; private set; }
 
 
     // -----------------------------------------------------------------------------------------
@@ -65,48 +50,48 @@ public class MagicController : MonoBehaviour
         switch (classValue)
         {
             case 0:
-                _currentClass = ClassType.none;
+                currentClass = ClassType.none;
                 break;
 
             case 1:
-                _currentClass = ClassType.Wizard;
+                currentClass = ClassType.Wizard;
                 break;
 
             case 2:
-                _currentClass = ClassType.Conjurer;
+                currentClass = ClassType.Conjurer;
                 break;
 
             case 3:
-                _currentClass = ClassType.Sorcerer;
+                currentClass = ClassType.Sorcerer;
                 break;
 
             case 4:
-                _currentClass = ClassType.Mage;
+                currentClass = ClassType.Mage;
                 break;
 
             case 5:
-                _currentClass = ClassType.Enchanter;
+                currentClass = ClassType.Enchanter;
                 break;
 
             case 6:
-                _currentClass = ClassType.Warlock;
+                currentClass = ClassType.Warlock;
                 break;
 
             case 7:
-                _currentClass = ClassType.Witch;
+                currentClass = ClassType.Witch;
                 break;
 
             case 8:
-                _currentClass = ClassType.Tarot;
+                currentClass = ClassType.Tarot;
                 break;
         }
     }
 
     public void ChangeClass(ClassType newClass)
     {
-        _currentClass = newClass;
+        currentClass = newClass;
 
-        switch (_currentClass)
+        switch (currentClass)
         {
             case ClassType.Wizard:
                 break;
@@ -139,8 +124,8 @@ public class MagicController : MonoBehaviour
 
     public bool CheckPlayerClass(ClassType classCheck)
     {
-        if (_currentClass == classCheck) { return true; }
-        else return false;
+        bool check = currentClass == classCheck ? true : false;
+        return check;
     }
 
 
@@ -150,19 +135,19 @@ public class MagicController : MonoBehaviour
     //MAGIC FUNCTIONS
     public void SetToSpecificMagic(MagicType newMagic)
     {
-        _currentMagic = newMagic;
+        currentMagic = newMagic;
         UpdateMagic();
     }
 
     public void AddMagic(MagicType magicToAdd)
     {
-        _currentMagic |= magicToAdd;
+        currentMagic |= magicToAdd;
         UpdateMagic();
     }
 
     public void RemoveMagic(MagicType magicToRemove)
     {
-        _currentMagic &= ~magicToRemove;
+        currentMagic &= ~magicToRemove;
         UpdateMagic();
     }
 
@@ -175,18 +160,18 @@ public class MagicController : MonoBehaviour
     public void UpdateMagic(bool loadMagic = false, int loadMagicIndex = 0)
     {
         // Will remove Arcane if any other magic type is selected
-        if (_currentMagic != MagicType.arcane && (_currentMagic & MagicType.arcane) != 0)
+        if (currentMagic != MagicType.arcane && (currentMagic & MagicType.arcane) != 0)
         {
-            _currentMagic &= ~MagicType.arcane;
+            currentMagic &= ~MagicType.arcane;
         }
 
         // Will remove all other magic types if Blood or Cupcakes is selected
-        if ((_currentMagic & (MagicType.blood | MagicType.cupcakes)) != 0)
+        if ((currentMagic & (MagicType.blood | MagicType.cupcakes)) != 0)
         {
-            _currentMagic = _currentMagic & (MagicType.blood | MagicType.cupcakes);
+            currentMagic = currentMagic & (MagicType.blood | MagicType.cupcakes);
         }
 
-        int magicInt = loadMagic ? loadMagicIndex : (int)_currentMagic;
+        int magicInt = loadMagic ? loadMagicIndex : (int)currentMagic;
 
         switch (magicInt)
         {
@@ -441,17 +426,17 @@ public class MagicController : MonoBehaviour
     //STATUS EFFECT FUNCTIONS
     public void ChangeStatusEffectAbility(StatusEffects newStatusEffect)
     {
-        _currentStatusEffect = newStatusEffect;
+        currentStatusEffect = newStatusEffect;
     }
 
     public void AddStatusEffect(StatusEffects addStatusEffect)
     {
-        _currentStatusEffect |= addStatusEffect;
+        currentStatusEffect |= addStatusEffect;
     }
 
     public void RemoveStatusEffect(StatusEffects removeStatusEffect)
     {
-        _currentStatusEffect &= ~removeStatusEffect;
+        currentStatusEffect &= ~removeStatusEffect;
     }
 
 
@@ -461,17 +446,17 @@ public class MagicController : MonoBehaviour
     //DASH EFFECT FUNCTIONS
     public void SetToSpecificDashType(DashEffects newDashEffect)
     {
-        _currentDashEffects = newDashEffect;
+        currentDashEffects = newDashEffect;
     }
 
     public void AddDashEffect(DashEffects addDashEffect)
     {
-        _currentDashEffects |= addDashEffect;
+        currentDashEffects |= addDashEffect;
     }
 
     public void RemoveDashEffect(DashEffects removeDashEffect)
     {
-        _currentDashEffects &= ~removeDashEffect;
+        currentDashEffects &= ~removeDashEffect;
     }
 
 
@@ -481,7 +466,7 @@ public class MagicController : MonoBehaviour
     //COLLISION FUNCTIONS
     public void SwitchCollisionType(CollisionEffects newCollisionEffect)
     {
-        _currentCollisionEffects = newCollisionEffect;
+        currentCollisionEffects = newCollisionEffect;
     }
 
 
@@ -492,17 +477,17 @@ public class MagicController : MonoBehaviour
     //SPECIAL EFFECT FUNCIONS
     public void SetToSpecificSpecialEffect(SpecialEffects newSpecialEffects)
     {
-        _currentSpecialEffect = newSpecialEffects;
+        currentSpecialEffect = newSpecialEffects;
     }
 
     public void AddSpecialEffect(SpecialEffects addSpecialEffect)
     {
-        _currentSpecialEffect |= addSpecialEffect;
+        currentSpecialEffect |= addSpecialEffect;
     }
 
     public void RemoveSpecialEffect(SpecialEffects removeSpecialEffect)
     {
-        _currentSpecialEffect &= ~removeSpecialEffect;
+        currentSpecialEffect &= ~removeSpecialEffect;
     }
 
 
@@ -517,22 +502,22 @@ public class MagicController : MonoBehaviour
         switch (castingTypeValue)
         {
             case 0:
-                _currentCastingType = CastingType.charge;
+                currentCastingType = CastingType.charge;
                 break;
 
             case 1:
-                _currentCastingType = CastingType.rapidFire;
+                currentCastingType = CastingType.rapidFire;
                 break;
 
             case 2:
-                _currentCastingType = CastingType.beam;
+                currentCastingType = CastingType.beam;
                 break;
         }
     }
 
     public void ChangeCastingType(CastingType newCastingType)
     {
-        _currentCastingType = newCastingType;
+        currentCastingType = newCastingType;
     }
 
 
@@ -541,7 +526,7 @@ public class MagicController : MonoBehaviour
 
 
     //CONTROLLABLE ATTACK FUNCTIONS
-    public void ToggleControllabeAttack(bool on) { _controllabeAttack = on; }
+    public void ToggleControllabeAttack(bool on) { controllabeAttack = on; }
 
 
 
@@ -549,14 +534,274 @@ public class MagicController : MonoBehaviour
 
     public bool CanSummonMinion()
     {
-        if (_currentMinion == null) { return true; }
-        else return false;
+        bool canSummon = currentMinion == null ? true : false;
+        return canSummon;
+    }
+
+    public void SetNewMinion(GameObject newMinion)
+    {
+        currentMinion = newMinion;
     }
 
     // --------------------------------------------------------------------------------------------------
 
-    public void ResetAll()
-    {
 
+    public async Task LoadSavedDungeonMagicStats(PlayerDungeonData loadedData)
+    {
+        switch (loadedData.playerClass)
+        {
+            case 0:
+                currentClass = ClassType.none;
+                break;
+
+            case 1:
+                currentClass = ClassType.Wizard;
+                break;
+
+            case 2:
+                currentClass = ClassType.Conjurer;
+                break;
+
+            case 3:
+                currentClass = ClassType.Sorcerer;
+                break;
+
+            case 4:
+                currentClass = ClassType.Mage;
+                break;
+
+            case 5:
+                currentClass = ClassType.Enchanter;
+                break;
+
+            case 6:
+                currentClass = ClassType.Warlock;
+                break;
+
+            case 7:
+                currentClass = ClassType.Witch;
+                break;
+
+            case 8:
+                currentClass = ClassType.Tarot;
+                break;
+        }
+
+        switch (loadedData.magicType)
+        {
+            // Cupcakes
+            case 128:
+                currentMagic |= MagicType.cupcakes;
+                break;
+
+            // Blood
+            case 64:
+                currentMagic |= MagicType.blood;
+                break;
+
+            // Fire, Water, Earth, Dark, Light
+            case 62:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Earth, Dark, Light
+            case 58:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Water, Earth, Dark, Light
+            case 60:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Water, Light, Dark
+            case 54:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.light;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Fire, Water, Earth Light
+            case 46:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Water, Earth, Dark
+            case 30:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Earth, Dark, Light
+            case 56:
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Water, Dark, Light
+            case 52:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Water, Earth, Light
+            case 44:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Water, Earth, Dark
+            case 28:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Fire, Dark, Light
+            case 50:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Earth, Dark
+            case 26:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Fire, Water, Light
+            case 38:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Water, Dark
+            case 22:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Fire, Water, Earth
+            case 14:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                break;
+
+            // Dark, Light
+            case 48:
+                currentMagic |= MagicType.dark;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Earth, Light
+            case 40:
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Earth, Dark
+            case 24:
+                currentMagic |= MagicType.earth;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Water, Light
+            case 36:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Water, Dark
+            case 20:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Water, Earth
+            case 12:
+                currentMagic |= MagicType.water;
+                currentMagic |= MagicType.earth;
+                break;
+
+            // Fire, Light
+            case 34:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.light;
+                break;
+
+            // Fire, Dark
+            case 18:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Fire, Earth
+            case 10:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.earth;
+                break;
+
+            // Fire, Water
+            case 6:
+                currentMagic |= MagicType.fire;
+                currentMagic |= MagicType.water;
+                break;
+
+            // Light
+            case 32:
+                currentMagic |= MagicType.light;
+                break;
+
+            // Dark
+            case 16:
+                currentMagic |= MagicType.dark;
+                break;
+
+            // Earth
+            case 8:
+                currentMagic |= MagicType.earth;
+                break;
+
+            // Water
+            case 4:
+                currentMagic |= MagicType.water;
+                break;
+
+            //Fire
+            case 2:
+                currentMagic |= MagicType.fire;
+                break;
+
+            // Arcane
+            case 1 | 0:
+                currentMagic |= MagicType.arcane;
+                break;
+        }
+
+        UpdateMagic();
     }
 }

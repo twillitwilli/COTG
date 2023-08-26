@@ -11,7 +11,7 @@ public class ShopMusicTrigger : MonoBehaviour
 
     private void Start()
     {
-        _audioController = LocalGameManager.instance.GetAudioController();
+        _audioController = LocalGameManager.Instance.GetAudioController();
     }
 
     private void OnTriggerEnter(Collider other)

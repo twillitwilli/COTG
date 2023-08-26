@@ -8,7 +8,7 @@ public class LoadGameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!LocalGameManager.instance) 
+        if (!LocalGameManager.Instance) 
         {
             GameObject newManager = Instantiate(gameManager);
             newManager.transform.SetParent(null);

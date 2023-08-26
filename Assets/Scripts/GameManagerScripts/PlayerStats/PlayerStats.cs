@@ -197,7 +197,7 @@ public class PlayerStats : MonoBehaviour
         if (_magicFocus <= 0) { _magicFocus = 1; }
         else if (_magicFocus >= 20) { _magicFocus = 20; }
 
-        switch (_magicController.GetClassType())
+        switch (_magicController.currentClass)
         {
             case MagicController.ClassType.Wizard:
                 _gearController.GetStaffController().GetPlayerStaff().AdjustMagicFocus();
@@ -327,7 +327,7 @@ public class PlayerStats : MonoBehaviour
 
     public int GetCurrentSouls() { return _currentSouls; }
 
-    public void LoadStats(PlayerDungeonData loadedData)
+    public async Task LoadStats(PlayerDungeonData loadedData)
     {
         // Base Stats
         _maxHealth = loadedData.maxHealth;

@@ -12,7 +12,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void Awake()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
     }
 
     private void LateUpdate()

@@ -9,7 +9,7 @@ public class CheckDungeonBuildStatus : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (!buildStatusCompleted && LocalGameManager.instance.dungeonBuildCompleted)
+        if (!buildStatusCompleted && LocalGameManager.Instance.dungeonBuildCompleted)
         {
             foreach (GameObject obj in portal) { obj.SetActive(true); }
             buildStatusCompleted = true;

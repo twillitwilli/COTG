@@ -12,7 +12,7 @@ public class GameTimerDisplayer : MonoBehaviour
 
     public void Start()
     {
-        _gameTimer = LocalGameManager.instance.GetGameTimer();
+        _gameTimer = LocalGameManager.Instance.GetGameTimer();
         if (!runningTimer) { DisplayCurrentGameTime(); }
     }
 

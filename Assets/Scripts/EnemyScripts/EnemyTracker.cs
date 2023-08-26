@@ -12,7 +12,7 @@ public class EnemyTracker : MonoBehaviour
 
     private void Awake()
     {
-        _enemyTrackerController = LocalGameManager.instance.GetEnemyTrackerController();
+        _enemyTrackerController = LocalGameManager.Instance.GetEnemyTrackerController();
     }
 
     public void Start()

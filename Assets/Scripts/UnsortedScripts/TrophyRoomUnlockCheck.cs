@@ -8,7 +8,7 @@ public class TrophyRoomUnlockCheck : MonoBehaviour
 
     private void Start()
     {
-        _totalStats = LocalGameManager.instance.GetTotalStats();
+        _totalStats = LocalGameManager.Instance.GetTotalStats();
 
         if (_totalStats.enemiesKilled > 1) { gameObject.SetActive(false); }
     }

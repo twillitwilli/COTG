@@ -47,7 +47,7 @@ public class SpawnRandomScroll : MonoBehaviour
         }
         else 
         {
-            LocalGameManager.instance.spawnedScrolls.Add(scrollParameters);
+            LocalGameManager.Instance.spawnedScrolls.Add(scrollParameters);
             ScrollSettings(spawnedScroll); 
         }
     }
@@ -65,11 +65,11 @@ public class SpawnRandomScroll : MonoBehaviour
 
     public bool CheckIfItemScrollAlreadySpawned(Vector2Int scrollParameters)
     {
-        if (LocalGameManager.instance.spawnedScrolls.Count > 0)
+        if (LocalGameManager.Instance.spawnedScrolls.Count > 0)
         {
-            for (int i = 0; i < LocalGameManager.instance.spawnedScrolls.Count; i++)
+            for (int i = 0; i < LocalGameManager.Instance.spawnedScrolls.Count; i++)
             {
-                if (LocalGameManager.instance.spawnedScrolls[i] == scrollParameters) { return true; }
+                if (LocalGameManager.Instance.spawnedScrolls[i] == scrollParameters) { return true; }
             }
         }
         return false;

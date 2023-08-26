@@ -8,14 +8,14 @@ public class RuneUsed : MonoBehaviour
 
     private void Start()
     {
-        _totalStats = LocalGameManager.instance.GetTotalStats();
+        _totalStats = LocalGameManager.Instance.GetTotalStats();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("RitualRune"))
         {
-            switch (LocalGameManager.instance.currentGameMode)
+            switch (LocalGameManager.Instance.currentGameMode)
             {
                 case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
                     _totalStats.AdjustStats(PlayerTotalStats.StatType.runesUsed);

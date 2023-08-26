@@ -26,7 +26,7 @@ public class CurrentMinion : MonoBehaviour
 
     public int GetMinionStage()
     {
-        int magicFocus = Mathf.RoundToInt(LocalGameManager.instance.GetPlayerStats().GetMagicFocus());
+        int magicFocus = Mathf.RoundToInt(LocalGameManager.Instance.GetPlayerStats().GetMagicFocus());
         if (magicFocus < 6) return 0;
         else if (magicFocus >= 6 && magicFocus < 12) return 1;
         else if (magicFocus >= 12) return 2;
@@ -35,6 +35,6 @@ public class CurrentMinion : MonoBehaviour
 
     public void SpawnNewMinion()
     {
-        currentMinion = Instantiate(MasterManager.playerMagicController.minions[currentMinionStage].minion[LocalGameManager.instance.GetMagicController().magicIdx]);
+        currentMinion = Instantiate(MasterManager.playerMagicController.minions[currentMinionStage].minion[LocalGameManager.Instance.GetMagicController().magicIdx]);
     }
 }

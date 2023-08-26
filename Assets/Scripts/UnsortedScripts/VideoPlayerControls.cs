@@ -20,7 +20,7 @@ public class VideoPlayerControls : MonoBehaviour
 
     private void Start()
     {
-        _audioController = LocalGameManager.instance.GetAudioController();
+        _audioController = LocalGameManager.Instance.GetAudioController();
 
         _currentVolume = _audioController.GetMusicVolume();
         _videoPlayer.SetDirectAudioVolume(0, _currentVolume);

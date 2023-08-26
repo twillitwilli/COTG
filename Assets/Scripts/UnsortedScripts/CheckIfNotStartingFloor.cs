@@ -6,6 +6,6 @@ public class CheckIfNotStartingFloor : MonoBehaviour
 {
     private void Start()
     {
-        if (LocalGameManager.instance.currentLevel == 1) { Destroy(gameObject); }
+        if (LocalGameManager.Instance.currentLevel == 1) { Destroy(gameObject); }
     }
 }

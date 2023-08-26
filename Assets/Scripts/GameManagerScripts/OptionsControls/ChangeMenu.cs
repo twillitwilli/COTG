@@ -9,33 +9,26 @@ public class ChangeMenu : MonoBehaviour
     [SerializeField] public GameObject[] enableObjects;
     [SerializeField] public GameObject[] disableObjects;
 
-    private bool buttonPress;
+    private bool _buttonPress;
 
-    public void ChangeMenuDisplay()
+    public async void ChangeMenuDisplay()
     {
-        buttonPress = true;
-
-        // foreach (GameObject disableObj in disableObjects) { disableObj.SetActive(false); }
-
-        Array.ForEach(disableObjects, disableObj => disableObj.SetActive(false));
-    }
-
-    private async void OnDisable()
-    {
-        if (buttonPress) 
+        if (!_buttonPress)
         {
-            await Task.Delay(500);
+            _buttonPress = true;
 
-            EnableNewMenus();
+            await EnableNewMenus();
 
-            buttonPress = false;
+            _buttonPress = false;
+
+            Array.ForEach(disableObjects, disableObj => disableObj.SetActive(false));
         }
     }
 
-    private void EnableNewMenus()
+    private async Task EnableNewMenus()
     {
         // foreach (GameObject enableObj in enableObjects) { enableObj.SetActive(true); }
 
-        Array.ForEach(disableObjects, disableObj => disableObj.SetActive(false));
+        Array.ForEach(enableObjects, enableObj => enableObj.SetActive(true));
     }
 }

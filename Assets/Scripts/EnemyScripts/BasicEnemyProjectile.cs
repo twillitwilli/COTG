@@ -17,7 +17,7 @@ public class BasicEnemyProjectile : MonoBehaviour
 
     public virtual void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         transform.SetParent(null);
         rb = GetComponent<Rigidbody>();
     }
@@ -26,7 +26,7 @@ public class BasicEnemyProjectile : MonoBehaviour
     {
         rb.velocity = transform.forward * projectileSpeed;
 
-        if (LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master) 
+        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
         { 
             attackDamage += (attackDamage * 0.5f); 
         }

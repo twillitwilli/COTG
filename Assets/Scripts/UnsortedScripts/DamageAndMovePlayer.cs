@@ -11,7 +11,7 @@ public class DamageAndMovePlayer : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
     }
 
     private void OnTriggerEnter(Collider other)

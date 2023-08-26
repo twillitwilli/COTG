@@ -11,7 +11,7 @@ public class AimAtPlayer : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
         enemyController = GetComponentInParent<EnemyController>();
     }
 

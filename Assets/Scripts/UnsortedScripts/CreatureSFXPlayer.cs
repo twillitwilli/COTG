@@ -50,7 +50,7 @@ public class CreatureSFXPlayer : MonoBehaviour
     {
         setCooldownTimer = true;
         sfxPlayer.clip = clip;
-        sfxPlayer.volume = LocalGameManager.instance.GetAudioController().GetCreatureSFXVolume();
+        sfxPlayer.volume = LocalGameManager.Instance.GetAudioController().GetCreatureSFXVolume();
         if (!sfxPlayer.isPlaying) { sfxPlayer.Play(); }
     }
 }

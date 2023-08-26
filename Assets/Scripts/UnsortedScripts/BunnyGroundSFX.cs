@@ -29,7 +29,7 @@ public class BunnyGroundSFX : MonoBehaviour
     private void PlayAudio()
     {
         sfxPlayer.clip = clip;
-        sfxPlayer.volume = LocalGameManager.instance.GetAudioController().GetCreatureSFXVolume();
+        sfxPlayer.volume = LocalGameManager.Instance.GetAudioController().GetCreatureSFXVolume();
         if (!sfxPlayer.isPlaying) { sfxPlayer.Play(); }
     }
 }

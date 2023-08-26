@@ -62,8 +62,8 @@ public class RoomSpawner : MonoBehaviour
 
     public void RoomSpawn(int roomType)
     {
-        int roomSelection = Random.Range(0, RoomObjects.instance.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[roomType].roomCount - 1);
-        GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.instance.dungeonType].roomLists[roomType].rooms[roomSelection], transform.position, transform.rotation);
+        int roomSelection = Random.Range(0, RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].roomCount - 1);
+        GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].rooms[roomSelection], transform.position, transform.rotation);
         newRoom.transform.LookAt(roomController.transform);
 
         //room save data

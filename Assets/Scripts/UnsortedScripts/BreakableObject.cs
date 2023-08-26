@@ -41,7 +41,7 @@ public class BreakableObject : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerTotalStats = _gameManager.GetTotalStats();
 
         Invoke("DelayCollision", 1);
@@ -92,7 +92,7 @@ public class BreakableObject : MonoBehaviour
 
     public void BreakObject(bool brokenByCurrentPlayer)
     {
-        switch (LocalGameManager.instance.currentGameMode)
+        switch (LocalGameManager.Instance.currentGameMode)
         {
             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
                 if (brokenByCurrentPlayer)

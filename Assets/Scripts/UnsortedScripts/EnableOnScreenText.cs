@@ -8,7 +8,7 @@ public class EnableOnScreenText : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerComponents = LocalGameManager.instance.player.GetPlayerComponents();
+        _playerComponents = LocalGameManager.Instance.player.GetPlayerComponents();
         _playerComponents.onScreenText.PrintText("This is the on screen text displayer", false);
     }
 

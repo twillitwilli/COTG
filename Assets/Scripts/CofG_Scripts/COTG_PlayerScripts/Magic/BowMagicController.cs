@@ -14,7 +14,7 @@ public class BowMagicController : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _magicController = _gameManager.GetMagicController();
     }
 

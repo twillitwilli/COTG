@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
 
         LocalGameManager.playerCreated += ConfigureSettingsForNewPlayer;
     }

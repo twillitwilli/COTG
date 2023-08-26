@@ -15,7 +15,7 @@ public class LightPedastal : MonoBehaviour
 
     private void Start()
     {
-        _visualSettings = LocalGameManager.instance.GetVisualSettings();
+        _visualSettings = LocalGameManager.Instance.GetVisualSettings();
         _visualSettings.lightPedastals.Add(this);
         AdjustLight();
     }

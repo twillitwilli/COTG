@@ -8,7 +8,7 @@ public class MovePlayerOnAwake : MonoBehaviour
 
     private void Awake()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
 
         _player.transform.position = transform.position;
         _player.transform.rotation = transform.rotation;

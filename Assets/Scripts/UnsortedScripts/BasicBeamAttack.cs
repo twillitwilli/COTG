@@ -18,7 +18,7 @@ public class BasicBeamAttack : MonoBehaviour
 
     public void Start()
     {
-        _playerStats = LocalGameManager.instance.GetPlayerStats();
+        _playerStats = LocalGameManager.Instance.GetPlayerStats();
 
         Invoke("StartDelay", 0.1f);
     }

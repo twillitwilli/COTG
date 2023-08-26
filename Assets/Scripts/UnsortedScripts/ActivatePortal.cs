@@ -11,12 +11,12 @@ public class ActivatePortal : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (!portalActivated && CoopManager.instance != null && !LocalGameManager.instance.isHost && CoopManager.instance.portalActive)
+        if (!portalActivated && CoopManager.instance != null && !LocalGameManager.Instance.isHost && CoopManager.instance.portalActive)
         {
             EnableObjects(activatePortal, true);
             if (CoopManager.instance.closeOtherPortals)
             {
-                switch (LocalGameManager.instance.currentGameMode)
+                switch (LocalGameManager.Instance.currentGameMode)
                 {
                     case LocalGameManager.GameMode.master:
                         if (hardModePortal)

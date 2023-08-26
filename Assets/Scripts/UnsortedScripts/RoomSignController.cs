@@ -8,7 +8,7 @@ public class RoomSignController : MonoBehaviour
 
     private void Awake()
     {
-        switch (LocalGameManager.instance.currentGameMode)
+        switch (LocalGameManager.Instance.currentGameMode)
         {
             case LocalGameManager.GameMode.tutorial:
                 ActivateSign();

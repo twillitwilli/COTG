@@ -27,7 +27,7 @@ public class DevOptions : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _enemyTrackerController = _gameManager.GetEnemyTrackerController();
 
         _player = _gameManager.player;
@@ -159,7 +159,7 @@ public class DevOptions : MonoBehaviour
             _gameManager.GetMagicController().ChangeClass(_classType);
         }
 
-        ChangeText("Current Class:\n" + _gameManager.GetMagicController().GetClassType());
+        ChangeText("Current Class:\n" + _gameManager.GetMagicController().currentClass);
     }
 
     private void ChangeMagicType()
@@ -179,6 +179,6 @@ public class DevOptions : MonoBehaviour
             _gameManager.GetMagicController().ChangeCastingType(_castingType);
         }
 
-        ChangeText("Casting Type:\n" + _gameManager.GetMagicController().GetCurrentCastingType());
+        ChangeText("Casting Type:\n" + _gameManager.GetMagicController().currentCastingType);
     }
 }

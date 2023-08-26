@@ -15,7 +15,7 @@ public class HandAdjustmentController : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
 
         for (int i = 0; i < controllerOrigins.Length; i++)
         {

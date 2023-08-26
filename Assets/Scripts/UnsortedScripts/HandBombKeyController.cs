@@ -24,8 +24,8 @@ public class HandBombKeyController : MonoBehaviour
     {
         if (_leftHand == null || _rightHand == null)
         {
-            _player = LocalGameManager.instance.player;
-            _playerStats = LocalGameManager.instance.GetPlayerStats();
+            _player = LocalGameManager.Instance.player;
+            _playerStats = LocalGameManager.Instance.GetPlayerStats();
             _leftHand = _player.GetPlayerComponents().GetHand(0);
             _rightHand = _player.GetPlayerComponents().GetHand(1);
         }

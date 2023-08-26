@@ -13,7 +13,7 @@ public class TutorialAreaLoaded : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _playerStats = _gameManager.GetPlayerStats();
 
         Invoke("AreaLoaded", 1);

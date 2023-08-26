@@ -10,7 +10,7 @@ public class BombTrigger : MonoBehaviour
 
     private void Start()
     {
-        _totalStats = LocalGameManager.instance.GetTotalStats();
+        _totalStats = LocalGameManager.Instance.GetTotalStats();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +21,7 @@ public class BombTrigger : MonoBehaviour
 
             if (player != null)
             {
-                switch (LocalGameManager.instance.currentGameMode)
+                switch (LocalGameManager.Instance.currentGameMode)
                 {
                     case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
                         switch (breakableObject.objectType)

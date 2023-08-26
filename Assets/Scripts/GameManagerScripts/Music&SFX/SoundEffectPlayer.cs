@@ -10,7 +10,7 @@ public class SoundEffectPlayer : MonoBehaviour
 
     private void Awake()
     {
-        _audioController = LocalGameManager.instance.GetAudioController();
+        _audioController = LocalGameManager.Instance.GetAudioController();
     }
 
     public void PlaySFX(float currentSFXVolume, AudioClip sfxClip, bool attachToObject, Transform attachingObject, float lifeTime)

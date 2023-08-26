@@ -6,6 +6,6 @@ public class PlayerHasPotionSight : MonoBehaviour
 {
     private void Start()
     {
-        if (!LocalGameManager.instance.player.GetPlayerComponents().dungeonGear.hasPotionSight) { gameObject.SetActive(false); }
+        if (!LocalGameManager.Instance.player.GetPlayerComponents().dungeonGear.hasPotionSight) { gameObject.SetActive(false); }
     }
 }

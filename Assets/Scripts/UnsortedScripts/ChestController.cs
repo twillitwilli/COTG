@@ -32,10 +32,10 @@ public class ChestController : MonoBehaviour
         else if (lootSelection > 75 && lootSelection < 95) { SpawnPotion(); }
         else { SpawnItemPedastal(); }
 
-        switch (LocalGameManager.instance.currentGameMode)
+        switch (LocalGameManager.Instance.currentGameMode)
         {
             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
-                LocalGameManager.instance.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.chestsOpened);
+                LocalGameManager.Instance.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.chestsOpened);
                 break;
         }
     }
@@ -46,7 +46,7 @@ public class ChestController : MonoBehaviour
         for (int i = 0; i < spawnItemCount; i++)
         {
             int randomSpawnPoint = Mathf.RoundToInt(Random.Range(2f, spawnPoints.Count));
-            LocalGameManager.instance.SpawnRandomDrop(spawnPoints[randomSpawnPoint]);
+            LocalGameManager.Instance.SpawnRandomDrop(spawnPoints[randomSpawnPoint]);
             spawnPoints.Remove(spawnPoints[randomSpawnPoint]);
         }
         Destroy(gameObject);

@@ -21,7 +21,7 @@ public class SpecialRoomSpawner : MonoBehaviour
         _dungeonBuildParent = DungeonBuildParent.instance;
         _compassController = _dungeonBuildParent.GetCompassController();
 
-        _audioController = LocalGameManager.instance.GetAudioController();
+        _audioController = LocalGameManager.Instance.GetAudioController();
     }
 
     public void ExploredRoom()

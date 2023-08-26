@@ -13,7 +13,7 @@ public class ChatWindow : MonoBehaviour
 
     public void Start()
     {
-        _chatManager = LocalGameManager.instance.GetChatManager();
+        _chatManager = LocalGameManager.Instance.GetChatManager();
 
         if (_chatManager.displayMessage != null)
         {

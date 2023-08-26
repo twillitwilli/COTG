@@ -15,7 +15,7 @@ public class DropOnDestroy : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _player = _gameManager.player;
     }
 
@@ -27,7 +27,7 @@ public class DropOnDestroy : MonoBehaviour
             {
                 _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.soul, transform);
             }
-            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + LocalGameManager.instance.GetPlayerStats().GetLuck()))
+            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + LocalGameManager.Instance.GetPlayerStats().GetLuck()))
             {
                 _gameManager.SpawnRandomDrop(transform);
             }

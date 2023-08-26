@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     public virtual void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _player = _gameManager.player;
 
         statusController = GetComponent<EnemyStatusController>();
@@ -82,7 +82,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void AdjustTotalStats()
     {
-        PlayerTotalStats totalStats = LocalGameManager.instance.GetTotalStats();
+        PlayerTotalStats totalStats = LocalGameManager.Instance.GetTotalStats();
 
         switch (enemyController.enemyName)
         {

@@ -21,7 +21,7 @@ public class CoopManager : MonoBehaviourPun
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _currentPlayer = _gameManager.player;
     }
 

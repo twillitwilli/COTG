@@ -13,7 +13,7 @@ public class FogFade : MonoBehaviour
 
     private void Start()
     {
-        _player = LocalGameManager.instance.player;
+        _player = LocalGameManager.Instance.player;
 
         backingOn = true;
     }

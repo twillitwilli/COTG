@@ -8,7 +8,7 @@ public class PlayerCalibrationCheck : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (LocalGameManager.instance.hasCalibrated)
+        if (LocalGameManager.Instance.hasCalibrated)
         {
             SaveFileSelector.SetActive(true);
             Destroy(gameObject);

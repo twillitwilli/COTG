@@ -17,7 +17,7 @@ public class PotionEffect : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _potionController = _gameManager.GetPotionController();
         _audioController = _gameManager.GetAudioController();
         _totalStats = _gameManager.GetTotalStats();

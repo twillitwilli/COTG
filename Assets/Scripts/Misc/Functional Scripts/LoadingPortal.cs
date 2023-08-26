@@ -25,7 +25,7 @@ public class LoadingPortal : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _gameTimer = _gameManager.GetGameTimer();
         _playerPrefSaveData = _gameManager.GetPlayerPrefsSaveData();
         _playerTotalStats = _gameManager.GetTotalStats();
@@ -46,7 +46,7 @@ public class LoadingPortal : MonoBehaviour
         {
             //temp game block
             case GameType.ToNextFloor:
-                if (LocalGameManager.instance.currentLevel >= 2) { gameObject.SetActive(false); }
+                if (LocalGameManager.Instance.currentLevel >= 2) { gameObject.SetActive(false); }
                 break;
         }
     }
@@ -117,7 +117,7 @@ public class LoadingPortal : MonoBehaviour
                 _gameManager.dungeonBuildCompleted = false;
                 if (CoopManager.instance != null) 
                 { 
-                    if (LocalGameManager.instance.isHost) 
+                    if (LocalGameManager.Instance.isHost) 
                     {
                         CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
                         CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
@@ -185,7 +185,7 @@ public class LoadingPortal : MonoBehaviour
     {
         CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
         CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
-        CoopManager.instance.isHardMode = LocalGameManager.instance.currentGameMode == LocalGameManager.GameMode.master ? true : false;
+        CoopManager.instance.isHardMode = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ? true : false;
         CoopManager.instance.portalActive = true;
         CoopManager.instance.PortalStatus();
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialGuideAnimation : MonoBehaviour
+public class TutorialGuideAnimation : Cooldown
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Cooldown cooldown;
@@ -11,7 +11,7 @@ public class TutorialGuideAnimation : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (cooldown.CooldownDone()) { Attack(); }
+        if (CooldownCompleted()) { Attack(); }
     }
 
     public void DisableSelf()
@@ -22,7 +22,8 @@ public class TutorialGuideAnimation : MonoBehaviour
     public void Idle()
     {
         ChangeAnimationClip("Idle");
-        cooldown.setCooldown = true;
+
+        CooldownCompleted(1, true);
     }
 
     public void Attack()

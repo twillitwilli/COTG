@@ -64,7 +64,7 @@ public class PlayerTotalStats : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
     }
 
     public void AdjustStats(StatType statType, int value = 0)

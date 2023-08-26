@@ -16,9 +16,9 @@ public class DefaultButton : MonoBehaviour
 
     private void Start()
     {
-        _visualSettings = LocalGameManager.instance.GetVisualSettings();
-        _postProcessingController = LocalGameManager.instance.GetPostProcessingController();
-        _player = LocalGameManager.instance.player;
+        _visualSettings = LocalGameManager.Instance.GetVisualSettings();
+        _postProcessingController = LocalGameManager.Instance.GetPostProcessingController();
+        _player = LocalGameManager.Instance.player;
     }
 
     public void ResetToDefault()
@@ -54,7 +54,7 @@ public class DefaultButton : MonoBehaviour
                 break;
 
             case DefaultOptions.volume:
-                LocalGameManager.instance.GetAudioController().DefaultAudioSettings();
+                LocalGameManager.Instance.GetAudioController().DefaultAudioSettings();
                 break;
 
             case DefaultOptions.playerAttachments:

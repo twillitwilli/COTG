@@ -8,7 +8,7 @@ public class HandsOnPedastalCheck : MonoBehaviour
 
     private void Start()
     {
-        _getItem = LocalGameManager.instance.player.GetPlayerComponents().getItemRaycast;
+        _getItem = LocalGameManager.Instance.player.GetPlayerComponents().getItemRaycast;
     }
 
     private void OnTriggerEnter(Collider other)

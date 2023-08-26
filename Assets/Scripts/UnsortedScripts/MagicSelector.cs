@@ -11,7 +11,7 @@ public class MagicSelector : MonoBehaviour
 
     private void Start()
     {
-        _magicController = LocalGameManager.instance.GetMagicController();
+        _magicController = LocalGameManager.Instance.GetMagicController();
     }
 
     public void ChangeMagic()

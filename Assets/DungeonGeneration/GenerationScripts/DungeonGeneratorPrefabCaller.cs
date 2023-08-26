@@ -20,16 +20,16 @@ public class DungeonGeneratorPrefabCaller : MonoBehaviour
         else { Destroy(gameObject); }
         Instantiate(roomPrefabObjects);
 
-        _gameManager = LocalGameManager.instance;
+        _gameManager = LocalGameManager.Instance;
         _chatManager = _gameManager.GetChatManager();
 
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.instance.isHost)
+        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost)
         {
             _chatManager.DebugMessage("Building Dungeon");
             int randomLoadingArea = Random.Range(0, loadingAreas.Length);
             Instantiate(loadingAreas[randomLoadingArea], transform.position, transform.rotation);
         }
-        else if (CoopManager.instance != null && !LocalGameManager.instance.isHost)
+        else if (CoopManager.instance != null && !LocalGameManager.Instance.isHost)
         {
             CoopManager.instance.coopDungeonBuild.CheckSpawnedLoadingArea();
         }
