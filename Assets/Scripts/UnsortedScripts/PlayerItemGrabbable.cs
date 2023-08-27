@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class PlayerItemGrabbable : MonoBehaviour
 {
-    public enum PlayerItem { nothingToGrab, map, wallet, bomb, key, potion, staff, bow, bowString, rune, climbable, jar, classCard }
+    public enum PlayerItem 
+    { 
+        nothing, 
+        map, 
+        wallet, 
+        bomb, 
+        key, 
+        potion, 
+        staff, 
+        bow, 
+        bowString, 
+        rune, 
+        climbable, 
+        jar,
+        classCard, 
+        ignitedBomb 
+    }
     public PlayerItem whichItem;
+
     public bool canBePlacedInPocket, throwableObject;
-    [HideInInspector] public VRPlayerHand currentHand;
-    [HideInInspector] public bool attachedToPocket;
+
+    [HideInInspector] 
+    public VRPlayerHand currentHand;
+
+    [HideInInspector] 
+    public bool attachedToPocket;
 
     [Header("Has Impact sound")]
     public bool hasImpactSound;

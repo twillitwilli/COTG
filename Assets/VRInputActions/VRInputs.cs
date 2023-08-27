@@ -19,7 +19,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
             ""id"": ""5d08d00e-5321-442f-a739-63ec6858809a"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""JoystickPosition"",
                     ""type"": ""Value"",
                     ""id"": ""64872231-0f14-4448-9876-aa2f8511ed01"",
                     ""expectedControlType"": ""Vector2"",
@@ -27,7 +27,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Sprint"",
+                    ""name"": ""JoystickClick"",
                     ""type"": ""Button"",
                     ""id"": ""98a8a603-5940-4346-9915-1772a9c7cac3"",
                     ""expectedControlType"": ""Button"",
@@ -35,7 +35,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""SecondaryButton"",
                     ""type"": ""Button"",
                     ""id"": ""98145bd3-b83d-4980-96f3-a15f4e7b4b63"",
                     ""expectedControlType"": ""Button"",
@@ -43,7 +43,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Grab"",
+                    ""name"": ""GrabButton"",
                     ""type"": ""Button"",
                     ""id"": ""205d1d34-0789-45dc-ad4e-c77307bb1db6"",
                     ""expectedControlType"": ""Button"",
@@ -51,7 +51,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Trigger"",
+                    ""name"": ""TriggerButton"",
                     ""type"": ""Button"",
                     ""id"": ""b5dffc35-b8e1-4fba-a3c3-ce18784877ec"",
                     ""expectedControlType"": ""Button"",
@@ -59,17 +59,9 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Primary_Button"",
+                    ""name"": ""PrimaryButton"",
                     ""type"": ""Button"",
                     ""id"": ""149ebbc3-c24a-454c-8b7a-bf636eca582b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""JoystickTouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""59398030-65a2-491c-a071-d5592fcb1257"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -83,7 +75,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Move"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -94,7 +86,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Move"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -105,7 +97,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Move"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -116,7 +108,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Move"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -127,7 +119,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -138,7 +130,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -149,7 +141,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -160,7 +152,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -171,7 +163,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -182,7 +174,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -193,7 +185,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Trigger"",
+                    ""action"": ""TriggerButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -204,7 +196,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Trigger"",
+                    ""action"": ""TriggerButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -215,7 +207,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Trigger"",
+                    ""action"": ""TriggerButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -226,7 +218,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Menu"",
+                    ""action"": ""SecondaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -237,7 +229,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Menu"",
+                    ""action"": ""SecondaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -248,7 +240,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Menu"",
+                    ""action"": ""SecondaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -259,7 +251,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Menu"",
+                    ""action"": ""SecondaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -270,7 +262,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Menu"",
+                    ""action"": ""SecondaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -281,7 +273,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Primary_Button"",
+                    ""action"": ""PrimaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -292,29 +284,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Primary_Button"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4aca2636-53c0-48a2-9dc7-380c9a476838"",
-                    ""path"": ""<XRController>{LeftHand}/primaryTouched"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""VRControls"",
-                    ""action"": ""JoystickTouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f0307748-66cf-45a4-a163-6c7ab597d4b5"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""VRControls"",
-                    ""action"": ""JoystickTouch"",
+                    ""action"": ""PrimaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -325,7 +295,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
             ""id"": ""9cefcb27-6ca5-4250-82f9-82609efc2889"",
             ""actions"": [
                 {
-                    ""name"": ""Rotate"",
+                    ""name"": ""JoystickPosition"",
                     ""type"": ""Value"",
                     ""id"": ""9bbe2d98-ec63-4d66-bcce-d9ff8b46fbe6"",
                     ""expectedControlType"": ""Vector2"",
@@ -333,7 +303,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""JoystickClick"",
                     ""type"": ""Button"",
                     ""id"": ""a1fcb408-2e2b-40d1-942e-306c88713ee2"",
                     ""expectedControlType"": ""Button"",
@@ -341,7 +311,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""CrouchToggle"",
+                    ""name"": ""SeconaryButton"",
                     ""type"": ""Button"",
                     ""id"": ""6b3ced5a-25ef-4383-922a-1e84f8e772e4"",
                     ""expectedControlType"": ""Button"",
@@ -349,7 +319,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Grab"",
+                    ""name"": ""GrabButton"",
                     ""type"": ""Button"",
                     ""id"": ""29660c6a-812c-4fd9-bfa9-623a77ee6b17"",
                     ""expectedControlType"": ""Button"",
@@ -357,7 +327,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Trigger"",
+                    ""name"": ""TriggerButton"",
                     ""type"": ""Button"",
                     ""id"": ""47896f88-f978-418b-9a7e-cc014ce5c6f3"",
                     ""expectedControlType"": ""Button"",
@@ -365,33 +335,9 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Primary_Button"",
+                    ""name"": ""PrimaryButton"",
                     ""type"": ""Button"",
                     ""id"": ""008109f2-08ac-4937-b83c-afd8f765fd2e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""WMRTriggerButtonDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""8ad53b20-58d1-41b7-ac5d-c472eaf2d4e0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""WMRTriggerButtonUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""ec1f8160-1253-438c-92f9-758f4f965b8d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""JoystickTouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""6c0a4d27-4bae-4140-9043-bc4818f880fc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -405,7 +351,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -416,7 +362,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -427,7 +373,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -438,7 +384,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Rotate"",
+                    ""action"": ""JoystickPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -449,7 +395,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Jump"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -460,7 +406,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Jump"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -471,7 +417,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Jump"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -482,7 +428,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Jump"",
+                    ""action"": ""JoystickClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -493,7 +439,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""CrouchToggle"",
+                    ""action"": ""SeconaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -504,7 +450,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""CrouchToggle"",
+                    ""action"": ""SeconaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -515,7 +461,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""CrouchToggle"",
+                    ""action"": ""SeconaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -526,7 +472,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""CrouchToggle"",
+                    ""action"": ""SeconaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -537,7 +483,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""CrouchToggle"",
+                    ""action"": ""SeconaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -548,7 +494,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -559,7 +505,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -570,7 +516,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Grab"",
+                    ""action"": ""GrabButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -581,7 +527,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Trigger"",
+                    ""action"": ""TriggerButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -592,7 +538,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Trigger"",
+                    ""action"": ""TriggerButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -603,7 +549,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Primary_Button"",
+                    ""action"": ""PrimaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -614,40 +560,7 @@ public class @VRInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""VRControls"",
-                    ""action"": ""Primary_Button"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6850f32a-49a3-4724-bdec-da5987cc944d"",
-                    ""path"": ""<WMRSpatialController>{RightHand}/triggerPressed"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""VRControls"",
-                    ""action"": ""WMRTriggerButtonDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a47a6b4c-9176-495a-9b21-b1f3e164eb05"",
-                    ""path"": ""<WMRSpatialController>{RightHand}/triggerPressed"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": ""VRControls"",
-                    ""action"": ""WMRTriggerButtonUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fff91f74-cd00-40f0-97af-6b490f2a52f6"",
-                    ""path"": ""<XRController>{RightHand}/primaryTouched"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""VRControls"",
-                    ""action"": ""JoystickTouch"",
+                    ""action"": ""PrimaryButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -681,24 +594,20 @@ public class @VRInputs : IInputActionCollection, IDisposable
 }");
         // Left_Hand
         m_Left_Hand = asset.FindActionMap("Left_Hand", throwIfNotFound: true);
-        m_Left_Hand_Move = m_Left_Hand.FindAction("Move", throwIfNotFound: true);
-        m_Left_Hand_Sprint = m_Left_Hand.FindAction("Sprint", throwIfNotFound: true);
-        m_Left_Hand_Menu = m_Left_Hand.FindAction("Menu", throwIfNotFound: true);
-        m_Left_Hand_Grab = m_Left_Hand.FindAction("Grab", throwIfNotFound: true);
-        m_Left_Hand_Trigger = m_Left_Hand.FindAction("Trigger", throwIfNotFound: true);
-        m_Left_Hand_Primary_Button = m_Left_Hand.FindAction("Primary_Button", throwIfNotFound: true);
-        m_Left_Hand_JoystickTouch = m_Left_Hand.FindAction("JoystickTouch", throwIfNotFound: true);
+        m_Left_Hand_JoystickPosition = m_Left_Hand.FindAction("JoystickPosition", throwIfNotFound: true);
+        m_Left_Hand_JoystickClick = m_Left_Hand.FindAction("JoystickClick", throwIfNotFound: true);
+        m_Left_Hand_SecondaryButton = m_Left_Hand.FindAction("SecondaryButton", throwIfNotFound: true);
+        m_Left_Hand_GrabButton = m_Left_Hand.FindAction("GrabButton", throwIfNotFound: true);
+        m_Left_Hand_TriggerButton = m_Left_Hand.FindAction("TriggerButton", throwIfNotFound: true);
+        m_Left_Hand_PrimaryButton = m_Left_Hand.FindAction("PrimaryButton", throwIfNotFound: true);
         // Right_Hand
         m_Right_Hand = asset.FindActionMap("Right_Hand", throwIfNotFound: true);
-        m_Right_Hand_Rotate = m_Right_Hand.FindAction("Rotate", throwIfNotFound: true);
-        m_Right_Hand_Jump = m_Right_Hand.FindAction("Jump", throwIfNotFound: true);
-        m_Right_Hand_CrouchToggle = m_Right_Hand.FindAction("CrouchToggle", throwIfNotFound: true);
-        m_Right_Hand_Grab = m_Right_Hand.FindAction("Grab", throwIfNotFound: true);
-        m_Right_Hand_Trigger = m_Right_Hand.FindAction("Trigger", throwIfNotFound: true);
-        m_Right_Hand_Primary_Button = m_Right_Hand.FindAction("Primary_Button", throwIfNotFound: true);
-        m_Right_Hand_WMRTriggerButtonDown = m_Right_Hand.FindAction("WMRTriggerButtonDown", throwIfNotFound: true);
-        m_Right_Hand_WMRTriggerButtonUp = m_Right_Hand.FindAction("WMRTriggerButtonUp", throwIfNotFound: true);
-        m_Right_Hand_JoystickTouch = m_Right_Hand.FindAction("JoystickTouch", throwIfNotFound: true);
+        m_Right_Hand_JoystickPosition = m_Right_Hand.FindAction("JoystickPosition", throwIfNotFound: true);
+        m_Right_Hand_JoystickClick = m_Right_Hand.FindAction("JoystickClick", throwIfNotFound: true);
+        m_Right_Hand_SeconaryButton = m_Right_Hand.FindAction("SeconaryButton", throwIfNotFound: true);
+        m_Right_Hand_GrabButton = m_Right_Hand.FindAction("GrabButton", throwIfNotFound: true);
+        m_Right_Hand_TriggerButton = m_Right_Hand.FindAction("TriggerButton", throwIfNotFound: true);
+        m_Right_Hand_PrimaryButton = m_Right_Hand.FindAction("PrimaryButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -748,24 +657,22 @@ public class @VRInputs : IInputActionCollection, IDisposable
     // Left_Hand
     private readonly InputActionMap m_Left_Hand;
     private ILeft_HandActions m_Left_HandActionsCallbackInterface;
-    private readonly InputAction m_Left_Hand_Move;
-    private readonly InputAction m_Left_Hand_Sprint;
-    private readonly InputAction m_Left_Hand_Menu;
-    private readonly InputAction m_Left_Hand_Grab;
-    private readonly InputAction m_Left_Hand_Trigger;
-    private readonly InputAction m_Left_Hand_Primary_Button;
-    private readonly InputAction m_Left_Hand_JoystickTouch;
+    private readonly InputAction m_Left_Hand_JoystickPosition;
+    private readonly InputAction m_Left_Hand_JoystickClick;
+    private readonly InputAction m_Left_Hand_SecondaryButton;
+    private readonly InputAction m_Left_Hand_GrabButton;
+    private readonly InputAction m_Left_Hand_TriggerButton;
+    private readonly InputAction m_Left_Hand_PrimaryButton;
     public struct Left_HandActions
     {
         private @VRInputs m_Wrapper;
         public Left_HandActions(@VRInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Left_Hand_Move;
-        public InputAction @Sprint => m_Wrapper.m_Left_Hand_Sprint;
-        public InputAction @Menu => m_Wrapper.m_Left_Hand_Menu;
-        public InputAction @Grab => m_Wrapper.m_Left_Hand_Grab;
-        public InputAction @Trigger => m_Wrapper.m_Left_Hand_Trigger;
-        public InputAction @Primary_Button => m_Wrapper.m_Left_Hand_Primary_Button;
-        public InputAction @JoystickTouch => m_Wrapper.m_Left_Hand_JoystickTouch;
+        public InputAction @JoystickPosition => m_Wrapper.m_Left_Hand_JoystickPosition;
+        public InputAction @JoystickClick => m_Wrapper.m_Left_Hand_JoystickClick;
+        public InputAction @SecondaryButton => m_Wrapper.m_Left_Hand_SecondaryButton;
+        public InputAction @GrabButton => m_Wrapper.m_Left_Hand_GrabButton;
+        public InputAction @TriggerButton => m_Wrapper.m_Left_Hand_TriggerButton;
+        public InputAction @PrimaryButton => m_Wrapper.m_Left_Hand_PrimaryButton;
         public InputActionMap Get() { return m_Wrapper.m_Left_Hand; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -775,52 +682,46 @@ public class @VRInputs : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_Left_HandActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMove;
-                @Sprint.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSprint;
-                @Sprint.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSprint;
-                @Sprint.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSprint;
-                @Menu.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMenu;
-                @Menu.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMenu;
-                @Menu.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnMenu;
-                @Grab.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrab;
-                @Grab.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrab;
-                @Grab.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrab;
-                @Trigger.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTrigger;
-                @Trigger.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTrigger;
-                @Trigger.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTrigger;
-                @Primary_Button.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimary_Button;
-                @Primary_Button.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimary_Button;
-                @Primary_Button.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimary_Button;
-                @JoystickTouch.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickTouch;
-                @JoystickTouch.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickTouch;
-                @JoystickTouch.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickTouch;
+                @JoystickPosition.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickPosition.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickPosition.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickClick.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickClick;
+                @JoystickClick.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickClick;
+                @JoystickClick.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnJoystickClick;
+                @SecondaryButton.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSecondaryButton;
+                @SecondaryButton.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSecondaryButton;
+                @SecondaryButton.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnSecondaryButton;
+                @GrabButton.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrabButton;
+                @GrabButton.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrabButton;
+                @GrabButton.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnGrabButton;
+                @TriggerButton.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTriggerButton;
+                @TriggerButton.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTriggerButton;
+                @TriggerButton.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnTriggerButton;
+                @PrimaryButton.started -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimaryButton;
+                @PrimaryButton.performed -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimaryButton;
+                @PrimaryButton.canceled -= m_Wrapper.m_Left_HandActionsCallbackInterface.OnPrimaryButton;
             }
             m_Wrapper.m_Left_HandActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-                @Sprint.started += instance.OnSprint;
-                @Sprint.performed += instance.OnSprint;
-                @Sprint.canceled += instance.OnSprint;
-                @Menu.started += instance.OnMenu;
-                @Menu.performed += instance.OnMenu;
-                @Menu.canceled += instance.OnMenu;
-                @Grab.started += instance.OnGrab;
-                @Grab.performed += instance.OnGrab;
-                @Grab.canceled += instance.OnGrab;
-                @Trigger.started += instance.OnTrigger;
-                @Trigger.performed += instance.OnTrigger;
-                @Trigger.canceled += instance.OnTrigger;
-                @Primary_Button.started += instance.OnPrimary_Button;
-                @Primary_Button.performed += instance.OnPrimary_Button;
-                @Primary_Button.canceled += instance.OnPrimary_Button;
-                @JoystickTouch.started += instance.OnJoystickTouch;
-                @JoystickTouch.performed += instance.OnJoystickTouch;
-                @JoystickTouch.canceled += instance.OnJoystickTouch;
+                @JoystickPosition.started += instance.OnJoystickPosition;
+                @JoystickPosition.performed += instance.OnJoystickPosition;
+                @JoystickPosition.canceled += instance.OnJoystickPosition;
+                @JoystickClick.started += instance.OnJoystickClick;
+                @JoystickClick.performed += instance.OnJoystickClick;
+                @JoystickClick.canceled += instance.OnJoystickClick;
+                @SecondaryButton.started += instance.OnSecondaryButton;
+                @SecondaryButton.performed += instance.OnSecondaryButton;
+                @SecondaryButton.canceled += instance.OnSecondaryButton;
+                @GrabButton.started += instance.OnGrabButton;
+                @GrabButton.performed += instance.OnGrabButton;
+                @GrabButton.canceled += instance.OnGrabButton;
+                @TriggerButton.started += instance.OnTriggerButton;
+                @TriggerButton.performed += instance.OnTriggerButton;
+                @TriggerButton.canceled += instance.OnTriggerButton;
+                @PrimaryButton.started += instance.OnPrimaryButton;
+                @PrimaryButton.performed += instance.OnPrimaryButton;
+                @PrimaryButton.canceled += instance.OnPrimaryButton;
             }
         }
     }
@@ -829,28 +730,22 @@ public class @VRInputs : IInputActionCollection, IDisposable
     // Right_Hand
     private readonly InputActionMap m_Right_Hand;
     private IRight_HandActions m_Right_HandActionsCallbackInterface;
-    private readonly InputAction m_Right_Hand_Rotate;
-    private readonly InputAction m_Right_Hand_Jump;
-    private readonly InputAction m_Right_Hand_CrouchToggle;
-    private readonly InputAction m_Right_Hand_Grab;
-    private readonly InputAction m_Right_Hand_Trigger;
-    private readonly InputAction m_Right_Hand_Primary_Button;
-    private readonly InputAction m_Right_Hand_WMRTriggerButtonDown;
-    private readonly InputAction m_Right_Hand_WMRTriggerButtonUp;
-    private readonly InputAction m_Right_Hand_JoystickTouch;
+    private readonly InputAction m_Right_Hand_JoystickPosition;
+    private readonly InputAction m_Right_Hand_JoystickClick;
+    private readonly InputAction m_Right_Hand_SeconaryButton;
+    private readonly InputAction m_Right_Hand_GrabButton;
+    private readonly InputAction m_Right_Hand_TriggerButton;
+    private readonly InputAction m_Right_Hand_PrimaryButton;
     public struct Right_HandActions
     {
         private @VRInputs m_Wrapper;
         public Right_HandActions(@VRInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_Right_Hand_Rotate;
-        public InputAction @Jump => m_Wrapper.m_Right_Hand_Jump;
-        public InputAction @CrouchToggle => m_Wrapper.m_Right_Hand_CrouchToggle;
-        public InputAction @Grab => m_Wrapper.m_Right_Hand_Grab;
-        public InputAction @Trigger => m_Wrapper.m_Right_Hand_Trigger;
-        public InputAction @Primary_Button => m_Wrapper.m_Right_Hand_Primary_Button;
-        public InputAction @WMRTriggerButtonDown => m_Wrapper.m_Right_Hand_WMRTriggerButtonDown;
-        public InputAction @WMRTriggerButtonUp => m_Wrapper.m_Right_Hand_WMRTriggerButtonUp;
-        public InputAction @JoystickTouch => m_Wrapper.m_Right_Hand_JoystickTouch;
+        public InputAction @JoystickPosition => m_Wrapper.m_Right_Hand_JoystickPosition;
+        public InputAction @JoystickClick => m_Wrapper.m_Right_Hand_JoystickClick;
+        public InputAction @SeconaryButton => m_Wrapper.m_Right_Hand_SeconaryButton;
+        public InputAction @GrabButton => m_Wrapper.m_Right_Hand_GrabButton;
+        public InputAction @TriggerButton => m_Wrapper.m_Right_Hand_TriggerButton;
+        public InputAction @PrimaryButton => m_Wrapper.m_Right_Hand_PrimaryButton;
         public InputActionMap Get() { return m_Wrapper.m_Right_Hand; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -860,64 +755,46 @@ public class @VRInputs : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_Right_HandActionsCallbackInterface != null)
             {
-                @Rotate.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnRotate;
-                @Rotate.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnRotate;
-                @Rotate.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnRotate;
-                @Jump.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJump;
-                @CrouchToggle.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnCrouchToggle;
-                @CrouchToggle.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnCrouchToggle;
-                @CrouchToggle.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnCrouchToggle;
-                @Grab.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrab;
-                @Grab.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrab;
-                @Grab.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrab;
-                @Trigger.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTrigger;
-                @Trigger.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTrigger;
-                @Trigger.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTrigger;
-                @Primary_Button.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimary_Button;
-                @Primary_Button.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimary_Button;
-                @Primary_Button.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimary_Button;
-                @WMRTriggerButtonDown.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonDown.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonDown.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonUp.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonUp;
-                @WMRTriggerButtonUp.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonUp;
-                @WMRTriggerButtonUp.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnWMRTriggerButtonUp;
-                @JoystickTouch.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickTouch;
-                @JoystickTouch.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickTouch;
-                @JoystickTouch.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickTouch;
+                @JoystickPosition.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickPosition.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickPosition.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickPosition;
+                @JoystickClick.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickClick;
+                @JoystickClick.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickClick;
+                @JoystickClick.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnJoystickClick;
+                @SeconaryButton.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnSeconaryButton;
+                @SeconaryButton.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnSeconaryButton;
+                @SeconaryButton.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnSeconaryButton;
+                @GrabButton.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrabButton;
+                @GrabButton.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrabButton;
+                @GrabButton.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnGrabButton;
+                @TriggerButton.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTriggerButton;
+                @TriggerButton.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTriggerButton;
+                @TriggerButton.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnTriggerButton;
+                @PrimaryButton.started -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimaryButton;
+                @PrimaryButton.performed -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimaryButton;
+                @PrimaryButton.canceled -= m_Wrapper.m_Right_HandActionsCallbackInterface.OnPrimaryButton;
             }
             m_Wrapper.m_Right_HandActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Rotate.started += instance.OnRotate;
-                @Rotate.performed += instance.OnRotate;
-                @Rotate.canceled += instance.OnRotate;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @CrouchToggle.started += instance.OnCrouchToggle;
-                @CrouchToggle.performed += instance.OnCrouchToggle;
-                @CrouchToggle.canceled += instance.OnCrouchToggle;
-                @Grab.started += instance.OnGrab;
-                @Grab.performed += instance.OnGrab;
-                @Grab.canceled += instance.OnGrab;
-                @Trigger.started += instance.OnTrigger;
-                @Trigger.performed += instance.OnTrigger;
-                @Trigger.canceled += instance.OnTrigger;
-                @Primary_Button.started += instance.OnPrimary_Button;
-                @Primary_Button.performed += instance.OnPrimary_Button;
-                @Primary_Button.canceled += instance.OnPrimary_Button;
-                @WMRTriggerButtonDown.started += instance.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonDown.performed += instance.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonDown.canceled += instance.OnWMRTriggerButtonDown;
-                @WMRTriggerButtonUp.started += instance.OnWMRTriggerButtonUp;
-                @WMRTriggerButtonUp.performed += instance.OnWMRTriggerButtonUp;
-                @WMRTriggerButtonUp.canceled += instance.OnWMRTriggerButtonUp;
-                @JoystickTouch.started += instance.OnJoystickTouch;
-                @JoystickTouch.performed += instance.OnJoystickTouch;
-                @JoystickTouch.canceled += instance.OnJoystickTouch;
+                @JoystickPosition.started += instance.OnJoystickPosition;
+                @JoystickPosition.performed += instance.OnJoystickPosition;
+                @JoystickPosition.canceled += instance.OnJoystickPosition;
+                @JoystickClick.started += instance.OnJoystickClick;
+                @JoystickClick.performed += instance.OnJoystickClick;
+                @JoystickClick.canceled += instance.OnJoystickClick;
+                @SeconaryButton.started += instance.OnSeconaryButton;
+                @SeconaryButton.performed += instance.OnSeconaryButton;
+                @SeconaryButton.canceled += instance.OnSeconaryButton;
+                @GrabButton.started += instance.OnGrabButton;
+                @GrabButton.performed += instance.OnGrabButton;
+                @GrabButton.canceled += instance.OnGrabButton;
+                @TriggerButton.started += instance.OnTriggerButton;
+                @TriggerButton.performed += instance.OnTriggerButton;
+                @TriggerButton.canceled += instance.OnTriggerButton;
+                @PrimaryButton.started += instance.OnPrimaryButton;
+                @PrimaryButton.performed += instance.OnPrimaryButton;
+                @PrimaryButton.canceled += instance.OnPrimaryButton;
             }
         }
     }
@@ -942,24 +819,20 @@ public class @VRInputs : IInputActionCollection, IDisposable
     }
     public interface ILeft_HandActions
     {
-        void OnMove(InputAction.CallbackContext context);
-        void OnSprint(InputAction.CallbackContext context);
-        void OnMenu(InputAction.CallbackContext context);
-        void OnGrab(InputAction.CallbackContext context);
-        void OnTrigger(InputAction.CallbackContext context);
-        void OnPrimary_Button(InputAction.CallbackContext context);
-        void OnJoystickTouch(InputAction.CallbackContext context);
+        void OnJoystickPosition(InputAction.CallbackContext context);
+        void OnJoystickClick(InputAction.CallbackContext context);
+        void OnSecondaryButton(InputAction.CallbackContext context);
+        void OnGrabButton(InputAction.CallbackContext context);
+        void OnTriggerButton(InputAction.CallbackContext context);
+        void OnPrimaryButton(InputAction.CallbackContext context);
     }
     public interface IRight_HandActions
     {
-        void OnRotate(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnCrouchToggle(InputAction.CallbackContext context);
-        void OnGrab(InputAction.CallbackContext context);
-        void OnTrigger(InputAction.CallbackContext context);
-        void OnPrimary_Button(InputAction.CallbackContext context);
-        void OnWMRTriggerButtonDown(InputAction.CallbackContext context);
-        void OnWMRTriggerButtonUp(InputAction.CallbackContext context);
-        void OnJoystickTouch(InputAction.CallbackContext context);
+        void OnJoystickPosition(InputAction.CallbackContext context);
+        void OnJoystickClick(InputAction.CallbackContext context);
+        void OnSeconaryButton(InputAction.CallbackContext context);
+        void OnGrabButton(InputAction.CallbackContext context);
+        void OnTriggerButton(InputAction.CallbackContext context);
+        void OnPrimaryButton(InputAction.CallbackContext context);
     }
 }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoSingleton<PlayerStats>
 {
     [SerializeField] private PlayerTotalStats _playerTotalStats;
     [SerializeField] private MagicController _magicController;
-    [SerializeField] private GearController _gearController;
 
     private VRPlayerController _player;
     private PlayerComponents _playerComponents;
@@ -28,7 +27,6 @@ public class PlayerStats : MonoBehaviour
 
     //Gold
     private int _maxGold = 999, _currentGold;
-    [SerializeField] private CurrentGoldDisplay _goldDisplay;
 
     //Arcane Crystals
     private int _maxArcaneCrystals = 16, _currentArcaneCrystals;
@@ -290,7 +288,7 @@ public class PlayerStats : MonoBehaviour
         if (_currentGold < 0) { _currentGold = 0; }
         else if (_currentGold > _maxGold) { _currentGold = _maxGold; }
 
-        if (_goldDisplay != null) { _goldDisplay.UpdateDisplay(_currentGold); }
+        WalletController.Instance.UpdateGoldDisplay(_currentGold);
     }
 
     public int GetCurrentGold() { return _currentGold; }

@@ -10,13 +10,16 @@ public class HandBombKeyController : MonoBehaviour
     private VRPlayerHand _primaryHand, _offHand;
     private PlayerStats _playerStats;
 
-    [SerializeField] private Material _bombCrystalMat, _keyCrystalMat;
+    [SerializeField] 
+    private Material _bombCrystalMat, _keyCrystalMat;
 
     private GameObject _currentBombCrystal, _currentKeyCrystal;
 
-    [SerializeField] private GameObject[] _ignitedBombCrystal;
+    [SerializeField] 
+    private GameObject[] _ignitedBombCrystal;
 
-    [HideInInspector] public bool holdingActiveBomb;
+    [HideInInspector] 
+    public bool holdingActiveBomb;
 
     private GameObject _newIgnitedBomb;
 

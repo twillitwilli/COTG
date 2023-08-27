@@ -21,7 +21,8 @@ public class VRPlayerController : MonoBehaviour
 
     [HideInInspector] public bool isLeftHanded, isGrounded, isCrouched, isSprinting, heightCheck, tutorial, menuSpawned, militaryTime, headOrientation, 
         snapTurnOn, roomScale, toggleGrip, playerStanding, disableMovement, sprintEnabled, jumpControllerOn, climbOn, canFly, toggleSprint,
-        playerCalibrationOn, playerHandAdjusterOn, playerMoving, selectingClass, isGhost, physicalJumping, meditating, hasCustomHandSettings;
+        playerCalibrationOn, playerHandAdjusterOn, playerMoving, selectingClass, isGhost, physicalJumping, meditating, hasCustomHandSettings,
+        movementDisabled;
 
     [HideInInspector] public Rigidbody playerRB = null;
     [HideInInspector] public CapsuleCollider playerCollider;

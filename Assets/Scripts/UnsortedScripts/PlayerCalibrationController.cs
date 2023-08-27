@@ -10,8 +10,6 @@ public class PlayerCalibrationController : MonoBehaviour
 
     [HideInInspector] public GameObject menu;
 
-    public CloseMenu closeMenuButton;
-
     [SerializeField] private Text infoDisplay;
     private int calibrationStage;
 
@@ -52,6 +50,7 @@ public class PlayerCalibrationController : MonoBehaviour
         foreach (GameObject obj in _playerComponents.GetAllOriginPoints()) { obj.GetComponent<MeshRenderer>().enabled = false; }
         _player.playerCalibrationOn = false;
         LocalGameManager.Instance.hasCalibrated = true;
-        if (menu != null) { closeMenuButton.ClosePlayerMenu(); }
+
+        if (menu != null) { menu.GetComponent<PlayerMenu>().ClosePlayerMenu(); }
     }
 }

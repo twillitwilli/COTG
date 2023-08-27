@@ -5,7 +5,6 @@ using UnityEngine;
 public class HandAnimationState : MonoBehaviour
 {
     private Animator _animator;
-    private ControllerInputManager.ButtonDown _currentButtonsDown;
 
     public enum HandState { idle, fist, fingerPoint, thumbsUp, holdingMap, holdingWallet, holdingArcaneBomb, holdingBowString, fingerGun, rockAndRoll, middleFinger, indexFingerDown, holdingBombCrystal, 
         holdingKeyCrystal, crushBombCrystal }

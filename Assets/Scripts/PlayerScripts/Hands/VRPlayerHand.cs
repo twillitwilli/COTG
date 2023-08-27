@@ -6,24 +6,38 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 public class VRPlayerHand : MonoBehaviour
 {
-    [SerializeField] private bool _isRightHand;
+    [SerializeField] 
+    private bool _isRightHand;
 
     private GrabController _grabController;
     private ClimbingController _climbingController;
     private SpellCastingForHands _spellCasting;
     
-    [SerializeField] private VRPlayerController _player;
-    [SerializeField] private VRPlayerHand _oppositeHand;
-    [SerializeField] private SkinnedMeshRenderer _handRenderer;
-    [SerializeField] private MenuRaycast _menuRaycast;
-    [SerializeField] private TelekinesisRaycast _telekinesisController;
+    [SerializeField] 
+    private VRPlayerController _player;
 
-    [SerializeField] private Transform _menuSpawnLocation;
+    [SerializeField] 
+    private VRPlayerHand _oppositeHand;
 
-    [SerializeField] private HandAnimationState _handAnimator;
+    [SerializeField] 
+    private SkinnedMeshRenderer _handRenderer;
+
+    [SerializeField] 
+    private MenuRaycast _menuRaycast;
+
+    [SerializeField] 
+    private TelekinesisRaycast _telekinesisController;
+
+    [SerializeField] 
+    private Transform _menuSpawnLocation;
+
+    [SerializeField] 
+    private HandAnimationState _handAnimator;
+
     private HandAnimationState.HandState _currentHandState;
 
-    [SerializeField] private GameObject _handModel;
+    [SerializeField] 
+    private GameObject _handModel;
 
     public Vector3 defaultHandPos, defaultHandRot;
     public Transform itemFixedToHand;
@@ -287,10 +301,4 @@ public class VRPlayerHand : MonoBehaviour
     public Vector3 GetHandAngularVelocity() { return _handAngVel; }
     public SpellCastingForHands GetSpellCastingForHands() { return _spellCasting; }
     public Transform GetMenuSpawnLocation() { return _menuSpawnLocation; }
-
-    public bool CheckIfHoldingSpecificItem(int holdingItemIdx)
-    {
-        if (_grabController.CheckIfHoldingSpecificThing(holdingItemIdx)) { return true; }
-        else return false;
-    }
 }

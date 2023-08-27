@@ -10,7 +10,6 @@ public class PlayerBow : MonoBehaviour
     private PlayerStats _playerStats;
     private MagicController _magicController;
     private PlayerMagicController _playerMagicController;
-    private GearController _gearController;
     private BowMagicController _bowController;
 
     private VRPlayerController _player;

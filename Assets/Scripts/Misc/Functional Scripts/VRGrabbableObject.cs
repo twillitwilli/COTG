@@ -10,6 +10,7 @@ public class VRGrabbableObject : MonoBehaviour
     public enum typeOfObject { grabbablePickup, bigGrabbablePickup, heavyPickup, pushable, climbable };
     [Tooltip("Select weather the object is Grabbable or Climbable")]
     public typeOfObject objectType;
+
     public bool canEquip;
 
     [Header("Has Impact sound")]

@@ -32,7 +32,6 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     [SerializeField] private PlayerStats _playerStats;
     [SerializeField] private PlayerTotalStats _playerTotalStats;
     [SerializeField] private MagicController _magicController;
-    [SerializeField] private GearController _gearController;
     [SerializeField] private PlayerPotionController _potionController;
     [SerializeField] private PlayerCurse _curseController;
 
@@ -217,7 +216,6 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     public PlayerStats GetPlayerStats() { return _playerStats; }
     public PlayerTotalStats GetTotalStats() { return _playerTotalStats; }
     public MagicController GetMagicController() { return _magicController; }
-    public GearController GetGearController() { return _gearController; }
     public PlayerPotionController GetPotionController() { return _potionController; }
     public PlayerCurse GetCurseController() { return _curseController; }
 

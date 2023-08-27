@@ -5,134 +5,133 @@ using UnityEngine.SceneManagement;
 
 public class GrabController : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private GearController _gearController;
-    private MagicController _magicController;
+    public Transform grabbableSpawnLocation;
 
+    [SerializeField]
     private VRPlayerHand _hand, _oppositeHand;
+
+    [SerializeField]
     private VRPlayerController _player;
+
+    [SerializeField]
     private GrabController _oppositeHandGrabController;
+
+    [SerializeField]
     private ClimbingController _climbController, _oppositeHandClimbController;
 
-    private MapWalletSpawner _mapWalletController;
-    private HandBombKeyController _bombKeyController;
-    private PlayerPotionController _potionController;
+    [SerializeField]
+    private MenuRaycast _menuRaycast;
 
-    [HideInInspector] public GameObject currentGrabbableObj;
+    [SerializeField]
+    private HandAnimationState _handAnimations;
 
-    public Transform grabbableSpawnLocation;
-    //item index 0 = nothingToGrab, 1 = map, 2 = wallet, 3 = bomb, 4 = key, 5 = potion, 6 = staff, 7 = bow, 8 = bowString, 9 = rune, 10 = climbable, 11 = jar, 12 = classCard
-    [SerializeField] private bool[] _holdingItem;
+    public PlayerItemGrabbable.PlayerItem currentObjectGrabbed { get; private set; }
 
-    [HideInInspector] public bool holdingIgnitedBomb;
+    [HideInInspector] 
+    public bool holdingIgnitedBomb;
 
     public TelekinesisRaycast telekinesisController;
     public LayerMask ignoreLayers;
-
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _gearController = _gameManager.GetGearController();
-        _magicController = _gameManager.GetMagicController();
-
-        _hand = GetComponent<VRPlayerHand>();
-        _player = _hand.GetPlayer();
-        _climbController = GetComponent<ClimbingController>();
-
-        _oppositeHand = _hand.GetOppositeHand();
-        _oppositeHandGrabController = _oppositeHand.GetGrabController();
-        _oppositeHandClimbController = _oppositeHandGrabController.GetClimbingController();
-
-        _mapWalletController = _player.GetPlayerComponents().mapWalletSpawner;
-        _bombKeyController = _gearController.GetBombKeyController();
-        _potionController = LocalGameManager.Instance.GetPotionController();
-    }
 
     public void UseGrabController(bool buttonDown)
     {
         Debug.Log("Used Grab Controller");
         if (buttonDown)
         {
-            if (_player.toggleGrip && CheckIfHoldingAnything()) { ReleaseGrip(); }
-            else if (!CheckIfHoldingAnything())
+            if (_player.toggleGrip && currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing)
+                ReleaseGrip();
+
+            else if (currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.nothing)
             {
-                if (currentGrabbableObj == null && GetNearestGrabbable() != null) { currentGrabbableObj = GetNearestGrabbable(); }
-                if (currentGrabbableObj != null)
+                GameObject newObject = GetNearestGrabbable();
+                if (newObject != null)
                 {
-                    switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
+                    currentObjectGrabbed = newObject.GetComponent<PlayerItemGrabbable>().whichItem;
+
+                    switch (currentObjectGrabbed)
                     {
                         case PlayerItemGrabbable.PlayerItem.map:
-                            _mapWalletController.GrabMap(this);
-                            _holdingItem[1] = true;
+                            MapController.Instance.GrabMap(this);
+                            _handAnimations.SwitchHandState(HandAnimationState.HandState.holdingMap);
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.wallet:
-                            _mapWalletController.GrabWallet(this);
-                            _holdingItem[2] = true;
+                            WalletController.Instance.GrabWallet(this);
+                            _handAnimations.SwitchHandState(HandAnimationState.HandState.holdingWallet);
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.bomb:
-                            _bombKeyController.GrabBombCrystal(this);
-                            _holdingItem[3] = true;
+                            CrystalController.Instance.GrabBombCrystal(this);
+                            _handAnimations.SwitchHandState(HandAnimationState.HandState.holdingBombCrystal);
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.key:
                             _bombKeyController.GrabKeyCrystal(this);
-                            _holdingItem[4] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.potion:
                             _potionController.GrabPotion(_hand);
-                            _holdingItem[5] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.staff:
-                            _holdingItem[6] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.bow:
-                            _holdingItem[7] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.rune:
-                            _holdingItem[9] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.climbable:
                             _climbController.GrabClimbable(false, currentGrabbableObj.transform);
-                            _holdingItem[10] = true;
                             break;
 
                         case PlayerItemGrabbable.PlayerItem.jar:
-                            _holdingItem[11] = true;
                             break;
                     }
                 }
             }
         }
-        else { if (!_player.toggleGrip && CheckIfHoldingAnything()) { ReleaseGrip(); } }
+
+        else
+        {
+            if (!_player.toggleGrip && currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing)
+                ReleaseGrip();
+        }
     }
 
     public void UseTriggerController(bool buttonDown)
     {
+        TriggerGrabController(buttonDown);
+
+        if (currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing)
+            return;
+
+        else if (currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.nothing && _menuRaycast.MenuRayActive())
+            _menuRaycast.ShootRaycast();
+    }
+
+    private void TriggerGrabController(bool buttonDown)
+    {
         //add telekinetic throwing here
         if (buttonDown)
         {
-            if (currentGrabbableObj != null)
+            if (currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing)
             {
-                switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
+                switch (currentObjectGrabbed)
                 {
                     case PlayerItemGrabbable.PlayerItem.bomb:
-                        _bombKeyController.IgniteBomb(_hand);
+                        CrystalController.Instance.IgniteBomb(this);
+                        currentObjectGrabbed = PlayerItemGrabbable.PlayerItem.ignitedBomb;
+                        _handAnimations.SwitchHandState(HandAnimationState.HandState.holdingArcaneBomb);
                         break;
 
                     case PlayerItemGrabbable.PlayerItem.bowString:
-                        if (_hand.IsPrimaryHand()) 
+                        if (_hand.IsPrimaryHand())
                         {
-                            Conjurer.instance.GetBowController().GetBow().GrabString(); 
+                            Conjurer.instance.GetBowController().GetBow().GrabString();
                         }
 
-                        _holdingItem[8] = true;
                         break;
 
                     case PlayerItemGrabbable.PlayerItem.climbable:
@@ -140,6 +139,7 @@ public class GrabController : MonoBehaviour
                         break;
                 }
             }
+
             else
             {
                 if (GetNearestGrabbable() != null)
@@ -165,6 +165,7 @@ public class GrabController : MonoBehaviour
                 }
             }
         }
+
         else
         {
             if (currentGrabbableObj != null)
@@ -194,57 +195,54 @@ public class GrabController : MonoBehaviour
 
     public void ReleaseGrip()
     {
-        switch (currentGrabbableObj.GetComponent<PlayerItemGrabbable>().whichItem)
+        if (currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing)
         {
-            case PlayerItemGrabbable.PlayerItem.map:
-                _holdingItem[1] = false;
-                _mapWalletController.ResetMap(this);
-                break;
+            switch (currentObjectGrabbed)
+            {
+                case PlayerItemGrabbable.PlayerItem.map:
+                    MapController.Instance.ResetMap(this);
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.wallet:
-                _holdingItem[2] = false;
-                _mapWalletController.ResetWallet(this);
-                break;
+                case PlayerItemGrabbable.PlayerItem.wallet:
+                    WalletController.Instance.ResetWallet(this);
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.bomb:
-                _holdingItem[3] = false;
-                holdingIgnitedBomb = false;
-                _bombKeyController.DropBombCrystal();
-                break;
+                case PlayerItemGrabbable.PlayerItem.bomb:
+                    CrystalController.Instance.DropBombCrystal();
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.key:
-                _holdingItem[4] = false;
-                _bombKeyController.DropKeyCrystal();
-                break;
+                case PlayerItemGrabbable.PlayerItem.ignitedBomb:
+                    CrystalController.Instance.ThrowBomb(GetHand());
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.potion:
-                _holdingItem[5] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.key:
+                    _bombKeyController.DropKeyCrystal();
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.staff:
-                _holdingItem[6] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.potion:
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.bow:
-                _holdingItem[7] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.staff:
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.rune:
-                _holdingItem[9] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.bow:
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.climbable:
-                _holdingItem[10] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.rune:
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.jar:
-                _holdingItem[11] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.climbable:
+                    break;
 
-            case PlayerItemGrabbable.PlayerItem.classCard:
-                _holdingItem[12] = false;
-                break;
+                case PlayerItemGrabbable.PlayerItem.jar:
+                    break;
+
+                case PlayerItemGrabbable.PlayerItem.classCard:
+                    break;
+            }
         }
+
+        _handAnimations.SwitchHandState(HandAnimationState.HandState.idle);
     }
 
     public GameObject GetNearestGrabbable()
@@ -321,17 +319,14 @@ public class GrabController : MonoBehaviour
     //item index 0 = nothingToGrab, 1 = map, 2 = wallet, 3 = bomb, 4 = key, 5 = potion, 6 = staff, 7 = bow, 8 = bowString, 9 = rune, 10 = climbable, 11 = jar
     public bool CheckIfHoldingAnything()
     {
-        for (int i = 0; i < _holdingItem.Length; i++) { if (_holdingItem[i]) { return true; } }
-        return false;
-    }
+        bool holdingItem = currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.nothing ? true : false;
 
-    public bool CheckIfHoldingSpecificThing(int holdableIdx)
-    {
-        if (_holdingItem[holdableIdx]) { return true; }
-        else return false;
+        return holdingItem;
     }
 
     public VRPlayerHand GetHand() { return _hand; }
 
     public ClimbingController GetClimbingController() { return _climbController; }
+
+    public GrabController GetOppositeGrabController() { return GetHand().GetOppositeHand().GetGrabController(); }
 }

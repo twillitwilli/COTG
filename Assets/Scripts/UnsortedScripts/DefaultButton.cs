@@ -62,10 +62,7 @@ public class DefaultButton : MonoBehaviour
                 break;
         }
 
-        if (PlayerMenu.instance != null) 
-        {
-            Destroy(PlayerMenu.instance.gameObject);
-            PlayerMenu.instance = null;
-        }
+        if (PlayerMenu.Instance != null)
+            PlayerMenu.Instance.ClosePlayerMenu();
     }
 }

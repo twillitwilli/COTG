@@ -1,93 +1,71 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ControllerInputManager : MonoBehaviour
 {
-    private ControllerType _controllerType;
+    [SerializeField] 
+    private VRPlayerController _player;
 
-    [SerializeField] private VRPlayerController _player;
-    [SerializeField] private VRPlayerHand[] _hands;
-
-    private PlayerComponents _playerComponents;
-    private HandAnimationState _handAnimator;
-
-    [System.Flags] public enum ButtonDown { trigger = 1, grab = 2, thumbDown = 4 }
-    private ButtonDown _currentButtonsDown;
+    [SerializeField]
+    private GrabController[] _grabControllers;
 
     public VRInputs controls;
-    private Vector2 _leftPos, _rightPos;
-    private bool _canUseJumpButton = true, _triggerDown, _grabDown, _crouchButtonDown;
+
+    // Joystick Position
+    public Vector2 joystickPosLeft { get; private set; }
+    public Vector2 joystickPosRight { get; private set; }
+
 
     public void EnableControls()
     {
         controls = new VRInputs();
 
-        //left controls
-        controls.Left_Hand.Move.performed += ctx => _leftPos = ctx.ReadValue<Vector2>();
-        controls.Left_Hand.Move.canceled += ctx => _leftPos = Vector2.zero;
+        // Joystick Position
+        controls.Left_Hand.JoystickPosition.performed += ctx => joystickPosLeft = ctx.ReadValue<Vector2>();
+        controls.Left_Hand.JoystickPosition.canceled += ctx => joystickPosLeft = Vector2.zero;
 
-        controls.Left_Hand.Sprint.performed += ctx => LeftJoystickClick();
+        controls.Right_Hand.JoystickPosition.performed += ctx => joystickPosRight = ctx.ReadValue<Vector2>();
+        controls.Right_Hand.JoystickPosition.canceled += ctx => joystickPosRight = Vector2.zero;
 
-        controls.Left_Hand.Grab.performed += ctx => GrabButton(0, true);
-        controls.Left_Hand.Grab.canceled += ctx => GrabButton(0, false);
+        // Joystick Click
+        controls.Left_Hand.JoystickClick.performed += ctx => JoystickClick(0);
 
-        controls.Left_Hand.Trigger.performed += ctx => TriggerButton(0, true);
-        controls.Left_Hand.Trigger.canceled += ctx => TriggerButton(0, false);
+        controls.Right_Hand.JoystickClick.performed += ctx => JoystickClick(1);
 
-        controls.Left_Hand.Menu.performed += ctx => MenuButton();
+        // Grab Button
+        controls.Left_Hand.GrabButton.performed += ctx => GrabButton(0);
+        controls.Left_Hand.GrabButton.canceled += ctx => GrabButton(0, false);
 
-        controls.Left_Hand.Primary_Button.performed += ctx => PrimaryButtonDown(0, true);
-        controls.Left_Hand.Primary_Button.canceled += ctx => PrimaryButtonDown(0, false);
+        controls.Right_Hand.GrabButton.performed += ctx => GrabButton(1);
+        controls.Right_Hand.GrabButton.canceled += ctx => GrabButton(1, false);
 
-        controls.Left_Hand.JoystickTouch.performed += ctx => JoystickTouched(0, true);
-        controls.Left_Hand.JoystickTouch.canceled += ctx => JoystickTouched(0, false);
+        // Trigger Button
+        controls.Left_Hand.TriggerButton.performed += ctx => TriggerButton(0);
+        controls.Left_Hand.TriggerButton.canceled += ctx => TriggerButton(0, false);
 
-        //right controls
-        controls.Right_Hand.Rotate.performed += ctx => _rightPos = ctx.ReadValue<Vector2>();
-        controls.Right_Hand.Rotate.canceled += ctx => _rightPos = Vector2.zero;
+        controls.Right_Hand.TriggerButton.performed += ctx => TriggerButton(1);
+        controls.Right_Hand.TriggerButton.canceled += ctx => TriggerButton(1, false);
 
-        controls.Right_Hand.Jump.started += ctx => RightJoystickClick(true);
-        controls.Right_Hand.Jump.canceled += ctx => RightJoystickClick(false);
+        // Primary Button
+        controls.Left_Hand.PrimaryButton.performed += ctx => PrimaryButton(0);
 
-        controls.Right_Hand.Grab.performed += ctx => GrabButton(1, true);
-        controls.Right_Hand.Grab.canceled += ctx => GrabButton(1, false);
+        controls.Right_Hand.PrimaryButton.performed += ctx => PrimaryButton(1);
+        controls.Right_Hand.PrimaryButton.canceled += ctx => PrimaryButton(1, false);
 
-        controls.Right_Hand.CrouchToggle.performed += ctx => CrouchToggle(true);
-        controls.Right_Hand.CrouchToggle.canceled += ctx => CrouchToggle(false);
+        // Secondary Button
+        controls.Left_Hand.SecondaryButton.performed += ctx => SecondaryButton(0);
 
-        controls.Right_Hand.Primary_Button.performed += ctx => PrimaryButtonDown(1, true);
-        controls.Right_Hand.Primary_Button.canceled += ctx => PrimaryButtonDown(1, false);
+        controls.Right_Hand.SeconaryButton.performed += ctx => SecondaryButton(1);
+        controls.Right_Hand.SeconaryButton.canceled += ctx => SecondaryButton(1, false);
 
-        controls.Right_Hand.JoystickTouch.performed += ctx => JoystickTouched(1, true);
-        controls.Right_Hand.JoystickTouch.canceled += ctx => JoystickTouched(1, false);
-
-        _controllerType = LocalGameManager.Instance.GetControllerType();
-
-        //specific to controllers
-        switch (_controllerType.currentControllerType)
-        {
-            case ControllerType.controllerType.oculusRift:
-                controls.Right_Hand.Trigger.performed += ctx => TriggerButton(1, true);
-                controls.Right_Hand.Trigger.canceled += ctx => TriggerButton(1, false);
-                break;
-
-            case ControllerType.controllerType.index:
-                controls.Right_Hand.Trigger.performed += ctx => TriggerButton(1, true);
-                controls.Right_Hand.Trigger.canceled += ctx => TriggerButton(1, false);
-                break;
-
-            case ControllerType.controllerType.wmr:
-                controls.Right_Hand.WMRTriggerButtonDown.performed += ctx => TriggerButton(1, true);
-                controls.Right_Hand.WMRTriggerButtonUp.canceled += ctx => TriggerButton(1, false);
-                break;
-        }
 
         controls.Enable();
-        _canUseJumpButton = true;
-        PrimaryButtonDown(1, true);
-        PrimaryButtonDown(0, false);
+
+        SetPrimaryButtonDown(1, true);
+        SetPrimaryButtonDown(0, false);
     }
 
     private void OnDisable()
@@ -97,112 +75,83 @@ public class ControllerInputManager : MonoBehaviour
 
     private void Update()
     {
-        _player.LeftJoystickController(_leftPos);
-        _player.RightJoystickController(_rightPos);
+        JoystickPosition();
     }
 
-    private void LeftJoystickClick()
+    private void JoystickPosition()
     {
-        if (_player.sprintEnabled) { _player.SprintController(); }
-    }
-
-    private void RightJoystickClick(bool jumpButtonDown)
-    {
-        if (_canUseJumpButton && !_player.physicalJumping)
+        if (!_player.movementDisabled)
         {
-            _canUseJumpButton = false;
-            if (!_player.canFly && _player.jumpControllerOn) { _player.JumpController(); }
-        }
-
-        if (_player.canFly) { _player.FlightController(jumpButtonDown); }
-
-        if (!jumpButtonDown) { _canUseJumpButton = true; }
-    }
-
-    private void JoystickTouched(int hand, bool touched)
-    {
-
-        
-    }
-
-    private void GrabButton(int hand, bool grabButtonDown)
-    {
-        if (VerifyButtonStatus(_grabDown, grabButtonDown))
-        {
-            _hands[hand].GetGrabController().UseGrabController(grabButtonDown);
-        } 
-    }
-
-    private void TriggerButton(int hand, bool triggerButtonDown)
-    {
-        if (VerifyButtonStatus(_triggerDown, triggerButtonDown))
-        {
-            if (!_triggerDown && triggerButtonDown) { _triggerDown = true; }
-            else if (_triggerDown && !triggerButtonDown) { _triggerDown = false; }
-
-            if (!_player.selectingClass && !_player.menuSpawned)
-            {
-                _playerComponents.GetHand(hand).GetGrabController().UseTriggerController(triggerButtonDown);
-            }
-
-            else if (_player.selectingClass || !_player.selectingClass && triggerButtonDown && _player.menuSpawned || LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.inLobby && triggerButtonDown)
-            {
-                _hands[hand].GetMenuRaycast().ShootRaycast();
-                return;
-            }
+            _player.LeftJoystickController(joystickPosLeft);
+            _player.RightJoystickController(joystickPosRight);
         }
     }
 
-    private void MenuButton()
+    public void JoystickClick(int hand)
     {
-        if (PlayerMenu.instance == null && !_player.selectingClass && !_hands[0].GetGrabController().CheckIfHoldingAnything() && !_hands[1].GetGrabController().CheckIfHoldingAnything())
+        // Left Hand
+        if (hand == 0)
         {
-            LocalGameManager.Instance.GetOptionsMenu().OpenMenu();
+            if (_player.sprintEnabled)
+                _player.SprintController();
         }
-        else if (PlayerMenu.instance != null)
+
+        // Right Hand
+        else
         {
-            Destroy(PlayerMenu.instance.gameObject);
+            if (!_player.physicalJumping && _player.jumpControllerOn)
+                _player.JumpController();
         }
     }
 
-    private void PrimaryButtonDown(int hand, bool buttonDown)
+    public void GrabButton(int hand, bool buttonClicked = true)
+    {
+        _grabControllers[hand].UseGrabController(buttonClicked);
+    }
+
+    public void TriggerButton(int hand, bool buttonClicked = true)
+    {
+        _grabControllers[hand].UseTriggerController(buttonClicked);
+    }
+
+    public void PrimaryButton(int hand, bool buttonClicked = true)
+    {
+        if (hand == 0)
+        {
+
+        }
+
+        else _player.DashController(buttonClicked);
+    }
+
+    public void SecondaryButton(int hand, bool buttonClicked = true)
+    {
+        if (hand == 0)
+        {
+            if (PlayerMenu.Instance == null && CheckIfBothHandsEmpty())
+                LocalGameManager.Instance.GetOptionsMenu().OpenMenu();
+
+            else if (PlayerMenu.Instance != null)
+                PlayerMenu.Instance.ClosePlayerMenu();
+        }
+
+        else _player.CrouchController(buttonClicked);
+    }
+
+    private void SetPrimaryButtonDown(int hand, bool buttonDown)
     {
         if (hand == 1)
+            _player.DashController(buttonDown);
+    }
+
+    private bool CheckIfBothHandsEmpty()
+    {
+        foreach (GrabController grabController in _grabControllers)
         {
-            if (buttonDown) { _player.DashController(true); }
-            else { _player.DashController(false); }
+            if (grabController.CheckIfHoldingAnything())
+                return false;
         }
-    }
 
-    private void CrouchToggle(bool buttonDown)
-    {
-        if (VerifyButtonStatus(buttonDown, _crouchButtonDown))
-        {
-            if (!_crouchButtonDown && buttonDown) { _crouchButtonDown = true; }
-            else if (_crouchButtonDown && !buttonDown) { _crouchButtonDown = false; }
-            if (_crouchButtonDown && buttonDown)
-                if (!_player.playerStanding && buttonDown)
-                {
-                    _player.SittingHeightController();
-                }
-                else if (!_player.playerStanding && !buttonDown && _player.isCrouched)
-                {
-                    Debug.Log("Crouch button up");
-                    _player.sittingPlayerAnim.SetBool("isCrouched", false);
-                    _player.CrouchController(false);
-                }
-        }
-    }
-
-    private bool VerifyButtonStatus(bool buttonStateDown, bool currentlyPressingButtonDown)
-    {
-        if (currentlyPressingButtonDown && buttonStateDown) { return false; }
-        else if (!currentlyPressingButtonDown && !buttonStateDown) { return false; }
-        else return true;
-    }
-
-    public ButtonDown GetCurrentButtonsDown()
-    {
-        return _currentButtonsDown;
+        return true;
     }
 }

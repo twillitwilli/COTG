@@ -8,7 +8,6 @@ public class PlayerStaff : MonoBehaviour
     private PlayerStats _playerStats;
     private MagicController _magicController;
     private PlayerMagicController _playerMagicController;
-    private GearController _gearController;
     private StaffMagicController _staffController;
     private VRPlayerController _player;
 

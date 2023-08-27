@@ -51,10 +51,11 @@ public class MenuRaycast : MonoBehaviour
         _selectedButton.menuRaycastHitting = this;
     }
 
-    public bool RayActive()
+    public bool MenuRayActive()
     {
-        if (_rayEffect.activeSelf) { return true; }
-        else return false;
+        bool rayActive = _rayEffect.activeSelf ? true : false;
+
+        return rayActive;
     }
 
     public void ShootRaycast()

@@ -3,37 +3,99 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MagicController : MonoBehaviour
+public class MagicController : MonoSingleton<MagicController>
 {
     //CLASS SELECTION
-    public enum ClassType { none = 0, Wizard = 1, Conjurer = 2, Sorcerer = 3, Mage = 4, Enchanter = 5, Warlock = 6, Witch = 7, Tarot = 8 }
+    public enum ClassType 
+    { 
+        none = 0, 
+        Wizard = 1, 
+        Conjurer = 2, 
+        Sorcerer = 3, 
+        Mage = 4, 
+        Enchanter = 5, 
+        Warlock = 6, 
+        Witch = 7, 
+        Tarot = 8 
+    }
     public ClassType currentClass { get; private set; }
 
     //MAGIC SELECTION
-    [System.Flags] public enum MagicType { arcane = 1, fire = 2, water = 4, earth = 8, dark = 16, light = 32, blood = 64, cupcakes = 128 }
+    [System.Flags] 
+    public enum MagicType 
+    { 
+        arcane = 1, 
+        fire = 2, 
+        water = 4, 
+        earth = 8, 
+        dark = 16, 
+        light = 32, 
+        blood = 64, 
+        cupcakes = 128 
+    }
     public MagicType currentMagic { get; private set; }
     public string magicName { get; private set; }
     public int magicIdx { get; private set; }
 
     //STATUS
-    [System.Flags] public enum StatusEffects { none = 0, burning = 1, blinded = 2, frozen = 4, electrocuted = 8, slowed = 16, rooted = 32, lifeDraining = 64, poisoned = 128 }
+    [System.Flags] 
+    public enum StatusEffects 
+    { 
+        none = 0, 
+        burning = 1, 
+        blinded = 2, 
+        frozen = 4, 
+        electrocuted = 8, 
+        slowed = 16, 
+        rooted = 32, 
+        lifeDraining = 64, 
+        poisoned = 128 
+    }
     public StatusEffects currentStatusEffect { get; private set; }
     public bool hasStatusEffect { get; private set; }
 
     //DASH EFFECTS
-    [System.Flags] public enum DashEffects { none = 0, dashAOETrail = 1, teleportBurst = 2, dashPillars = 4 }
+    [System.Flags] 
+    public enum DashEffects 
+    { 
+        none = 0, 
+        dashAOETrail = 1, 
+        teleportBurst = 2, 
+        dashPillars = 4 
+    }
     public DashEffects currentDashEffects { get; private set; }
 
     //COLLISION EFFECTS
-    public enum CollisionEffects { none = 0, peircing = 1, bouncing = 2, split = 3 }
+    public enum CollisionEffects 
+    { 
+        none = 0, 
+        peircing = 1, 
+        bouncing = 2, 
+        split = 3 
+    }
     public CollisionEffects currentCollisionEffects { get; private set; }
 
     //SPECIAL EFFECTS
-    [System.Flags] public enum SpecialEffects { none = 0, explosion = 1, rain = 2, summoning = 4, burst = 8, pillar = 16, AOEGround = 32 }
+    [System.Flags] public enum SpecialEffects 
+    { 
+        none = 0, 
+        explosion = 1, 
+        rain = 2, 
+        summoning = 4, 
+        burst = 8, 
+        pillar = 16, 
+        AOEGround = 32 
+    }
     public SpecialEffects currentSpecialEffect { get; private set; }
 
     //CASTING TYPE
-    public enum CastingType { none = 0, charge = 1, rapidFire = 2, beam = 3}
+    public enum CastingType 
+    { 
+        none = 0, 
+        charge = 1, 
+        rapidFire = 2, 
+        beam = 3
+    }
     public CastingType currentCastingType { get; private set; }
     public bool controllabeAttack { get; private set; }
 

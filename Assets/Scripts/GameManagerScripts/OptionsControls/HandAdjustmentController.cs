@@ -9,7 +9,6 @@ public class HandAdjustmentController : MonoBehaviour
 
     [HideInInspector] public GameObject menu;
 
-    public CloseMenu closeMenuButton;
     public GameObject[] controllerOrigins;
     public HandAdjustment[] handAdjusters;
 
@@ -34,9 +33,8 @@ public class HandAdjustmentController : MonoBehaviour
 
     private void OnDestroy()
     {
-        VRPlayerHand leftHand = _playerComponents.GetHand(0);
-        VRPlayerHand rightHand = _playerComponents.GetHand(1);
-        closeMenuButton.ClosePlayerMenu();
+        PlayerMenu.Instance.ClosePlayerMenu();
+
         foreach (GameObject obj in controllerOrigins) { Destroy(obj); }
     }
 }

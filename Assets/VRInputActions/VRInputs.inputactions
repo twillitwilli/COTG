@@ -6,7 +6,7 @@
             "id": "5d08d00e-5321-442f-a739-63ec6858809a",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "JoystickPosition",
                     "type": "Value",
                     "id": "64872231-0f14-4448-9876-aa2f8511ed01",
                     "expectedControlType": "Vector2",
@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Sprint",
+                    "name": "JoystickClick",
                     "type": "Button",
                     "id": "98a8a603-5940-4346-9915-1772a9c7cac3",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Menu",
+                    "name": "SecondaryButton",
                     "type": "Button",
                     "id": "98145bd3-b83d-4980-96f3-a15f4e7b4b63",
                     "expectedControlType": "Button",
@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Grab",
+                    "name": "GrabButton",
                     "type": "Button",
                     "id": "205d1d34-0789-45dc-ad4e-c77307bb1db6",
                     "expectedControlType": "Button",
@@ -38,7 +38,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Trigger",
+                    "name": "TriggerButton",
                     "type": "Button",
                     "id": "b5dffc35-b8e1-4fba-a3c3-ce18784877ec",
                     "expectedControlType": "Button",
@@ -46,17 +46,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Primary_Button",
+                    "name": "PrimaryButton",
                     "type": "Button",
                     "id": "149ebbc3-c24a-454c-8b7a-bf636eca582b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "JoystickTouch",
-                    "type": "Button",
-                    "id": "59398030-65a2-491c-a071-d5592fcb1257",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -70,7 +62,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Move",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -81,7 +73,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Move",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -92,7 +84,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Move",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -103,7 +95,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Move",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -114,7 +106,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Sprint",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -125,7 +117,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Sprint",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -136,7 +128,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Sprint",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -147,7 +139,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -158,7 +150,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -169,7 +161,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -180,7 +172,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Trigger",
+                    "action": "TriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -191,7 +183,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Trigger",
+                    "action": "TriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -202,7 +194,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Trigger",
+                    "action": "TriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -213,7 +205,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Menu",
+                    "action": "SecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -224,7 +216,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Menu",
+                    "action": "SecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -235,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Menu",
+                    "action": "SecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +238,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Menu",
+                    "action": "SecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -257,7 +249,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Menu",
+                    "action": "SecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -268,7 +260,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Primary_Button",
+                    "action": "PrimaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -279,29 +271,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Primary_Button",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4aca2636-53c0-48a2-9dc7-380c9a476838",
-                    "path": "<XRController>{LeftHand}/primaryTouched",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "VRControls",
-                    "action": "JoystickTouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f0307748-66cf-45a4-a163-6c7ab597d4b5",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "VRControls",
-                    "action": "JoystickTouch",
+                    "action": "PrimaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -312,7 +282,7 @@
             "id": "9cefcb27-6ca5-4250-82f9-82609efc2889",
             "actions": [
                 {
-                    "name": "Rotate",
+                    "name": "JoystickPosition",
                     "type": "Value",
                     "id": "9bbe2d98-ec63-4d66-bcce-d9ff8b46fbe6",
                     "expectedControlType": "Vector2",
@@ -320,7 +290,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump",
+                    "name": "JoystickClick",
                     "type": "Button",
                     "id": "a1fcb408-2e2b-40d1-942e-306c88713ee2",
                     "expectedControlType": "Button",
@@ -328,7 +298,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "CrouchToggle",
+                    "name": "SeconaryButton",
                     "type": "Button",
                     "id": "6b3ced5a-25ef-4383-922a-1e84f8e772e4",
                     "expectedControlType": "Button",
@@ -336,7 +306,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Grab",
+                    "name": "GrabButton",
                     "type": "Button",
                     "id": "29660c6a-812c-4fd9-bfa9-623a77ee6b17",
                     "expectedControlType": "Button",
@@ -344,7 +314,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Trigger",
+                    "name": "TriggerButton",
                     "type": "Button",
                     "id": "47896f88-f978-418b-9a7e-cc014ce5c6f3",
                     "expectedControlType": "Button",
@@ -352,33 +322,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Primary_Button",
+                    "name": "PrimaryButton",
                     "type": "Button",
                     "id": "008109f2-08ac-4937-b83c-afd8f765fd2e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "WMRTriggerButtonDown",
-                    "type": "Button",
-                    "id": "8ad53b20-58d1-41b7-ac5d-c472eaf2d4e0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "WMRTriggerButtonUp",
-                    "type": "Button",
-                    "id": "ec1f8160-1253-438c-92f9-758f4f965b8d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "JoystickTouch",
-                    "type": "Button",
-                    "id": "6c0a4d27-4bae-4140-9043-bc4818f880fc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -392,7 +338,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Rotate",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -403,7 +349,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Rotate",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -414,7 +360,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Rotate",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -425,7 +371,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Rotate",
+                    "action": "JoystickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -436,7 +382,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Jump",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -447,7 +393,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Jump",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -458,7 +404,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Jump",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -469,7 +415,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Jump",
+                    "action": "JoystickClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -480,7 +426,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "CrouchToggle",
+                    "action": "SeconaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -491,7 +437,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "CrouchToggle",
+                    "action": "SeconaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -502,7 +448,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "CrouchToggle",
+                    "action": "SeconaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -513,7 +459,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "CrouchToggle",
+                    "action": "SeconaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -524,7 +470,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "CrouchToggle",
+                    "action": "SeconaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -535,7 +481,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -546,7 +492,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -557,7 +503,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Grab",
+                    "action": "GrabButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -568,7 +514,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Trigger",
+                    "action": "TriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -579,7 +525,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Trigger",
+                    "action": "TriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -590,7 +536,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Primary_Button",
+                    "action": "PrimaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -601,40 +547,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "VRControls",
-                    "action": "Primary_Button",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6850f32a-49a3-4724-bdec-da5987cc944d",
-                    "path": "<WMRSpatialController>{RightHand}/triggerPressed",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "VRControls",
-                    "action": "WMRTriggerButtonDown",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a47a6b4c-9176-495a-9b21-b1f3e164eb05",
-                    "path": "<WMRSpatialController>{RightHand}/triggerPressed",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "VRControls",
-                    "action": "WMRTriggerButtonUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fff91f74-cd00-40f0-97af-6b490f2a52f6",
-                    "path": "<XRController>{RightHand}/primaryTouched",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "VRControls",
-                    "action": "JoystickTouch",
+                    "action": "PrimaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

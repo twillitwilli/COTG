@@ -18,7 +18,7 @@ public class ReturnToTitleScreen : MonoBehaviour
     {
         _gameManager.CloseEyes();
 
-        if (PlayerMenu.instance != null) { Destroy(PlayerMenu.instance.gameObject); }
+        if (PlayerMenu.Instance != null) { PlayerMenu.Instance.ClosePlayerMenu(); }
 
         _gameManager.ResetPlayer();
         _gameManager.PlayerBackToTitleScreen();

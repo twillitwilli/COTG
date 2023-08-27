@@ -9,7 +9,6 @@ public class ResetPlayerToDefault : MonoBehaviour
     private PlayerComponents _playerComponents;
     private PlayerStats _playerStats;
     private MagicController _magicController;
-    private GearController _gearController;
     private PlayerCurse _curseController;
 
     private void Start()

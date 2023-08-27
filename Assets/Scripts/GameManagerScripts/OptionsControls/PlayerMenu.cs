@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerMenu : MonoBehaviour
+public class PlayerMenu : MonoSingleton<PlayerMenu>
 {
-    public static PlayerMenu instance;
-
     private VRPlayerController _player;
 
     [HideInInspector] public string multiplayerRoomName;
 
     private void Start()
     {
-        if (instance == null) { instance = this; }
-        else { Destroy(gameObject); }
-
         _player = LocalGameManager.Instance.player;
         _player.menuSpawned = true;
+    }
+
+    public void ClosePlayerMenu()
+    {
+        Destroy(gameObject);
     }
 
     private async void OnDestroy()

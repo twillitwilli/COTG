@@ -26,6 +26,9 @@ public class PlayerComponents : MonoBehaviour
     public VRPlayerHand[] GetBothHands() { return _hand; }
     public VRPlayerHand GetHand(int whichHand) { return _hand[whichHand]; }
 
+    [SerializeField] private Transform[] _secondaryItemSlot;
+    public Transform GetAccessoryItemSlot(int whichSlot) { return _secondaryItemSlot[whichSlot]; }
+
     [SerializeField] private VRSockets[] _handSocket;
     public VRSockets[] GetAllSockets() { return _handSocket; }
     public VRSockets GetHandSocket(int whichSocket) { return _handSocket[whichSocket]; }
@@ -58,7 +61,6 @@ public class PlayerComponents : MonoBehaviour
     public PlayerSceneLocation sceneLocation;
     public Transform petSpawnLocation;
     public CurrentMinion minionSpawnLocation;
-    public DungeonGear dungeonGear;
 
     [Header("--Reset Player--")]
     public ResetPlayerToDefault resetPlayer;

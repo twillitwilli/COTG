@@ -5,21 +5,8 @@ using UnityEngine.UI;
 
 public class CurrentGoldDisplay : MonoBehaviour
 {
-    private PlayerStats _playerStats;
-
-    [SerializeField] private Text displayGold;
-    [HideInInspector] public VRPlayerController player;
-    [HideInInspector] public bool walletInHand;
-
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-    }
-
-    private void LateUpdate()
-    {
-        if (walletInHand) { UpdateDisplay(_playerStats.GetCurrentGold()); }
-    }
+    [SerializeField] 
+    private Text displayGold;
 
     public void UpdateDisplay(int goldAmount)
     {
