@@ -20,8 +20,11 @@ public class EnemyHealthDisplay : MonoBehaviour
 
     private void Start()
     {
-        if (_gameManager.currentGameMode != LocalGameManager.GameMode.master || _gameManager.player.GetPlayerComponents().dungeonGear.hasEnemyHealthReveal) { healthDisplay.SetActive(true); }
-        if (isBoss) { healthDisplay.SetActive(true); }
+        if (_gameManager.currentGameMode != LocalGameManager.GameMode.master || _gameManager.player.GetPlayerComponents().dungeonGear.hasEnemyHealthReveal)
+            healthDisplay.SetActive(true);
+
+        if (isBoss)
+            healthDisplay.SetActive(true);
     }
 
     public void UpdateDisplay(int currentHealth, int maxHealth)

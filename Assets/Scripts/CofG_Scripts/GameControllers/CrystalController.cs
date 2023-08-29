@@ -9,12 +9,10 @@ public class CrystalController : MonoSingleton<CrystalController>
     private VRPlayerHand _bombHand, _keyHand;
 
     [SerializeField]
-    private GameObject _bombCrystalPrefab, _keyCrystalPrefab;
+    private GameObject _currentBombCrystal, _currentKeyCrystal;
 
     [SerializeField]
     private Material _bombCrystalMat, _keyCrystalMat, _depletedMaterial;
-
-    private GameObject _currentBombCrystal, _currentKeyCrystal;
 
     [SerializeField]
     private GameObject[] _ignitedBombPrefabs;
@@ -47,10 +45,8 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     private void SpawnBombCrystalOnHand()
     {
-        if (_currentBombCrystal != null)
-            Destroy(_currentBombCrystal);
-
-        _currentBombCrystal = Instantiate(_bombCrystalPrefab);
+        _currentBombCrystal.SetActive(true);
+        _currentBombCrystal.GetComponent<BoxCollider>().enabled = true;
 
         Vector3 bombPos;
         Vector3 bombRot;
@@ -93,7 +89,7 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     public void IgniteBomb(GrabController grabController)
     {
-        Destroy(_currentBombCrystal);
+        _currentBombCrystal.SetActive(false);
         PlayerStats.Instance.AdjustArcaneCrystalAmount(-1);
 
         _currentIgnitedBomb = Instantiate(_ignitedBombPrefabs[MagicController.Instance.magicIdx]);
@@ -125,49 +121,37 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     public void SpawnKeyCrystalOnHand()
     {
-        if (_currentKeyCrystal != null)
-        {
-            Destroy(_currentKeyCrystal);
-            _currentKeyCrystal = null;
-        }
+        _currentKeyCrystal.SetActive(true);
+        _currentKeyCrystal.GetComponent<BoxCollider>().enabled = true;
 
-        _currentKeyCrystal = Instantiate(MasterManager.playerManager.keyCrystalForHand);
+        Vector3 keyPos;
+        Vector3 keyRot;
 
-        Vector3 keyPos = new Vector3(0, 0, 0);
-        Vector3 keyRot = new Vector3(0, 0, 0);
-        Vector3 keyScale = new Vector3(0.4f, 0.4f, 0.4f);
-
-        if (_primaryHand == _leftHand)
+        if (!_keyHand.IsRightHand())
         {
             keyPos = new Vector3(0.0227f, 0, 0.002f);
             keyRot = new Vector3(0, 80, 90);
         }
+
         else
         {
             keyPos = new Vector3(-0.02419997f, 0.001700029f, -0.004799998f);
             keyRot = new Vector3(0, -96.415f, -90);
         }
 
-        _primaryHand.ParentObjectToFixedHandPosition(_currentKeyCrystal, keyPos, keyRot, keyScale);
+        Vector3 keyScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+        _keyHand.ParentObjectToFixedHandPosition(_currentKeyCrystal, keyPos, keyRot, keyScale);
     }
 
     public void GrabKeyCrystal(GrabController grabController)
     {
-        if (grabController.GetHand() == _offHand && _playerStats.GetCurrentKeys() > 0)
+        if (!grabController.GetHand().IsPrimaryHand() && PlayerStats.Instance.GetCurrentKeys() > 0)
         {
-            Destroy(_currentKeyCrystal);
-            _currentKeyCrystal = Instantiate(MasterManager.playerManager.keyCrystal);
             Vector3 keyPos = new Vector3(0, 0, 0);
             Vector3 keyRot = new Vector3(0, 0, 0);
             Vector3 keyScale = new Vector3(1, 1, 1);
             grabController.ParentGrabbable(_currentKeyCrystal, keyPos, keyRot, keyScale);
-            grabController.GetHand().GetHandAnimationState().SwitchHandState(HandAnimationState.HandState.holdingKeyCrystal);
         }
-    }
-
-    public void DropKeyCrystal()
-    {
-        Destroy(_currentKeyCrystal);
-        SpawnKeyCrystalOnHand();
     }
 }

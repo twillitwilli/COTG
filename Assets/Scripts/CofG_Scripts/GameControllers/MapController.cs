@@ -36,9 +36,7 @@ public class MapController : MonoSingleton<MapController>
         for (int i = 0; i < _playerComponents.GetBothHands().Length; i++)
         {
             if (_playerComponents.GetBothHands()[i].IsPrimaryHand())
-            {
                 map.transform.SetParent(_playerComponents.GetAccessoryItemSlot(i));
-            }
         }
 
         map.transform.localPosition = new Vector3(0, 0, 0);

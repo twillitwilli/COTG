@@ -2,23 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPotionController : MonoBehaviour
+public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 {
+    [SerializeField]
     private LocalGameManager _gameManager;
-    [SerializeField] private PlayerStats _playerStats;
-    [SerializeField] private EnemyTrackerController _enemyTrackerController;
+
+    [SerializeField] 
+    private PlayerStats _playerStats;
+
+    [SerializeField] 
+    private EnemyTrackerController _enemyTrackerController;
 
     private VRPlayerController _player;
 
-    public enum PotionType { none, death, sight, movement, strength, fairy, arcane, rainbow, health, angelic, lucky }
+    public enum PotionType 
+    { 
+        none, 
+        death, 
+        sight, 
+        movement, 
+        strength, 
+        fairy, 
+        arcane, 
+        rainbow, 
+        health, 
+        angelic, 
+        lucky 
+    }
 
-    public enum TempEffect { movement, strength, flight, magicFocus, godMode }
+    public enum TempEffect 
+    { 
+        movement, 
+        strength, 
+        flight, 
+        magicFocus, 
+        godMode 
+    }
 
-    [HideInInspector] public float movementBoost, strengthBoost, magicFocusBoost;
+    [HideInInspector] 
+    public float movementBoost, strengthBoost, magicFocusBoost;
 
     public bool[] effectBoosts;
 
-    [HideInInspector] public PotionType lastPotionDrank;
+    [HideInInspector] 
+    public PotionType lastPotionDrank;
 
     private void Awake()
     {
@@ -30,12 +57,7 @@ public class PlayerPotionController : MonoBehaviour
         _player = player;
     }
 
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-    }
-
-    public void GrabPotion(VRPlayerHand hand)
+    public void GrabPotion(VRPlayerHand hand, GameObject potionObj)
     {
         Vector3 pos;
         Vector3 rot;
@@ -55,7 +77,7 @@ public class PlayerPotionController : MonoBehaviour
             scale = new Vector3(0.714286f, 0.7142861f, 0.7142854f);
         }
 
-        hand.ParentObjectToFixedHandPosition(hand.GetGrabController().currentGrabbableObj, pos, rot, scale);
+        hand.ParentObjectToFixedHandPosition(potionObj, pos, rot, scale);
     }
 
     public void PotionEffect(PotionType whichPotionEffect, string potionDescription, bool drankRainbowPotion)
@@ -139,8 +161,8 @@ public class PlayerPotionController : MonoBehaviour
 
     public void SightEffect()
     {
-        _gameManager.GetGearController().GetMapController().RevealMap();
-        _gameManager.GetGearController().GetCompassController().CompassReveal();
+        MapController.Instance.RevealDungeonMap();
+        CompassController.Instance.CompassReveal();
     }
 
     public void RainbowEffect(string potionDescription)

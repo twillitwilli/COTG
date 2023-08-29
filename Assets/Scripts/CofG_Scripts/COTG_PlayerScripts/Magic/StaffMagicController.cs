@@ -24,7 +24,7 @@ public class StaffMagicController : MonoBehaviour
         _playerComponenets = _player.GetPlayerComponents();
     }
 
-    public void GrabStaff(VRPlayerHand hand)
+    public void GrabStaff(VRPlayerHand hand, GameObject staffObj)
     {
         Vector3 pos;
         Vector3 rot;
@@ -44,7 +44,7 @@ public class StaffMagicController : MonoBehaviour
             scale = new Vector3(0.7645649f, 0.7645643f, 0.7645646f);
         }
 
-        hand.ParentObjectToFixedHandPosition(hand.GetGrabController().currentGrabbableObj, pos, rot, scale);
+        hand.ParentObjectToFixedHandPosition(staffObj, pos, rot, scale);
     }
 
     public void SpawnStaff()

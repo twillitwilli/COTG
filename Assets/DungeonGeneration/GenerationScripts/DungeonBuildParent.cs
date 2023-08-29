@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonBuildParent : MonoBehaviour
+public class DungeonBuildParent : MonoSingleton<DungeonBuildParent>
 {
-    public static DungeonBuildParent instance;
-
     public Rooms rooms;
     private MapController _mapController;
     private CompassController _compassController;
     private EnemySpawnerTracker _enemySpawnerTracker;
 
-    [HideInInspector] public string dungeonType;
+    [HideInInspector] 
+    public string dungeonType;
 
     private LocalGameManager _gameManager;
     private ChatManager _chatManager;
 
     private void Awake()
     {
-        if (!instance) { instance = this; }
-        else Destroy(gameObject);
-
         rooms = GetComponent<Rooms>();
         _mapController = GetComponent<MapController>();
         _compassController = GetComponent<CompassController>();

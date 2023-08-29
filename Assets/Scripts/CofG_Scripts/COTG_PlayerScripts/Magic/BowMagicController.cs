@@ -24,7 +24,7 @@ public class BowMagicController : MonoBehaviour
         _playerComponenets = _player.GetPlayerComponents();
     }
 
-    public void GrabBow(VRPlayerHand hand)
+    public void GrabBow(VRPlayerHand hand, GameObject bowObj)
     {
         Vector3 pos;
         Vector3 rot;
@@ -44,7 +44,7 @@ public class BowMagicController : MonoBehaviour
             scale = new Vector3(0.01911412f, 0.01911411f, -0.01911411f);
         }
 
-        hand.ParentObjectToFixedHandPosition(hand.GetGrabController().currentGrabbableObj, pos, rot, scale);
+        hand.ParentObjectToFixedHandPosition(bowObj, pos, rot, scale);
     }
 
     public void SpawnBow()

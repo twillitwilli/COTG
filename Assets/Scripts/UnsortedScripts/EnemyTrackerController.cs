@@ -3,20 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyTrackerController : MonoBehaviour
+public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 {
-    [SerializeField] private AudioController _audioController;
+    [SerializeField] 
+    private AudioController _audioController;
+
     private VRPlayerController _player;
 
-    [HideInInspector] public PlayerProgressStats progressionStats;
-    [HideInInspector] public NavMeshSurface enemyNavMesh;
-    [HideInInspector] public bool enemiesDead, bossesDead, reaperExists, doorsLocked;
-    [HideInInspector] public int currentEnemies, currentBosses;
-    [HideInInspector] public GameObject spawnedReaper;
-    [HideInInspector] public List<GameObject> spawnedEnemies = new List<GameObject>();
-    [HideInInspector] public List<GameObject> otherPlayerSpawnedEnemies = new List<GameObject>();
-    [HideInInspector] public GameObject spawnedBoss;
-    [HideInInspector] public EnemySpawner currentEnemySpawner;
+    [HideInInspector] 
+    public PlayerProgressStats progressionStats;
+
+    [HideInInspector] 
+    public NavMeshSurface enemyNavMesh;
+
+    [HideInInspector] 
+    public bool enemiesDead, bossesDead, reaperExists, doorsLocked;
+
+    [HideInInspector] 
+    public int currentEnemies, currentBosses;
+
+    [HideInInspector] 
+    public GameObject spawnedReaper;
+
+    [HideInInspector] 
+    public List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    [HideInInspector] 
+    public List<GameObject> otherPlayerSpawnedEnemies = new List<GameObject>();
+
+    [HideInInspector] 
+    public GameObject spawnedBoss;
+
+    [HideInInspector] 
+    public EnemySpawner currentEnemySpawner;
+
+    public bool hasEnemyHealthReveal { get; private set; }
+
+    public void SetEnemyHealthReveal(bool hasHealthReveal)
+    {
+        hasEnemyHealthReveal = hasHealthReveal;
+    }
 
     private void Awake()
     {

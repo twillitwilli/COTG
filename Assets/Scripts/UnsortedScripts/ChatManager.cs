@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class ChatManager : MonoBehaviour
+public class ChatManager : MonoSingleton<ChatManager>
 {
-    [HideInInspector] public bool textChat, allowDebugMessages, voiceChat, notifications, chatOnRightHand;
-    [HideInInspector] public string displayMessage;
-    [HideInInspector] public List<string> messageHistory = new List<string>();
-    [HideInInspector] public int totalMessages = -1, currentMessage = -1;
+    [HideInInspector] 
+    public bool textChat, allowDebugMessages, voiceChat, notifications, chatOnRightHand;
 
-    private void Start()
-    {
-        if (textChat)
-        {
-            Invoke("SpawnChat", 3);
-        }
-    }
+    [HideInInspector] 
+    public string displayMessage;
+    
+    [HideInInspector] 
+    public List<string> messageHistory = new List<string>();
+    
+    [HideInInspector] 
+    public int totalMessages = -1, currentMessage = -1;
 
     public void DefaultChatSettings()
     {

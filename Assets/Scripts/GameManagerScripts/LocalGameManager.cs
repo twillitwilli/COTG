@@ -4,53 +4,53 @@ using UnityEngine;
 
 public class LocalGameManager : MonoSingleton<LocalGameManager>
 {
-    public enum GameMode { inLobby = 0, tutorial = 1, normal = 2, master = 3 }
+    public enum GameMode 
+    { 
+        inLobby = 0, 
+        tutorial = 1, 
+        normal = 2, 
+        master = 3 
+    }
     public GameMode currentGameMode;
 
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] 
+    private GameObject playerPrefab;
 
     public VRPlayerController player { get; private set; }
 
     public delegate void PlayerCreated(VRPlayerController newPlayer);
     public static event PlayerCreated playerCreated;
 
-    public enum SceneSelection { testArea, tutorial, titleScene, dungeon }
+    public enum SceneSelection 
+    { 
+        testArea, 
+        tutorial, 
+        titleScene, 
+        dungeon 
+    }
 
-    [SerializeField] private bool hardResetPlayerData, devMode, demoMode;
-    [SerializeField] private Camera _mapCamera;
-    [SerializeField] private Transform[] _spawnLocations;
+    [SerializeField] 
+    private bool hardResetPlayerData, devMode, demoMode;
 
-    [SerializeField] private ControllerType _controllerType;
-    [SerializeField] private OptionsMenu _optionsMenu;
-    [SerializeField] private AudioController _audioController;
-    [SerializeField] private VisualSettings _visualSettings;
-    [SerializeField] private PostProcessingController _postProcessingController;
-    [SerializeField] private PlayerPrefsSaveData _playerPrefsSaveData;
-    [SerializeField] private GameTimer _gameTimer;
+    [SerializeField] 
+    private Camera _mapCamera;
 
-    [SerializeField] private PlayerCardContnroller _playerCardController;
-    [SerializeField] private PlayerStats _playerStats;
-    [SerializeField] private PlayerTotalStats _playerTotalStats;
-    [SerializeField] private MagicController _magicController;
-    [SerializeField] private PlayerPotionController _potionController;
-    [SerializeField] private PlayerCurse _curseController;
-
-    [SerializeField] private EnemyTrackerController _enemyTrackerController;
-
-    [SerializeField] private FollowerPetController _followerPetController;
-
-    [SerializeField] private NetworkManager _networkManager;
-    [SerializeField] private ChatManager _chatManager;
+    [SerializeField] 
+    private Transform[] _spawnLocations;
 
     private EyeManager _eyeManager;
 
-    [HideInInspector] public bool hasCalibrated, isHost, dungeonBuildCompleted, loadDungeon;
+    [HideInInspector] 
+    public bool hasCalibrated, isHost, dungeonBuildCompleted, loadDungeon;
 
-    [HideInInspector] public List<Vector2Int> spawnedScrolls = new List<Vector2Int>();
+    [HideInInspector] 
+    public List<Vector2Int> spawnedScrolls = new List<Vector2Int>();
 
-    [HideInInspector] public GameObject loadingBox, spawnedBossArena;
+    [HideInInspector] 
+    public GameObject loadingBox, spawnedBossArena;
 
-    [HideInInspector] public int dungeonType, currentLevel;
+    [HideInInspector] 
+    public int dungeonType, currentLevel;
 
     private void Awake()
     {
@@ -204,31 +204,6 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     }
 
     public Camera GetMapCamera() { return _mapCamera; }
-    public ControllerType GetControllerType() { return _controllerType; }
-    public OptionsMenu GetOptionsMenu() { return _optionsMenu; }
-    public AudioController GetAudioController() { return _audioController; }
-    public VisualSettings GetVisualSettings() { return _visualSettings; }
-    public PostProcessingController GetPostProcessingController() { return _postProcessingController; }
-    public PlayerPrefsSaveData GetPlayerPrefsSaveData() { return _playerPrefsSaveData; }
-    public GameTimer GetGameTimer() { return _gameTimer; }
-
-    public PlayerCardContnroller GetPlayerCardController() { return _playerCardController; }
-    public PlayerStats GetPlayerStats() { return _playerStats; }
-    public PlayerTotalStats GetTotalStats() { return _playerTotalStats; }
-    public MagicController GetMagicController() { return _magicController; }
-    public PlayerPotionController GetPotionController() { return _potionController; }
-    public PlayerCurse GetCurseController() { return _curseController; }
-
-
-    public EnemyTrackerController GetEnemyTrackerController() { return _enemyTrackerController; }
-
-
-    public FollowerPetController GetPetController() { return _followerPetController; }
-
-
-    public NetworkManager GetNetworkManager() { return _networkManager; }
-    public ChatManager GetChatManager() { return _chatManager; }
-
 
     public Transform[] GetSpawnLocations() { return _spawnLocations; }
     public bool IsDemo() { return demoMode; }
