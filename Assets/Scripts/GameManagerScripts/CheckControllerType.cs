@@ -6,7 +6,8 @@ using UnityEngine.XR;
 [CreateAssetMenu(menuName = "MasterManager/CheckControllerType")]
 public class CheckControllerType : ScriptableObject
 {
-    public List<Vector3> oculusPos, oculusRot, 
+    public List<Vector3> 
+        oculusPos, oculusRot, 
         indexPos, indexRot, 
         wmrPos, wmrRot, 
         vivePos, viveRot, 

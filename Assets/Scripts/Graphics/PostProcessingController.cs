@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class PostProcessingController : MonoBehaviour
+public class PostProcessingController : MonoSingleton<PostProcessingController>
 {
     private PostProcessLayer _postProcessLayer;
     private PostProcessVolume _postProcessVolume;
@@ -13,22 +13,39 @@ public class PostProcessingController : MonoBehaviour
 
     //Post Processing Options
 
-    [HideInInspector] public enum PostEffectAdjustment { ambientOcc, bloomEffect, color }
+    [HideInInspector] public enum PostEffectAdjustment 
+    { 
+        ambientOcc, 
+        bloomEffect, 
+        color 
+    }
 
     //Ambient Occlusion Settings
     public bool ambientOcclusion { get; set; }
-    [HideInInspector] public float AOIntensity = 1.15f;
-    [HideInInspector] public float thickness = 1;
+
+    [HideInInspector] 
+    public float AOIntensity = 1.15f;
+    
+    [HideInInspector] 
+    public float thickness = 1;
 
     //Bloom Settings
     public bool bloom { get; set; }
-    [HideInInspector] public float Bintensity = 14;
-    [HideInInspector] public float threshold = 1, diffusion = 7;
+    
+    [HideInInspector] 
+    public float Bintensity = 14;
+    
+    [HideInInspector] 
+    public float threshold = 1, diffusion = 7;
 
     //Color Grading Settings
     public bool colorGrading { get; set; }
-    [HideInInspector] public Tonemapper tonemapping;
-    [HideInInspector] public float temperature = -75, tint = -55, postExposure = 0, hueShift = 0, saturation = 100, contrast = 20;
+    
+    [HideInInspector] 
+    public Tonemapper tonemapping;
+    
+    [HideInInspector] 
+    public float temperature = -75, tint = -55, postExposure = 0, hueShift = 0, saturation = 100, contrast = 20;
 
     private void Awake()
     {
@@ -48,8 +65,7 @@ public class PostProcessingController : MonoBehaviour
 
     public void TogglePostProcessing(bool postProcessingOn)
     {
-        if (postProcessingOn) { _postProcessLayer.enabled = true; }
-        else _postProcessLayer.enabled = false;
+        _postProcessLayer.enabled = postProcessingOn;
     }
 
     public void DefaultSettings()
@@ -118,8 +134,11 @@ public class PostProcessingController : MonoBehaviour
     {
 
 
-        if (_ambientOcclusionEffect.enabled.value && !ambientOcclusion) { _ambientOcclusionEffect.enabled.value = false; }
-        else if (!_ambientOcclusionEffect.enabled.value && ambientOcclusion) { _ambientOcclusionEffect.enabled.value = true; }
+        if (_ambientOcclusionEffect.enabled.value && !ambientOcclusion)
+            _ambientOcclusionEffect.enabled.value = false;
+
+        else if (!_ambientOcclusionEffect.enabled.value && ambientOcclusion)
+            _ambientOcclusionEffect.enabled.value = true;
 
         _ambientOcclusionEffect.intensity.value = AOIntensity;
         _ambientOcclusionEffect.thicknessModifier.value = thickness;
@@ -127,8 +146,11 @@ public class PostProcessingController : MonoBehaviour
 
     public void BloomSettings()
     {
-        if (_bloomEffect.enabled.value && !bloom) { _bloomEffect.enabled.value = false; }
-        else if (!_bloomEffect.enabled.value && bloom) { _bloomEffect.enabled.value = true; }
+        if (_bloomEffect.enabled.value && !bloom)
+            _bloomEffect.enabled.value = false;
+
+        else if (!_bloomEffect.enabled.value && bloom)
+            _bloomEffect.enabled.value = true;
 
         _bloomEffect.intensity.value = Bintensity;
         _bloomEffect.threshold.value = threshold;
@@ -137,8 +159,11 @@ public class PostProcessingController : MonoBehaviour
 
     public void ColorGradingSettings()
     {
-        if (_colorGradingEffect.enabled.value && !colorGrading) { _colorGradingEffect.enabled.value = false; }
-        else if (!_colorGradingEffect.enabled.value && colorGrading) { _colorGradingEffect.enabled.value = true; }
+        if (_colorGradingEffect.enabled.value && !colorGrading)
+            _colorGradingEffect.enabled.value = false;
+
+        else if (!_colorGradingEffect.enabled.value && colorGrading)
+            _colorGradingEffect.enabled.value = true;
 
         _colorGradingEffect.tonemapper.value = tonemapping;
         _colorGradingEffect.temperature.value = temperature;

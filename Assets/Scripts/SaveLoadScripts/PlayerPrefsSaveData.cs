@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class PlayerPrefsSaveData : MonoBehaviour
+public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
 {
-    [SerializeField] private MagicController _magicController;
-    [SerializeField] private AudioController _audioController;
-    [SerializeField] private VisualSettings _visualSettings;
-    [SerializeField] private PostProcessingController _postProcessingController;
-    [SerializeField] private ChatManager _chatManager;
-
     private VRPlayerController _player;
     private PlayerComponents _playerComponents;
 
@@ -33,10 +27,6 @@ public class PlayerPrefsSaveData : MonoBehaviour
         {
             Debug.Log("New Player");
              _player.DefaultPlayerSettings();
-            _audioController.LoadVolumeStats();
-            _visualSettings.DefaultLighting();
-            _postProcessingController.DefaultSettings();
-            _chatManager.DefaultChatSettings();
         }
         else { await LoadPlayerPrefs(); }
     }
@@ -90,7 +80,7 @@ public class PlayerPrefsSaveData : MonoBehaviour
         PlayerPrefs.SetInt("PrimaryHand", (_player.isLeftHanded ? 1 : 0));
         PlayerPrefs.SetInt("TimeFormat", (_player.militaryTime ? 1 : 0));
 
-        _audioController.SaveVolumeStats();
+        AudioController.Instance.SaveVolumeStats();
 
         PlayerPrefs.SetFloat("BackAttachments", _playerComponents.belt.backAttachments);
         PlayerPrefs.SetFloat("StandingBeltAdjustment", _playerComponents.belt.heightStandingPlayer);

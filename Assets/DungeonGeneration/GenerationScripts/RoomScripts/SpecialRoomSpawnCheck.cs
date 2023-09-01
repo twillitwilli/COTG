@@ -20,8 +20,8 @@ public class SpecialRoomSpawnCheck : MonoBehaviour
     {
         if (other.gameObject)
         {
-            DungeonGenerationV3.instance.spawnedRooms.specialRooms.Remove(specialRoom.gameObject);
-            DungeonGenerationV3.instance.specialRoomCount--;
+            DungeonGenerationV3.Instance.spawnedRooms.specialRooms.Remove(specialRoom.gameObject);
+            DungeonGenerationV3.Instance.specialRoomCount--;
             Destroy(specialRoom.gameObject);
         }
     }

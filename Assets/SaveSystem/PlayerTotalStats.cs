@@ -2,17 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTotalStats : MonoBehaviour
+public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
 {
     private LocalGameManager _gameManager;
 
-    [SerializeField] private GameTimer _gameTimer;
-    [SerializeField] private ChatManager _chatManager;
+    [SerializeField] 
+    private GameTimer _gameTimer;
+    
+    [SerializeField] 
+    private ChatManager _chatManager;
 
-    public enum StatType { totalRuns, completedRuns, bestStreak, deaths, totalGold, totalSouls, runesUsed, scrollsAbsorbed, itemsBought, 
-        potionsDrank, chestsOpened, roomsExplored, puzzlesCompleted, enemiesKilled, bossesKilled, reapersKilled, jarsBroken, rocksBroken, batsKilled, 
-        beesKilled, bunniesKilled, goblinsKilled, mushroomsKilled, plantsKilled, wolvesKilled, golemsKilled, treantsKilled, dragonsKilled, 
-        babyReaperKills, princeReapersKilled, godReapersKilled, magicSealsBroken }
+    public enum StatType 
+    { 
+        totalRuns, 
+        completedRuns, 
+        bestStreak, 
+        deaths, 
+        totalGold, 
+        totalSouls, 
+        runesUsed, 
+        scrollsAbsorbed, 
+        itemsBought, 
+        potionsDrank, 
+        chestsOpened, 
+        roomsExplored, 
+        puzzlesCompleted, 
+        enemiesKilled, 
+        bossesKilled, 
+        reapersKilled, 
+        jarsBroken, 
+        rocksBroken, 
+        batsKilled, 
+        beesKilled, 
+        bunniesKilled, 
+        goblinsKilled, 
+        mushroomsKilled, 
+        plantsKilled, 
+        wolvesKilled, 
+        golemsKilled, 
+        treantsKilled, 
+        dragonsKilled, 
+        babyReaperKills, 
+        princeReapersKilled, 
+        godReapersKilled, 
+        magicSealsBroken }
 
     public PlayerProgressStats progressStats;
 

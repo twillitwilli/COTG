@@ -6,6 +6,6 @@ public class StartingRoom : MonoBehaviour
 {
     private void Awake()
     {
-        DungeonGenerationV3.instance.spawnedRooms.dungeonRooms.Add(gameObject);
+        DungeonGenerationV3.Instance.spawnedRooms.dungeonRooms.Add(gameObject);
     }
 }

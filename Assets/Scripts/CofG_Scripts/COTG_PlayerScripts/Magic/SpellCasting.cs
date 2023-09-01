@@ -7,27 +7,28 @@ public class SpellCasting : MonoBehaviour
     // --- FOR SORCERER ONLY ---
     private VRPlayerController _player;
     private PlayerComponents _playerComponents;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
 
     public bool canUseSpellCasting;
     public float accelerationReq = 1f, stoppingForce = 0.25f, distanceReq;
     public float distanceBetweenHandAndChest;
-    [SerializeField] private Transform[] handCenter; 
-    [SerializeField] private Transform centerOfHands;
+
+    [SerializeField] 
+    private Transform[] handCenter; 
+
+    [SerializeField] 
+    private Transform centerOfHands;
 
     private PlayerMagicController magic;
     private float castTime;
     private float distanceForSpellCharge = 0.2f;
     private GameObject chargingSpell;
+
     private List<GameObject> magicFocusCharges = new List<GameObject>();
 
     private void Awake()
     {
         _player = LocalGameManager.Instance.player;
         _playerComponents = _player.GetPlayerComponents();
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-        _magicController = LocalGameManager.Instance.GetMagicController();
 
         magic = MasterManager.playerMagicController;
         ResetSpellCharge();
@@ -44,12 +45,16 @@ public class SpellCasting : MonoBehaviour
         {
             Vector3 centerPoint = (handCenter[0].position + handCenter[1].position) / 2;
             centerOfHands.position = centerPoint;
-            if (_playerStats.GetCurrentMagicFocus() < _playerStats.GetMagicFocus())
+
+            if (PlayerStats.Instance.GetCurrentMagicFocus() < PlayerStats.Instance.GetMagicFocus())
             {
                 float distance = Vector3.Distance(handCenter[0].position, handCenter[1].position);
 
-                if (distance > distanceForSpellCharge) { ResetSpellCharge(); }
-                else if (distance <= distanceForSpellCharge) { ChargeSpell(_magicController.magicIdx); }
+                if (distance > distanceForSpellCharge)
+                    ResetSpellCharge();
+
+                else if (distance <= distanceForSpellCharge)
+                    ChargeSpell(MagicController.Instance.magicIdx);
             }
         }
     }
@@ -63,16 +68,23 @@ public class SpellCasting : MonoBehaviour
             ResetTransform(newSpell);
             chargingSpell = newSpell;
         }
-        if (castTime > 0) { castTime -= Time.deltaTime * 6; }
-        else if (castTime <= 0) { SpellReady(currentMagic); }
+
+        if (castTime > 0)
+            castTime -= Time.deltaTime * 6;
+
+        else if (castTime <= 0)
+            SpellReady(currentMagic);
     }
 
     private void SpellReady(int currentMagic)
     {
         for (int i = 0; i < 2; i++)
         {
-            if (!_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual) { SpawnSpellCharges(i, currentMagic); }
-            else SetSpellFocus(_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual.GetComponent<ParticleSystem>(), Mathf.RoundToInt(_playerStats.GetMagicFocus()));
+            if (!_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual)
+                SpawnSpellCharges(i, currentMagic);
+
+            else
+                SetSpellFocus(_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual.GetComponent<ParticleSystem>(), Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus()));
 
             _playerComponents.GetHand(i).GetSpellCastingForHands().magicActive = true;
         }
@@ -87,7 +99,7 @@ public class SpellCasting : MonoBehaviour
         spellReady.transform.SetParent(_playerComponents.GetHand(hand).GetSpellCastingForHands().magicChargesSpawn);
         ResetTransform(spellReady);
         _playerComponents.GetHand(hand).GetSpellCastingForHands().spellReadyVisual = spellReady;
-        SetSpellFocus(spellReady.GetComponent<ParticleSystem>(), Mathf.RoundToInt(_playerStats.GetMagicFocus()));
+        SetSpellFocus(spellReady.GetComponent<ParticleSystem>(), Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus()));
     }
 
     private void ResetTransform(GameObject obj)
@@ -105,8 +117,10 @@ public class SpellCasting : MonoBehaviour
 
     private void ResetSpellCharge()
     {
-        if (chargingSpell) { Destroy(chargingSpell); }
-        castTime = _playerStats.GetAttackCooldown();
+        if (chargingSpell)
+            Destroy(chargingSpell);
+
+        castTime = PlayerStats.Instance.GetAttackCooldown();
     }
 
     public void CalibrateSettings()
@@ -118,10 +132,12 @@ public class SpellCasting : MonoBehaviour
     private void OnDisable()
     {
         canUseSpellCasting = false;
+
         foreach (GameObject obj in magicFocusCharges)
         {
             if (obj != null) { Destroy(obj); }
         }
+
         magicFocusCharges.Clear();
     }
 }

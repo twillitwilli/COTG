@@ -4,23 +4,14 @@ using UnityEngine;
 
 public class BowMagicController : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private MagicController _magicController;
-
     private VRPlayerController _player;
     private PlayerComponents _playerComponenets;
 
     private PlayerBow _currentBow;
 
-    private void Awake()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _magicController = _gameManager.GetMagicController();
-    }
-
     private void OnEnable()
     {
-        _player = _gameManager.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponenets = _player.GetPlayerComponents();
     }
 
@@ -49,7 +40,8 @@ public class BowMagicController : MonoBehaviour
 
     public void SpawnBow()
     {
-        GameObject newBow = Instantiate(MasterManager.playerMagicController.bows[_magicController.magicIdx]);
+        GameObject newBow = Instantiate(MasterManager.playerMagicController.bows[MagicController.Instance.magicIdx]);
+
         _currentBow = newBow.GetComponent<PlayerBow>();
         ResetToBack();
     }

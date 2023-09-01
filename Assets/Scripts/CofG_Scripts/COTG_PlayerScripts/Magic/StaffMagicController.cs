@@ -4,23 +4,14 @@ using UnityEngine;
 
 public class StaffMagicController : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private MagicController _magicController;
-
     private VRPlayerController _player;
     private PlayerComponents _playerComponenets;
 
     private PlayerStaff _currentStaff;
 
-    private void Awake()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _magicController = _gameManager.GetMagicController();
-    }
-
     private void OnEnable()
     {
-        _player = _gameManager.player;
+        _player = LocalGameManager.Instance.player;
         _playerComponenets = _player.GetPlayerComponents();
     }
 
@@ -49,7 +40,7 @@ public class StaffMagicController : MonoBehaviour
 
     public void SpawnStaff()
     {
-        GameObject newStaff = Instantiate(MasterManager.playerMagicController.staffs[_magicController.magicIdx]);
+        GameObject newStaff = Instantiate(MasterManager.playerMagicController.staffs[MagicController.Instance.magicIdx]);
         _currentStaff = newStaff.GetComponent<PlayerStaff>();
         ResetOnBack();
     }

@@ -7,12 +7,13 @@ public class SpecialRoom : MonoBehaviour
     public List<RoomController> roomControllers;
     public List<SpecialRoomSpawnCheck> spawnChecks;
 
-    [HideInInspector] public int specialRoomSpawnCheckers;
+    [HideInInspector] 
+    public int specialRoomSpawnCheckers;
 
     private void Awake()
     {
-        DungeonGenerationV3.instance.specialRoomCount++;
-        DungeonGenerationV3.instance.spawnedRooms.specialRooms.Add(gameObject);
+        DungeonGenerationV3.Instance.specialRoomCount++;
+        DungeonGenerationV3.Instance.spawnedRooms.specialRooms.Add(gameObject);
     }
 
     public void CanSpawnRoomCheck()

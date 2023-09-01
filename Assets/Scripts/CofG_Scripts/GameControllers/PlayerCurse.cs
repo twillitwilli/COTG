@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCurse : MonoBehaviour
+public class PlayerCurse : MonoSingleton<PlayerCurse>
 {
     private OnScreenText _onScreenText;
 
     public bool hasCurseImmunity { get; private set; }
 
-    public enum Curses { NotCursed, CurseOfUnknown, CurseOfTheLost, CurseOfDarkness, CurseOfTheDungeon, CurseOfDispair }
+    public enum Curses 
+    { 
+        NotCursed, 
+        CurseOfUnknown, 
+        CurseOfTheLost, 
+        CurseOfDarkness, 
+        CurseOfTheDungeon, 
+        CurseOfDispair 
+    }
     public Curses currentCurseEffect { get; private set; }
 
     private void Awake()
@@ -30,7 +38,7 @@ public class PlayerCurse : MonoBehaviour
     {
         if (!hasCurseImmunity)
         {
-            int applyCurse = Random.Range(1, 6 + LocalGameManager.Instance.GetPlayerStats().GetLuck());
+            int applyCurse = Random.Range(1, 6 + PlayerStats.Instance.GetLuck());
 
             if (applyCurse == 1)
             {

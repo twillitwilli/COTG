@@ -16,9 +16,11 @@ public class RoomController : MonoBehaviour
     {
         if (!isSpecialRoom) 
         { 
-            DungeonGenerationV3.instance.roomCount++; 
-            DungeonGenerationV3.instance.spawnedRooms.spawnedRooms.Add(transform.parent.gameObject);
+            DungeonGenerationV3.Instance.roomCount++; 
+            DungeonGenerationV3.Instance.spawnedRooms.spawnedRooms.Add(transform.parent.gameObject);
         }
-        else { specialRoomParent = GetComponentInParent<SpecialRoom>().gameObject; }
+
+        else
+            specialRoomParent = GetComponentInParent<SpecialRoom>().gameObject;
     }
 }

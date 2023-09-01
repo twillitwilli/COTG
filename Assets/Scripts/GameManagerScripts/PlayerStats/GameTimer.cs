@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTimer : MonoBehaviour
+public class GameTimer : MonoSingleton<GameTimer>
 {
     private TimeSpan timePlaying;
     private bool timerGoing;

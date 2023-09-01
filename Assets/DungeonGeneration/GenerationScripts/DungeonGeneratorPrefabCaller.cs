@@ -2,42 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonGeneratorPrefabCaller : MonoBehaviour
+public class DungeonGeneratorPrefabCaller : MonoSingleton<DungeonGeneratorPrefabCaller>
 {
     public static DungeonGeneratorPrefabCaller instance;
 
-    private LocalGameManager _gameManager;
-    private ChatManager _chatManager;
-
-    [SerializeField] private GameObject _dungeonGeneratorPrefab;
+    [SerializeField] 
+    private GameObject _dungeonGeneratorPrefab;
+    
     public GameObject roomPrefabObjects;
+    
     public GameObject[] loadingAreas;
 
 
     private void Awake()
     {
-        if (!instance) { instance = this; }
-        else { Destroy(gameObject); }
         Instantiate(roomPrefabObjects);
-
-        _gameManager = LocalGameManager.Instance;
-        _chatManager = _gameManager.GetChatManager();
 
         if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost)
         {
-            _chatManager.DebugMessage("Building Dungeon");
+            ChatManager.Instance.DebugMessage("Building Dungeon");
+
             int randomLoadingArea = Random.Range(0, loadingAreas.Length);
+
             Instantiate(loadingAreas[randomLoadingArea], transform.position, transform.rotation);
         }
+        
         else if (CoopManager.instance != null && !LocalGameManager.Instance.isHost)
-        {
             CoopManager.instance.coopDungeonBuild.CheckSpawnedLoadingArea();
-        }
     }
 
     private void Start()
     {
-        _gameManager.GetCurseController().RunCurseCheck();
+        PlayerCurse.Instance.RunCurseCheck();
 
         Invoke("SpawnDungeonGenerator", 5);
     }

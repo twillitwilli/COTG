@@ -4,41 +4,44 @@ using UnityEngine;
 
 public class RoomMarker : MonoBehaviour
 {
-    private DungeonBuildParent _dungeonBuildParent;
-    private CompassController _compassController;
-
-    public enum roomType { bossRoom, itemRoom, shopRoom, sacrificeRoom, ritualRoom }
+    public enum roomType 
+    { 
+        bossRoom, 
+        itemRoom, 
+        shopRoom, 
+        sacrificeRoom, 
+        ritualRoom 
+    }
     public roomType dungeonRoomType;
 
     private void Start()
     {
-        _dungeonBuildParent = DungeonBuildParent.instance;
-        _compassController = _dungeonBuildParent.GetCompassController();
-
-        if (_dungeonBuildParent != null)
+        if (DungeonBuildParent.Instance != null)
         {
-            _compassController.compassIndicators.Add(gameObject);
+            CompassController.Instance.compassIndicators.Add(gameObject);
 
             switch (dungeonRoomType)
             {
                 case roomType.bossRoom:
-                    _compassController.bossRoom = gameObject;
+                    CompassController.Instance.bossRoom = gameObject;
                     break;
+
                 case roomType.itemRoom:
-                    _compassController.itemRoom = gameObject;
+                    CompassController.Instance.itemRoom = gameObject;
                     break;
+
                 case roomType.shopRoom:
-                    _compassController.shopRoom = gameObject;
+                    CompassController.Instance.shopRoom = gameObject;
                     break;
+
                 case roomType.sacrificeRoom:
-                    _compassController.sacrificeRoom = gameObject;
+                    CompassController.Instance.sacrificeRoom = gameObject;
                     break;
+
                 case roomType.ritualRoom:
-                    _compassController.ritualRoom = gameObject;
+                    CompassController.Instance.ritualRoom = gameObject;
                     break;
             }
         }
-
-        
     }
 }

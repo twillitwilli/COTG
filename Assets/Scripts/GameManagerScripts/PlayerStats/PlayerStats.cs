@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 
 public class PlayerStats : MonoSingleton<PlayerStats>
 {
-    [SerializeField] private PlayerTotalStats _playerTotalStats;
-    [SerializeField] private MagicController _magicController;
-
     private VRPlayerController _player;
     private PlayerComponents _playerComponents;
 
@@ -106,12 +103,16 @@ public class PlayerStats : MonoSingleton<PlayerStats>
                 _player.GetPlayerComponents().hitEffect.PlayerHit();
                 StartIFrame();
             }
-            else { _playerComponents.hitEffect.CheckVision(); }
+            else
+                _playerComponents.hitEffect.CheckVision();
 
             _currentHealth += adjustmentValue;
 
-            if (_currentHealth <= 0) { PlayerDead(deathMessage); }
-            else if (_currentHealth >= _maxHealth) { _currentHealth = _maxHealth; }
+            if (_currentHealth <= 0)
+                PlayerDead(deathMessage);
+
+            else if (_currentHealth >= _maxHealth)
+                _currentHealth = _maxHealth;
 
             foreach (PlayerHealthDisplay healthDisplay in _playerComponents.healthDisplay) { healthDisplay.AdjustHealthDisplay((_currentHealth / _maxHealth) * 100); }
         }
@@ -123,16 +124,19 @@ public class PlayerStats : MonoSingleton<PlayerStats>
 
     public void PlayerDead(string deathMessage)
     {
-        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.deaths);
+        PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.deaths);
+
         _playerComponents.onScreenText.PrintText(deathMessage, true);
         _isDead = true;
 
         if (CoopManager.instance == null) 
         {
-            _playerTotalStats.SavePlayerProgress(saveFile);
+            PlayerTotalStats.Instance.SavePlayerProgress(saveFile);
             _playerComponents.resetPlayer.ResetPlayer(true); 
         }
-        else { CoopManager.instance.PlayerDied(); }
+
+        else
+            CoopManager.instance.PlayerDied();
     }
 
     public void AdjustAttackDamage(float adjustmentValue)
@@ -141,11 +145,17 @@ public class PlayerStats : MonoSingleton<PlayerStats>
         _minAttackDamage = _attackDamage - 3;
         _maxAttackDamage = _attackDamage + 3; 
 
-        if (adjustmentValue > 0) { AdjustDamageUpgrades(1); }
-        else { AdjustDamageUpgrades(-1); }
+        if (adjustmentValue > 0)
+            AdjustDamageUpgrades(1);
 
-        if (_minAttackDamage <= 1f) { _minAttackDamage = 1f; }
-        if (_maxAttackDamage <= 4f) { _maxAttackDamage = 4f; }
+        else
+            AdjustDamageUpgrades(-1);
+
+        if (_minAttackDamage <= 1f)
+            _minAttackDamage = 1f;
+
+        if (_maxAttackDamage <= 4f)
+            _maxAttackDamage = 4f;
     }
 
     public float GetAttackDamage() { return _attackDamage; }
@@ -158,9 +168,14 @@ public class PlayerStats : MonoSingleton<PlayerStats>
     public void AdjustAttackRange(float adjustmentValue)
     {
         _attackRange += adjustmentValue;
-        if (adjustmentValue > 0) { AdjustRangeUprades(1); }
-        else { AdjustRangeUprades(-1); }
-        if (_attackRange <= 0.01f) { _attackRange = 0.01f; }
+
+        if (adjustmentValue > 0)
+            AdjustRangeUprades(1);
+
+        else AdjustRangeUprades(-1);
+
+        if (_attackRange <= 0.01f)
+            _attackRange = 0.01f;
     }
 
     public float GetAttackRange() { return _attackRange; }
@@ -168,7 +183,8 @@ public class PlayerStats : MonoSingleton<PlayerStats>
     public void AdjustAttackCooldown(float adjustmentValue)
     {
         _attackCooldown += adjustmentValue;
-        if (_attackCooldown <= 0.01f) { _attackCooldown = 0.01f; }
+        if (_attackCooldown <= 0.01f)
+            _attackCooldown = 0.01f;
     }
 
     public float GetAttackCooldown() { return _attackCooldown; }
@@ -176,7 +192,9 @@ public class PlayerStats : MonoSingleton<PlayerStats>
     public void AdjustDamageUpgrades(float adjustmentValue)
     {
         _damageUpgrades += adjustmentValue;
-        if (_damageUpgrades < 0) { _damageUpgrades = 0; }
+
+        if (_damageUpgrades < 0)
+            _damageUpgrades = 0;
     }
 
     public float GetDamageUpgrades() { return _damageUpgrades; }
@@ -184,7 +202,9 @@ public class PlayerStats : MonoSingleton<PlayerStats>
     public void AdjustRangeUprades(float adjustmentValue)
     {
         _rangeUpgrades += adjustmentValue;
-        if (_rangeUpgrades < 0) { _rangeUpgrades = 0; }
+
+        if (_rangeUpgrades < 0)
+            _rangeUpgrades = 0;
     }
 
     public float GetRangeUpgrades() { return _rangeUpgrades; }
@@ -192,20 +212,15 @@ public class PlayerStats : MonoSingleton<PlayerStats>
     public void AdjustMagicFocus(int adjustmentValue)
     {
         _magicFocus += adjustmentValue;
-        if (_magicFocus <= 0) { _magicFocus = 1; }
-        else if (_magicFocus >= 20) { _magicFocus = 20; }
 
-        switch (_magicController.currentClass)
-        {
-            case MagicController.ClassType.Wizard:
-                _gearController.GetStaffController().GetPlayerStaff().AdjustMagicFocus();
-                break;
-        }
-        
+        if (_magicFocus <= 0)
+            _magicFocus = 1;
+
+        else if (_magicFocus >= 20)
+            _magicFocus = 20;
+
         if (_playerComponents.minionSpawnLocation.currentMinion != null)
-        {
             _playerComponents.minionSpawnLocation.CheckMinionStage();
-        }
     }
 
     public int GetMagicFocus() { return Mathf.RoundToInt(_magicFocus); }

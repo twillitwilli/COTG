@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class SpecialAttack : MonoBehaviour
 {
-    private PlayerStats _playerStats;
-
-    [SerializeField] private MagicController.SpecialEffects _specialEffect;
-    [SerializeField] private ParticleHitEnemy _particleHitEnemy;
+    [SerializeField] 
+    private MagicController.SpecialEffects _specialEffect;
+    
+    [SerializeField] 
+    private ParticleHitEnemy _particleHitEnemy;
 
     public EnemyHealthModifier enemyHealthModifier;
 
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-    }
-
     public virtual void Explosion()
     {
-        float explosionDamage = _playerStats.GetAttackDamage();
+        float explosionDamage = PlayerStats.Instance.GetAttackDamage();
         enemyHealthModifier.healthValue = (-1 * (explosionDamage + (explosionDamage * 0.5f)));
         Destroy(gameObject, 6);
     }
@@ -26,8 +22,8 @@ public class SpecialAttack : MonoBehaviour
     public virtual void Rain()
     {
         transform.localEulerAngles = new Vector3(-90, 0, 0);
-        _particleHitEnemy.healthAdjustment = (-1 * (_playerStats.GetAttackDamage() * 0.65f));
-        Destroy(gameObject, _playerStats.GetMagicFocus() * 2);
+        _particleHitEnemy.healthAdjustment = (-1 * (PlayerStats.Instance.GetAttackDamage() * 0.65f));
+        Destroy(gameObject, PlayerStats.Instance.GetMagicFocus() * 2);
     }
 
     public virtual void Summoning()
@@ -47,6 +43,6 @@ public class SpecialAttack : MonoBehaviour
 
     public virtual void AOEGround()
     {
-        Destroy(gameObject, _playerStats.GetMagicFocus() * 2);
+        Destroy(gameObject, PlayerStats.Instance.GetMagicFocus() * 2);
     }
 }

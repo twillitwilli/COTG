@@ -7,10 +7,9 @@ public class GoldSteal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         VRPlayerController player;
+
         if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
-        {
-            LocalGameManager.Instance.GetPlayerStats().AdjustGoldAmount(-RandomGoldAmount());
-        }
+            PlayerStats.Instance.AdjustGoldAmount(-RandomGoldAmount());
     }
 
     private int RandomGoldAmount()

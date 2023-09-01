@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class OptionsMenu : MonoBehaviour
+public class OptionsMenu : MonoSingleton<OptionsMenu>
 {
-    [SerializeField] private GameObject _menuPrefab;
-    [SerializeField] private PlayerPrefsSaveData _playerPrefSaveData;
+    [SerializeField] 
+    private GameObject _menuPrefab;
+
+    [SerializeField] 
+    private PlayerPrefsSaveData _playerPrefSaveData;
 
     private VRPlayerController _player;
     private PlayerComponents _playerComponents;
@@ -15,7 +18,8 @@ public class OptionsMenu : MonoBehaviour
     public Transform secondaryMenuSpawnLocation;
     public GameObject handAdjusterPrefab, playerCalibrationPrefab;
 
-    [HideInInspector] public GameObject spawnedMenu, spawnedHandAdjuster, spawnedPlayerCalibration;
+    [HideInInspector] 
+    public GameObject spawnedMenu, spawnedHandAdjuster, spawnedPlayerCalibration;
 
     private void Awake()
     {
@@ -73,7 +77,9 @@ public class OptionsMenu : MonoBehaviour
 
             PlayerCalibrationController calibrationController = spawnedPlayerCalibration.GetComponent<PlayerCalibrationController>();
 
-            if (spawnedMenu != null) { calibrationController.menu = spawnedMenu; }
+            if (spawnedMenu != null)
+                calibrationController.menu = spawnedMenu;
+
             else
             {
                 GameObject newMenu = Instantiate(_menuPrefab);

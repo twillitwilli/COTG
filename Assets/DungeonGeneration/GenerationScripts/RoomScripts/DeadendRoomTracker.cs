@@ -6,6 +6,6 @@ public class DeadendRoomTracker : MonoBehaviour
 {
     private void Awake()
     {
-        DungeonGenerationV3.instance.spawnedRooms.deadendRooms.Add(gameObject);
+        DungeonGenerationV3.Instance.spawnedRooms.deadendRooms.Add(gameObject);
     }
 }

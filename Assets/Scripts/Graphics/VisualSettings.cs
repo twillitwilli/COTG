@@ -3,17 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class VisualSettings : MonoBehaviour
+public class VisualSettings : MonoSingleton<VisualSettings>
 {
     private VRPlayerController _player;
 
-    [HideInInspector] public PostProcessingController postProcessingController;
+    [HideInInspector] 
+    public PostProcessingController postProcessingController;
     
-    [HideInInspector] public LightShadows shadowSetting;
-    [HideInInspector] public ShadowResolution shadowQuality;
-    [HideInInspector] public float lightRange = 27.5f, brightness = 1;
-    [HideInInspector] public enum LightAdjustment { shadowType, shadowResolution, range, intensity }
-    [HideInInspector] public List<LightPedastal> lightPedastals = new List<LightPedastal>();
+    [HideInInspector] 
+    public LightShadows shadowSetting;
+    
+    [HideInInspector] 
+    public ShadowResolution shadowQuality;
+    
+    [HideInInspector] 
+    public float lightRange = 27.5f, brightness = 1;
+    
+    [HideInInspector] 
+    public enum LightAdjustment 
+    { 
+        shadowType, 
+        shadowResolution, 
+        range, 
+        intensity 
+    }
+    
+    [HideInInspector] 
+    public List<LightPedastal> lightPedastals = new List<LightPedastal>();
 
     private void Awake()
     {
@@ -38,10 +54,7 @@ public class VisualSettings : MonoBehaviour
     {
         if (lightPedastals.Count > 0)
         {
-            foreach (LightPedastal lights in lightPedastals) { lights.AdjustShadowType(); }
-            foreach (LightPedastal lights in lightPedastals) { lights.AdjustShadowResolution(); }
-            foreach (LightPedastal lights in lightPedastals) { lights.AdjustRange(); }
-            foreach (LightPedastal lights in lightPedastals) { lights.AdjustIntensity(); }
+            foreach (LightPedastal lights in lightPedastals) { lights.AdjustLight(); }
         }
     }
 

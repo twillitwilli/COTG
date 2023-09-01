@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class RoomOpening : MonoBehaviour
 {
-    public enum Opening { north, south, east, west }
+    public enum Opening 
+    { 
+        north, 
+        south, 
+        east, 
+        west 
+    }
     public Opening openingDirection;
+    
     public RoomController roomController;
     public GameObject mapCounterpart;
+    
     [HideInInspector]
     public bool connectedToRoom;
+    
     private int roomOpeningChecks;
 
     private void Start()
     {
-        DungeonGenerationV3.instance.spawnedRooms.roomOpenings.Add(this);
+        DungeonGenerationV3.Instance.spawnedRooms.roomOpenings.Add(this);
     }
 
     public void WhichRoomCheck(bool solidWall)
@@ -59,13 +68,23 @@ public class RoomOpening : MonoBehaviour
     public void CheckRoomConnection()
     {
         Collider[] groundobjects = Physics.OverlapBox(transform.position, new Vector3(0.25f, 0.25f, 0.25f), transform.rotation);
-        foreach (Collider col in groundobjects) { if (col.gameObject.CompareTag("RoomOpening")) { roomOpeningChecks++; } }
-        if(roomOpeningChecks == 2) { WhichRoomCheck(false); }
-        else { WhichRoomCheck(true); }
+        
+        foreach (Collider col in groundobjects) 
+        { 
+            if (col.gameObject.CompareTag("RoomOpening"))
+                roomOpeningChecks++;
+        }
+        
+        if(roomOpeningChecks == 2)
+            WhichRoomCheck(false);
+        
+        else
+            WhichRoomCheck(true);
     }
 
     public void OnDestroy()
     {
-        if (DungeonGenerationV3.instance && DungeonGenerationV3.instance.spawnedRooms.roomOpenings.Contains(this)) { DungeonGenerationV3.instance.spawnedRooms.roomOpenings.Remove(this); }
+        if (DungeonGenerationV3.Instance && DungeonGenerationV3.Instance.spawnedRooms.roomOpenings.Contains(this))
+            DungeonGenerationV3.Instance.spawnedRooms.roomOpenings.Remove(this);
     }
 }

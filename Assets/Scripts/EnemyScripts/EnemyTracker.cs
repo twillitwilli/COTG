@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class EnemyTracker : MonoBehaviour
 {
-    private EnemyTrackerController _enemyTrackerController;
-
     public bool isBoss;
-    [HideInInspector] public bool otherPlayerSpawned;
-    [HideInInspector] public int spawnCount;
 
-    private void Awake()
-    {
-        _enemyTrackerController = LocalGameManager.Instance.GetEnemyTrackerController();
-    }
+    [HideInInspector] 
+    public bool otherPlayerSpawned;
+
+    [HideInInspector] 
+    public int spawnCount;
 
     public void Start()
     {
@@ -21,13 +18,14 @@ public class EnemyTracker : MonoBehaviour
         {
             if (isBoss)
             {
-                _enemyTrackerController.UpdateBossTracker(1);
-                _enemyTrackerController.spawnedBoss = gameObject;
+                EnemyTrackerController.Instance.UpdateBossTracker(1);
+                EnemyTrackerController.Instance.spawnedBoss = gameObject;
             }
+
             else
             {
-                _enemyTrackerController.UpdateEnemyTracker(this, 1);
-                _enemyTrackerController.spawnedEnemies.Add(gameObject);
+                EnemyTrackerController.Instance.UpdateEnemyTracker(this, 1);
+                EnemyTrackerController.Instance.spawnedEnemies.Add(gameObject);
             }
         }
     }
@@ -38,13 +36,14 @@ public class EnemyTracker : MonoBehaviour
         {
             if (isBoss)
             {
-                _enemyTrackerController.UpdateBossTracker(-1);
-                _enemyTrackerController.spawnedBoss = null;
+                EnemyTrackerController.Instance.UpdateBossTracker(-1);
+                EnemyTrackerController.Instance.spawnedBoss = null;
             }
+
             else
             {
-                _enemyTrackerController.UpdateEnemyTracker(this, -1);
-                _enemyTrackerController.spawnedEnemies.Remove(gameObject);
+                EnemyTrackerController.Instance.UpdateEnemyTracker(this, -1);
+                EnemyTrackerController.Instance.spawnedEnemies.Remove(gameObject);
             }
         }
     }

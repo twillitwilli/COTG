@@ -6,20 +6,23 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    private LocalGameManager _gameManager;
     private OnScreenText _onScreenText;
 
     public bool autoConnect;
     public bool sendChatMessage;
     public string chatMessage;
-    [HideInInspector] public string roomName;
-    [HideInInspector] public GameObject networkPlayer, coopManager;
-    [HideInInspector] public int connectedPlayers, networkSpawnedObjects;
+
+    [HideInInspector] 
+    public string roomName;
+    
+    [HideInInspector] 
+    public GameObject networkPlayer, coopManager;
+    
+    [HideInInspector] 
+    public int connectedPlayers, networkSpawnedObjects;
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.Instance;
-
         LocalGameManager.playerCreated += ConfigureSettingsForNewPlayer;
     }
 
@@ -46,17 +49,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connect to server");
+
         base.OnConnectedToMaster();
+
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
+
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
 
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
+
         _onScreenText.PrintText("Created Coop Room", true);
         coopManager = PhotonNetwork.Instantiate("Coop Manager", transform.position, transform.rotation);
     }
@@ -64,12 +71,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+
         _onScreenText.PrintText("New Player Joined Room", true);
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+
         networkPlayer = PhotonNetwork.Instantiate("Network Player", transform.position, transform.rotation);
         _onScreenText.PrintText("Joined Room", true);
     }
@@ -85,6 +94,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+
         CoopManager.instance.PlayerLeft();
         _onScreenText.PrintText("Left Multiplayer", true);
     }
@@ -94,7 +104,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom(true);
         PhotonNetwork.Destroy(networkPlayer);
         PhotonNetwork.Destroy(coopManager);
-        _gameManager.isHost = false;
+
+        LocalGameManager.Instance.isHost = false;
+
         Destroy(CoopManager.instance.gameObject);
     }
 }

@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class SpecialRoomSpawner : MonoBehaviour
 {
-    private DungeonBuildParent _dungeonBuildParent;
-    private CompassController _compassController;
-
-    private AudioController _audioController;
-
-    public enum roomType { bossPortalRoom, itemRoom, ritualRoom, sacrificeRoom, shopRoom }
-    public roomType typeOfRoom;
-    public GameObject spawnTriggers, mapUnexplored, mapExplored, roomIndicator;
-    public Transform spawnLocation;
-    public RoomSignController signController;
-    public GameObject[] roomPrefabs;
-
-    private void Start()
-    {
-        _dungeonBuildParent = DungeonBuildParent.instance;
-        _compassController = _dungeonBuildParent.GetCompassController();
-
-        _audioController = LocalGameManager.Instance.GetAudioController();
+    public enum roomType 
+    { 
+        bossPortalRoom, 
+        itemRoom, 
+        ritualRoom, 
+        sacrificeRoom, 
+        shopRoom 
     }
+    public roomType typeOfRoom;
+    
+    public GameObject spawnTriggers, mapUnexplored, mapExplored, roomIndicator;
+    
+    public Transform spawnLocation;
+    
+    public RoomSignController signController;
+    
+    public GameObject[] roomPrefabs;
 
     public void ExploredRoom()
     {
@@ -33,34 +31,36 @@ public class SpecialRoomSpawner : MonoBehaviour
 
     public void SpawnRoom()
     {
+        CompassController compassController = CompassController.Instance;
+
         spawnTriggers.SetActive(false);
 
         switch (typeOfRoom)
         {
             case roomType.bossPortalRoom:
-                _compassController.CompassRevealSpecificRoom(_compassController.bossRoom);
+                compassController.CompassRevealSpecificRoom(compassController.bossRoom);
                 SpawnedObjects(0);
                 break;
 
             case roomType.itemRoom:
-                _compassController.CompassRevealSpecificRoom(_compassController.itemRoom);
+                compassController.CompassRevealSpecificRoom(compassController.itemRoom);
                 SpawnedObjects(1);
                 break;
 
             case roomType.ritualRoom:
-                _compassController.CompassRevealSpecificRoom(_compassController.ritualRoom);
+                compassController.CompassRevealSpecificRoom(compassController.ritualRoom);
                 SpawnedObjects(2);
                 break;
 
             case roomType.sacrificeRoom:
-                _compassController.CompassRevealSpecificRoom(_compassController.sacrificeRoom);
+                compassController.CompassRevealSpecificRoom(compassController.sacrificeRoom);
                 SpawnedObjects(3);
                 break;
 
             case roomType.shopRoom:
-                _compassController.CompassRevealSpecificRoom(_compassController.shopRoom);
+                compassController.CompassRevealSpecificRoom(compassController.shopRoom);
                 SpawnedObjects(4);
-                _audioController.ChangeMusic(AudioController.MusicTracks.ShopRoom);
+                AudioController.Instance.ChangeMusic(AudioController.MusicTracks.ShopRoom);
                 break;
         }
     }

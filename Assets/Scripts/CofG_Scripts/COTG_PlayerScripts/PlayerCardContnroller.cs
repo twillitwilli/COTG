@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCardContnroller : MonoBehaviour
+public class PlayerCardContnroller : MonoSingleton<PlayerCardContnroller>
 {
-    [SerializeField] private GameObject[] _playerCards;
+    [SerializeField] 
+    private GameObject[] _playerCards;
 
     private GameObject _currentPlayerCard;
 

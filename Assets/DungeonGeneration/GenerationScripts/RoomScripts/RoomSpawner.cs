@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
@@ -9,23 +10,19 @@ public class RoomSpawner : MonoBehaviour
 
     private void Awake()
     {
-        dungeonGeneration = DungeonGenerationV3.instance;
         dungeonGeneration.spawnerCount++;
     }
 
     private void Start()
     {
-        Invoke("SpawnType", Random.Range(1f, 3f));
-        Destroy(gameObject, 3);
-    }
+        float spawnTime = Random.Range(1000, 3000);
 
-    private void SpawnType()
-    {
-        if (!roomController.disableSpawning)
-        {
-            if (dungeonGeneration.roomCount <= dungeonGeneration.roomLimitMax) { DetermineSpawnType(); }
-            else { Destroy(gameObject); }
-        }
+        Task.Delay(Mathf.RoundToInt(spawnTime));
+
+        if (!roomController.disableSpawning && dungeonGeneration.roomCount <= dungeonGeneration.roomLimitMax)
+            DetermineSpawnType();
+
+        Destroy(gameObject, 3);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +41,7 @@ public class RoomSpawner : MonoBehaviour
             else if (spawnType >= 45 && spawnType <= 60) { RoomSpawn(3); } //3 opening room
             else { RoomSpawn(5); } //special room
         }
+
         else if (dungeonGeneration.roomCount > dungeonGeneration.roomLimitMin && dungeonGeneration.roomCount < dungeonGeneration.roomLimitMax)
         {
             int spawnType = Random.Range(0, 100);
@@ -53,6 +51,7 @@ public class RoomSpawner : MonoBehaviour
             else if (spawnType >= 75 && spawnType <= 80) { RoomSpawn(3); } //3 opening room
             else { RoomSpawn(5); } //special room
         }
+
         else
         {
             int canSpawn = Random.Range(0, 100);
@@ -63,6 +62,7 @@ public class RoomSpawner : MonoBehaviour
     public void RoomSpawn(int roomType)
     {
         int roomSelection = Random.Range(0, RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].roomCount - 1);
+        
         GameObject newRoom = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].rooms[roomSelection], transform.position, transform.rotation);
         newRoom.transform.LookAt(roomController.transform);
 
@@ -70,6 +70,7 @@ public class RoomSpawner : MonoBehaviour
         Vector2 roomData = new Vector2(roomType, roomSelection);
         Vector3 pos = newRoom.transform.localPosition;
         Vector3 rot = newRoom.transform.localEulerAngles;
+
         if (CoopManager.instance != null) 
         { 
             CoopManager.instance.coopDungeonBuild.AddDungeonRoom(roomType, roomSelection, pos, rot);

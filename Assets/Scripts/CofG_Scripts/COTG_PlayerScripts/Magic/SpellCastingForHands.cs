@@ -5,17 +5,19 @@ using UnityEngine;
 public class SpellCastingForHands : MonoBehaviour
 {
     private VRPlayerController _player;
-    private PlayerStats _playerStats;
     private PlayerComponents _playerComponents;
     private VRPlayerHand _hand;
 
     private PlayerMagicController _magicObjects;
-    private MagicController _magicController;
     private SpellCasting _spellCasting;
 
     public Transform magicCircleSpawn, magicChargesSpawn, magicProjectileSpawn, magicAccelEffectSpawn, effectBurstWhenCast;
-    [HideInInspector] public bool magicActive, canCastSpell, concentrationSpell, castingSpell, maxCharge;
-    [HideInInspector] public GameObject spellReadyVisual, sorcerySpellReadyEffect;
+    
+    [HideInInspector] 
+    public bool magicActive, canCastSpell, concentrationSpell, castingSpell, maxCharge;
+    
+    [HideInInspector] 
+    public GameObject spellReadyVisual, sorcerySpellReadyEffect;
    
     private Vector3 startSpellPos, startConcentrationPos;
     private ParticleSystem magicFocusCharges;
@@ -27,13 +29,11 @@ public class SpellCastingForHands : MonoBehaviour
     private void Start()
     {
         _player = LocalGameManager.Instance.player;
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
 
         _playerComponents = _player.GetPlayerComponents();
         _hand = GetComponent<VRPlayerHand>();
 
         _magicObjects = MasterManager.playerMagicController;
-        _magicController = LocalGameManager.Instance.GetMagicController();
 
         PlayerCardContnroller.newSorcerer += NewSorcerer;
     }
@@ -52,8 +52,12 @@ public class SpellCastingForHands : MonoBehaviour
                 castingSpell = false;
                 Destroy(currentConcentrationSpell);
             }
+
             var maxParticles = magicFocusCharges.main;
-            if (maxParticles.maxParticles > 0) { ConcentrationSpellCastTime(); }
+
+            if (maxParticles.maxParticles > 0)
+                ConcentrationSpellCastTime();
+
             else
             {
                 castingSpell = false;
@@ -64,16 +68,21 @@ public class SpellCastingForHands : MonoBehaviour
 
     public void SorcererMagic()
     {
-        currentMagic = _magicController.magicIdx;
+        currentMagic = MagicController.Instance.magicIdx;
         magicFocusCharges = spellReadyVisual.GetComponent<ParticleSystem>();
+
         var maxParticles = magicFocusCharges.main;
-        if (maxParticles.maxParticles == _playerStats.GetMagicFocus()) { maxCharge = true; }
+
+        if (maxParticles.maxParticles == PlayerStats.Instance.GetMagicFocus()) { maxCharge = true; }
+
         else { maxCharge = false; }
+
         if (maxParticles.maxParticles <= 0) 
         {
             Destroy(sorcerySpellReadyEffect);
             ResetSpell(); 
         }
+
         else if (!canCastSpell && maxParticles.maxParticles > 0)
         {
             if (_hand.GetHandAcceleration().magnitude > _spellCasting.accelerationReq)
@@ -82,6 +91,7 @@ public class SpellCastingForHands : MonoBehaviour
                 canCastSpell = true;
             }
         }
+
         else if (canCastSpell && _hand.GetHandAcceleration().magnitude <= _spellCasting.stoppingForce)
         {
             canCastSpell = false;
@@ -94,12 +104,12 @@ public class SpellCastingForHands : MonoBehaviour
 
     private void CastSorcererSpells()
     {
-        if (_playerStats.GetCurrentMagicFocus() <= 0) { return; }
+        if (PlayerStats.Instance.GetCurrentMagicFocus() <= 0) { return; }
         else
         {
-            _playerStats.AdjustCurrentMagicFocus(-1);
+            PlayerStats.Instance.AdjustCurrentMagicFocus(-1);
 
-            CastChargedSpell(_magicController.magicIdx);
+            CastChargedSpell(MagicController.Instance.magicIdx);
 
             Invoke("CastSorcererSpells", 0.25f);
         }
@@ -162,7 +172,7 @@ public class SpellCastingForHands : MonoBehaviour
             cooldownTimer = 0;
             var maxParticles = magicFocusCharges.main;
             maxParticles.maxParticles += -1;
-            _playerStats.AdjustCurrentMagicFocus(-1);
+            PlayerStats.Instance.AdjustCurrentMagicFocus(-1);
             tickDownMagicFocus = true;
         }
     }

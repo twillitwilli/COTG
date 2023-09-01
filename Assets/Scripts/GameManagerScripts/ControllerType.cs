@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using System.Threading.Tasks;
 
-public class ControllerType : MonoBehaviour
+public class ControllerType : MonoSingleton<ControllerType>
 {
     public string currentController { get; private set; }
     public string controllerFullName { get; private set; }
@@ -12,10 +12,23 @@ public class ControllerType : MonoBehaviour
     private CheckControllerType _controllerType;
     private VRPlayerController _player;
 
-    public enum controllerType { oculusRift, index, wmr, vive, quest2, custom }
-    [HideInInspector] public controllerType currentControllerType;
-    [HideInInspector] public string controllerName;
-    [HideInInspector] public int controllerID; //0 = oculus, 1 = index, 2 = wmr, 3 = vive
+    public enum controllerType 
+    { 
+        oculusRift, 
+        index, 
+        wmr, // Not Implemented or Tested
+        vive, // Not Implemented or Tested
+        quest2, // Not Implemented or Tested
+        custom 
+    }
+    
+    public controllerType currentControllerType { get; private set; }
+    
+    [HideInInspector] 
+    public string controllerName;
+    
+    [HideInInspector] 
+    public int controllerID; //0 = oculus, 1 = index, 2 = wmr, 3 = vive
 
     [HideInInspector] public int roomID;
 
@@ -48,7 +61,9 @@ public class ControllerType : MonoBehaviour
             await RecheckController(player);
             return;
         }
-        else { currentController = rightInput.manufacturer; }
+
+        else
+            currentController = rightInput.manufacturer;
 
         Debug.Log("controller name: " + rightInput.manufacturer);
 
@@ -58,37 +73,53 @@ public class ControllerType : MonoBehaviour
     public async Task RecheckController(VRPlayerController player)
     {
         await Task.Delay(3000);
+
         NewPlayerCreated(player);
     }
 
     public void OculusReset(VRPlayerHand hand)
     {
-        if (!hand.IsRightHand()) { HandAlignmentReset(hand, _controllerType.oculusPos[0], _controllerType.oculusRot[0]); }
-        else { HandAlignmentReset(hand, _controllerType.oculusPos[1], _controllerType.oculusRot[1]); }
+        if (!hand.IsRightHand())
+            HandAlignmentReset(hand, _controllerType.oculusPos[0], _controllerType.oculusRot[0]);
+
+        else
+            HandAlignmentReset(hand, _controllerType.oculusPos[1], _controllerType.oculusRot[1]);
     }
 
     public void IndexReset(VRPlayerHand hand)
     {
-        if (!hand.IsRightHand()) { HandAlignmentReset(hand, _controllerType.indexPos[0], _controllerType.indexRot[0]); }
-        else { HandAlignmentReset(hand, _controllerType.indexPos[1], _controllerType.indexRot[1]); }
+        if (!hand.IsRightHand())
+            HandAlignmentReset(hand, _controllerType.indexPos[0], _controllerType.indexRot[0]);
+
+        else
+            HandAlignmentReset(hand, _controllerType.indexPos[1], _controllerType.indexRot[1]);
     }
 
     public void WMRReset(VRPlayerHand hand)
     {
-        if (!hand.IsRightHand()) { HandAlignmentReset(hand, _controllerType.wmrPos[0], _controllerType.wmrRot[0]); }
-        else { HandAlignmentReset(hand, _controllerType.wmrPos[1], _controllerType.wmrRot[1]); }
+        if (!hand.IsRightHand())
+            HandAlignmentReset(hand, _controllerType.wmrPos[0], _controllerType.wmrRot[0]);
+
+        else
+            HandAlignmentReset(hand, _controllerType.wmrPos[1], _controllerType.wmrRot[1]);
     }
 
     public void ViveReset(VRPlayerHand hand)
     {
-        if (!hand.IsRightHand()) { HandAlignmentReset(hand, _controllerType.vivePos[0], _controllerType.viveRot[0]); }
-        else { HandAlignmentReset(hand, _controllerType.vivePos[1], _controllerType.viveRot[1]); }
+        if (!hand.IsRightHand())
+            HandAlignmentReset(hand, _controllerType.vivePos[0], _controllerType.viveRot[0]);
+
+        else
+            HandAlignmentReset(hand, _controllerType.vivePos[1], _controllerType.viveRot[1]);
     }
 
     public void OculusQuest2Reset(VRPlayerHand hand)
     {
-        if (!hand.IsRightHand()) { HandAlignmentReset(hand, _controllerType.quest2Pos[0], _controllerType.quest2Rot[0]); }
-        else { HandAlignmentReset(hand, _controllerType.quest2Pos[1], _controllerType.quest2Rot[1]); }
+        if (!hand.IsRightHand())
+            HandAlignmentReset(hand, _controllerType.quest2Pos[0], _controllerType.quest2Rot[0]);
+
+        else
+            HandAlignmentReset(hand, _controllerType.quest2Pos[1], _controllerType.quest2Rot[1]);
     }
 
     public void CustomHandAlignment(VRPlayerHand hand)

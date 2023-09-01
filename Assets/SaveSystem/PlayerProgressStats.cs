@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProgressStats : MonoBehaviour
+public class PlayerProgressStats : MonoSingleton<PlayerProgressStats>
 {
     public float totalPlayTimeLevel;
+
     public int totalRunsLevel, completedRunsLevel, bestRunStreakLevel, deathLevel, goldLevel, soulLevel, runeLevel, scrollLevel, itemLevel,
         potionLevel, chestLevel, roomLevel, puzzleLevel, enemyLevel, bossLevel, reaperLevel, jarLevel, rockLevel,
         batLevel, beeLevel, bunnyLevel, goblinLevel, mushroomLevel, plantLevel, wolfLevel, golemLevel, treantGuardLevel,

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class BombTrigger : MonoBehaviour
 {
-    private PlayerTotalStats _totalStats;
-
-    private void Start()
-    {
-        _totalStats = LocalGameManager.Instance.GetTotalStats();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<BreakableObject>())
@@ -23,11 +16,11 @@ public class BombTrigger : MonoBehaviour
                     switch (breakableObject.objectType)
                     {
                         case BreakableObject.BreakableObjectType.jar:
-                            _totalStats.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
                             break;
 
                         case BreakableObject.BreakableObjectType.rock:
-                            _totalStats.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
                             break;
                     }
                     break;

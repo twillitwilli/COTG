@@ -25,6 +25,9 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
     [HideInInspector] 
     public GameObject spawnedReaper;
 
+    [HideInInspector]
+    public List<GameObject> enemySpawners = new List<GameObject>();
+
     [HideInInspector] 
     public List<GameObject> spawnedEnemies = new List<GameObject>();
 
