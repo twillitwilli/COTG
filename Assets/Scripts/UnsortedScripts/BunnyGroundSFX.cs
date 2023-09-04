@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class BunnyGroundSFX : MonoBehaviour
 {
-    [SerializeField] private AudioSource sfxPlayer;
-    [SerializeField] private AudioClip clip;
+    [SerializeField] 
+    private AudioSource sfxPlayer;
+    
+    [SerializeField] 
+    private AudioClip clip;
+    
     private int enteredTrigger;
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +17,9 @@ public class BunnyGroundSFX : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             enteredTrigger++;
-            if (enteredTrigger == 1 && !sfxPlayer.isPlaying) { PlayAudio(); }
+
+            if (enteredTrigger == 1 && !sfxPlayer.isPlaying)
+                PlayAudio();
         }
     }
 
@@ -22,14 +28,18 @@ public class BunnyGroundSFX : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             enteredTrigger--;
-            if (enteredTrigger < 0) { enteredTrigger = 0; }
+
+            if (enteredTrigger < 0)
+                enteredTrigger = 0;
         }
     }
 
     private void PlayAudio()
     {
         sfxPlayer.clip = clip;
-        sfxPlayer.volume = LocalGameManager.Instance.GetAudioController().GetCreatureSFXVolume();
-        if (!sfxPlayer.isPlaying) { sfxPlayer.Play(); }
+        sfxPlayer.volume = AudioController.Instance.GetCreatureSFXVolume();
+
+        if (!sfxPlayer.isPlaying)
+            sfxPlayer.Play();
     }
 }

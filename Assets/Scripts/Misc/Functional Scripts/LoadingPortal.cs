@@ -5,18 +5,25 @@ using UnityEngine;
 
 public class LoadingPortal : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private GameTimer _gameTimer;
-    private PlayerPrefsSaveData _playerPrefSaveData;
-    private PlayerTotalStats _playerTotalStats;
-
-    private EnemyTrackerController _enemyTrackerController;
-
     private VRPlayerController _player;
-    private EyeManager _eyeManager;
-    
-    public enum GameType { Normal, Hard, Tutorial, TestingArea, ExitGame, ToBossArena, ToNextFloor, LoadSavedDungeon, moveToSpawn, titleScreen, saveDungeon, beginnerDungeon }
-    public GameType GameMode;
+
+    public enum PortalTo 
+    { 
+        NormalDungeon, 
+        HardDungeon, 
+        Tutorial, 
+        TestingArea, 
+        ExitGame, 
+        ToBossArena, 
+        ToNextFloor, 
+        LoadSavedDungeon, 
+        MoveToSpawn, 
+        TitleScreen, 
+        SaveDungeon, 
+        BeginnerDungeon 
+    }
+
+    public PortalTo portalLocation;
 
     public bool movePlayerInScene, portalDisabled;
     public int whichSpawnLocation;
@@ -25,28 +32,17 @@ public class LoadingPortal : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.Instance;
-        _gameTimer = _gameManager.GetGameTimer();
-        _playerPrefSaveData = _gameManager.GetPlayerPrefsSaveData();
-        _playerTotalStats = _gameManager.GetTotalStats();
-
-        _enemyTrackerController = _gameManager.GetEnemyTrackerController();
-
-        if (_gameManager.player != null)
-        {
-            _player = _gameManager.player;
-            _eyeManager = _player.GetPlayerComponents().GetEyeManager();
-        }
-        else LocalGameManager.playerCreated += NewPlayerCreated;
+        LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
     private void Start()
     {
-        switch(GameMode)
+        switch(portalLocation)
         {
             //temp game block
-            case GameType.ToNextFloor:
-                if (LocalGameManager.Instance.currentLevel >= 2) { gameObject.SetActive(false); }
+            case PortalTo.ToNextFloor:
+                if (LocalGameManager.Instance.currentLevel >= 2)
+                    gameObject.SetActive(false);
                 break;
         }
     }
@@ -54,19 +50,20 @@ public class LoadingPortal : MonoBehaviour
     public void NewPlayerCreated(VRPlayerController player)
     {
         _player = player;
-        _eyeManager = _player.GetPlayerComponents().GetEyeManager();
     }
 
     private async void OnTriggerEnter(Collider other)
     {
         VRPlayerController player;
+
         if (other.TryGetComponent<VRPlayerController>(out player)) 
         {
             if (!movePlayerInScene)
             {
-                _eyeManager.EyesClosing();
+                LocalGameManager.Instance.CloseEyes();
 
-                if (GameMode == GameType.ExitGame) { Application.Quit(); }
+                if (portalLocation == PortalTo.ExitGame)
+                    Application.Quit();
 
                 else 
                 {
@@ -75,46 +72,50 @@ public class LoadingPortal : MonoBehaviour
                     PortalSettings();
                 }
             }
-            else PortalSettings();
+            else
+                PortalSettings();
         }
     }
 
     public void PortalSettings()
     {
-        switch (GameMode)
+        switch (portalLocation)
         {
-            case GameType.beginnerDungeon:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.tutorial;
+            case PortalTo.BeginnerDungeon:
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.tutorial;
                 NewDungeonSettings();
                 break;
 
-            case GameType.Normal:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.normal;
+            case PortalTo.NormalDungeon:
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.normal;
                 NewDungeonSettings();
                 break;
 
-            case GameType.Hard:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.master;
+            case PortalTo.HardDungeon:
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.master;
                 NewDungeonSettings();
                 break;
 
-            case GameType.TestingArea:
-                _gameManager.Loading(LocalGameManager.SceneSelection.testArea);
+            case PortalTo.TestingArea:
+                LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.testArea);
                 break;
 
-            case GameType.Tutorial:
-                _gameManager.Loading(LocalGameManager.SceneSelection.tutorial);
+            case PortalTo.Tutorial:
+                LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.tutorial);
                 break;
 
-            case GameType.ToBossArena:
-                if(DungeonBuildParent.instance) Destroy(DungeonBuildParent.instance.gameObject);
+            case PortalTo.ToBossArena:
+                if(DungeonBuildParent.Instance)
+                    Destroy(DungeonBuildParent.Instance.gameObject);
+
                 SpawnBossArena();
-                _gameManager.AreaLoaded();
+                LocalGameManager.Instance.AreaLoaded();
                 break;
 
-            case GameType.ToNextFloor:
-                _gameManager.currentLevel++;
-                _gameManager.dungeonBuildCompleted = false;
+            case PortalTo.ToNextFloor:
+                LocalGameManager.Instance.currentLevel++;
+                LocalGameManager.Instance.dungeonBuildCompleted = false;
+
                 if (CoopManager.instance != null) 
                 { 
                     if (LocalGameManager.Instance.isHost) 
@@ -123,62 +124,61 @@ public class LoadingPortal : MonoBehaviour
                         CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
                         CoopManager.instance.MoveOtherPlayer();
                     }
+
                     else 
                     {
                         CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
                         CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
-                        _gameManager.loadDungeon = true;
-                        _gameManager.dungeonBuildCompleted = false;
+                        LocalGameManager.Instance.loadDungeon = true;
+                        LocalGameManager.Instance.dungeonBuildCompleted = false;
                         CoopManager.instance.coopDungeonBuild.CheckDungeonBuild(); 
                     }
                 }
-                _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
+                LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
                 break;
 
-            case GameType.moveToSpawn:
+            case PortalTo.MoveToSpawn:
                 EnableObjects();
-                _gameManager.MovePlayer(whichSpawnLocation);
+                LocalGameManager.Instance.MovePlayer(whichSpawnLocation);
                 DisableObjects();
                 break;
 
-            case GameType.titleScreen:
-                _gameManager.PlayerBackToTitleScreen();
+            case PortalTo.TitleScreen:
+                LocalGameManager.Instance.PlayerBackToTitleScreen();
                 break;
 
-            case GameType.saveDungeon:
+            case PortalTo.SaveDungeon:
                 SavePlayerDungeonStats saveSystem = GetComponent<SavePlayerDungeonStats>();
                 saveSystem.SaveDungeon();
                 break;
 
-            case GameType.LoadSavedDungeon:
+            case PortalTo.LoadSavedDungeon:
                 SavePlayerDungeonStats loadSystem = GetComponent<SavePlayerDungeonStats>();
                 loadSystem.LoadDungeon();
 
-                _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
+                LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
                 break;
         }
     }
 
     public void NewDungeonSettings()
     {
-        _gameManager.dungeonBuildCompleted = false;
-        _gameManager.currentLevel = 1;
+        LocalGameManager.Instance.dungeonBuildCompleted = false;
+        LocalGameManager.Instance.currentLevel = 1;
         
         if (CoopManager.instance != null)
         {
-            if (_gameManager.isHost)
-            {
+            if (LocalGameManager.Instance.isHost)
                 CoopPortalSettings();
-                _gameTimer.BeginTimer();
-            }
-            else CoopManager.instance.coopDungeonBuild.CheckDungeonBuild();
+
+            else 
+                CoopManager.instance.coopDungeonBuild.CheckDungeonBuild();
         }
 
-
         BasePlayerSettings(_player);
-        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalRuns);
+        PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.totalRuns);
 
-        _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
+        LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
     }
 
     private void CoopPortalSettings()
@@ -197,19 +197,32 @@ public class LoadingPortal : MonoBehaviour
 
     public void SpawnBossArena()
     {
-        _enemyTrackerController.enemyNavMesh.RemoveData();
-        _enemyTrackerController.enemyNavMesh.BuildNavMesh();
-        _gameManager.spawnedBossArena = Instantiate(MasterManager.bossArena.bossArenas[Random.Range(0, MasterManager.bossArena.bossArenas.Length)]);
-        _gameManager.spawnedBossArena.transform.localScale = new Vector3(30, 30, 30);
+        EnemyTrackerController.Instance.enemyNavMesh.RemoveData();
+        EnemyTrackerController.Instance.enemyNavMesh.BuildNavMesh();
+
+        LocalGameManager.Instance.spawnedBossArena = Instantiate(MasterManager.bossArena.bossArenas[Random.Range(0, MasterManager.bossArena.bossArenas.Length)]);
+        LocalGameManager.Instance.spawnedBossArena.transform.localScale = new Vector3(30, 30, 30);
     }
 
     public void EnableObjects()
     {
-        if (enableObjs.Count > 0) foreach (GameObject obj in enableObjs) { obj.SetActive(true); }
+        if (enableObjs.Count > 0)
+        {
+            foreach (GameObject obj in enableObjs)
+            {
+                obj.SetActive(true);
+            }
+        }
     }
 
     public void DisableObjects()
     {
-        if (disableObjs.Count > 0) { foreach (GameObject obj in disableObjs) { obj.SetActive(false); } }
+        if (disableObjs.Count > 0) 
+        { 
+            foreach (GameObject obj in disableObjs) 
+            { 
+                obj.SetActive(false); 
+            } 
+        }
     }
 }

@@ -7,23 +7,15 @@ public class PlayerHealthModifier : MonoBehaviour
     public string objectName;
     public float healthValue;
 
-    private PlayerStats _playerStats;
-
     private void Awake()
     {
-        if (objectName == null) { objectName = "Object Not Named: " + gameObject.name; }
-    }
-
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+        if (objectName == null)
+            objectName = "Object Not Named: " + gameObject.name;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<VRPlayerController>())
-        {
-            _playerStats.AdjustHealth(healthValue, objectName);
-        }
+            PlayerStats.Instance.AdjustHealth(healthValue, objectName);
     }
 }

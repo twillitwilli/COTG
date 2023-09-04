@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerHealthDisplay : MonoBehaviour
 {
-    private PlayerStats _playerStats;
     private SkinnedMeshRenderer _meshRenderer;
     public Text textBox;
 
     private void Start()
     {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
         _meshRenderer = GetComponent<SkinnedMeshRenderer>();
     }
 
@@ -23,14 +21,14 @@ public class PlayerHealthDisplay : MonoBehaviour
             float blendValue = 100 - healthPercentage;
             _meshRenderer.SetBlendShapeWeight(0, (blendValue / 50) * 100);
         }
+
         else
         {
             _meshRenderer.SetBlendShapeWeight(0, 100);
             _meshRenderer.SetBlendShapeWeight(1, 100 - ((healthPercentage / 50) * 100));
         }
+
         if (textBox != null)
-        {
-            textBox.text = _playerStats.GetCurrentHealth() + "/" + _playerStats.GetMaxHealth();
-        }
+            textBox.text = PlayerStats.Instance.GetCurrentHealth() + "/" + PlayerStats.Instance.GetMaxHealth();
     }
 }

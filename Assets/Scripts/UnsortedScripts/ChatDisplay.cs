@@ -6,31 +6,38 @@ public class ChatDisplay : MonoBehaviour
 {
     public GameObject hand;
     public GameObject chatSystem;
-    [HideInInspector] public bool chatOpened, isRightHand;
-    [HideInInspector] public GameObject spawnedChat;
 
-    private ChatManager _chatManager;
+    [HideInInspector] 
+    public bool chatOpened, isRightHand;
+    
+    [HideInInspector] 
+    public GameObject spawnedChat;
 
     public void Start()
     {
-        _chatManager = LocalGameManager.Instance.GetChatManager();
-
         isRightHand = GetComponentInParent<VRPlayerHand>().IsRightHand();
     }
 
     private void FixedUpdate()
     {
-        if (LocalGameManager.Instance.GetChatManager().textChat)
+        if (ChatManager.Instance.textChat)
         {
             if (!chatOpened && spawnedChat == null)
             {
-                if (isRightHand && _chatManager.chatOnRightHand && Vector3.Angle(hand.transform.up, -Vector3.up) < 45) { SpawnChat(); }
-                else if (!isRightHand && !_chatManager.chatOnRightHand && Vector3.Angle(-hand.transform.up, Vector3.up) < 45) { SpawnChat(); }
+                if (isRightHand && ChatManager.Instance.chatOnRightHand && Vector3.Angle(hand.transform.up, -Vector3.up) < 45)
+                    SpawnChat();
+
+                else if (!isRightHand && !ChatManager.Instance.chatOnRightHand && Vector3.Angle(-hand.transform.up, Vector3.up) < 45)
+                    SpawnChat();
             }
+
             else
             {
-                if (isRightHand && _chatManager.chatOnRightHand && Vector3.Angle(hand.transform.up, -Vector3.up) > 45) { CloseChat(); }
-                else if (!isRightHand && !_chatManager.chatOnRightHand && Vector3.Angle(-hand.transform.up, Vector3.up) > 45) { CloseChat(); }
+                if (isRightHand && ChatManager.Instance.chatOnRightHand && Vector3.Angle(hand.transform.up, -Vector3.up) > 45)
+                    CloseChat();
+
+                else if (!isRightHand && !ChatManager.Instance.chatOnRightHand && Vector3.Angle(-hand.transform.up, Vector3.up) > 45)
+                    CloseChat();
             }
         }
     }

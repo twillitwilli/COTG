@@ -5,24 +5,26 @@ using UnityEngine.UI;
 
 public class GameTimerDisplayer : MonoBehaviour
 {
-    private GameTimer _gameTimer;
+    [SerializeField] 
+    private Text textBox;
 
-    [SerializeField] private Text textBox;
+    [HideInInspector]
     public bool runningTimer;
 
     public void Start()
     {
-        _gameTimer = LocalGameManager.Instance.GetGameTimer();
-        if (!runningTimer) { DisplayCurrentGameTime(); }
+        if (!runningTimer)
+            DisplayCurrentGameTime();
     }
 
     private void Update()
     {
-        if (runningTimer) { DisplayCurrentGameTime(); }
+        if (runningTimer)
+            DisplayCurrentGameTime();
     }
 
     public void DisplayCurrentGameTime()
     {
-        textBox.text = _gameTimer.currentTimeDisplay;
+        textBox.text = GameTimer.Instance.currentTimeDisplay;
     }
 }

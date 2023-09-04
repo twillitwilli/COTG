@@ -6,34 +6,44 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class VRPlayerController : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private AudioController _audioController;
-
-    [SerializeField] private PlayerComponents _playerComponents;
+    [SerializeField] 
+    private PlayerComponents _playerComponents;
     public PlayerComponents GetPlayerComponents() { return _playerComponents; }
 
     public GameObject playSpace;
     public LayerMask ignoreLayers;
     public bool godMode;
 
-    [HideInInspector] public float leftJoystickDeadzoneAdjustment = 0.25f, rightJoystickDeadzoneAdjustment = 0.5f, turnSpeedAdjustment = 1f, snapTurnRotationAdjustment = 45;
+    [HideInInspector] 
+    public float leftJoystickDeadzoneAdjustment = 0.25f, rightJoystickDeadzoneAdjustment = 0.5f, turnSpeedAdjustment = 1f, snapTurnRotationAdjustment = 45;
 
-    [HideInInspector] public bool isLeftHanded, isGrounded, isCrouched, isSprinting, heightCheck, tutorial, menuSpawned, militaryTime, headOrientation, 
+    [HideInInspector] 
+    public bool isLeftHanded, isGrounded, isCrouched, isSprinting, heightCheck, tutorial, menuSpawned, militaryTime, headOrientation, 
         snapTurnOn, roomScale, toggleGrip, playerStanding, disableMovement, sprintEnabled, jumpControllerOn, climbOn, canFly, toggleSprint,
         playerCalibrationOn, playerHandAdjusterOn, playerMoving, selectingClass, isGhost, physicalJumping, meditating, hasCustomHandSettings,
         movementDisabled;
 
-    [HideInInspector] public Rigidbody playerRB = null;
-    [HideInInspector] public CapsuleCollider playerCollider;
-    [HideInInspector] public Transform head = null;
-    [HideInInspector] public int playerSaveFile;
+    [HideInInspector] 
+    public Rigidbody playerRB = null;
+    
+    [HideInInspector] 
+    public CapsuleCollider playerCollider;
+    
+    [HideInInspector] 
+    public Transform head = null;
+    
+    [HideInInspector] 
+    public int playerSaveFile;
 
-    [SerializeField] private float collisionRange = 0.75f;
+    [SerializeField] 
+    private float collisionRange = 0.75f;
+    
     private float playerMovement;
     private bool floatPlayer, canSnapTurn, crouchSpeedSet;
     private Transform playerOrientation;
-    [HideInInspector] public Animator sittingPlayerAnim;
+    
+    [HideInInspector] 
+    public Animator sittingPlayerAnim;
 
     //dash controls
     private bool setDashCooldown, canDash, runDashCooldown;
@@ -45,10 +55,7 @@ public class VRPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = LocalGameManager.Instance;
-        if (_gameManager.player != null) { Destroy(gameObject); }
-
-        _playerStats = _gameManager.GetPlayerStats();
+        if (LocalGameManager.Instance.player != null) { Destroy(gameObject); }
 
         playerRB = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
@@ -79,9 +86,14 @@ public class VRPlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!isSprinting && toggleSprint) { SprintController(); }
-        if (playerStanding) { StandingHeightController(); }
-        if (runDashCooldown) { canDash = DashCooldown(); }
+        if (!isSprinting && toggleSprint)
+            SprintController();
+
+        if (playerStanding)
+            StandingHeightController();
+
+        if (runDashCooldown)
+            canDash = DashCooldown();
 
         PlayerBounds();
     }
@@ -118,13 +130,14 @@ public class VRPlayerController : MonoBehaviour
         {
             //sets player movement to 0
             playerMoving = false;
-            playerMovement = _playerStats.GetPlayerSpeed();
+            playerMovement = PlayerStats.Instance.GetPlayerSpeed();
             isSprinting = false;
 
             //stop movement audio
 
             crouchSpeedSet = false;
         }
+
         if (!disableMovement)
         {
             if (isCrouched && !crouchSpeedSet) { CrouchSpeedReduction(); }
@@ -158,10 +171,13 @@ public class VRPlayerController : MonoBehaviour
     public bool MovementCheck(Vector3 movePos)
     {
         RaycastHit hit;
+
         if (Physics.Raycast(transform.TransformPoint(playerCollider.center), movePos - transform.position, out hit, collisionRange, -ignoreLayers))
         {
-            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Rock")) { return false; }
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Rock"))
+                return false;
         }
+
         return true;
     }
 
@@ -171,9 +187,7 @@ public class VRPlayerController : MonoBehaviour
         {
             //Smooth Turn
             if (!snapTurnOn && Mathf.Abs(pos.x) >= rightJoystickDeadzoneAdjustment)
-            {
                 transform.RotateAround(head.position, Vector3.up, (pos.x * 90 * turnSpeedAdjustment) * Time.deltaTime);
-            }
 
             //Snap Turn
             else if (snapTurnOn && canSnapTurn)
@@ -184,9 +198,10 @@ public class VRPlayerController : MonoBehaviour
                 transform.RotateAround(head.position, Vector3.up, snapValue);
                 canSnapTurn = false;
             }
-            if (!canSnapTurn && pos.x < rightJoystickDeadzoneAdjustment && pos.x > -rightJoystickDeadzoneAdjustment) { canSnapTurn = true; }
+
+            if (!canSnapTurn && pos.x < rightJoystickDeadzoneAdjustment && pos.x > -rightJoystickDeadzoneAdjustment)
+                canSnapTurn = true;
         }
-        
     }
 
     private void StandingHeightController()
@@ -199,10 +214,14 @@ public class VRPlayerController : MonoBehaviour
             heightCheck = false; 
         }
 
-        if (isCrouched && playerCollider.height > 1.2) { CrouchController(false); }
-        else if (!isCrouched && playerCollider.height < 1.2) { CrouchController(true); }
+        if (isCrouched && playerCollider.height > 1.2)
+            CrouchController(false);
 
-        if (physicalJumping && playerCollider.height > 2) { JumpController(); }
+        else if (!isCrouched && playerCollider.height < 1.2)
+            CrouchController(true);
+
+        if (physicalJumping && playerCollider.height > 2)
+            JumpController();
     }
 
     public void SittingHeightController()
@@ -230,7 +249,7 @@ public class VRPlayerController : MonoBehaviour
     {
         if (crouched)
         {
-            if (isSprinting) { playerMovement = _playerStats.GetPlayerSpeed(); }
+            if (isSprinting) { playerMovement = PlayerStats.Instance.GetPlayerSpeed(); }
             isSprinting = false;
             CrouchSpeedReduction();
 
@@ -238,9 +257,10 @@ public class VRPlayerController : MonoBehaviour
 
             isCrouched = true;
         }
+
         else
         {
-            playerMovement = _playerStats.GetPlayerSpeed();
+            playerMovement = PlayerStats.Instance.GetPlayerSpeed();
             isCrouched = false;
             ChangeMovementSFX();
         }
@@ -248,17 +268,17 @@ public class VRPlayerController : MonoBehaviour
 
     private void CrouchSpeedReduction()
     {
-        playerMovement = playerMovement / _playerStats.GetCrouchSpeedReduction();
+        playerMovement = playerMovement / PlayerStats.Instance.GetCrouchSpeedReduction();
         crouchSpeedSet = true;
     }
 
     public void SprintController()
     {
-        if (!isCrouched && playerMovement == _playerStats.GetPlayerSpeed() && !isSprinting)
+        if (!isCrouched && playerMovement == PlayerStats.Instance.GetPlayerSpeed() && !isSprinting)
         {
             isSprinting = true;
             ChangeMovementSFX();
-            playerMovement = playerMovement * _playerStats.GetSprintMultiplier();
+            playerMovement = playerMovement * PlayerStats.Instance.GetSprintMultiplier();
         }
     }
 
@@ -269,7 +289,10 @@ public class VRPlayerController : MonoBehaviour
             cooldownTimer = dashCooldownTime;
             setDashCooldown = false;
         }
-        if (cooldownTimer > 0) { cooldownTimer -= Time.deltaTime; }
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
         else if (cooldownTimer <= 0)
         {
             cooldownTimer = 0;
@@ -278,6 +301,7 @@ public class VRPlayerController : MonoBehaviour
             runDashCooldown = false;
             return true;
         }
+
         return false;
     }
 
@@ -285,11 +309,14 @@ public class VRPlayerController : MonoBehaviour
     {
         if (!isCrouched && playerMoving && canDash && dashButton)
         {
-            _playerStats.StartIFrame();
+            PlayerStats.Instance.StartIFrame();
 
-            if (Mathf.Abs(leftJoystickPos.y) >= leftJoystickDeadzoneAdjustment) { dashPos = DashDistanceCheck(transform.position + (forwardMovement * _playerStats.GetDashDistance() * leftJoystickPos.y)); }
-            else if (Mathf.Abs(leftJoystickPos.x) >= leftJoystickDeadzoneAdjustment) { dashPos = DashDistanceCheck(transform.position + (rightMovement * _playerStats.GetDashDistance() * leftJoystickPos.x)); }
-            
+            if (Mathf.Abs(leftJoystickPos.y) >= leftJoystickDeadzoneAdjustment)
+                dashPos = DashDistanceCheck(transform.position + (forwardMovement * PlayerStats.Instance.GetDashDistance() * leftJoystickPos.y));
+
+            else if (Mathf.Abs(leftJoystickPos.x) >= leftJoystickDeadzoneAdjustment)
+                dashPos = DashDistanceCheck(transform.position + (rightMovement * PlayerStats.Instance.GetDashDistance() * leftJoystickPos.x));
+
             _playerComponents.dashEffect.gameObject.SetActive(true);
             _playerComponents.dashEffect.transform.localPosition = new Vector3(leftJoystickPos.x, 0, leftJoystickPos.y);
 
@@ -300,7 +327,8 @@ public class VRPlayerController : MonoBehaviour
             setDashCooldown = true;
         }
 
-        else if (!canDash && !dashButton) { runDashCooldown = true; }
+        else if (!canDash && !dashButton)
+            runDashCooldown = true;
     }
 
     public Vector3 DashDistanceCheck(Vector3 dashPosition)
@@ -310,8 +338,10 @@ public class VRPlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.TransformPoint(playerCollider.center), dashPosition - transform.position, out hit, range, -ignoreLayers))
         {
-            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Rock")) { return hit.point + (transform.position - dashPosition).normalized * collisionRange; }
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Rock"))
+                return hit.point + (transform.position - dashPosition).normalized * collisionRange;
         }
+
         return dashPosition;
     }
 
@@ -319,7 +349,7 @@ public class VRPlayerController : MonoBehaviour
     {
         if (!isCrouched && _playerComponents.GetGroundCheckController().GroundCheck())
         {
-            playerRB.velocity = new Vector3(playerRB.velocity.x, _playerStats.GetJumpVelocity(), playerRB.velocity.z);
+            playerRB.velocity = new Vector3(playerRB.velocity.x, PlayerStats.Instance.GetJumpVelocity(), playerRB.velocity.z);
             isGrounded = false;
         }
     }
@@ -328,18 +358,26 @@ public class VRPlayerController : MonoBehaviour
     {
         if (jumpButtonDown)
         {
-            playerRB.velocity = new Vector3(playerRB.velocity.x, _playerStats.GetJumpVelocity(), playerRB.velocity.z);
+            playerRB.velocity = new Vector3(playerRB.velocity.x, PlayerStats.Instance.GetJumpVelocity(), playerRB.velocity.z);
             floatPlayer = true;
         }
-        else { floatPlayer = false; }
 
-        if (floatPlayer) { playerRB.velocity = playerRB.velocity + new Vector3(0, _playerStats.flightTesting, 0); }
+        else
+            floatPlayer = false;
+
+        if (floatPlayer)
+            playerRB.velocity = playerRB.velocity + new Vector3(0, PlayerStats.Instance.flightTesting, 0);
     }
 
     public void OrientationSource()
     {
-        if (headOrientation) { playerOrientation = head; } //Head orientation
-        else if (!headOrientation) { playerOrientation = _playerComponents.GetHand(0).transform; } //Hand orientation
+        // Headset Orientation
+        if (headOrientation)
+            playerOrientation = head;
+
+        // Controller Orientation
+        else if (!headOrientation)
+            playerOrientation = _playerComponents.GetHand(0).transform;
     }
 
     private void ChangeMovementSFX()
@@ -347,6 +385,7 @@ public class VRPlayerController : MonoBehaviour
         if (isGrounded)
         {
             if (!isSprinting && !isCrouched) {  } //walking sfx
+
             else if (isSprinting) {  } //runnning sfx
         }
     }
@@ -377,7 +416,7 @@ public class VRPlayerController : MonoBehaviour
         toggleSprint = false;
         militaryTime = false;
 
-        _audioController.DefaultAudioSettings();
+        AudioController.Instance.DefaultAudioSettings();
         DefaultAttachmentSettings();
     }
 
@@ -403,21 +442,25 @@ public class VRPlayerController : MonoBehaviour
 
     public int GetPrimaryHandIndex()
     {
-        if (isLeftHanded) { return 0; }
-        else return 1;
+        if (isLeftHanded)
+            return 0;
+
+        else
+            return 1;
     }
 
     public int GetOffHandIndex()
     {
-        if (isLeftHanded) { return 1; }
-        else return 0;
+        if (isLeftHanded)
+            return 1;
+
+        else
+            return 0;
     }
 
     private void PlayerBounds()
     {
         if (transform.position.y < -1500 || transform.position.y > 1500)
-        {
-            _gameManager.MovePlayer(0);
-        }
+            LocalGameManager.Instance.MovePlayer(0);
     }
 }

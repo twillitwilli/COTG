@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ControllerDetectionDisplay : MonoBehaviour
 {
-    private ControllerType _controllerType;
-
     public bool autoDestroyParent;
-    [SerializeField] private GameObject displayParent;
+
+    [SerializeField] 
+    private GameObject displayParent;
+
     private Text text;
 
     private void Awake()
@@ -16,26 +18,25 @@ public class ControllerDetectionDisplay : MonoBehaviour
         text = GetComponent<Text>();
     }
 
-    private void Start()
+    private async void Start()
     {
-        Invoke("ControllerType", 1);
+        await Task.Delay(1000);
+
+        ControllerDetection();
     }
 
-    private void ControllerType()
+    private void ControllerDetection()
     {
-        _controllerType = LocalGameManager.Instance.GetControllerType();
-
-        if (_controllerType.currentController != null)
+        if (ControllerType.Instance.currentController != null)
         {
-            text.text = _controllerType.currentController;
+            text.text = ControllerType.Instance.currentController;
             if (text.text == "Oculus")
             {
-                if (autoDestroyParent) { DestroyParent(); }
+                if (autoDestroyParent)
+                    DestroyParent();
             }
             else
-            {
                 text.text = "Unknown Controller Index: " + text.text;
-            }
         }
     }
 

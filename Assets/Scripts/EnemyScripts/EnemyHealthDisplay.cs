@@ -16,7 +16,7 @@ public class EnemyHealthDisplay : MonoBehaviour
 
     private void Start()
     {
-        if (LocalGameManager.Instance.currentGameMode != LocalGameManager.GameMode.master || LocalGameManager.Instance.player.GetPlayerComponents().dungeonGear.hasEnemyHealthReveal)
+        if (LocalGameManager.Instance.currentGameMode != LocalGameManager.GameMode.master || EnemyTrackerController.Instance.hasEnemyHealthReveal)
             healthDisplay.SetActive(true);
 
         if (isBoss)

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,15 +53,11 @@ public class VRPlayerHand : MonoBehaviour
     private bool _isPrimaryHand;
     private Rigidbody _rb;
 
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-    private PlayerComponents _playerComponents;
-    private ControllerType _controllerType;
-
     //chat
     public Transform chatSpawn;
-    [HideInInspector] public ChatDisplay chatDisplay;
+
+    [HideInInspector] 
+    public ChatDisplay chatDisplay;
 
     private void Awake()
     {
@@ -75,18 +72,16 @@ public class VRPlayerHand : MonoBehaviour
         _spellCasting = GetComponent<SpellCastingForHands>();
     }
 
-    private void Start()
+    private async void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _magicController = _gameManager.GetMagicController();
-        _playerComponents = _gameManager.player.GetPlayerComponents();
-        _controllerType = _gameManager.GetControllerType();
-
         CheckHandModelDistance();
         SetPrimaryHand();
 
         _currentHandState = _handAnimator.GetCurrentHandState();
-        Invoke("HandIdleState", 1);
+
+        await Task.Delay(1000);
+
+        HandIdleState();
     }
 
     private void LateUpdate()
@@ -94,38 +89,48 @@ public class VRPlayerHand : MonoBehaviour
         if (!_player.isGhost && !_player.menuSpawned && !_player.playerCalibrationOn && !_player.playerHandAdjusterOn)
         {
             CurrentHandPhysicsMotion();
-            if (_climbingController.IsClimbing()) { _climbingController.Climbing(); }
+
+            if (_climbingController.IsClimbing())
+                _climbingController.Climbing();
+
             else
             {
-                switch (_magicController.currentClass)
+                switch (MagicController.Instance.currentClass)
                 {
                     case MagicController.ClassType.Sorcerer:
                         if (!_grabController.CheckIfHoldingAnything() && _spellCasting.magicActive && _spellCasting.spellReadyVisual) { _spellCasting.SorcererMagic(); }
                         break;
                 }
             }
-            if (!_grabController.CheckIfHoldingAnything() && !_menuRaycast.RayActive() && !_telekinesisController.gameObject.activeSelf)
+
+            if (!_grabController.CheckIfHoldingAnything() && !_menuRaycast.MenuRayActive() && !_telekinesisController.gameObject.activeSelf)
             {
-                { 
-                    _telekinesisController.gameObject.SetActive(true);
-                    _handAnimator.SwitchHandState(HandAnimationState.HandState.fingerPoint);
-                }
+                _telekinesisController.gameObject.SetActive(true);
+                _handAnimator.SwitchHandState(HandAnimationState.HandState.fingerPoint);
             }
+
             PreviousHandPhysicsMotion();
         }
-        if (_menuRaycast.RayActive() && _currentHandState != HandAnimationState.HandState.fingerPoint)
-        {
+
+        if (_menuRaycast.MenuRayActive() && _currentHandState != HandAnimationState.HandState.fingerPoint)
             _handAnimator.SwitchHandState(HandAnimationState.HandState.fingerPoint);
-        }
+
         //if (grabbableScript) { Debug.DrawRay(grabbableScript.transform.position, VRPlayerController.instance.head.transform.position - grabbableScript.transform.position, Color.green); }
     }
 
     public void SetPrimaryHand()
     {
-        if (_player.isLeftHanded && !_isRightHand) { _isPrimaryHand = true; }
-        else if (_player.isLeftHanded && _isRightHand) { _isPrimaryHand = false; }
-        else if (!_player.isLeftHanded && !_isRightHand) { _isPrimaryHand = false; }
-        else if (!_player.isLeftHanded && _isRightHand) { _isPrimaryHand = true; }
+        if (_player.isLeftHanded && !_isRightHand)
+            _isPrimaryHand = true;
+
+        else if (_player.isLeftHanded && _isRightHand)
+            _isPrimaryHand = false;
+
+        else if (!_player.isLeftHanded && !_isRightHand)
+            _isPrimaryHand = false;
+
+        else if (!_player.isLeftHanded && _isRightHand)
+            _isPrimaryHand = true;
     }
 
     // HAND PHYSICS
@@ -168,15 +173,15 @@ public class VRPlayerHand : MonoBehaviour
     {
         rb.isKinematic = false;
         rb.useGravity = true;
+
         if (!isTelekineticThrow)
         {
-            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up) * _handVel * _playerStats.GetThrowingForce());
+            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up) * _handVel * PlayerStats.Instance.GetThrowingForce());
             rb.angularVelocity = _handAngVel;
         }
+
         else
-        {
-            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up)) * _handVel * _playerStats.GetThrowingForce() * 4;
-        }
+            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up)) * _handVel * PlayerStats.Instance.GetThrowingForce() * 4;
     }
 
     public void HandIdleState()
@@ -204,13 +209,10 @@ public class VRPlayerHand : MonoBehaviour
         if (Vector3.Distance(transform.position, _handModel.transform.position) > 0.5f)
         {
             if (!_player.hasCustomHandSettings)
-            {
-                _controllerType.ResetHandToControllerDefault(this);
-            }
+                ControllerType.Instance.ResetHandToControllerDefault(this);
+
             else
-            {
                 LoadHandPosition();
-            }
 
             _handModel.SetActive(true);
         }
@@ -228,6 +230,7 @@ public class VRPlayerHand : MonoBehaviour
     {
         defaultHandPos = _handModel.transform.localPosition;
         defaultHandRot = _handModel.transform.localEulerAngles;
+
         if (_isRightHand)
         {
             PlayerPrefs.SetFloat("RightPosX", defaultHandPos.x);
@@ -237,6 +240,7 @@ public class VRPlayerHand : MonoBehaviour
             PlayerPrefs.SetFloat("RightRotY", defaultHandRot.y);
             PlayerPrefs.SetFloat("RightRotZ", defaultHandRot.z);
         }
+
         else
         {
             PlayerPrefs.SetFloat("LeftPosX", defaultHandPos.x);
@@ -257,11 +261,13 @@ public class VRPlayerHand : MonoBehaviour
                 defaultHandPos = new Vector3(PlayerPrefs.GetFloat("RightPosX"), PlayerPrefs.GetFloat("RightPosY"), PlayerPrefs.GetFloat("RightPosZ"));
                 defaultHandRot = new Vector3(PlayerPrefs.GetFloat("RightRotX"), PlayerPrefs.GetFloat("RightRotY"), PlayerPrefs.GetFloat("RightRotZ"));
             }
+
             else
             {
                 defaultHandPos = new Vector3(PlayerPrefs.GetFloat("LeftPosX"), PlayerPrefs.GetFloat("LeftPosY"), PlayerPrefs.GetFloat("LeftPosZ"));
                 defaultHandRot = new Vector3(PlayerPrefs.GetFloat("LeftRotX"), PlayerPrefs.GetFloat("LeftRotY"), PlayerPrefs.GetFloat("LeftRotZ"));
             }
+
             _handModel.transform.localPosition = defaultHandPos;
             _handModel.transform.localEulerAngles = defaultHandRot;
         }
@@ -287,9 +293,9 @@ public class VRPlayerHand : MonoBehaviour
     public bool IsRightHand() { return _isRightHand; }
     public bool IsPrimaryHand()
     {
-        if (_player.isLeftHanded && !_isRightHand) { return true; }
-        else if (!_player.isLeftHanded && _isRightHand) { return true; }
-        else return false;
+        bool primaryHand = (_player.isLeftHanded && !_isRightHand) | (!_player.isLeftHanded && _isRightHand) ? true : false;
+
+        return primaryHand;
     }
     public GrabController GetGrabController() { return _grabController; }
     public ClimbingController GetClimbController() { return _climbingController; }

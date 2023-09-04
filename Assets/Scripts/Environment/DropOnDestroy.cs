@@ -4,48 +4,44 @@ using UnityEngine;
 
 public class DropOnDestroy : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _player;
-
     [Range(0, 100)]
     public int dropPercentage;
-    [HideInInspector] public bool disableDrop;
-    public bool dropSpecificItem, isEnemy;
-    public DroppableItems.itemType typeOfItem;
 
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _player = _gameManager.player;
-    }
+    [HideInInspector] 
+    public bool disableDrop;
+
+    public bool dropSpecificItem, isEnemy;
+
+    public DroppableItems.itemType typeOfItem;
 
     private void OnDestroy()
     {
         if (!disableDrop)
         {
             if (isEnemy)
-            {
-                _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.soul, transform);
-            }
-            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + LocalGameManager.Instance.GetPlayerStats().GetLuck()))
-            {
-                _gameManager.SpawnRandomDrop(transform);
-            }
+                LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.soul, transform);
+
+            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + PlayerStats.Instance.GetLuck()))
+                LocalGameManager.Instance.SpawnRandomDrop(transform);
+
             else if (dropSpecificItem)
             {
                 switch (typeOfItem)
                 {
                     case DroppableItems.itemType.gold:
-                        _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.gold, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.gold, transform);
                         break;
+
                     case DroppableItems.itemType.key:
-                        _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.key, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.key, transform);
                         break;
+
                     case DroppableItems.itemType.arcaneOrb:
-                        _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.arcaneEnergy, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.arcaneEnergy, transform);
                         break;
+
                     case DroppableItems.itemType.health:
-                        _gameManager.SpawnSpecificItem(ItemDropSelection.ItemType.health, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.health, transform);
                         break;
                 }
             }

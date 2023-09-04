@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class CheckForKey : MonoBehaviour
 {
-    private PlayerStats _playerStats;
-    private PlayerTotalStats _totalStats;
+    [SerializeField] 
+    private KeyController keyController;
 
-    [SerializeField] private KeyController keyController;
     public bool isForChest, justUseHand;
     private int handInt;
-
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-        _totalStats = LocalGameManager.Instance.GetTotalStats();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,23 +18,24 @@ public class CheckForKey : MonoBehaviour
 
             if (!justUseHand)
             {
-                if (_playerStats.GetCurrentKeys() > 0)
+                if (PlayerStats.Instance.GetCurrentKeys() > 0)
                 {
                     if (isForChest)
                     {
                         switch (LocalGameManager.Instance.currentGameMode)
                         {
                             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
-                                _totalStats.AdjustStats(PlayerTotalStats.StatType.chestsOpened);
+                                PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.chestsOpened);
                                 break;
                         }
                     }
 
                     keyController.UnlockKeyLock();
-                    _playerStats.AdjustKeyAmount(-1);
+                    PlayerStats.Instance.AdjustKeyAmount(-1);
                 }
             }
-            else { keyController.UnlockKeyLock(); }
+            else
+                keyController.UnlockKeyLock();
         }
     }
 
@@ -50,7 +44,9 @@ public class CheckForKey : MonoBehaviour
         if (other.gameObject.CompareTag("Left Hand") || other.gameObject.CompareTag("Right Hand"))
         {
             handInt--;
-            if (handInt < 0) { handInt = 0; }
+
+            if (handInt < 0)
+                handInt = 0;
         }
     }
 }

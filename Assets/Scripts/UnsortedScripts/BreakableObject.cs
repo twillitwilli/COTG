@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(SpawnOnDestroy))]
 [RequireComponent(typeof(DropOnDestroy))]
 public class BreakableObject : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private PlayerTotalStats _playerTotalStats;
+    public enum BreakableObjectType 
+    { 
+        rock, 
+        jar, 
+        magicSeal 
+    }
 
-    public enum BreakableObjectType { rock, jar, magicSeal }
     public BreakableObjectType objectType;
 
     public bool breaksOnCollision, canBreakWithBomb, canBreakWithAttack, canBreakWithArrow;
     public float breakingForceForCollision;
 
-    [HideInInspector] public int objectID;
+    [HideInInspector] 
+    public int objectID;
 
     private SpawnOnDestroy _spawnOnDestroyScript;
     private DropOnDestroy _dropScript;
@@ -26,12 +31,14 @@ public class BreakableObject : MonoBehaviour
     {
         _spawnOnDestroyScript = GetComponent<SpawnOnDestroy>();
         _dropScript = GetComponent<DropOnDestroy>();
+
         if (GetComponent<Rigidbody>())
         {
             _rb = GetComponent<Rigidbody>();
             _rb.isKinematic = true;
             _rb.useGravity = false;
         }
+
         if (GetComponent<Collider>()) 
         {
             _colliderOfObject = GetComponent<Collider>();
@@ -39,17 +46,17 @@ public class BreakableObject : MonoBehaviour
         }
     }
 
-    private void Start()
+    private async void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _playerTotalStats = _gameManager.GetTotalStats();
+        await Task.Delay(1000);
 
-        Invoke("DelayCollision", 1);
+        DelayCollision();
     }
 
     private void DelayCollision()
     {
         _colliderOfObject.enabled = true;
+
         if (GetComponent<Rigidbody>())
         {
             _rb.useGravity = true;
@@ -61,7 +68,9 @@ public class BreakableObject : MonoBehaviour
     {
         if (breaksOnCollision && col.relativeVelocity.magnitude >= breakingForceForCollision)
         {
-            if (col.gameObject.GetComponent<EnemyController>()) { col.gameObject.GetComponent<EnemyController>().enemyHealth.AdjustHealth(Mathf.RoundToInt(Random.Range(3, 6)), false); }
+            if (col.gameObject.GetComponent<EnemyController>())
+                col.gameObject.GetComponent<EnemyController>().enemyHealth.AdjustHealth(Mathf.RoundToInt(Random.Range(3, 6)), false);
+            
             BreakObject(true);
         }
     }
@@ -69,25 +78,19 @@ public class BreakableObject : MonoBehaviour
     public void BreakObjectWithAttack()
     {
         if (canBreakWithAttack)
-        {
             BreakObject(true);
-        }
     }
 
     public void BreakObjectWithBomb()
     {
         if (canBreakWithBomb)
-        {
             BreakObject(true);
-        }
     }
 
     public void BreakObjectWithArrow()
     {
         if (canBreakWithArrow)
-        {
             BreakObject(true);
-        }
     }
 
     public void BreakObject(bool brokenByCurrentPlayer)
@@ -100,15 +103,15 @@ public class BreakableObject : MonoBehaviour
                     switch (objectType)
                     {
                         case BreakableObjectType.jar:
-                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.jarsBroken);
                             break;
 
                         case BreakableObjectType.rock:
-                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.rocksBroken);
                             break;
 
                         case BreakableObjectType.magicSeal:
-                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.magicSealsBroken);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.magicSealsBroken);
                             break;
                     }
                 }

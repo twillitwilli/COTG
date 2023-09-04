@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class PlayerMenu : MonoSingleton<PlayerMenu>
 {
-    private VRPlayerController _player;
-
-    [HideInInspector] public string multiplayerRoomName;
+    [HideInInspector] 
+    public string multiplayerRoomName;
 
     private void Start()
     {
-        _player = LocalGameManager.Instance.player;
-        _player.menuSpawned = true;
+        LocalGameManager.Instance.player.menuSpawned = true;
     }
 
     public void ClosePlayerMenu()
@@ -22,7 +20,8 @@ public class PlayerMenu : MonoSingleton<PlayerMenu>
 
     private async void OnDestroy()
     {
-        _player.menuSpawned = false;
-        await LocalGameManager.Instance.GetPlayerPrefsSaveData().SavePlayerPrefs();
+        LocalGameManager.Instance.player.menuSpawned = false;
+
+        await PlayerPrefsSaveData.Instance.SavePlayerPrefs();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowerPetController : MonoBehaviour
+public class FollowerPetController : MonoSingleton<FollowerPetController>
 {
     private Transform _petSpawn;
     private GameObject _currentPet;

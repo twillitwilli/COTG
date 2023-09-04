@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerComponents : MonoBehaviour
 {
-    private PlayerPrefsSaveData _playerPrefSaveData;
-
     [Header("--Player Origins--")]
     [SerializeField] private GameObject[] _originPoints;
     public GameObject[] GetAllOriginPoints() { return _originPoints; }
@@ -56,8 +54,6 @@ public class PlayerComponents : MonoBehaviour
 
     [Header("--Other Player Stuff--")]
     public GetItem getItemRaycast;
-    public MapWalletSpawner mapWalletSpawner;
-    public HandBombKeyController bombKeyController;
     public PlayerSceneLocation sceneLocation;
     public Transform petSpawnLocation;
     public CurrentMinion minionSpawnLocation;
@@ -67,8 +63,6 @@ public class PlayerComponents : MonoBehaviour
 
     private void Start()
     {
-        _playerPrefSaveData = LocalGameManager.Instance.GetPlayerPrefsSaveData();
-
         _controllerInput.gameObject.SetActive(true);
     }
 
@@ -88,9 +82,7 @@ public class PlayerComponents : MonoBehaviour
 
     public void LoadPlayerOrigins()
     {
-        _playerPrefSaveData = LocalGameManager.Instance.GetPlayerPrefsSaveData();
-
-        if (_playerPrefSaveData.CheckIfSaveFileExists("originPosX"))
+        if (PlayerPrefsSaveData.Instance.CheckIfSaveFileExists("originPosX"))
         {
             for (int i = 0; i < _originPoints.Length; i++)
             {
@@ -99,7 +91,8 @@ public class PlayerComponents : MonoBehaviour
                 _originPoints[i].transform.localPosition = newPos;
                 _originPoints[i].transform.localEulerAngles = newRot;
 
-                if (Sorcerer.instance != null) { Sorcerer.instance.GetSpellCasting().CalibrateSettings(); }
+                if (Sorcerer.instance != null)
+                    Sorcerer.instance.GetSpellCasting().CalibrateSettings();
             }
         }
     }

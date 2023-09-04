@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ChestController : MonoBehaviour
 {
-    public enum ChestType { locked, free }
-    [HideInInspector] public Animator chestAnimator;
+    public enum ChestType 
+    { 
+        locked, 
+        free 
+    }
+
+    [HideInInspector] 
+    public Animator chestAnimator;
+    
     //spawnpoints -- 0 = itemPedastal, 1 = potion, <1 = smallDrops
     public List<Transform> spawnPoints;
 
@@ -28,14 +35,19 @@ public class ChestController : MonoBehaviour
     {
         int lootSelection = Random.Range(0, 100);
 
-        if (lootSelection < 75) { SpawnSmallLoot(); }
-        else if (lootSelection > 75 && lootSelection < 95) { SpawnPotion(); }
-        else { SpawnItemPedastal(); }
+        if (lootSelection < 75)
+            SpawnSmallLoot();
+
+        else if (lootSelection > 75 && lootSelection < 95)
+            SpawnPotion();
+
+        else
+            SpawnItemPedastal();
 
         switch (LocalGameManager.Instance.currentGameMode)
         {
             case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
-                LocalGameManager.Instance.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.chestsOpened);
+                PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.chestsOpened);
                 break;
         }
     }
@@ -43,18 +55,22 @@ public class ChestController : MonoBehaviour
     public void SpawnSmallLoot()
     {
         int spawnItemCount = Random.Range(1, spawnPoints.Count);
+
         for (int i = 0; i < spawnItemCount; i++)
         {
             int randomSpawnPoint = Mathf.RoundToInt(Random.Range(2f, spawnPoints.Count));
+
             LocalGameManager.Instance.SpawnRandomDrop(spawnPoints[randomSpawnPoint]);
             spawnPoints.Remove(spawnPoints[randomSpawnPoint]);
         }
+
         Destroy(gameObject);
     }
 
     public void SpawnPotion()
     {
         int randomPotion = Mathf.RoundToInt(Random.Range(0, MasterManager.itemPool.droppableItems.potions.Count));
+
         GameObject newPotion = Instantiate(MasterManager.itemPool.droppableItems.potions[randomPotion], spawnPoints[1]);
         ResetPositioning(newPotion);
         Destroy(gameObject);

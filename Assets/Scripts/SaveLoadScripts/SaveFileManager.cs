@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SaveFileManager : MonoBehaviour
 {
-    private PlayerStats _playerStats;
-    private PlayerTotalStats _playerTotalStats;
+    [HideInInspector]
+    public VRPlayerController player;
 
     public StartingPortal startingPortal;
     public SaveFileSelector[] saveFileSelectors;
@@ -16,10 +16,9 @@ public class SaveFileManager : MonoBehaviour
         LocalGameManager.playerCreated += CheckSaveFiles;
     }
 
-    public void CheckSaveFiles(VRPlayerController player)
+    public void CheckSaveFiles(VRPlayerController newPlayer)
     {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-        _playerTotalStats = LocalGameManager.Instance.GetTotalStats();
+        player = newPlayer;
 
         // foreach (SaveFileSelector fileSelectors in saveFileSelectors) { fileSelectors.CheckSaveFile(); }
 
@@ -28,12 +27,12 @@ public class SaveFileManager : MonoBehaviour
 
     public void LoadFile(int file, bool fileExists)
     {
-        _playerStats.SetSaveFileIndex(file);
+        PlayerStats.Instance.SetSaveFileIndex(file);
 
         if (fileExists)
         {
             startingPortal.newSaveFile = false;
-            _playerTotalStats.LoadPlayerProgress(file);
+            PlayerTotalStats.Instance.LoadPlayerProgress(file);
         }
 
         else

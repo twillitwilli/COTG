@@ -7,17 +7,32 @@ public class StatDisplay : MonoBehaviour
 {
     private Text _thisDisplay;
 
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-    private PlayerCurse _playerCurse;
-    private PlayerPotionController _potionController;
+    public enum Stats 
+    { 
+        damage, 
+        magicFocus, 
+        rateOfFire, 
+        range, 
+        movement, 
+        luck, 
+        curse, 
+        potionEffect, 
+        hp, 
+        arcane, 
+        critChance, 
+        aimAssist, 
+        elementalEffect, 
+        playerClass, 
+        magicType, 
+        castingType, 
+        critDamage, 
+        specialEffectChance 
+    }
 
-    public enum stats { damage, magicFocus, rateOfFire, range, movement, luck, curse, potionEffect, hp, arcane, critChance, aimAssist, 
-        elementalEffect, playerClass, magicType, castingType, critDamage, specialEffectChance }
-    public stats statDisplay;
+    public Stats statDisplay;
 
-    [SerializeField] private MapItem mapItem;
+    [SerializeField] 
+    private MapItem mapItem;
 
     private void Awake()
     {
@@ -26,93 +41,90 @@ public class StatDisplay : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
-        _magicController = _gameManager.GetMagicController();
-        _playerCurse = _gameManager.GetCurseController();
-        _potionController = _gameManager.GetPotionController();
+        PlayerStats stats = PlayerStats.Instance;
 
         switch (statDisplay)
         {
-            case stats.damage:
-                _thisDisplay.text = "Atk Dmg: " + _playerStats.GetMinAttackDamage().ToString() + "-" + _playerStats.GetMaxAttackDamage().ToString();
+            case Stats.damage:
+                _thisDisplay.text = "Atk Dmg: " + stats.GetMinAttackDamage().ToString() + "-" + stats.GetMaxAttackDamage().ToString();
                 break;
 
-            case stats.magicFocus:
-                _thisDisplay.text = "Magic Focus: " + _playerStats.GetMagicFocus().ToString();
+            case Stats.magicFocus:
+                _thisDisplay.text = "Magic Focus: " + stats.GetMagicFocus().ToString();
                 break;
 
-            case stats.rateOfFire:
-                _thisDisplay.text = "Atk CD: " + _playerStats.GetAttackCooldown().ToString();
+            case Stats.rateOfFire:
+                _thisDisplay.text = "Atk CD: " + stats.GetAttackCooldown().ToString();
                 break;
 
-            case stats.range:
-                _thisDisplay.text = "Atk Range: " + _playerStats.GetAttackRange().ToString();
+            case Stats.range:
+                _thisDisplay.text = "Atk Range: " + stats.GetAttackRange().ToString();
                 break;
 
-            case stats.movement:
-                _thisDisplay.text = "Movement: " + _playerStats.GetPlayerSpeed().ToString();
+            case Stats.movement:
+                _thisDisplay.text = "Movement: " + stats.GetPlayerSpeed().ToString();
                 break;
 
-            case stats.luck:
-                _thisDisplay.text = "Luck: " + _playerStats.GetLuck().ToString();
+            case Stats.luck:
+                _thisDisplay.text = "Luck: " + stats.GetLuck().ToString();
                 break;
 
-            case stats.curse:
-                _thisDisplay.text = _playerCurse.CheckCurrentCurseStatus();
+            case Stats.curse:
+                _thisDisplay.text = PlayerCurse.Instance.CheckCurrentCurseStatus();
                 break;
 
-            case stats.potionEffect:
+            case Stats.potionEffect:
                 CheckPotionEffect();
                 break;
 
-            case stats.hp:
-                int currentHealth = Mathf.RoundToInt(_playerStats.GetCurrentHealth());
-                int maxHealth = Mathf.RoundToInt(_playerStats.GetMaxHealth());
+            case Stats.hp:
+                int currentHealth = Mathf.RoundToInt(stats.GetCurrentHealth());
+                int maxHealth = Mathf.RoundToInt(stats.GetMaxHealth());
+
                 _thisDisplay.text = "HP: " + currentHealth.ToString() + "/" + maxHealth.ToString();
                 break;
 
-            case stats.arcane:
-                _thisDisplay.text = "Arcane Crystals: " + _playerStats.GetCurrentArcaneCrystals().ToString() + "/16";
+            case Stats.arcane:
+                _thisDisplay.text = "Arcane Crystals: " + stats.GetCurrentArcaneCrystals().ToString() + "/16";
                 break;
 
-            case stats.critChance:
-                _thisDisplay.text = "Crit Chance: " + _playerStats.GetCritChance().ToString() + "%";
+            case Stats.critChance:
+                _thisDisplay.text = "Crit Chance: " + stats.GetCritChance().ToString() + "%";
                 break;
 
-            case stats.aimAssist:
-                _thisDisplay.text = "Aim Assist: " + _playerStats.GetAimAssist().ToString();
+            case Stats.aimAssist:
+                _thisDisplay.text = "Aim Assist: " + stats.GetAimAssist().ToString();
                 break;
 
-            case stats.elementalEffect:
-                _thisDisplay.text = "Elemental Effect:\n" + _playerStats.GetElementalEffectChance().ToString() + "%";
+            case Stats.elementalEffect:
+                _thisDisplay.text = "Elemental Effect:\n" + stats.GetElementalEffectChance().ToString() + "%";
                 break;
 
-            case stats.playerClass:
-                _thisDisplay.text = "Class: " + _magicController.currentClass;
+            case Stats.playerClass:
+                _thisDisplay.text = "Class: " + MagicController.Instance.currentClass;
                 break;
 
-            case stats.magicType:
-                _thisDisplay.text = "Magic Type: " + _magicController.magicName;
+            case Stats.magicType:
+                _thisDisplay.text = "Magic Type: " + MagicController.Instance.magicName;
                 break;
 
-            case stats.castingType:
-                _thisDisplay.text = "Casting Type: " + _magicController.currentCastingType;
+            case Stats.castingType:
+                _thisDisplay.text = "Casting Type: " + MagicController.Instance.currentCastingType;
                 break;
 
-            case stats.critDamage:
-                _thisDisplay.text = "Crit Dmg: " + Mathf.RoundToInt(_playerStats.GetCritDamage() * 100).ToString();
+            case Stats.critDamage:
+                _thisDisplay.text = "Crit Dmg: " + Mathf.RoundToInt(stats.GetCritDamage() * 100).ToString();
                 break;
 
-            case stats.specialEffectChance:
-                _thisDisplay.text = "Special Effect Chance: " + _playerStats.GetElementalEffectChance().ToString() + "%";
+            case Stats.specialEffectChance:
+                _thisDisplay.text = "Special Effect Chance: " + stats.GetElementalEffectChance().ToString() + "%";
                 break;
         }
     }
 
     public void CheckPotionEffect()
     {
-        switch (_potionController.lastPotionDrank)
+        switch (PlayerPotionController.Instance.lastPotionDrank)
         {
             case PlayerPotionController.PotionType.death:
                 _thisDisplay.text = "Death Potion";

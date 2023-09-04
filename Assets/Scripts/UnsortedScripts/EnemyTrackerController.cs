@@ -26,7 +26,7 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
     public GameObject spawnedReaper;
 
     [HideInInspector]
-    public List<GameObject> enemySpawners = new List<GameObject>();
+    public List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
 
     [HideInInspector] 
     public List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -64,6 +64,14 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
         spawnedEnemies.Clear();
         spawnedBoss = null;
         otherPlayerSpawnedEnemies.Clear();
+    }
+
+    public void CheckSpawners()
+    {
+        for (int i = 0; i < enemySpawners.Count; i++)
+        {
+            enemySpawners[i].CheckSpawnLocations();
+        }
     }
 
     public void GetNewEnemy(Transform spawnLocation, bool networkSpawn, int enemy, int levelOfEnemy, int ID, int roomID)

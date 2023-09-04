@@ -5,36 +5,40 @@ using UnityEngine.UI;
 
 public class DevOptions : MonoBehaviour
 {
-    public enum DevOption { flight, map, giveItems, killEnemies, killReaper, giveHealth, resetPlayerSave, 
-        godMode, changeClass, magicType, castingType }
+    public enum DevOption 
+    { 
+        flight, 
+        map, 
+        giveItems, 
+        killEnemies, 
+        killReaper, 
+        giveHealth, 
+        resetPlayerSave, 
+        godMode, 
+        changeClass, 
+        magicType, 
+        castingType 
+    }
     
     public DevOption playerDevOptions;
 
-    [SerializeField] private Text _textBox;
-    [SerializeField] private bool _checkStatusOnly;
+    [SerializeField] 
+    private Text _textBox;
+    
+    [SerializeField] 
+    private bool _checkStatusOnly;
 
-    [SerializeField] private MagicController.ClassType _classType;
-    [SerializeField] private MagicController.MagicType _magicType;
-    [SerializeField] private MagicController.CastingType _castingType;
-
-    private LocalGameManager _gameManager;
-    private EnemyTrackerController _enemyTrackerController;
-
-    private VRPlayerController _player;
-    private PlayerStats _playerStats;
-
-    private DungeonBuildParent _dungeonBuildParent;
+    [SerializeField] 
+    private MagicController.ClassType _classType;
+    
+    [SerializeField] 
+    private MagicController.MagicType _magicType;
+    
+    [SerializeField] 
+    private MagicController.CastingType _castingType;
 
     private void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _enemyTrackerController = _gameManager.GetEnemyTrackerController();
-
-        _player = _gameManager.player;
-        _playerStats = _gameManager.GetPlayerStats();
-
-        if (DungeonBuildParent.instance != null) { _dungeonBuildParent = DungeonBuildParent.instance; }
-
         if (_checkStatusOnly) { ChangeDevOption(); }
     }
 
@@ -97,42 +101,42 @@ public class DevOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            bool flight = _player.canFly ? false : true;
-            _player.canFly = flight;
+            bool flight = LocalGameManager.Instance.player.canFly ? false : true;
+            LocalGameManager.Instance.player.canFly = flight;
         }
         
-        ChangeText(_player.canFly ? "Flight:\nOn" : "Flight:\nOff");
+        ChangeText(LocalGameManager.Instance.player.canFly ? "Flight:\nOn" : "Flight:\nOff");
     }
 
     private void RevealMap()
     {
-        if (_dungeonBuildParent != null)
+        if (DungeonBuildParent.Instance != null)
         {
-            _dungeonBuildParent.GetMapController().RevealMap();
-            _dungeonBuildParent.GetCompassController().CompassReveal();
+            MapController.Instance.RevealDungeonMap();
+            CompassController.Instance.CompassReveal();
         }
     }
 
     private void GiveItem()
     {
-        _playerStats.AdjustGoldAmount(999);
-        _playerStats.AdjustArcaneCrystalAmount(999);
-        _playerStats.AdjustKeyAmount(999);
+        PlayerStats.Instance.AdjustGoldAmount(999);
+        PlayerStats.Instance.AdjustArcaneCrystalAmount(999);
+        PlayerStats.Instance.AdjustKeyAmount(999);
     }
 
     private void KillEnemies()
     {
-        _enemyTrackerController.KillAllEnemies();
+        EnemyTrackerController.Instance.KillAllEnemies();
     }
 
     private void KillReaper()
     {
-        _enemyTrackerController.KillReaper();
+        EnemyTrackerController.Instance.KillReaper();
     }
 
     private void GiveHealth()
     {
-        _playerStats.AdjustHealth(9999, "*@#&$&%#&@!#@)*)#@!!");
+        PlayerStats.Instance.AdjustHealth(9999, "*@#&$&%#&@!#@)*)#@!!");
     }
 
     private void ResetPlayerSave()
@@ -145,40 +149,34 @@ public class DevOptions : MonoBehaviour
     {
         if (!_checkStatusOnly)
         {
-            bool godMode = _player.godMode ? false : true;
-            _player.godMode = godMode;
+            bool godMode = LocalGameManager.Instance.player.godMode ? false : true;
+            LocalGameManager.Instance.player.godMode = godMode;
         }
 
-        ChangeText(_player.godMode ? "God Mode:\nOn" : "God Mode:\nOff");
+        ChangeText(LocalGameManager.Instance.player.godMode ? "God Mode:\nOn" : "God Mode:\nOff");
     }
 
     private void ChangeClass()
     {
         if (!_checkStatusOnly)
-        {
-            _gameManager.GetMagicController().ChangeClass(_classType);
-        }
+            MagicController.Instance.ChangeClass(_classType);
 
-        ChangeText("Current Class:\n" + _gameManager.GetMagicController().currentClass);
+        ChangeText("Current Class:\n" + MagicController.Instance.currentClass);
     }
 
     private void ChangeMagicType()
     {
         if (!_checkStatusOnly)
-        {
-            _gameManager.GetMagicController().AddMagic(_magicType);
-        }
+            MagicController.Instance.AddMagic(_magicType);
 
-        ChangeText("Current Magic:\n" + _gameManager.GetMagicController().magicName);
+        ChangeText("Current Magic:\n" + MagicController.Instance.magicName);
     }
 
     private void ChangeCastingType()
     {
         if (!_checkStatusOnly)
-        {
-            _gameManager.GetMagicController().ChangeCastingType(_castingType);
-        }
+            MagicController.Instance.ChangeCastingType(_castingType);
 
-        ChangeText("Casting Type:\n" + _gameManager.GetMagicController().currentCastingType);
+        ChangeText("Casting Type:\n" + MagicController.Instance.currentCastingType);
     }
 }

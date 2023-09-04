@@ -56,21 +56,24 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     {
         DontDestroyOnLoad(gameObject);
 
-        if (hardResetPlayerData && _playerPrefsSaveData.CheckIfSaveFileExists("ReturningPlayer"))
-        {
+        if (hardResetPlayerData && PlayerPrefsSaveData.Instance.CheckIfSaveFileExists("ReturningPlayer"))
             PlayerPrefs.SetInt("ReturningPlayer", (false ? 1 : 0));
-        }
     }
 
     private void Start()
     {
-        if (player == null) { PlayerSpawner(); }
+        if (player == null)
+            PlayerSpawner();
+
         MovePlayer(0);
 
         currentGameMode = GameMode.inLobby;
 
-        if (devMode) { Debug.Log("Dev Mode Active"); }
-        if (demoMode) { Debug.Log("Demo Mode Active"); }
+        if (devMode)
+            Debug.Log("Dev Mode Active");
+
+        if (demoMode)
+            Debug.Log("Demo Mode Active");
     }
 
     public void NewLoadingBoxSettings(GameObject newLoadingBox)
@@ -118,7 +121,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
 
     public void AreaLoaded()
     {
-        _enemyTrackerController.enemyNavMesh.RemoveData();
+        EnemyTrackerController.Instance.enemyNavMesh.RemoveData();
     }
 
     public void MovePlayer(int spawnLocation)
@@ -135,7 +138,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
 
     public void PlayerDeadReset()
     {
-        _enemyTrackerController.Reset();
+        EnemyTrackerController.Instance.Reset();
     }
 
     public void ChangeScene(SceneSelection whichScene)
@@ -163,7 +166,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
                 break;
         }
 
-        _audioController.ChangeMusic(AudioController.MusicTracks.Forest);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
     }
 
     public void CheckDungeonType()
@@ -176,6 +179,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     public void SpawnRandomDrop(Transform spawnLocation)
     {
         int spawnChest = Random.Range(0, 100);
+
         if (spawnChest < 90)
         {
             GameObject spawnedDrop = Instantiate(MasterManager.itemPool.droppableItems.dropTemplate, spawnLocation);
@@ -183,6 +187,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
             spawnedDrop.transform.localEulerAngles = new Vector3(-90, 0, 0);
             spawnedDrop.transform.localScale = new Vector3(1, 1, 1);
         }
+
         else
         {
             Debug.Log("Chest Count = " + MasterManager.itemPool.droppableItems.chests.Count);
@@ -204,7 +209,6 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     }
 
     public Camera GetMapCamera() { return _mapCamera; }
-
     public Transform[] GetSpawnLocations() { return _spawnLocations; }
     public bool IsDemo() { return demoMode; }
     public bool IsDevMode() { return devMode; }

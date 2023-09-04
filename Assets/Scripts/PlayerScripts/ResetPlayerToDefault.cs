@@ -1,78 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ResetPlayerToDefault : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-    private PlayerCurse _curseController;
-
-    private void Start()
+    public async void ResetPlayer(bool playerDied)
     {
-        _gameManager = LocalGameManager.Instance;
-        _player = _gameManager.player;
-        _playerComponents = _player.GetPlayerComponents();
-        _playerStats = _gameManager.GetPlayerStats();
-        _magicController = _gameManager.GetMagicController();
-        _gearController = _gameManager.GetGearController();
-        _curseController = _gameManager.GetCurseController();
-    }
+        PlayerComponents playerComponents = LocalGameManager.Instance.player.GetPlayerComponents();
 
-    public void ResetPlayer(bool playerDied)
-    {
-        _playerComponents.GetEyeManager().EyesClosing();
+        playerComponents.GetEyeManager().EyesClosing();
 
         //reset curses
-        _curseController.ToggleCurseImmunity(false);
-        _curseController.RemoveCurse();
+        PlayerCurse.Instance.ToggleCurseImmunity(false);
+        PlayerCurse.Instance.RemoveCurse();
 
         //reset drops
-        _playerStats.AdjustGoldAmount(-999999);
-        _playerStats.AdjustArcaneCrystalAmount(-999999);
-        _playerStats.AdjustArcaneCrystalAmount(1);
-        _playerStats.AdjustKeyAmount(-999999);
-
-        //reset has special item
-        _gearController.ResetDungeonGear();
+        PlayerStats.Instance.AdjustGoldAmount(-999999);
+        PlayerStats.Instance.AdjustArcaneCrystalAmount(-999999);
+        PlayerStats.Instance.AdjustArcaneCrystalAmount(1);
+        PlayerStats.Instance.AdjustKeyAmount(-999999);
 
         //reset special stats
-        _player.canFly = false;
+        LocalGameManager.Instance.player.canFly = false;
 
         //pocket reset
-        foreach (VRSockets pocket in _playerComponents.GetAllSockets()) { pocket.EmptyPockets(); }
+        foreach (VRSockets pocket in playerComponents.GetAllSockets()) { pocket.EmptyPockets(); }
 
         //hand reset
-        foreach (VRPlayerHand hand in _playerComponents.GetBothHands()) { hand.EmptyHand(); }
+        foreach (VRPlayerHand hand in playerComponents.GetBothHands()) { hand.EmptyHand(); }
 
         //move player to spawn location
-        _player.gameObject.transform.position = LocalGameManager.Instance.GetSpawnLocations()[0].position;
-        _player.gameObject.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[0].rotation;
+        LocalGameManager.Instance.player.gameObject.transform.position = LocalGameManager.Instance.GetSpawnLocations()[0].position;
+        LocalGameManager.Instance.player.gameObject.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[0].rotation;
 
         //reset music to default
-        _gameManager.GetAudioController().ChangeMusic(AudioController.MusicTracks.Forest);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
 
         //Eyes
-        _playerComponents.hitEffect.CheckVision();
-        _playerComponents.GetEyeManager().EyesOpening();
+        playerComponents.hitEffect.CheckVision();
+        playerComponents.GetEyeManager().EyesOpening();
 
         //Pet Reset
-        _gameManager.GetPetController().GetPet().ResetPet();
+        FollowerPetController.Instance.GetPet().ResetPet();
 
         //reset class stats
         
 
         //reset game manager
-        LocalGameManager.Instance.GetEnemyTrackerController().enemyNavMesh.RemoveData();
-        LocalGameManager.Instance.GetGameTimer().EndTimer();
+        EnemyTrackerController.Instance.enemyNavMesh.RemoveData();
+        GameTimer.Instance.EndTimer();
 
         if (playerDied)
         {
             Loader.Load(Loader.Scene.LoadingScreen);
-            Invoke("RespawnPlayer", 15);
+
+            await Task.Delay(15000);
+
+            RespawnPlayer();
         }
     }
 

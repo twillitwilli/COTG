@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerHitEffect : MonoBehaviour
 {
-    [SerializeField] private VRPlayerController player;
-    [SerializeField] private Animator hitEffect;
+    [SerializeField] 
+    private VRPlayerController player;
 
-    private PlayerStats _playerStats;
-
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-    }
+    [SerializeField] 
+    private Animator hitEffect;
 
     public void PlayerHit()
     {
@@ -28,9 +24,13 @@ public class PlayerHitEffect : MonoBehaviour
 
     public bool CheckIfAlmostDead()
     {
-        float healthPercentage = (_playerStats.GetCurrentHealth() / _playerStats.GetMaxHealth());
-        if (healthPercentage > 0.15f) return true;
-        else return false;
+        float healthPercentage = (PlayerStats.Instance.GetCurrentHealth() / PlayerStats.Instance.GetMaxHealth());
+
+        if (healthPercentage > 0.15f)
+            return true;
+
+        else
+            return false;
     }
 
     public void AnimationClip(string animationClipName)

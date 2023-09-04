@@ -7,60 +7,88 @@ using UnityEngine.UI;
 
 public class PlayerOptions : MonoBehaviour
 {
-    public enum Options { playmode, primaryHand, clockFormat, playerOrientation, playerRotation, roomScale, gripType, leftJoystickSensitivty,
-        rightJoystickSensitivty, smoothTurning, snapTurning, musicVolume, adjustHandPositioning, changeControllerType, sfxVolume, sprintToggle,
-        playerCalibration, clearHands, openDiscordLink, creatureSFX, resetHandAlignment, keyboard, joinCreateServer, chat, textChat, debugChat,
-        voiceChat, notifications, shadowType, shadowQuality, lightRange, lightBrightness, ambientOcclusionToggle, bloomToggle, colorGradingToggle,
-        ambientOcclusionIntensity, ambientOcclusionThickness, bloomIntensity, bloomThreshold, bloomDiffusion, colorGradingTonemapper,
-        colorGradingTemperature, colorGradingTint, colorGradingPostExposure, colorGradingHueShift, colorGradingSaturation, colorGradingContrast,
-        backAttachments, beltAdjustment, sittingBeltOffset, onScreenText, chatHand, cheatOptions, physicalJumpingToggle
+    public enum Options 
+    { 
+        playmode, 
+        primaryHand, 
+        clockFormat, 
+        playerOrientation, 
+        playerRotation, 
+        roomScale, 
+        gripType, 
+        leftJoystickSensitivty,
+        rightJoystickSensitivty, 
+        smoothTurning, 
+        snapTurning, 
+        musicVolume, 
+        adjustHandPositioning, 
+        changeControllerType, 
+        sfxVolume, 
+        sprintToggle,
+        playerCalibration, 
+        clearHands, 
+        openDiscordLink, 
+        creatureSFX, 
+        resetHandAlignment, 
+        keyboard, 
+        joinCreateServer, 
+        chat, 
+        textChat, 
+        debugChat,
+        voiceChat, 
+        notifications, 
+        shadowType, 
+        shadowQuality, 
+        lightRange, 
+        lightBrightness, 
+        ambientOcclusionToggle, 
+        bloomToggle, 
+        colorGradingToggle,
+        ambientOcclusionIntensity, 
+        ambientOcclusionThickness, 
+        bloomIntensity, 
+        bloomThreshold, 
+        bloomDiffusion, 
+        colorGradingTonemapper,
+        colorGradingTemperature, 
+        colorGradingTint, 
+        colorGradingPostExposure, 
+        colorGradingHueShift, 
+        colorGradingSaturation, 
+        colorGradingContrast,
+        backAttachments, 
+        beltAdjustment, 
+        sittingBeltOffset, 
+        onScreenText, 
+        chatHand, 
+        cheatOptions, 
+        physicalJumpingToggle
     }
 
     public Options playerOptions;
 
-    [SerializeField] private PlayerMenu _menu;
-    [SerializeField] private Text _textBox;
-    [SerializeField] private bool _checkStatusOnly;
-    [SerializeField] private float _valueAdjustment;
-    [SerializeField] private string _stringName;
-
-    private LocalGameManager _gameManager;
-    private OptionsMenu _optionsMenu;
-    private AudioController _audioController;
-    private VisualSettings _visualSettings;
-    private PostProcessingController _postProcessingController;
-
-    private NetworkManager _networkManager;
-    private ChatManager _chatManager;
-
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
-    private MagicController _magicController;
+    [SerializeField] 
+    private PlayerMenu _menu;
     
-    private int _controllerIndx;
-
+    [SerializeField] 
+    private Text _textBox;
+    
+    [SerializeField] 
+    private bool _checkStatusOnly;
+    
+    [SerializeField] 
+    private float _valueAdjustment;
+    
+    [SerializeField] 
+    private string _stringName;
+    
     private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _optionsMenu = _gameManager.GetOptionsMenu();
-        _audioController = _gameManager.GetAudioController();
-        _visualSettings = _gameManager.GetVisualSettings();
-        _postProcessingController = _gameManager.GetPostProcessingController();
-
-        _networkManager = _gameManager.GetNetworkManager();
-        _chatManager = _gameManager.GetChatManager();
-
-        _player = _gameManager.player;
-        _playerComponents = _player.GetPlayerComponents();
-        _magicController = _gameManager.GetMagicController();
-        
+    {        
         if (_checkStatusOnly) { ChangePlayerOptions(); }
     }
 
     public void ChangePlayerOptions()
     {
-        _gameManager.GetControllerType().controllerID = _controllerIndx;
-
         switch (playerOptions)
         {
             /// Main Menu Options ///
@@ -314,31 +342,38 @@ public class PlayerOptions : MonoBehaviour
 
     private void ChangePlayMode()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            _player.heightCheck = true;
-            if (_player.playerStanding)
+            player.heightCheck = true;
+            
+            if (player.playerStanding)
             {
-                _player.playerStanding = false;
-                _player.isCrouched = false;
-                _player.SittingHeightController();
+                player.playerStanding = false;
+                player.isCrouched = false;
+                player.SittingHeightController();
             }
-            else _player.playerStanding = true;
+
+            else 
+                player.playerStanding = true;
         }
 
-        ChangeText(_player.playerStanding ? "Playmode:\nStanding" : "Playmode:\nSitting");
+        ChangeText(player.playerStanding ? "Playmode:\nStanding" : "Playmode:\nSitting");
     }
 
     private void ChangePrimaryHand()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool leftHanded = _player.isLeftHanded ? false : true;
-            _player.isLeftHanded = leftHanded;
+            bool leftHanded = player.isLeftHanded ? false : true;
+            player.isLeftHanded = leftHanded;
 
-            Array.ForEach(_playerComponents.GetBothHands(), setPrimaryHand => setPrimaryHand.SetPrimaryHand());
+            Array.ForEach(player.GetPlayerComponents().GetBothHands(), setPrimaryHand => setPrimaryHand.SetPrimaryHand());
 
-            switch (_magicController.currentClass)
+            switch (MagicController.Instance.currentClass)
             {
                 case MagicController.ClassType.Wizard:
                     Wizard.instance.GetStaffController().ResetStaff();
@@ -350,183 +385,222 @@ public class PlayerOptions : MonoBehaviour
             }
         }
 
-        ChangeText(_player.isLeftHanded ? "Left Handed" : "Right Handed");
+        ChangeText(player.isLeftHanded ? "Left Handed" : "Right Handed");
     }
 
     private void ChangeTimeDisplay()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool timeFormat = _player.militaryTime ? false : true;
-            _player.militaryTime = timeFormat;
+            bool timeFormat = player.militaryTime ? false : true;
+            player.militaryTime = timeFormat;
         }
 
-        ChangeText(_player.militaryTime ? "Time Format:\n24hr" : "Time Format:\n12hr");
+        ChangeText(player.militaryTime ? "Time Format:\n24hr" : "Time Format:\n12hr");
     }
 
     private void ChangePlayerOrientation()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool playerOrientation = _player.headOrientation ? false : true;
-            _player.headOrientation = playerOrientation;
+            bool playerOrientation = player.headOrientation ? false : true;
+            player.headOrientation = playerOrientation;
 
-            _player.OrientationSource();
+            player.OrientationSource();
         }
 
-        ChangeText(_player.headOrientation ? "Orientation:\nHead" : "Orientation:\nHand");
+        ChangeText(player.headOrientation ? "Orientation:\nHead" : "Orientation:\nHand");
     }
 
     private void ChangePlayerRotation()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool snapRotation = _player.snapTurnOn ? false : true;
-            _player.snapTurnOn = snapRotation;
+            bool snapRotation = player.snapTurnOn ? false : true;
+            player.snapTurnOn = snapRotation;
         }
 
-        ChangeText(_player.snapTurnOn ? "Snap Turning" : "Smooth Turning");
+        ChangeText(player.snapTurnOn ? "Snap Turning" : "Smooth Turning");
     }
 
     private void ToggleRoomScale()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool roomScale = _player.roomScale ? false : true;
-            _player.roomScale = roomScale;
+            bool roomScale = player.roomScale ? false : true;
+            player.roomScale = roomScale;
         }
 
-        ChangeText(_player.roomScale ? "Roomscale:\nOn" : "Roomscale:\nOff");
+        ChangeText(player.roomScale ? "Roomscale:\nOn" : "Roomscale:\nOff");
     }
 
     private void ChangeGrip()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool toggleGrip = _player.toggleGrip ? false : true;
-            _player.toggleGrip = toggleGrip;
+            bool toggleGrip = player.toggleGrip ? false : true;
+            player.toggleGrip = toggleGrip;
         }
 
-        ChangeText(_player.toggleGrip ? "Toggle Grip" : "Hold Grip");
+        ChangeText(player.toggleGrip ? "Toggle Grip" : "Hold Grip");
     }
 
     private void LeftControllerSensitivty()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            _player.leftJoystickDeadzoneAdjustment += _valueAdjustment;
+            player.leftJoystickDeadzoneAdjustment += _valueAdjustment;
 
-            if (_player.leftJoystickDeadzoneAdjustment >= .9f) { _player.leftJoystickDeadzoneAdjustment = .9f; }
-            else if (_player.leftJoystickDeadzoneAdjustment <= 0) { _player.leftJoystickDeadzoneAdjustment = 0; }
+            if (player.leftJoystickDeadzoneAdjustment >= .9f)
+                player.leftJoystickDeadzoneAdjustment = .9f;
+
+            else if (player.leftJoystickDeadzoneAdjustment <= 0)
+                player.leftJoystickDeadzoneAdjustment = 0;
         }
 
-        int deadzoneValue = Mathf.RoundToInt(_player.leftJoystickDeadzoneAdjustment * 100);
+        int deadzoneValue = Mathf.RoundToInt(player.leftJoystickDeadzoneAdjustment * 100);
+
         ChangeText("Left Sensitivity:\n" + deadzoneValue + "%");
     }
 
     private void RightControllerSensitivty()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            _player.rightJoystickDeadzoneAdjustment += _valueAdjustment;
+            player.rightJoystickDeadzoneAdjustment += _valueAdjustment;
 
-            if (_player.rightJoystickDeadzoneAdjustment >= .9f) { _player.rightJoystickDeadzoneAdjustment = .9f; }
-            else if (_player.rightJoystickDeadzoneAdjustment <= 0) { _player.rightJoystickDeadzoneAdjustment = 0; }
+            if (player.rightJoystickDeadzoneAdjustment >= .9f)
+                player.rightJoystickDeadzoneAdjustment = .9f;
+
+            else if (player.rightJoystickDeadzoneAdjustment <= 0)
+                player.rightJoystickDeadzoneAdjustment = 0;
         }
 
-        int deadzoneValue = Mathf.RoundToInt(_player.rightJoystickDeadzoneAdjustment * 100);
+        int deadzoneValue = Mathf.RoundToInt(player.rightJoystickDeadzoneAdjustment * 100);
+
         ChangeText("Right Sensitivity:\n" + deadzoneValue + "%");
     }
 
     private void SmoothTurningAdjustment()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            _player.turnSpeedAdjustment += _valueAdjustment;
+            player.turnSpeedAdjustment += _valueAdjustment;
 
-            if (_player.turnSpeedAdjustment >= 4f) { _player.turnSpeedAdjustment = 4f; }
-            else if (_player.turnSpeedAdjustment <= .1f) { _player.turnSpeedAdjustment = .1f; }
+            if (player.turnSpeedAdjustment >= 4f)
+                player.turnSpeedAdjustment = 4f;
+
+            else if (player.turnSpeedAdjustment <= .1f)
+                player.turnSpeedAdjustment = .1f;
         }
 
-        int turnSpeed = Mathf.RoundToInt(_player.turnSpeedAdjustment * 100);
+        int turnSpeed = Mathf.RoundToInt(player.turnSpeedAdjustment * 100);
+
         ChangeText("Smooth Turning:\n" + turnSpeed + "%");
     }
 
     private void SnapTurningAdjustment()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            _player.snapTurnRotationAdjustment += _valueAdjustment;
+            player.snapTurnRotationAdjustment += _valueAdjustment;
 
-            if (_player.snapTurnRotationAdjustment >= 90f) { _player.snapTurnRotationAdjustment = 90f; }
-            else if (_player.snapTurnRotationAdjustment <= 10f) { _player.snapTurnRotationAdjustment = 10f; }
+            if (player.snapTurnRotationAdjustment >= 90f)
+                player.snapTurnRotationAdjustment = 90f;
+
+            else if (player.snapTurnRotationAdjustment <= 10f)
+                player.snapTurnRotationAdjustment = 10f;
         }
         
-        ChangeText("Snap Turning:\n" + Mathf.RoundToInt(_player.snapTurnRotationAdjustment));
+        ChangeText("Snap Turning:\n" + Mathf.RoundToInt(player.snapTurnRotationAdjustment));
     }
 
     private void ChangeMusicVolume()
     {
-        if (!_checkStatusOnly) { _audioController.AdjustMusicVolume(_valueAdjustment); }
+        if (!_checkStatusOnly)
+            AudioController.Instance.AdjustMusicVolume(_valueAdjustment);
 
-        ChangeText("Music: " + Mathf.RoundToInt(_audioController.GetMusicVolume() * 100));
+        ChangeText("Music: " + Mathf.RoundToInt(AudioController.Instance.GetMusicVolume() * 100));
     }
 
     private void ChangeSFXVolume()
     {
-        if (!_checkStatusOnly) { _audioController.AdjustSFXVolume(_valueAdjustment); }
+        if (!_checkStatusOnly)
+            AudioController.Instance.AdjustSFXVolume(_valueAdjustment);
 
-        ChangeText("SFX: " + Mathf.RoundToInt(_audioController.GetSFXVolume() * 100));
+        ChangeText("SFX: " + Mathf.RoundToInt(AudioController.Instance.GetSFXVolume() * 100));
     }
 
     private void ChangeCreatureSFXVolume()
     {
-        if (!_checkStatusOnly) { _audioController.AdjustCreatureSFXVolume(_valueAdjustment); }
+        if (!_checkStatusOnly)
+            AudioController.Instance.AdjustCreatureSFXVolume(_valueAdjustment);
 
-        ChangeText("Creature SFX: " + Mathf.RoundToInt(_audioController.GetCreatureSFXVolume() * 100));
+        ChangeText("Creature SFX: " + Mathf.RoundToInt(AudioController.Instance.GetCreatureSFXVolume() * 100));
     }
 
     private void AdjustHandPositioning()
     {
-        _optionsMenu.OpenHandAdjuster();
+        OptionsMenu.Instance.OpenHandAdjuster();
         _menu.gameObject.SetActive(false);
     }
 
     private void ChangeControllerType()
     {
         if (_checkStatusOnly)
-        {
-            ChangeText("Controller Type:\n" + _gameManager.GetControllerType().controllerFullName);
-        }
+            ChangeText("Controller Type:\n" + ControllerType.Instance.controllerFullName);
     }
 
     private void ResetHandAlignment()
     {
-        Array.ForEach(_playerComponents.GetBothHands(), resetHands => _gameManager.GetControllerType().ResetHandToControllerDefault(resetHands));
+        Array.ForEach(LocalGameManager.Instance.player.GetPlayerComponents().GetBothHands(), resetHands => ControllerType.Instance.ResetHandToControllerDefault(resetHands));
     }
 
     private void SprintToggle()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool toggleSprint = _player.toggleSprint ? false : true;
-            _player.toggleSprint = toggleSprint;
+            bool toggleSprint = player.toggleSprint ? false : true;
+            player.toggleSprint = toggleSprint;
         }
 
-        ChangeText(_player.toggleSprint ? "Toggle Sprint:\nOn" : "Toggle Sprint:\nOff");
+        ChangeText(player.toggleSprint ? "Toggle Sprint:\nOn" : "Toggle Sprint:\nOff");
     }
 
     private void PlayerCalibration()
     {
-        _optionsMenu.OpenPlayerCalibration();
+        OptionsMenu.Instance.OpenPlayerCalibration();
 
-        if (_menu != null && _menu.gameObject != null) { _menu.gameObject.SetActive(false); }
-        else { Destroy(gameObject); }
+        if (_menu != null && _menu.gameObject != null)
+            _menu.gameObject.SetActive(false);
+
+        else
+            Destroy(gameObject);
     }
 
     private void ClearHands()
     {
-        Array.ForEach(_playerComponents.GetBothHands(), emptyHands => emptyHands.EmptyHand());
+        Array.ForEach(LocalGameManager.Instance.player.GetPlayerComponents().GetBothHands(), emptyHands => emptyHands.EmptyHand());
     }
 
     private void KeyboardTyping()
@@ -547,7 +621,7 @@ public class PlayerOptions : MonoBehaviour
                     break;
 
                 case "Send":
-                    _chatManager.ChatMessage("[You] " + _textBox.text);
+                    ChatManager.Instance.ChatMessage("[You] " + _textBox.text);
 
                     if (CoopManager.instance != null) { CoopManager.instance.SendChatMessage(_textBox.text); }
                     break;
@@ -562,111 +636,128 @@ public class PlayerOptions : MonoBehaviour
 
     private void JoinCreateServer()
     {
+        NetworkManager network = MultiplayerManager.Instance.GetNetworkManager();
+
+        string newText;
+
         if (_checkStatusOnly)
-        {
-            string newText = CoopManager.instance == null ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
-        }
+            newText = CoopManager.instance == null ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
 
         else
         {
             if (CoopManager.instance == null)
             {
-                _networkManager.roomName = _menu.multiplayerRoomName;
-                _networkManager.ConnectToServer();
-                _textBox.text = "Leave\n" + "Room";
+                network.roomName = _menu.multiplayerRoomName;
+                network.ConnectToServer();
+                newText = "Leave\n" + "Room";
             }
 
             else
             {
-                _networkManager.LeaveRoom();
-                _textBox.text = "Join/Create\n" + "Room";
+                network.LeaveRoom();
+                newText = "Join/Create\n" + "Room";
             }
         }
+
+        ChangeText(newText);
     }
 
     private void ChatOptions()
     {
+        ChatManager chat = ChatManager.Instance;
+
         switch (_stringName)
         {
             case "PreviousMessage":
-                _chatManager.DisplayPreviousMessage();
+                chat.DisplayPreviousMessage();
                 break;
 
             case "NextMessage":
-                _chatManager.DisplayNextMessage();
+                chat.DisplayNextMessage();
                 break;
 
             case "Keyboard":
                 for (int i = 0; i < 2; i++)
                 {
                     ChatWindow chatWindow;
-                    if (_playerComponents.GetHand(i).chatDisplay.chatSystem.TryGetComponent<ChatWindow>(out chatWindow))
+
+                    if (LocalGameManager.Instance.player.GetPlayerComponents().GetHand(i).chatDisplay.chatSystem.TryGetComponent<ChatWindow>(out chatWindow))
                     {
                         if (chatWindow.spawnedKeyboard == null)
-                        {
                             chatWindow.spawnedKeyboard = Instantiate(MasterManager.playerManager.chatKeyboard, chatWindow.keyboardSpawn);
-                        }
-                        else { Destroy(chatWindow.spawnedKeyboard); }
+
+                        else
+                            Destroy(chatWindow.spawnedKeyboard);
                     }
                 }
                 break;
 
             case "Erase":
-                _chatManager.DeleteMessageHistory();
+                chat.DeleteMessageHistory();
                 break;
         }
     }
 
     private void ToggleTextChat()
     {
+        ChatManager chat = ChatManager.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool textChat = _chatManager.textChat ? false : true;
-            _chatManager.textChat = textChat;
+            bool textChat = chat.textChat ? false : true;
+            chat.textChat = textChat;
         }
 
-        ChangeText(_chatManager.textChat ? "Text Chat:\nEnabled" : "Text Chat:\nDisabled");
+        ChangeText(chat.textChat ? "Text Chat:\nEnabled" : "Text Chat:\nDisabled");
     }
 
     private void ChangeChatHand()
     {
+        ChatManager chat = ChatManager.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool chatHand = _chatManager.chatOnRightHand ? false : true;
-            _chatManager.chatOnRightHand = chatHand;
+            bool chatHand = chat.chatOnRightHand ? false : true;
+            chat.chatOnRightHand = chatHand;
         }
 
-        ChangeText(_chatManager.chatOnRightHand ? "Chat Hand:\nRight Hand" : "Chat Hand:\nLeft Hand");
+        ChangeText(chat.chatOnRightHand ? "Chat Hand:\nRight Hand" : "Chat Hand:\nLeft Hand");
     }
 
     private void ToggleDebugChat()
     {
+        ChatManager chat = ChatManager.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool debugMessages = _chatManager.allowDebugMessages ? false : true;
-            _chatManager.allowDebugMessages = debugMessages;
+            bool debugMessages = chat.allowDebugMessages ? false : true;
+            chat.allowDebugMessages = debugMessages;
         }
 
-        ChangeText(_chatManager.allowDebugMessages ? "Debug Chat:\nEnabled" : "Debug Chat:\nDisabled");
+        ChangeText(chat.allowDebugMessages ? "Debug Chat:\nEnabled" : "Debug Chat:\nDisabled");
     }
 
     private void ToggleVoiceChat()
     {
+        ChatManager chat = ChatManager.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool voiceChat = _chatManager.voiceChat ? false : true;
-            _chatManager.voiceChat = voiceChat;
+            bool voiceChat = chat.voiceChat ? false : true;
+            chat.voiceChat = voiceChat;
         }
         
-        ChangeText(_chatManager.voiceChat ? "Voice Chat:\nEnabled" : "Voice Chat:\nDisabled");
+        ChangeText(chat.voiceChat ? "Voice Chat:\nEnabled" : "Voice Chat:\nDisabled");
     }
 
     private void ToggleNotifications()
     {
+        ChatManager chat = ChatManager.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool notifications = _chatManager.notifications ? false : true;
-            _chatManager.notifications = notifications;
+            bool notifications = chat.notifications ? false : true;
+            chat.notifications = notifications;
         }
 
         ChangeText(_checkStatusOnly ? "Notifications:\nEnabled" : "Notifications:\nDisabled");
@@ -674,27 +765,29 @@ public class PlayerOptions : MonoBehaviour
 
     private void ToggleShadowType()
     {
+        VisualSettings visuals = VisualSettings.Instance;
+
         if (!_checkStatusOnly)
         {
-            switch (_visualSettings.shadowSetting)
+            switch (visuals.shadowSetting)
             {
                 case LightShadows.Soft:
-                    _visualSettings.shadowSetting = LightShadows.Hard;
+                    visuals.shadowSetting = LightShadows.Hard;
                     break;
 
                 case LightShadows.Hard:
-                    _visualSettings.shadowSetting = LightShadows.None;
+                    visuals.shadowSetting = LightShadows.None;
                     break;
 
                 case LightShadows.None:
-                    _visualSettings.shadowSetting = LightShadows.Soft;
+                    visuals.shadowSetting = LightShadows.Soft;
                     break;
             }
 
-            _visualSettings.ChangeLightSettings(VisualSettings.LightAdjustment.shadowType);
+            visuals.ChangeLightSettings(VisualSettings.LightAdjustment.shadowType);
         }
 
-        switch (_visualSettings.shadowSetting)
+        switch (visuals.shadowSetting)
         {
             case LightShadows.Soft:
                 ChangeText("Soft Shadows");
@@ -712,9 +805,11 @@ public class PlayerOptions : MonoBehaviour
 
     private void ToggleShadowQuality()
     {
+        VisualSettings visuals = VisualSettings.Instance;
+
         if (_checkStatusOnly)
         {
-            switch (_visualSettings.shadowQuality)
+            switch (visuals.shadowQuality)
             {
                 case ShadowResolution.VeryHigh:
                     ChangeText("Shadow Quality:\nVery High");
@@ -736,194 +831,231 @@ public class PlayerOptions : MonoBehaviour
 
         else
         {
-            switch (_visualSettings.shadowQuality)
+            switch (visuals.shadowQuality)
             {
                 case ShadowResolution.VeryHigh:
-                    _visualSettings.shadowQuality = ShadowResolution.High;
+                    visuals.shadowQuality = ShadowResolution.High;
                     ChangeText("Shadow Quality:\nHigh");
                     break;
 
                 case ShadowResolution.High:
-                    _visualSettings.shadowQuality = ShadowResolution.Medium;
+                    visuals.shadowQuality = ShadowResolution.Medium;
                     ChangeText("Shadow Quality:\nMedium");
                     break;
 
                 case ShadowResolution.Medium:
-                    _visualSettings.shadowQuality = ShadowResolution.Low;
+                    visuals.shadowQuality = ShadowResolution.Low;
                     ChangeText("Shadow Quality:\nLow");
                     break;
 
                 case ShadowResolution.Low:
-                    _visualSettings.shadowQuality = ShadowResolution.VeryHigh;
+                    visuals.shadowQuality = ShadowResolution.VeryHigh;
                     ChangeText("Shadow Quality:\nVery High");
                     break;
             }
             
-            _visualSettings.ChangeLightSettings(VisualSettings.LightAdjustment.shadowResolution);
+            visuals.ChangeLightSettings(VisualSettings.LightAdjustment.shadowResolution);
         }
     }
 
     private void AdjustLightingRange()
     {
+        VisualSettings visuals = VisualSettings.Instance;
+
         if (!_checkStatusOnly)
         {
-            _visualSettings.lightRange += _valueAdjustment;
+            visuals.lightRange += _valueAdjustment;
 
-            if (_visualSettings.lightRange > 200) { _visualSettings.lightRange = 200; }
-            else if (_visualSettings.lightRange < 0) { _visualSettings.lightRange = 0; }
+            if (visuals.lightRange > 200)
+                visuals.lightRange = 200;
+
+            else if (visuals.lightRange < 0)
+                visuals.lightRange = 0;
         }
 
-        int range = Mathf.RoundToInt(_visualSettings.lightRange);
+        int range = Mathf.RoundToInt(visuals.lightRange);
 
         ChangeText("Light Range:\n" + range);
     }
 
     private void AdjustLightingBrightness()
     {
+        VisualSettings visuals = VisualSettings.Instance;
+
         if (!_checkStatusOnly)
         {
-            _visualSettings.brightness += _valueAdjustment;
+            visuals.brightness += _valueAdjustment;
 
-            if (_visualSettings.brightness > 2) { _visualSettings.brightness = 2; }
-            else if (_visualSettings.brightness < 0) { _visualSettings.brightness = 0; }
+            if (visuals.brightness > 2)
+                visuals.brightness = 2;
+
+            else if (visuals.brightness < 0)
+                visuals.brightness = 0;
         }
 
-        int brightnessPercentage = Mathf.RoundToInt(100 * _visualSettings.brightness);
+        int brightnessPercentage = Mathf.RoundToInt(100 * visuals.brightness);
 
         ChangeText("Light Brightness:\n" + brightnessPercentage + "%");
     }
 
     private void AmbientOcclusionToggle()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool ambientOcclusion = _postProcessingController.ambientOcclusion ? false : true;
-            _postProcessingController.ambientOcclusion = ambientOcclusion;
+            bool ambientOcclusion = postProcessing.ambientOcclusion ? false : true;
+            postProcessing.ambientOcclusion = ambientOcclusion;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        ChangeText(_postProcessingController.ambientOcclusion ? "Ambient Occlusion On" : "Ambient Occlusion Off");
+        ChangeText(postProcessing.ambientOcclusion ? "Ambient Occlusion On" : "Ambient Occlusion Off");
     }
 
     private void BloomToggle()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool bloom = _postProcessingController.bloom ? false : true;
-            _postProcessingController.bloom = bloom;
+            bool bloom = postProcessing.bloom ? false : true;
+            postProcessing.bloom = bloom;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        ChangeText(_postProcessingController.bloom ? "Bloom On" : "Bloom Off");
+        ChangeText(postProcessing.bloom ? "Bloom On" : "Bloom Off");
     }
 
     private void ColorGradingToggle()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            bool colorGrading = _postProcessingController.colorGrading ? false : true;
-            _postProcessingController.colorGrading = colorGrading;
+            bool colorGrading = postProcessing.colorGrading ? false : true;
+            postProcessing.colorGrading = colorGrading;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText(_postProcessingController.colorGrading ? "Color Grading On" : "Color Grading Off");
+        ChangeText(postProcessing.colorGrading ? "Color Grading On" : "Color Grading Off");
     }
 
     private void AmbientOcclusionIntensity()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.AOIntensity += _valueAdjustment;
+            postProcessing.AOIntensity += _valueAdjustment;
 
-            if (_postProcessingController.AOIntensity > 4) { _postProcessingController.AOIntensity = 4; }
-            else if (_postProcessingController.AOIntensity < 0) { _postProcessingController.AOIntensity = 0; }
+            if (postProcessing.AOIntensity > 4)
+                postProcessing.AOIntensity = 4;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
+            else if (postProcessing.AOIntensity < 0)
+                postProcessing.AOIntensity = 0;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        ChangeText("Intensity:\n" + _postProcessingController.AOIntensity);
+        ChangeText("Intensity:\n" + postProcessing.AOIntensity);
     }
 
     private void AmbientOcclusionThickness()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.thickness += _valueAdjustment;
+            postProcessing.thickness += _valueAdjustment;
 
-            if (_postProcessingController.thickness > 10) { _postProcessingController.thickness = 10; }
-            else if (_postProcessingController.thickness < 1) { _postProcessingController.thickness = 1; }
+            if (postProcessing.thickness > 10)
+                postProcessing.thickness = 10;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
+            else if (postProcessing.thickness < 1)
+                postProcessing.thickness = 1;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.ambientOcc);
         }
 
-        ChangeText("Thickness:\n" + _postProcessingController.thickness);
+        ChangeText("Thickness:\n" + postProcessing.thickness);
     }
 
     private void BloomIntensity()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.Bintensity += _valueAdjustment;
+            postProcessing.Bintensity += _valueAdjustment;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        ChangeText("Intensity:\n" + Mathf.RoundToInt(_postProcessingController.Bintensity));
+        ChangeText("Intensity:\n" + Mathf.RoundToInt(postProcessing.Bintensity));
     }
 
     private void BloomThreshold()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.threshold += _valueAdjustment;
+            postProcessing.threshold += _valueAdjustment;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        ChangeText("Threshold:\n" + _postProcessingController.threshold);
+        ChangeText("Threshold:\n" + postProcessing.threshold);
     }
 
     private void BloomDiffusion()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.diffusion += _valueAdjustment;
+            postProcessing.diffusion += _valueAdjustment;
 
-            if (_postProcessingController.diffusion > 10) { _postProcessingController.diffusion = 10; }
-            else if (_postProcessingController.diffusion < 1) { _postProcessingController.diffusion = 1; }
+            if (postProcessing.diffusion > 10)
+                postProcessing.diffusion = 10;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
+            else if (postProcessing.diffusion < 1)
+                postProcessing.diffusion = 1;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.bloomEffect);
         }
 
-        ChangeText("Diffusion:\n" + _postProcessingController.diffusion);
+        ChangeText("Diffusion:\n" + postProcessing.diffusion);
     }
 
     private void ColorGradingTonemapper()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            switch (_postProcessingController.tonemapping)
+            switch (postProcessing.tonemapping)
             {
                 case UnityEngine.Rendering.PostProcessing.Tonemapper.None:
-                    _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral;
+                    postProcessing.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral;
                     break;
 
                 case UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral:
-                    _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES;
+                    postProcessing.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES;
                     break;
 
                 case UnityEngine.Rendering.PostProcessing.Tonemapper.ACES:
-                    _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.None;
+                    postProcessing.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.None;
                     break;
             }
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        switch (_postProcessingController.tonemapping)
+        switch (postProcessing.tonemapping)
         {
             case UnityEngine.Rendering.PostProcessing.Tonemapper.None:
                 ChangeText("Tonemapper:\nNone");
@@ -941,119 +1073,154 @@ public class PlayerOptions : MonoBehaviour
 
     private void ColorGradingTemperature()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.temperature += _valueAdjustment;
+            postProcessing.temperature += _valueAdjustment;
 
-            if (_postProcessingController.temperature > 100) { _postProcessingController.temperature = 100; }
-            else if (_postProcessingController.temperature < -100) { _postProcessingController.temperature = -100; }
+            if (postProcessing.temperature > 100)
+                postProcessing.temperature = 100;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            else if (postProcessing.temperature < -100)
+                postProcessing.temperature = -100;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Temperature:\n" + Mathf.RoundToInt(_postProcessingController.temperature));
+        ChangeText("Temperature:\n" + Mathf.RoundToInt(postProcessing.temperature));
     }
 
     private void ColorGradingTint()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.tint += _valueAdjustment;
+            postProcessing.tint += _valueAdjustment;
 
-            if (_postProcessingController.tint > 100) { _postProcessingController.tint = 100; }
-            else if (_postProcessingController.tint < -100) { _postProcessingController.tint = -100; }
+            if (postProcessing.tint > 100)
+                postProcessing.tint = 100;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            else if (postProcessing.tint < -100)
+                postProcessing.tint = -100;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Tint:\n" + Mathf.RoundToInt(_postProcessingController.tint));
+        ChangeText("Tint:\n" + Mathf.RoundToInt(postProcessing.tint));
     }
 
     private void ColorGradingPostExposure()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.postExposure += _valueAdjustment;
+            postProcessing.postExposure += _valueAdjustment;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Post Exposure:\n" + _postProcessingController.postExposure);
+        ChangeText("Post Exposure:\n" + postProcessing.postExposure);
     }
 
     private void ColorGradingHueShift()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.hueShift += _valueAdjustment;
+            postProcessing.hueShift += _valueAdjustment;
 
-            if (_postProcessingController.hueShift > 180) { _postProcessingController.hueShift = 180; }
-            else if (_postProcessingController.hueShift < 180) { _postProcessingController.hueShift = -180; }
+            if (postProcessing.hueShift > 180)
+                postProcessing.hueShift = 180;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            else if (postProcessing.hueShift < 180)
+                postProcessing.hueShift = -180;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Hue Shift:\n" + Mathf.RoundToInt(_postProcessingController.hueShift));
+        ChangeText("Hue Shift:\n" + Mathf.RoundToInt(postProcessing.hueShift));
     }
 
     private void ColorGradingSaturation()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.saturation += _valueAdjustment;
+            postProcessing.saturation += _valueAdjustment;
 
-            if (_postProcessingController.saturation > 100) { _postProcessingController.saturation = 100; }
-            else if (_postProcessingController.saturation < -100) { _postProcessingController.saturation = -100; }
+            if (postProcessing.saturation > 100)
+                postProcessing.saturation = 100;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            else if (postProcessing.saturation < -100)
+                postProcessing.saturation = -100;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Saturation:\n" + Mathf.RoundToInt(_postProcessingController.saturation));
+        ChangeText("Saturation:\n" + Mathf.RoundToInt(postProcessing.saturation));
     }
 
     private void ColorGradingContrast()
     {
+        PostProcessingController postProcessing = PostProcessingController.Instance;
+
         if (!_checkStatusOnly)
         {
-            _postProcessingController.contrast += _valueAdjustment;
+            postProcessing.contrast += _valueAdjustment;
 
-            if (_postProcessingController.contrast > 100) { _postProcessingController.contrast = 100; }
-            else if (_postProcessingController.contrast < -100) { _postProcessingController.contrast = -100; }
+            if (postProcessing.contrast > 100)
+                postProcessing.contrast = 100;
 
-            _postProcessingController.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
+            else if (postProcessing.contrast < -100)
+                postProcessing.contrast = -100;
+
+            postProcessing.ChangePostProcessingSettings(PostProcessingController.PostEffectAdjustment.color);
         }
 
-        ChangeText("Contrast:\n" + Mathf.RoundToInt(_postProcessingController.contrast));
+        ChangeText("Contrast:\n" + Mathf.RoundToInt(postProcessing.contrast));
     }
 
     private void BackAttachmentAdjustment()
     {
+        PlayerComponents playerComponents = LocalGameManager.Instance.player.GetPlayerComponents();
+
         if (!_checkStatusOnly)
         {
-            Vector3 backAttachments = _playerComponents.backAttachments.transform.localPosition;
-            _playerComponents.belt.backAttachments = backAttachments.z + _valueAdjustment;
+            Vector3 backAttachments = playerComponents.backAttachments.transform.localPosition;
+            playerComponents.belt.backAttachments = backAttachments.z + _valueAdjustment;
 
-            if (_playerComponents.belt.backAttachments > 1) { _playerComponents.belt.backAttachments = 1; }
-            else if (_playerComponents.belt.backAttachments < -1) { _playerComponents.belt.backAttachments = -1; }
+            if (playerComponents.belt.backAttachments > 1)
+                playerComponents.belt.backAttachments = 1;
 
-            _playerComponents.backAttachments.transform.localPosition = new Vector3(0, 0, _playerComponents.belt.backAttachments);
+            else if (playerComponents.belt.backAttachments < -1)
+                playerComponents.belt.backAttachments = -1;
+
+            playerComponents.backAttachments.transform.localPosition = new Vector3(0, 0, playerComponents.belt.backAttachments);
         }
 
-        ChangeText("Back Position:\n" + _playerComponents.backAttachments.transform.localPosition.z);
+        ChangeText("Back Position:\n" + playerComponents.backAttachments.transform.localPosition.z);
     }
 
     private void BeltAdjustment()
     {
-        PlayerBelt belt = _playerComponents.belt;
+        PlayerBelt belt = LocalGameManager.Instance.player.GetPlayerComponents().belt;
 
         if (!_checkStatusOnly)
         {
-            if (_player.playerStanding)
+            if (LocalGameManager.Instance.player.playerStanding)
             {
                 belt.heightStandingPlayer += _valueAdjustment;
 
-                if (belt.heightStandingPlayer > 1) { belt.heightStandingPlayer = 1; }
-                else if (belt.heightStandingPlayer < 0) { belt.heightStandingPlayer = 0; }
+                if (belt.heightStandingPlayer > 1)
+                    belt.heightStandingPlayer = 1;
+
+                else if (belt.heightStandingPlayer < 0)
+                    belt.heightStandingPlayer = 0;
             }
 
             else
@@ -1062,25 +1229,31 @@ public class PlayerOptions : MonoBehaviour
                 {
                     belt.heightSittingPlayer += _valueAdjustment;
 
-                    if (belt.heightSittingPlayer > 1) { belt.heightSittingPlayer = 1; }
-                    else if (belt.heightSittingPlayer < 0) { belt.heightSittingPlayer = 0; }
+                    if (belt.heightSittingPlayer > 1)
+                        belt.heightSittingPlayer = 1;
+
+                    else if (belt.heightSittingPlayer < 0)
+                        belt.heightSittingPlayer = 0;
                 }
             }
         }
 
-        ChangeText(_player.playerStanding ? "Belt Adjustment:\n" + belt.heightStandingPlayer : "Belt Adjustment:\n" + belt.heightSittingPlayer);
+        ChangeText(LocalGameManager.Instance.player.playerStanding ? "Belt Adjustment:\n" + belt.heightStandingPlayer : "Belt Adjustment:\n" + belt.heightSittingPlayer);
     }
 
     private void BeltOffset()
     {
-        PlayerBelt belt = _playerComponents.belt;
+        PlayerBelt belt = LocalGameManager.Instance.player.GetPlayerComponents().belt;
 
         if (!_checkStatusOnly)
         {
             belt.zAdjustmentForSittingPlayer += _valueAdjustment;
 
-            if (belt.zAdjustmentForSittingPlayer > 1) { belt.zAdjustmentForSittingPlayer = 1; }
-            else if (belt.zAdjustmentForSittingPlayer < 0) { belt.zAdjustmentForSittingPlayer = 0; }
+            if (belt.zAdjustmentForSittingPlayer > 1)
+                belt.zAdjustmentForSittingPlayer = 1;
+
+            else if (belt.zAdjustmentForSittingPlayer < 0)
+                belt.zAdjustmentForSittingPlayer = 0;
         }
 
         ChangeText("Crouched Belt Offset:\n" + belt.zAdjustmentForSittingPlayer);
@@ -1088,28 +1261,34 @@ public class PlayerOptions : MonoBehaviour
 
     private void OnScreenTextPosition()
     {
-        Vector3 currentPos = _playerComponents.onScreenText.transform.localPosition;
+        Vector3 currentPos = LocalGameManager.Instance.player.GetPlayerComponents().onScreenText.transform.localPosition;
 
-        if(_stringName == "x") { currentPos.x += _valueAdjustment; }
-        else { currentPos.y += _valueAdjustment; }
+        if(_stringName == "x")
+            currentPos.x += _valueAdjustment;
 
-        _playerComponents.onScreenText.transform.localPosition = new Vector3(currentPos.x, currentPos.y, currentPos.z);
+        else
+            currentPos.y += _valueAdjustment;
+
+        LocalGameManager.Instance.player.GetPlayerComponents().onScreenText.transform.localPosition = new Vector3(currentPos.x, currentPos.y, currentPos.z);
     }
 
     private void CheatOptions()
     {
-        if (_textBox.text == "EREBUSGOD") { LocalGameManager.Instance.ActivateDevMode(); }
+        if (_textBox.text == "EREBUSGOD")
+            LocalGameManager.Instance.ActivateDevMode();
     }
 
     private void PhysicalJumpingToggle()
     {
+        VRPlayerController player = LocalGameManager.Instance.player;
+
         if (!_checkStatusOnly)
         {
-            bool physicalJumping = _player.physicalJumping ? false : true;
-            _player.physicalJumping = physicalJumping;
+            bool physicalJumping = player.physicalJumping ? false : true;
+            player.physicalJumping = physicalJumping;
         }
 
-        ChangeText(_player.physicalJumping ? "Physical Jump:\nOn" : "Physical Jump:\nOff");
+        ChangeText(player.physicalJumping ? "Physical Jump:\nOn" : "Physical Jump:\nOff");
     }
 
     private void OpenDiscordLink()

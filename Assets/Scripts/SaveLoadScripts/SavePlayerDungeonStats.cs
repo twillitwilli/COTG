@@ -5,20 +5,9 @@ using UnityEngine;
 
 public class SavePlayerDungeonStats : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
-        _magicController = _gameManager.GetMagicController();
-    }
-
     public void SaveDungeon()
     {
-        BinarySaveSystem.SaveDungeon(CreateSaveData(), _playerStats.saveFile);
+        BinarySaveSystem.SaveDungeon(CreateSaveData(), PlayerStats.Instance.saveFile);
     }
 
     private PlayerDungeonData CreateSaveData()
@@ -27,55 +16,55 @@ public class SavePlayerDungeonStats : MonoBehaviour
 
         // Dungeon Stats
 
-        newData.difficulty = (int)_gameManager.currentGameMode;
-        newData.dungeonType = _gameManager.dungeonType;
-        newData.currentLevel = _gameManager.currentLevel;
+        newData.difficulty = (int)LocalGameManager.Instance.currentGameMode;
+        newData.dungeonType = LocalGameManager.Instance.dungeonType;
+        newData.currentLevel = LocalGameManager.Instance.currentLevel;
 
 
         // Base Stats
 
-        newData.maxHealth = _playerStats.GetMaxHealth();
-        newData.currentHealth = _playerStats.GetCurrentHealth();
-        newData.playerSpeed = _playerStats.GetPlayerSpeed();
-        newData.sprintMultiplier = _playerStats.GetSprintMultiplier();
-        newData.crouchSpeedReduction = _playerStats.GetCrouchSpeedReduction();
-        newData.jumpVelocity = _playerStats.GetJumpVelocity();
-        newData.dashDistance = _playerStats.GetDashDistance();
-        newData.throwingForce = _playerStats.GetThrowingForce();
+        newData.maxHealth = PlayerStats.Instance.GetMaxHealth();
+        newData.currentHealth = PlayerStats.Instance.GetCurrentHealth();
+        newData.playerSpeed = PlayerStats.Instance.GetPlayerSpeed();
+        newData.sprintMultiplier = PlayerStats.Instance.GetSprintMultiplier();
+        newData.crouchSpeedReduction = PlayerStats.Instance.GetCrouchSpeedReduction();
+        newData.jumpVelocity = PlayerStats.Instance.GetJumpVelocity();
+        newData.dashDistance = PlayerStats.Instance.GetDashDistance();
+        newData.throwingForce = PlayerStats.Instance.GetThrowingForce();
 
 
         // Attack Stats
 
-        newData.attackDamage = _playerStats.GetAttackDamage();
-        newData.minAttackDamage = _playerStats.GetMinAttackDamage();
-        newData.maxAttackDamage = _playerStats.GetMaxAttackDamage();
-        newData.attackRange = _playerStats.GetAttackRange();
-        newData.attackCooldown = _playerStats.GetAttackCooldown();
-        newData.damageUpgrades = _playerStats.GetDamageUpgrades();
-        newData.rangeUpgrades = _playerStats.GetRangeUpgrades();
-        newData.magicFocus = _playerStats.GetMagicFocus();
-        newData.elementalEffectChance = _playerStats.GetElementalEffectChance();
-        newData.luck = _playerStats.GetLuck();
-        newData.critChance = _playerStats.GetCritChance();
-        newData.critDamage = _playerStats.GetCritDamage();
-        newData.specialEffectChance = _playerStats.GetSpecialChance();
-        newData.aimAssist = _playerStats.GetAimAssist();
+        newData.attackDamage = PlayerStats.Instance.GetAttackDamage();
+        newData.minAttackDamage = PlayerStats.Instance.GetMinAttackDamage();
+        newData.maxAttackDamage = PlayerStats.Instance.GetMaxAttackDamage();
+        newData.attackRange = PlayerStats.Instance.GetAttackRange();
+        newData.attackCooldown = PlayerStats.Instance.GetAttackCooldown();
+        newData.damageUpgrades = PlayerStats.Instance.GetDamageUpgrades();
+        newData.rangeUpgrades = PlayerStats.Instance.GetRangeUpgrades();
+        newData.magicFocus = PlayerStats.Instance.GetMagicFocus();
+        newData.elementalEffectChance = PlayerStats.Instance.GetElementalEffectChance();
+        newData.luck = PlayerStats.Instance.GetLuck();
+        newData.critChance = PlayerStats.Instance.GetCritChance();
+        newData.critDamage = PlayerStats.Instance.GetCritDamage();
+        newData.specialEffectChance = PlayerStats.Instance.GetSpecialChance();
+        newData.aimAssist = PlayerStats.Instance.GetAimAssist();
 
 
         // Gold, Bombs, Keys, Souls
-        newData.currentGold = _playerStats.GetCurrentGold();
-        newData.currentArcaneCrystals = _playerStats.GetCurrentArcaneCrystals();
-        newData.currentKeys = _playerStats.GetCurrentKeys();
-        newData.currentSouls = _playerStats.GetCurrentSouls();
+        newData.currentGold = PlayerStats.Instance.GetCurrentGold();
+        newData.currentArcaneCrystals = PlayerStats.Instance.GetCurrentArcaneCrystals();
+        newData.currentKeys = PlayerStats.Instance.GetCurrentKeys();
+        newData.currentSouls = PlayerStats.Instance.GetCurrentSouls();
 
 
         // Class & Magic Stats 
-        newData.playerClass = (int)_magicController.currentClass;
-        newData.magicType = (int)_magicController.currentMagic;
-        newData.statusEffect = (int)_magicController.currentStatusEffect;
-        newData.dashEffect = (int)_magicController.currentDashEffects;
-        newData.collisionEffect = (int)_magicController.currentCollisionEffects;
-        newData.specialEffect = (int)_magicController.currentCastingType;
+        newData.playerClass = (int)MagicController.Instance.currentClass;
+        newData.magicType = (int)MagicController.Instance.currentMagic;
+        newData.statusEffect = (int)MagicController.Instance.currentStatusEffect;
+        newData.dashEffect = (int)MagicController.Instance.currentDashEffects;
+        newData.collisionEffect = (int)MagicController.Instance.currentCollisionEffects;
+        newData.specialEffect = (int)MagicController.Instance.currentCastingType;
 
 
         return newData;
@@ -83,33 +72,33 @@ public class SavePlayerDungeonStats : MonoBehaviour
 
     public async void LoadDungeon()
     {
-        PlayerDungeonData loadedData = BinarySaveSystem.LoadDungeon(_playerStats.saveFile);
+        PlayerDungeonData loadedData = BinarySaveSystem.LoadDungeon(PlayerStats.Instance.saveFile);
 
         switch (loadedData.difficulty)
         {
             // Tutorial
             case 1:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.tutorial;
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.tutorial;
                 break;
 
             // Normal
             case 2:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.normal;
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.normal;
                 break;
 
             // Master
             case 3:
-                _gameManager.currentGameMode = LocalGameManager.GameMode.master;
+                LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.master;
                 break;
         }
 
-        _gameManager.dungeonType = loadedData.dungeonType;
-        _gameManager.currentLevel = loadedData.currentLevel;
+        LocalGameManager.Instance.dungeonType = loadedData.dungeonType;
+        LocalGameManager.Instance.currentLevel = loadedData.currentLevel;
 
-        await _playerStats.LoadStats(loadedData);
+        await PlayerStats.Instance.LoadStats(loadedData);
 
-        await _magicController.LoadSavedDungeonMagicStats(loadedData);
+        await MagicController.Instance.LoadSavedDungeonMagicStats(loadedData);
 
-        BinarySaveSystem.DeleteFile("DungeonData", _playerStats.saveFile);
+        BinarySaveSystem.DeleteFile("DungeonData", PlayerStats.Instance.saveFile);
     }
 }

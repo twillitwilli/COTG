@@ -10,13 +10,17 @@ public class BasicProjectile : MonoBehaviour
     public GameObject collisionEffect;
     public GameObject[] attackLevelEffects;
 
-    [HideInInspector] public VRPlayerController player;
-    [HideInInspector] public PlayerStats playerStats;
-    [HideInInspector] public MagicController magicController;
-
-    [HideInInspector] public Transform spawnParent;
-    [HideInInspector] public bool tempPeircing, disableCrit, minionProjectile;
-    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] 
+    public VRPlayerController player;
+    
+    [HideInInspector] 
+    public Transform spawnParent;
+    
+    [HideInInspector] 
+    public bool tempPeircing, disableCrit, minionProjectile;
+    
+    [HideInInspector] 
+    public Rigidbody rb;
 
     protected bool rayHit;
     protected int statusEffectChance;
@@ -24,7 +28,6 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void Awake()
     {
-        playerStats = LocalGameManager.Instance.GetPlayerStats();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -32,42 +35,54 @@ public class BasicProjectile : MonoBehaviour
     {
         transform.SetParent(null);
 
-        if (!minionProjectile) { StatModifier(); }
+        if (!minionProjectile)
+            StatModifier();
 
         rb.velocity = transform.forward * projectileSpeed;
-        Invoke("DestroyThis", projectileRange);
+
+        Destroy(gameObject, projectileRange);
     }
 
     public virtual void StatModifier()
     {
-        attackDamage = playerStats.GetAttackDamage();
-        projectileRange = playerStats.GetAttackRange();
-        aimAssist = playerStats.GetAimAssist();
+        attackDamage = PlayerStats.Instance.GetAttackDamage();
+        projectileRange = PlayerStats.Instance.GetAttackRange();
+        aimAssist = PlayerStats.Instance.GetAimAssist();
 
         CheckAttackLevel();
     }
 
     public virtual void CheckAttackLevel()
     {
-        if (attackDamage < 20) { ChangeLevel(0); }
-        else if (attackDamage >= 20 && attackDamage < 35) { ChangeLevel(1); }
-        else { ChangeLevel(2); }
+        if (attackDamage < 20)
+            ChangeLevel(0);
+
+        else if (attackDamage >= 20 && attackDamage < 35)
+            ChangeLevel(1);
+
+        else
+            ChangeLevel(2);
     }
 
     public virtual void ChangeLevel(int level)
     {
         for (int i = 0; i < attackLevelEffects.Length; i++)
         {
-            if (level != i) { attackLevelEffects[i].SetActive(false); }
-            else { attackLevelEffects[i].SetActive(true); }
+            if (level != i)
+                attackLevelEffects[i].SetActive(false);
+
+            else
+                attackLevelEffects[i].SetActive(true);
         }
     }
 
     public virtual void FixedUpdate()
     {
-        if (!forDemoOnly) { AimAssist(); }
+        if (!forDemoOnly)
+            AimAssist();
 
-        if (spawnParent != null && magicController.controllabeAttack) { rb.velocity = spawnParent.transform.right * projectileSpeed; }
+        if (spawnParent != null && MagicController.Instance.controllabeAttack)
+            rb.velocity = spawnParent.transform.right * projectileSpeed;
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -88,25 +103,18 @@ public class BasicProjectile : MonoBehaviour
             }
 
             else if (other.gameObject.CompareTag("Target"))
-            {
                 other.gameObject.GetComponent<TargetCollider>().TargetHit();
-            }
 
             else if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Climb Point"))
-            {
                 CollisionAction();
-            }
 
             if (other.gameObject.GetComponent<BreakableObject>())
-            {
                 other.gameObject.GetComponent<BreakableObject>().BreakObjectWithAttack();
-            }
 
             if (other.gameObject.GetComponent<MinionCollider>())
-            {
                 other.gameObject.GetComponent<MinionCollider>().HitPet();
-            }
         }
+
         else
         {
             if (other.gameObject.CompareTag("Target"))
@@ -120,6 +128,7 @@ public class BasicProjectile : MonoBehaviour
     public virtual void AimAssist()
     {
         RaycastHit hit;
+
         if (Physics.SphereCast(transform.position, aimAssist, rb.velocity, out hit, 15, -ignoreLayers))
         {
             if (hit.collider.CompareTag("Enemy") || (hit.collider.GetComponent<BreakableObject>() && !hit.collider.CompareTag("Rock")))
@@ -133,25 +142,28 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void HitEnemy(EnemyHealth enemy)
     {
-        if (!disableCrit && playerStats.HitCrit())
+        if (!disableCrit && PlayerStats.Instance.HitCrit())
         {
-            int critAttackDamage = Mathf.RoundToInt(attackDamage + (attackDamage * playerStats.GetCritDamage()));
+            int critAttackDamage = Mathf.RoundToInt(attackDamage + (attackDamage * PlayerStats.Instance.GetCritDamage()));
             enemy.AdjustHealth(-critAttackDamage, false);
         }
 
-        else { enemy.AdjustHealth(-attackDamage, false); }
+        else
+            enemy.AdjustHealth(-attackDamage, false);
 
 
-        if (playerStats.SpecialAttack()) { SpecialEffect(); }
+        if (PlayerStats.Instance.SpecialAttack())
+            SpecialEffect();
 
         CollisionAction();
     }
 
     public virtual void CollisionAction()
     {
-        if (collisionEffect != null) { Instantiate(collisionEffect, transform.position, transform.rotation); }
+        if (collisionEffect != null)
+            Instantiate(collisionEffect, transform.position, transform.rotation);
 
-        switch (magicController.currentCollisionEffects)
+        switch (MagicController.Instance.currentCollisionEffects)
         {
             case MagicController.CollisionEffects.none:
                 if (!tempPeircing) { Destroy(gameObject); }

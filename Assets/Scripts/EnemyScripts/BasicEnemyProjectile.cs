@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class BasicEnemyProjectile : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
+    [SerializeField] 
+    private string _deathMessage;
 
-    [SerializeField] private string _deathMessage;
     public float attackDamage = 30f, projectileSpeed = 15f, projectileRange = 5f;
     public LayerMask ignoreLayers;
     public GameObject collisionEffect;
@@ -17,21 +18,22 @@ public class BasicEnemyProjectile : MonoBehaviour
 
     public virtual void Awake()
     {
-        _gameManager = LocalGameManager.Instance;
         transform.SetParent(null);
         rb = GetComponent<Rigidbody>();
     }
 
-    public virtual void Start()
+    public async virtual void Start()
     {
         rb.velocity = transform.forward * projectileSpeed;
 
-        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
-        { 
-            attackDamage += (attackDamage * 0.5f); 
-        }
+        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master)
+            attackDamage += (attackDamage * 0.5f);
 
-        Invoke("DestroyAttack", projectileRange);
+        int range = Mathf.RoundToInt(projectileRange * 1000);
+
+        await Task.Delay(range);
+
+        DestroyAttack();
     }
 
     public virtual void FixedUpdate()
@@ -58,7 +60,8 @@ public class BasicEnemyProjectile : MonoBehaviour
 
     public virtual void LateUpdate()
     {
-        if (hitObject) { CollisionEffect(); }
+        if (hitObject)
+            CollisionEffect();
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -66,30 +69,39 @@ public class BasicEnemyProjectile : MonoBehaviour
         if(!rayHit && !triggerHit)
         {
             VRPlayerController player;
+
             if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
             {
                 HitPlayer();
                 triggerHit = true;
             }
+
             else if (!hitObject && other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Ground"))
             {
-                if (collisionEffect != null) { CollisionEffect(); }
+                if (collisionEffect != null)
+                    CollisionEffect();
+
                 triggerHit = true;
                 Destroy(gameObject);
             }
         }
     }
 
-    public virtual void ReduceSpeed()
+    public async virtual void ReduceSpeed()
     {
         rb.velocity = (transform.forward * projectileSpeed) / 2;
         delayDestruction = true;
-        Invoke("DelayDestroyAttack", projectileRange * 2);
+
+        int range = Mathf.RoundToInt(projectileRange * 1000 * 2);
+
+        await Task.Delay(range);
+
+        DelayDestroyAttack();
     }
 
     public virtual void HitPlayer()
     {
-        _gameManager.GetPlayerStats().AdjustHealth(-attackDamage, _deathMessage);
+        PlayerStats.Instance.AdjustHealth(-attackDamage, _deathMessage);
     }
 
     public virtual void CollisionEffect()
@@ -100,7 +112,8 @@ public class BasicEnemyProjectile : MonoBehaviour
 
     public virtual void DestroyAttack()
     {
-        if (!delayDestruction) { Destroy(gameObject); }
+        if (!delayDestruction)
+            Destroy(gameObject);
     }
 
     public virtual void DelayDestroyAttack()

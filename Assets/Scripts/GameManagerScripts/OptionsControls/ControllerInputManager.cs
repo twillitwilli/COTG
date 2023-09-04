@@ -129,7 +129,7 @@ public class ControllerInputManager : MonoBehaviour
         if (hand == 0)
         {
             if (PlayerMenu.Instance == null && CheckIfBothHandsEmpty())
-                LocalGameManager.Instance.GetOptionsMenu().OpenMenu();
+                OptionsMenu.Instance.OpenMenu();
 
             else if (PlayerMenu.Instance != null)
                 PlayerMenu.Instance.ClosePlayerMenu();

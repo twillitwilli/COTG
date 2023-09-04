@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _player;
-    private PlayerStats _playerStats;
-    private PlayerTotalStats _playerTotalStats;
-
     private StorePrices _storePrices;
     private PetPickup _pet;
 
-    [HideInInspector] public GameObject dropParent;
+    [HideInInspector] 
+    public GameObject dropParent;
 
-    public enum ItemType {health, gold, arcaneEnergy, key, potion, soul }
+    public enum ItemType 
+    {
+        health, 
+        gold, 
+        arcaneEnergy, 
+        key, 
+        potion, 
+        soul 
+    }
+
     public ItemType itemType;
 
-    [SerializeField] private ItemStatDisplay _statDisplay;
+    [SerializeField] 
+    private ItemStatDisplay _statDisplay;
 
-    [SerializeField] private bool _shopItem, _petHolding, _petCanPickup;
+    [SerializeField] 
+    private bool _shopItem, _petHolding, _petCanPickup;
 
     private int _itemPrice, _valueOfItem;
-
-    private void Awake()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _player = _gameManager.player;
-        _playerStats = _gameManager.GetPlayerStats();
-        _playerTotalStats = _gameManager.GetTotalStats();
-    }
 
     public void Start()
     {
@@ -48,14 +47,22 @@ public class Item : MonoBehaviour
                     break;
 
                 case ItemType.arcaneEnergy:
-                    if (_playerStats.GetLuck() > 0) { _valueOfItem = ArcaneValue(); }
-                    else _valueOfItem = 1;
+                    if (PlayerStats.Instance.GetLuck() > 0)
+                        _valueOfItem = ArcaneValue();
+
+                    else
+                        _valueOfItem = 1;
+
                     _statDisplay.UpdateStateDisplay("+ " + _valueOfItem + " Bomb");
                     break;
 
                 case ItemType.key:
-                    if (_playerStats.GetLuck() > 0) { _valueOfItem = KeyValue(); }
-                    else _valueOfItem = 1;
+                    if (PlayerStats.Instance.GetLuck() > 0)
+                        _valueOfItem = KeyValue();
+
+                    else
+                        _valueOfItem = 1;
+
                     _statDisplay.UpdateStateDisplay("+ " + _valueOfItem + " Key");
                     break;
 
@@ -94,30 +101,35 @@ public class Item : MonoBehaviour
             {
                 VRPlayerController player;
                 VRPlayerHand hand;
+
                 if (other.gameObject.TryGetComponent<VRPlayerController>(out player) || other.gameObject.TryGetComponent<VRPlayerHand>(out hand))
                 {
                     ChangeStat();
 
-                    if (dropParent != null) { Destroy(dropParent); }
-                    else Destroy(gameObject);
+                    if (dropParent != null)
+                        Destroy(dropParent);
+
+                    else
+                        Destroy(gameObject);
                 }
             }
             
             else
             {
                 WalletItem wallet;
-                if (other.gameObject.TryGetComponent<WalletItem>(out wallet) && _playerStats.GetCurrentGold() >= _itemPrice)
+                if (other.gameObject.TryGetComponent<WalletItem>(out wallet) && PlayerStats.Instance.GetCurrentGold() >= _itemPrice)
                 {
                     ChangeStat();
 
-                    _playerStats.AdjustGoldAmount(-_itemPrice);
+                    PlayerStats.Instance.AdjustGoldAmount(-_itemPrice);
 
-                    if (_storePrices.CheckStoreRefill()) { _storePrices.StoreRefill(); }
+                    if (_storePrices.CheckStoreRefill())
+                        _storePrices.StoreRefill();
 
-                    switch (_gameManager.currentGameMode)
+                    switch (LocalGameManager.Instance.currentGameMode)
                     {
                         case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
-                            _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.itemsBought);
+                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.itemsBought);
                             break;
                     }
                 }
@@ -181,27 +193,27 @@ public class Item : MonoBehaviour
         switch (itemType)
         {
             case ItemType.health:
-                _playerStats.AdjustHealth(_valueOfItem, "Healing Item");
+                PlayerStats.Instance.AdjustHealth(_valueOfItem, "Healing Item");
                 break;
 
             case ItemType.gold:
-                _playerStats.AdjustGoldAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustGoldAmount(_valueOfItem);
 
-                switch (_gameManager.currentGameMode)
+                switch (LocalGameManager.Instance.currentGameMode)
                 {
                     case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
-                        _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalGold, _valueOfItem);
+                        PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.totalGold, _valueOfItem);
                         break;
                 }
 
                 break;
 
             case ItemType.arcaneEnergy:
-                _playerStats.AdjustArcaneCrystalAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustArcaneCrystalAmount(_valueOfItem);
                 break;
 
             case ItemType.key:
-                _playerStats.AdjustKeyAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustKeyAmount(_valueOfItem);
                 break;
 
             case ItemType.potion:
@@ -209,8 +221,8 @@ public class Item : MonoBehaviour
                 break;
 
             case ItemType.soul:
-                _playerStats.AdjustSoulAmount(1);
-                _playerTotalStats.AdjustStats(PlayerTotalStats.StatType.totalSouls);
+                PlayerStats.Instance.AdjustSoulAmount(1);
+                PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.totalSouls);
                 break;
         }
     }
@@ -220,23 +232,23 @@ public class Item : MonoBehaviour
         int healthValue = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ?
             Random.Range(25, 35) : Random.Range(20, 25);
 
-        return Mathf.RoundToInt(healthValue + (_playerStats.GetLuck() * 0.5f));
+        return Mathf.RoundToInt(healthValue + (PlayerStats.Instance.GetLuck() * 0.5f));
     }
 
     public int GoldValue()
     {
-        int goldValue = (Random.Range(3, 10) + Mathf.RoundToInt(_playerStats.GetLuck() * 3));
+        int goldValue = (Random.Range(3, 10) + Mathf.RoundToInt(PlayerStats.Instance.GetLuck() * 3));
         return goldValue;
     }
 
     public int ArcaneValue()
     {
-        return Random.Range(1, (Mathf.RoundToInt(_playerStats.GetLuck())));
+        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.GetLuck())));
     }
 
     public int KeyValue()
     {
-        return Random.Range(1, (Mathf.RoundToInt(_playerStats.GetLuck())));
+        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.GetLuck())));
     }
 }
 

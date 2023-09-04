@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerItemGrabbable : MonoBehaviour
 {
-    public enum PlayerItem 
+    public enum GrabbableItems 
     { 
         nothing, 
         map, 
@@ -21,7 +21,8 @@ public class PlayerItemGrabbable : MonoBehaviour
         classCard, 
         ignitedBomb 
     }
-    public PlayerItem whichItem;
+
+    public GrabbableItems whichItem;
 
     public bool canBePlacedInPocket, throwableObject;
 

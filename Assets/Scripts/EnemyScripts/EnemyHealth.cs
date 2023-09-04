@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _player;
-
     public EnemyController enemyController;
     public EnemyHealthDisplay healthDisplayController;
     public SkinnedMeshRenderer healthDisplay;
+
     public bool isBoss;
     public float maxHealth;
 
@@ -17,21 +15,21 @@ public class EnemyHealth : MonoBehaviour
     public SkinnedMeshRenderer enemyMesh;
     public Material normal, wasHit;
 
-    [HideInInspector] public EnemyStatusController statusController;
-    [HideInInspector] public bool isDead;
-    [HideInInspector] public float currentHealth;
+    [HideInInspector] 
+    public EnemyStatusController statusController;
+    
+    [HideInInspector] 
+    public bool isDead;
+    
+    [HideInInspector] 
+    public float currentHealth;
 
     public virtual void Awake()
     {
-        _gameManager = LocalGameManager.Instance;
-        _player = _gameManager.player;
-
         statusController = GetComponent<EnemyStatusController>();
 
-        if (_gameManager.currentGameMode == LocalGameManager.GameMode.master) 
-        { 
-            maxHealth += maxHealth * 0.25f; 
-        }
+        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master)
+            maxHealth += maxHealth * 0.25f;
     }
 
     private void Start()
@@ -44,19 +42,26 @@ public class EnemyHealth : MonoBehaviour
     {
         if (!isDead)
         {
-            if (CoopManager.instance != null && !coopSync) 
-            { 
+            if (CoopManager.instance != null && !coopSync)
                 CoopManager.instance.coopEnemyController.AdjustEnemyHealth(adjustmentValue, enemyController.spawnID, enemyController.enemyTracker.isBoss);
-            }
-            if (adjustmentValue < 0) { WasHit(); }
+
+            if (adjustmentValue < 0)
+                WasHit();
+
             currentHealth += adjustmentValue;
+
             if (currentHealth <= 0)
             {
                 Debug.Log("Enemy Died");
-                if (!coopSync) { AdjustTotalStats(); }
+
+                if (!coopSync)
+                    AdjustTotalStats();
+
                 Dead();
             }
-            else if (currentHealth >= maxHealth) { currentHealth = maxHealth; }
+            else if (currentHealth >= maxHealth)
+                currentHealth = maxHealth;
+
             HealthDisplay();
         }
     }
@@ -82,7 +87,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void AdjustTotalStats()
     {
-        PlayerTotalStats totalStats = LocalGameManager.Instance.GetTotalStats();
+        PlayerTotalStats totalStats = PlayerTotalStats.Instance;
 
         switch (enemyController.enemyName)
         {
@@ -146,7 +151,10 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
         enemyController.dropScript.disableDrop = false;
-        if (healthDisplay.gameObject) { Destroy(healthDisplay.gameObject); }
+
+        if (healthDisplay.gameObject)
+            Destroy(healthDisplay.gameObject);
+
         enemyController.EnemyDead();
     }
 }

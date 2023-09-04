@@ -7,17 +7,15 @@ public class ChatWindow : MonoBehaviour
 {
     public Text chatDisplay;
     public Transform keyboardSpawn;
-    [HideInInspector] public GameObject spawnedKeyboard;
 
-    private ChatManager _chatManager;
+    [HideInInspector] 
+    public GameObject spawnedKeyboard;
 
     public void Start()
     {
-        _chatManager = LocalGameManager.Instance.GetChatManager();
-
-        if (_chatManager.displayMessage != null)
+        if (ChatManager.Instance.displayMessage != null)
         {
-            chatDisplay.text = _chatManager.displayMessage;
+            chatDisplay.text = ChatManager.Instance.displayMessage;
         }
     }
 }

@@ -6,13 +6,6 @@ using unityEngine = UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _player;
-    private EnemyTrackerController _enemyTrackerController;
-
-    private DungeonBuildParent _dungeonBuildParent;
-    private EnemySpawnerTracker _enemySpawnerTracker;
-
     public RoomModel room;
     public GameObject spawnTriggers, mapUnexplored, mapExplored;
     public bool smallRoom;
@@ -20,7 +13,9 @@ public class EnemySpawner : MonoBehaviour
     public EnemySpawner[] connectedSpawners;
     public List<GameObject> doorLocks; 
     public List<Transform> spawnLocations;
-    [HideInInspector] public int connectedSpawnersDone;
+
+    [HideInInspector] 
+    public int connectedSpawnersDone;
 
     private List<Transform> tempSpawnLocations = new List<Transform>();
     private bool spawnedEnemies;
@@ -28,21 +23,18 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _player = _gameManager.player;
-        _enemyTrackerController = _gameManager.GetEnemyTrackerController(); 
-
-        _dungeonBuildParent = DungeonBuildParent.instance;
-        _enemySpawnerTracker = _dungeonBuildParent.GetEnemySpawnerTracker();
-        if (_dungeonBuildParent != null) { _enemySpawnerTracker.enemySpawners.Add(this); }
+        if (DungeonBuildParent.Instance != null)
+            EnemyTrackerController.Instance.enemySpawners.Add(this);
     }
 
     public void CheckSpawnLocations()
     {
         for (int i = 0; i < spawnLocations.Count; i++)
         {
-            if (SpawnClear(i)) tempSpawnLocations.Add(spawnLocations[i]);
+            if (SpawnClear(i))
+                tempSpawnLocations.Add(spawnLocations[i]);
         }
+
         spawnLocations.Clear();
         spawnLocations = tempSpawnLocations;
     }
@@ -50,7 +42,13 @@ public class EnemySpawner : MonoBehaviour
     public bool SpawnClear(int whichSpawn)
     {
         Collider[] objects = Physics.OverlapSphere(spawnLocations[whichSpawn].position, 0.65f);
-        foreach (Collider col in objects) { if (!col.CompareTag("Ground")) { return false; } }
+
+        foreach (Collider col in objects) 
+        {
+            if (!col.CompareTag("Ground"))
+                return false;
+        }
+
         return true;
     }
 
@@ -58,40 +56,66 @@ public class EnemySpawner : MonoBehaviour
     {
         Destroy(mapUnexplored);
         mapExplored.SetActive(true);
+
         if (!fromConnectedRoom)
         {
-            _gameManager.GetTotalStats().AdjustStats(PlayerTotalStats.StatType.roomsExplored);
+            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.roomsExplored);
+            
             if (connectedSpawners != null)
             {
-                foreach (EnemySpawner spawners in connectedSpawners) { spawners.ExploredRoom(true); }
+                foreach (EnemySpawner spawners in connectedSpawners) 
+                { 
+                    spawners.ExploredRoom(true); 
+                }
             }
         }
     }
 
     public void SpawnType(bool connectedSpawner)
     {
-        _enemyTrackerController.enemyNavMesh.RemoveData();
-        _enemyTrackerController.enemyNavMesh.BuildNavMesh();
+        EnemyTrackerController.Instance.enemyNavMesh.RemoveData();
+        EnemyTrackerController.Instance.enemyNavMesh.BuildNavMesh();
 
-        if (!connectedSpawner) { masterSpawner = this; }
+        if (!connectedSpawner)
+            masterSpawner = this;
+
         if (!room.otherPlayerEnteredRoom)
         {
-            if (CoopManager.instance != null) { CoopManager.instance.coopEnemyController.EnteredRoom(room.roomID); }
+            if (CoopManager.instance != null)
+                CoopManager.instance.coopEnemyController.EnteredRoom(room.roomID);
+
             int enemySpawnChance = unityEngine::Random.Range(0, 100);
-            if (!spawnedEnemies && enemySpawnChance > 10) { SpawnEnemy(connectedSpawner); }
+
+            if (!spawnedEnemies && enemySpawnChance > 10)
+                SpawnEnemy(connectedSpawner);
+
             else if (connectedSpawner && !spawnedEnemies)
             {
                 spawnedEnemies = true;
                 masterSpawner.connectedSpawnersDone++;
                 masterSpawner.AllEnemiesSpawned();
             }
+
             else
             {
                 int puzzleSpawnChance = unityEngine::Random.Range(0, 100);
-                if (puzzleSpawnChance > 25) { SpawnPuzzle(); }
-                else { UnlockRoom(false); }
+
+                if (puzzleSpawnChance > 25)
+                    SpawnPuzzle();
+
+                else
+                    UnlockRoom(false);
+
                 spawnedEnemies = true;
-                if (connectedSpawners != null) { foreach (EnemySpawner spawners in connectedSpawners) { spawners.gameObject.SetActive(false); } }
+
+                if (connectedSpawners != null) 
+                { 
+                    foreach (EnemySpawner spawners in connectedSpawners) 
+                    { 
+                        spawners.gameObject.SetActive(false); 
+                    } 
+                }
+
                 gameObject.SetActive(false);
             }
         }
@@ -99,8 +123,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (!room.roomCleared)
             {
-                EnemyTrackerController enemyTracker = _enemyTrackerController;
-                foreach (GameObject enemy in enemyTracker.otherPlayerSpawnedEnemies)
+                foreach (GameObject enemy in EnemyTrackerController.Instance.otherPlayerSpawnedEnemies)
                 {
                     enemy.SetActive(true);
                 }
@@ -110,28 +133,32 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(bool connectedSpawner)
     {
-        if (_enemyTrackerController.currentEnemySpawner == null && !connectedSpawner)
+        if (EnemyTrackerController.Instance.currentEnemySpawner == null && !connectedSpawner)
         {
-            _enemyTrackerController.currentEnemySpawner = this;
+            EnemyTrackerController.Instance.currentEnemySpawner = this;
             LockRoom(false);
         }
+
         int spawnCount;
+
         if (!smallRoom)
         {
-            if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
-            { 
-                spawnCount = unityEngine::Random.Range(4, 6); 
-            }
-            else spawnCount = unityEngine::Random.Range(2, 4);
+            if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master)
+                spawnCount = unityEngine::Random.Range(4, 6);
+
+            else
+                spawnCount = unityEngine::Random.Range(2, 4);
 
             spawnCount += unityEngine::Random.Range(0, LocalGameManager.Instance.currentLevel);
         }
-        else { spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.Instance.currentLevel)); }
+
+        else
+            spawnCount = unityEngine::Random.Range(2, (4 + LocalGameManager.Instance.currentLevel));
 
         for (int i = 0; i < spawnCount; i++)
         {
             int randomSpawn = unityEngine::Random.Range(0, spawnLocations.Count);
-            _enemyTrackerController.GetNewEnemy(spawnLocations[randomSpawn], false, 0, 0, 0, room.roomID);
+            EnemyTrackerController.Instance.GetNewEnemy(spawnLocations[randomSpawn], false, 0, 0, 0, room.roomID);
         }
 
         spawnedEnemies = true;
@@ -144,7 +171,9 @@ public class EnemySpawner : MonoBehaviour
                 spawners.SpawnType(true);
             }
         }
-        else { AllEnemiesSpawned(); }
+
+        else
+            AllEnemiesSpawned();
 
         if (connectedSpawner)
         {
@@ -157,8 +186,16 @@ public class EnemySpawner : MonoBehaviour
     {
         if (connectedSpawners.Length == connectedSpawnersDone) 
         { 
-            _enemyTrackerController.AssignEnemyID(room.roomID);
-            if (connectedSpawners != null) { foreach (EnemySpawner spawners in connectedSpawners) { spawners.gameObject.SetActive(false); } }
+            EnemyTrackerController.Instance.AssignEnemyID(room.roomID);
+
+            if (connectedSpawners != null) 
+            { 
+                foreach (EnemySpawner spawners in connectedSpawners) 
+                { 
+                    spawners.gameObject.SetActive(false); 
+                } 
+            }
+            
             gameObject.SetActive(false);
         }
     }
@@ -171,34 +208,54 @@ public class EnemySpawner : MonoBehaviour
     public void LockRoom(bool fromConnectedRoom)
     {
         Debug.Log("Lock Room");
-        foreach (GameObject obj in doorLocks) { if (obj != null) { obj.SetActive(true); } }
+
+        foreach (GameObject obj in doorLocks) 
+        { 
+            if (obj != null)
+                obj.SetActive(true);
+        }
+
         if (!fromConnectedRoom && connectedSpawners != null)
         {
-            foreach (EnemySpawner spawners in connectedSpawners) { spawners.LockRoom(true); }
+            foreach (EnemySpawner spawners in connectedSpawners) 
+            { 
+                spawners.LockRoom(true); 
+            }
         }
     }
 
     public void UnlockRoom(bool fromConnectedRoom)
     {
         Debug.Log("Unlock Room");
-        foreach (GameObject obj in doorLocks) { if (obj != null) { Destroy(obj); } }
+
+        foreach (GameObject obj in doorLocks) 
+        { 
+            if (obj != null)
+                Destroy(obj);
+        }
+
         if (!fromConnectedRoom)
         {
             room.roomCleared = true;
+
             if (connectedSpawners != null)
             {
-                foreach (EnemySpawner spawners in connectedSpawners) { spawners.UnlockRoom(true); }
+                foreach (EnemySpawner spawners in connectedSpawners) 
+                { 
+                    spawners.UnlockRoom(true); 
+                }
             }
-            if (!room.otherPlayerEnteredRoom && CoopManager.instance != null) { CoopManager.instance.coopEnemyController.RoomCleared(room.roomID); }
+
+            if (!room.otherPlayerEnteredRoom && CoopManager.instance != null)
+                CoopManager.instance.coopEnemyController.RoomCleared(room.roomID);
         }
+
         Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
-        if (_dungeonBuildParent != null || _enemySpawnerTracker.enemySpawners.Contains(this))
-        {
-            _enemySpawnerTracker.enemySpawners.Remove(this);
-        }
+        if (DungeonBuildParent.Instance != null || EnemyTrackerController.Instance.enemySpawners.Contains(this))
+            EnemyTrackerController.Instance.enemySpawners.Remove(this);
     }
 }

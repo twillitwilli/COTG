@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class ClassSelector : MonoBehaviour
 {
-    private MagicController _magicController;
-
-    [SerializeField] private MagicController.ClassType _classType;
+    [SerializeField] 
+    private MagicController.ClassType _classType;
 
     public GameObject[] enableObjs, disableObjs;
 
-    private void Start()
-    {
-        _magicController = LocalGameManager.Instance.GetMagicController();
-    }
-
     public void ChangeClass()
     {
-        _magicController.ChangeClass(_classType);
+        MagicController.Instance.ChangeClass(_classType);
 
-        foreach (GameObject obj in enableObjs) { obj.SetActive(true); }
-        foreach (GameObject obj in disableObjs) { obj.SetActive(false); }
+        foreach (GameObject obj in enableObjs) 
+        { 
+            obj.SetActive(true); 
+        }
+
+        foreach (GameObject obj in disableObjs) 
+        { 
+            obj.SetActive(false); 
+        }
     }
 }
