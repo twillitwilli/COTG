@@ -6,9 +6,9 @@ public class DropTemplateController : MonoBehaviour
 {
     public ItemDropSelection dropSelection;
 
-    public void UseSpecificItemDrop(ItemDropSelection.ItemType itemType)
+    public void UseSpecificItemDrop(ItemPoolManager.DroppableItem itemType)
     {
         dropSelection.spawnSpecificItem = true;
-        dropSelection.itemType = itemType;
+        dropSelection.droppableItem = itemType;
     }
 }

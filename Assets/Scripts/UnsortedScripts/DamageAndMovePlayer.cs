@@ -7,21 +7,16 @@ public class DamageAndMovePlayer : MonoBehaviour
     public string objectName;
     public float damageAmount;
 
-    private LocalGameManager _gameManager;
-
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         VRPlayerController player;
+
         if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
-            _gameManager.GetPlayerStats().AdjustHealth(-damageAmount, objectName);
-            player.transform.position = _gameManager.GetSpawnLocations()[3].position;
-            player.transform.rotation = _gameManager.GetSpawnLocations()[3].rotation;
+            PlayerStats.Instance.AdjustHealth(-damageAmount, objectName);
+
+            player.transform.position = LocalGameManager.Instance.GetSpawnLocations()[3].position;
+            player.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[3].rotation;
         }
     }
 }

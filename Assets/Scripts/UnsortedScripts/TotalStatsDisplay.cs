@@ -7,141 +7,171 @@ public class TotalStatsDisplay : MonoBehaviour
 {
     [SerializeField] private Text textBox;
 
-    public enum TotalStats { completedRuns, bestRunStreak, deaths, goldCollected, soulsCollected, runesUsed, scrollsAbsorbed, itemsBought,
-        potionsDrank, chestsOpened, roomsExplored, puzzlesCompleted, enemiesKilled, bossesKilled, reapersKilled, jarsBroken, rocksBroken, 
-        totalPlayTime, batsKilled, beesKilled, bunniesKilled, goblinsKilled, mushroomsKilled, plantsKilled, wolvesKilled, golemsKilled, 
-        treantGuardsKilled, dragonsKilled, babyReapersKilled, princeReapersKilled, godReapersKilled }
+    public enum TotalStats 
+    { 
+        completedRuns, 
+        bestRunStreak, 
+        deaths, 
+        goldCollected, 
+        soulsCollected, 
+        runesUsed, 
+        scrollsAbsorbed, 
+        itemsBought,
+        potionsDrank, 
+        chestsOpened, 
+        roomsExplored, 
+        puzzlesCompleted, 
+        enemiesKilled, 
+        bossesKilled, 
+        reapersKilled, 
+        jarsBroken, 
+        rocksBroken, 
+        totalPlayTime, 
+        batsKilled, 
+        beesKilled, 
+        bunniesKilled, 
+        goblinsKilled, 
+        mushroomsKilled, 
+        plantsKilled, 
+        wolvesKilled, 
+        golemsKilled, 
+        treantGuardsKilled, 
+        dragonsKilled, 
+        babyReapersKilled, 
+        princeReapersKilled, 
+        godReapersKilled 
+    }
 
     public TotalStats statToDisplay;
 
     public void Start()
     {
-        PlayerTotalStats playerStats = LocalGameManager.Instance.GetTotalStats();
+        PlayerTotalStats totalStats = PlayerTotalStats.Instance;
 
         switch (statToDisplay)
         {
             case TotalStats.completedRuns:
-                textBox.text = "Completed Runs: " + playerStats.completedRuns;
+                textBox.text = "Completed Runs: " + totalStats.completedRuns;
                 break;
 
             case TotalStats.bestRunStreak:
-                textBox.text = "Best Run Streak: " + playerStats.bestRunStreak;
+                textBox.text = "Best Run Streak: " + totalStats.bestRunStreak;
                 break;
 
             case TotalStats.deaths:
-                textBox.text = "Total Deaths: " + playerStats.deaths;
+                textBox.text = "Total Deaths: " + totalStats.deaths;
                 break;
 
             case TotalStats.goldCollected:
-                textBox.text = "Gold Collected: " + playerStats.goldCollected;
+                textBox.text = "Gold Collected: " + totalStats.goldCollected;
                 break;
 
             case TotalStats.soulsCollected:
-                textBox.text = "Souls Collected: " + playerStats.soulsCollected;
+                textBox.text = "Souls Collected: " + totalStats.soulsCollected;
                 break;
 
             case TotalStats.runesUsed:
-                textBox.text = "Runes Used: " + playerStats.runesUsed;
+                textBox.text = "Runes Used: " + totalStats.runesUsed;
                 break;
 
             case TotalStats.scrollsAbsorbed:
-                textBox.text = "Scrolls Absorbed: " + playerStats.scrollsAbsorbed;
+                textBox.text = "Scrolls Absorbed: " + totalStats.scrollsAbsorbed;
                 break;
 
             case TotalStats.itemsBought:
-                textBox.text = "Items Bought: " + playerStats.itemsBought;
+                textBox.text = "Items Bought: " + totalStats.itemsBought;
                 break;
 
             case TotalStats.potionsDrank:
-                textBox.text = "Potions Used: " + playerStats.potionsDrank;
+                textBox.text = "Potions Used: " + totalStats.potionsDrank;
                 break;
 
             case TotalStats.chestsOpened:
-                textBox.text = "Chests Opened: " + playerStats.chestsOpened;
+                textBox.text = "Chests Opened: " + totalStats.chestsOpened;
                 break;
 
             case TotalStats.roomsExplored:
-                textBox.text = "Rooms Explored: " + playerStats.roomsExplored;
+                textBox.text = "Rooms Explored: " + totalStats.roomsExplored;
                 break;
 
             case TotalStats.puzzlesCompleted:
-                textBox.text = "Puzzles Completed: " + playerStats.puzzlesCompleted;
+                textBox.text = "Puzzles Completed: " + totalStats.puzzlesCompleted;
                 break;
 
             case TotalStats.enemiesKilled:
-                textBox.text = "Enemies Killed: " + playerStats.enemiesKilled;
+                textBox.text = "Enemies Killed: " + totalStats.enemiesKilled;
                 break;
 
             case TotalStats.bossesKilled:
-                textBox.text = "Bosses Killed: " + playerStats.bossesKilled;
+                textBox.text = "Bosses Killed: " + totalStats.bossesKilled;
                 break;
 
             case TotalStats.reapersKilled:
-                textBox.text = "Reapers Killed: " + playerStats.reapersKilled;
+                textBox.text = "Reapers Killed: " + totalStats.reapersKilled;
                 break;
 
             case TotalStats.jarsBroken:
-                textBox.text = "Jars Broken: " + playerStats.jarsBroken;
+                textBox.text = "Jars Broken: " + totalStats.jarsBroken;
                 break;
 
             case TotalStats.rocksBroken:
-                textBox.text = "Rocks Broken: " + playerStats.rocksBroken;
+                textBox.text = "Rocks Broken: " + totalStats.rocksBroken;
                 break;
 
             case TotalStats.totalPlayTime:
-                SetTotalPlayTime(playerStats.totalPlayTime);
+                SetTotalPlayTime(totalStats.totalPlayTime);
                 break;
 
             case TotalStats.batsKilled:
-                textBox.text = "Bats Killed: " + playerStats.batsKilled;
+                textBox.text = "Bats Killed: " + totalStats.batsKilled;
                 break;
 
             case TotalStats.beesKilled:
-                textBox.text = "Bees Killed: " + playerStats.beesKilled;
+                textBox.text = "Bees Killed: " + totalStats.beesKilled;
                 break;
 
             case TotalStats.bunniesKilled:
-                textBox.text = "Bunnies Killed: " + playerStats.bunniesKilled;
+                textBox.text = "Bunnies Killed: " + totalStats.bunniesKilled;
                 break;
 
             case TotalStats.goblinsKilled:
-                textBox.text = "Goblins Killed: " + playerStats.goblinsKilled;
+                textBox.text = "Goblins Killed: " + totalStats.goblinsKilled;
                 break;
 
             case TotalStats.mushroomsKilled:
-                textBox.text = "Mushrooms Killed: " + playerStats.mushroomsKilled;
+                textBox.text = "Mushrooms Killed: " + totalStats.mushroomsKilled;
                 break;
 
             case TotalStats.plantsKilled:
-                textBox.text = "Plants Killed: " + playerStats.plantsKilled;
+                textBox.text = "Plants Killed: " + totalStats.plantsKilled;
                 break;
 
             case TotalStats.wolvesKilled:
-                textBox.text = "Wolves Killed: " + playerStats.wolvesKilled;
+                textBox.text = "Wolves Killed: " + totalStats.wolvesKilled;
                 break;
 
             case TotalStats.golemsKilled:
-                textBox.text = "Golems Killed: " + playerStats.golemsKilled;
+                textBox.text = "Golems Killed: " + totalStats.golemsKilled;
                 break;
 
             case TotalStats.treantGuardsKilled:
-                textBox.text = "Treant Guards Killed: " + playerStats.treantGuardsKilled;
+                textBox.text = "Treant Guards Killed: " + totalStats.treantGuardsKilled;
                 break;
 
             case TotalStats.dragonsKilled:
-                textBox.text = "Dragons Killed: " + playerStats.dragonsKilled;
+                textBox.text = "Dragons Killed: " + totalStats.dragonsKilled;
                 break;
 
             case TotalStats.babyReapersKilled:
-                textBox.text = "Baby Reapers Killed: " + playerStats.babyReapersKilled;
+                textBox.text = "Baby Reapers Killed: " + totalStats.babyReapersKilled;
                 break;
 
             case TotalStats.princeReapersKilled:
-                textBox.text = "Prince Reapers Killed: " + playerStats.princeReapersKilled;
+                textBox.text = "Prince Reapers Killed: " + totalStats.princeReapersKilled;
                 break;
 
             case TotalStats.godReapersKilled:
-                textBox.text = "God Reapers Killed: " + playerStats.godReapersKilled;
+                textBox.text = "God Reapers Killed: " + totalStats.godReapersKilled;
                 break;
         }
     }

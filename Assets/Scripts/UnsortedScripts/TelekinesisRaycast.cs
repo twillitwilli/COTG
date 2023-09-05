@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class TelekinesisRaycast : MonoBehaviour
 {
-    [SerializeField] private VRPlayerController player;
+    [SerializeField] 
+    private VRPlayerController player;
+    
     public VRPlayerHand hand;
     public Transform telekineticHold;
-    [SerializeField] private GameObject rayEffect;
+    
+    [SerializeField] 
+    private GameObject rayEffect;
+    
     public GameObject telekineticGrabEffect;
     public float range;
     public LayerMask ignoreLayers;
-    [HideInInspector] public VRGrabbableObject selectedGrabbable;
+    
+    [HideInInspector] 
+    public PlayerItemGrabbable selectedGrabbable;
 
     public float cooldownTimer;
-    [HideInInspector] public float maxTimer;
-    [HideInInspector] public bool setCooldown;
-    [HideInInspector] public VRGrabbableObject heldObject;
+    
+    [HideInInspector] 
+    public float maxTimer;
+    
+    [HideInInspector] 
+    public bool setCooldown;
+    
+    [HideInInspector] 
+    public PlayerItemGrabbable heldObject;
 
     private void Awake()
     {
@@ -29,18 +42,21 @@ public class TelekinesisRaycast : MonoBehaviour
         if (CooldownDone())
         {
             RaycastHit hit;
+
             if (Physics.Raycast(transform.position, transform.up, out hit, range, -ignoreLayers))
             {
-                if (!rayEffect.activeSelf) { rayEffect.SetActive(true); }
-                if (hit.collider.CompareTag("Grabbable") && hit.collider.GetComponent<VRGrabbableObject>() && hit.collider.GetComponent<VRGrabbableObject>().objectType == VRGrabbableObject.typeOfObject.grabbablePickup && hit.collider.GetComponent<VRGrabbableObject>().canTelekineticGrab)
+                if (!rayEffect.activeSelf)
+                    rayEffect.SetActive(true);
+
+                if (hit.collider.CompareTag("Grabbable") && hit.collider.GetComponent<PlayerItemGrabbable>() && hit.collider.GetComponent<PlayerItemGrabbable>().canTelekineticGrab)
                 {
-                    if (selectedGrabbable && selectedGrabbable != hit.collider.GetComponent<VRGrabbableObject>())
+                    if (selectedGrabbable && selectedGrabbable != hit.collider.GetComponent<PlayerItemGrabbable>())
                     {
                         selectedGrabbable.activeTelekinesis.Remove(this);
-                        SelectNewGrabbable(hit.collider.GetComponent<VRGrabbableObject>());
+                        SelectNewGrabbable(hit.collider.GetComponent<PlayerItemGrabbable>());
                         return;
                     }
-                    else { SelectNewGrabbable(hit.collider.GetComponent<VRGrabbableObject>()); }
+                    else { SelectNewGrabbable(hit.collider.GetComponent<PlayerItemGrabbable>()); }
                     return;
                 }
                 return;
@@ -73,7 +89,7 @@ public class TelekinesisRaycast : MonoBehaviour
         return false;
     }
 
-    private void SelectNewGrabbable(VRGrabbableObject newGrabbable)
+    private void SelectNewGrabbable(PlayerItemGrabbable newGrabbable)
     {
         selectedGrabbable = newGrabbable;
         if (!selectedGrabbable.activeTelekinesis.Contains(this)) 

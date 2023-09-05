@@ -5,70 +5,83 @@ using UnityEngine.UI;
 
 public class EnemyTrophyDisplay : MonoBehaviour
 {
-    public enum Enemy { bunny, bat, plant, mushroom, bee, goblin, wolf, golem, treant, dragon, babyReaper, princeReaper, godReaper }
+    public enum Enemy 
+    { 
+        bunny, 
+        bat, 
+        plant, 
+        mushroom, 
+        bee, 
+        goblin, 
+        wolf, 
+        golem, 
+        treant, 
+        dragon, 
+        babyReaper, 
+        princeReaper, 
+        godReaper 
+    }
+
     public Enemy enemyType;
+    
     public GameObject enemyModel;
     public Text signDisplay;
-    private PlayerTotalStats _totalStats;
-
-    private void Awake()
-    {
-        _totalStats = LocalGameManager.Instance.GetTotalStats();
-    }
 
     private void OnEnable()
     {
+        PlayerTotalStats totalStats = PlayerTotalStats.Instance;
+
         switch (enemyType)
         {
             case Enemy.bunny:
-                if (_totalStats.bunniesKilled > 0) { UpdateTrophyStand("Bunnies", _totalStats.bunniesKilled); }
+                if (totalStats.bunniesKilled > 0) { UpdateTrophyStand("Bunnies", totalStats.bunniesKilled); }
                 break;
 
             case Enemy.bat:
-                if (_totalStats.batsKilled > 0) { UpdateTrophyStand("Bats", _totalStats.batsKilled); }
+                if (totalStats.batsKilled > 0) { UpdateTrophyStand("Bats", totalStats.batsKilled); }
                 break;
 
             case Enemy.plant:
-                if (_totalStats.plantsKilled > 0) { UpdateTrophyStand("Plants", _totalStats.plantsKilled); }
+                if (totalStats.plantsKilled > 0) { UpdateTrophyStand("Plants", totalStats.plantsKilled); }
                 break;
 
             case Enemy.mushroom:
-                if (_totalStats.mushroomsKilled > 0) { UpdateTrophyStand("Mushrooms", _totalStats.mushroomsKilled); }
+                if (totalStats.mushroomsKilled > 0) { UpdateTrophyStand("Mushrooms", totalStats.mushroomsKilled); }
                 break;
 
             case Enemy.bee:
-                if (_totalStats.beesKilled > 0) { UpdateTrophyStand("Bees", _totalStats.beesKilled); }
+                if (totalStats.beesKilled > 0) { UpdateTrophyStand("Bees", totalStats.beesKilled); }
                 break;
 
             case Enemy.goblin:
-                if (_totalStats.goblinsKilled > 0) { UpdateTrophyStand("Goblins", _totalStats.goblinsKilled); }
+                if (totalStats.goblinsKilled > 0) { UpdateTrophyStand("Goblins", totalStats.goblinsKilled); }
                 break;
 
             case Enemy.wolf:
-                if (_totalStats.wolvesKilled > 0) { UpdateTrophyStand("Wolves", _totalStats.wolvesKilled); }
+                if (totalStats.wolvesKilled > 0) { UpdateTrophyStand("Wolves", totalStats.wolvesKilled); }
                 break;
             case Enemy.golem:
-                if (_totalStats.golemsKilled > 0) { UpdateTrophyStand("Golems", _totalStats.golemsKilled); }
+                if (totalStats.golemsKilled > 0) { UpdateTrophyStand("Golems", totalStats.golemsKilled); }
                 break;
 
             case Enemy.treant:
-                if (_totalStats.treantGuardsKilled > 0) { UpdateTrophyStand("Treants", _totalStats.treantGuardsKilled); }
+                if (totalStats.treantGuardsKilled > 0) { UpdateTrophyStand("Treants", totalStats.treantGuardsKilled); }
                 break;
 
             case Enemy.dragon:
-                if (_totalStats.dragonsKilled > 0) { UpdateTrophyStand("Dragons", _totalStats.dragonsKilled); }
+                if (totalStats.dragonsKilled > 0) { UpdateTrophyStand("Dragons", totalStats.dragonsKilled); }
                 break;
 
             case Enemy.babyReaper:
-                if (_totalStats.babyReapersKilled > 0) { UpdateTrophyStand("Baby Reapers", _totalStats.babyReapersKilled); }
+                if (totalStats.babyReapersKilled > 0) { UpdateTrophyStand("Baby Reapers", totalStats.babyReapersKilled); }
                 break;
 
             case Enemy.princeReaper:
-                if (_totalStats.princeReapersKilled > 0) { UpdateTrophyStand("Prince Reapers", _totalStats.princeReapersKilled); }
+                if (totalStats.princeReapersKilled > 0) { UpdateTrophyStand("Prince Reapers", totalStats.princeReapersKilled); }
                 break;
 
             case Enemy.godReaper:
-                if (_totalStats.godReapersKilled > 0) { UpdateTrophyStand("God Reapers", _totalStats.godReapersKilled); }
+                if (totalStats.godReapersKilled > 0) { UpdateTrophyStand("God Reapers", totalStats.godReapersKilled); }
                 break;
         }
     }

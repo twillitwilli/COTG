@@ -87,25 +87,80 @@ public class ItemPoolManager : MonoSingleton<ItemPoolManager>
 
         switch (poolType)
         {
+            // HEALTH DROPS
             case ItemPoolType.health:
+
                 if (_healthPool[0] == null)
-                    SpawnNewItem(ItemPoolType.health);
+                    newItem = SpawnNewItem(ItemPoolType.health);
 
                 else
-                    GetFromHealthPool();
+                {
+                    _healthIdx++;
+                    _healthIdx = _healthIdx > (_healthPool.Count - 1) ? 0 : _healthIdx;
+
+                    newItem = GetItemFromPool(_healthIdx, _healthPool, ItemPoolType.health);
+
+                    if (_healthPool.IndexOf(newItem) == 0)
+                        _healthIdx = 0;
+                }
+
                 break;
 
+            // GOLD DROPS
             case ItemPoolType.gold:
-                if (_goldPool[0] == null)
-                    SpawnNewItem(ItemPoolType.gold);
 
+                if (_goldPool[0] == null)
+                    newItem = SpawnNewItem(ItemPoolType.gold);
+
+                else
+                {
+                    _goldIdx++;
+                    _goldIdx = _goldIdx > (_goldPool.Count - 1) ? 0 : _goldIdx;
+
+                    newItem = GetItemFromPool(_goldIdx, _goldPool, ItemPoolType.gold);
+
+                    if (_goldPool.IndexOf(newItem) == 0)
+                        _goldIdx = 0;
+                }
 
                     break;
 
+            // BOMB CRYSTAL DROPS
             case ItemPoolType.bombCrystal:
+
+                if (_bombCrystalPool[0] == null)
+                    newItem = SpawnNewItem(ItemPoolType.bombCrystal);
+
+                else
+                {
+                    _bombCrystalIdx++;
+                    _bombCrystalIdx = _bombCrystalIdx > (_bombCrystalPool.Count - 1) ? 0 : _bombCrystalIdx;
+
+                    newItem = GetItemFromPool(_bombCrystalIdx, _bombCrystalPool, ItemPoolType.bombCrystal);
+
+                    if (_bombCrystalPool.IndexOf(newItem) == 0)
+                        _bombCrystalIdx = 0;
+                }
+
                 break;
 
+            // KEY CRYSTAL DROPS
             case ItemPoolType.keyCrystal:
+
+                if (_keyCrystalPool[0] == null)
+                    newItem = SpawnNewItem(ItemPoolType.keyCrystal);
+
+                else
+                {
+                    _keyCrystalIdx++;
+                    _keyCrystalIdx = _keyCrystalIdx > (_keyCrystalPool.Count - 1) ? 0 : _keyCrystalIdx;
+
+                    newItem = GetItemFromPool(_keyCrystalIdx, _keyCrystalPool, ItemPoolType.keyCrystal);
+
+                    if (_keyCrystalPool.IndexOf(newItem) == 0)
+                        _keyCrystalIdx = 0;
+                }
+
                 break;
         }
 
@@ -148,30 +203,27 @@ public class ItemPoolManager : MonoSingleton<ItemPoolManager>
         return newItem;
     }
 
-    GameObject GetFromHealthPool()
+    GameObject GetItemFromPool(int poolIdx, List<GameObject> whichPool, ItemPoolType whichItem)
     {
-        GameObject healthItem = null;
+        GameObject itemFromPool = null;
 
-        if (_healthPool[0].activeSelf)
+        if (whichPool[0].activeSelf)
         {
-            _healthIdx++;
-            _healthIdx = _healthIdx > (_healthPool.Count - 1) ? 0 : _healthIdx;
+            bool spawnNewItem = whichPool[poolIdx].activeSelf ? true : false;
 
-            bool spawnNewHealthItem = _healthPool[_healthIdx].activeSelf ? true : false;
-
-            if (spawnNewHealthItem)
-                SpawnNewItem(ItemPoolType.health);
+            if (spawnNewItem)
+                itemFromPool = SpawnNewItem(whichItem);
 
             else
-                healthItem = _healthPool[_healthIdx];
+                itemFromPool = whichPool[poolIdx];
         }
 
         else
-        {
-            _healthIdx = 0;
-            healthItem = _healthPool[0];
-        }
+            itemFromPool = whichPool[0];
 
-        return healthItem;
+        if (!itemFromPool.activeSelf)
+            itemFromPool.SetActive(true);
+
+        return itemFromPool;
     }
 }

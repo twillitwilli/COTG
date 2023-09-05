@@ -42,8 +42,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (!isDead)
         {
-            if (CoopManager.instance != null && !coopSync)
-                CoopManager.instance.coopEnemyController.AdjustEnemyHealth(adjustmentValue, enemyController.spawnID, enemyController.enemyTracker.isBoss);
+            if (MultiplayerManager.Instance.coop && !coopSync)
+                MultiplayerManager.Instance.GetCoopManager().coopEnemyController.AdjustEnemyHealth(adjustmentValue, enemyController.spawnID, enemyController.enemyTracker.isBoss);
 
             if (adjustmentValue < 0)
                 WasHit();

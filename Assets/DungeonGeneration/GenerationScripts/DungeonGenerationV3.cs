@@ -34,7 +34,7 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
         roomsObjs = RoomObjects.instance;
         currentLevel = LocalGameManager.Instance.currentLevel;
 
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost)
+        if (!MultiplayerManager.Instance.coop || !MultiplayerManager.Instance.coop && LocalGameManager.Instance.isHost)
         {
             Task.Delay(5000);
 
@@ -54,10 +54,10 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
         Vector3 pos = spawnedStartingRoom.transform.localPosition;
         Vector3 rot = spawnedStartingRoom.transform.localEulerAngles;
 
-        if (CoopManager.instance != null) 
+        if (MultiplayerManager.Instance.coop) 
         { 
-            CoopManager.instance.coopDungeonBuild.AddDungeonRoom(4, startRoom, pos, rot);
-            CoopManager.instance.coopDungeonBuild.spawnedRooms.Add(spawnedStartingRoom);
+            MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.AddDungeonRoom(4, startRoom, pos, rot);
+            MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.spawnedRooms.Add(spawnedStartingRoom);
         }
 
         spawnedStartingRoom.transform.SetParent(spawnedRooms.transform);
@@ -67,7 +67,8 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
 
     public void DungeonBuildCheck()
     {
-        if (spawnerCount == 0) { CheckForDungeonErrors(); }        
+        if (spawnerCount == 0)
+            CheckForDungeonErrors();
     }
 
     private async void CheckForDungeonErrors()
@@ -99,7 +100,8 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
     private async void ConfigureDungeon()
     {
         Debug.Log("Configuring Dungeon...");
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost) 
+
+        if (!MultiplayerManager.Instance.coop || MultiplayerManager.Instance.coop && LocalGameManager.Instance.isHost) 
         {
             await CheckRoomOpenings();
 
@@ -133,10 +135,10 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
                 int lastDeadendRoom = spawnedRooms.deadendRooms.Count - 1;
                 spawnedRooms.dungeonRooms.Add(spawnedRooms.deadendRooms[lastDeadendRoom]);
 
-                if (CoopManager.instance != null) 
+                if (MultiplayerManager.Instance.coop) 
                 {
-                    CoopManager.instance.coopDungeonBuild.dungeonRoomCount++;
-                    CoopManager.instance.coopDungeonBuild.assignedDungeonRooms.Add(spawnedRooms.deadendRooms[lastDeadendRoom]); 
+                    MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonRoomCount++;
+                    MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.assignedDungeonRooms.Add(spawnedRooms.deadendRooms[lastDeadendRoom]); 
                 }
 
                 Destroy(spawnedRooms.deadendRooms[lastDeadendRoom].GetComponentInChildren<RoomController>().roomModel.gameObject);
@@ -148,10 +150,10 @@ public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>
                 int randomRoomSelection = unityEngine::Random.Range(0, spawnedRooms.deadendRooms.Count - 1);
                 spawnedRooms.dungeonRooms.Add(spawnedRooms.deadendRooms[randomRoomSelection]);
 
-                if (CoopManager.instance != null) 
+                if (MultiplayerManager.Instance.coop) 
                 {
-                    CoopManager.instance.coopDungeonBuild.dungeonRoomCount++;
-                    CoopManager.instance.coopDungeonBuild.assignedDungeonRooms.Add(spawnedRooms.deadendRooms[randomRoomSelection]); 
+                    MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonRoomCount++;
+                    MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.assignedDungeonRooms.Add(spawnedRooms.deadendRooms[randomRoomSelection]); 
                 }
 
                 Destroy(spawnedRooms.deadendRooms[randomRoomSelection].GetComponentInChildren<RoomController>().roomModel.gameObject);

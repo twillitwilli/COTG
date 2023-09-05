@@ -68,13 +68,13 @@ public class MapController : MonoSingleton<MapController>
             grabController.ParentGrabbable(_openedMapObject, mapPos, mapRot, mapScale);
         }
 
-        if (grabController.GetOppositeGrabController().currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.map)
+        if (grabController.GetOppositeGrabController().currentObjectGrabbed == ItemPoolManager.GrabbableItem.map)
             grabController.GetOppositeGrabController().ReleaseGrip();
     }
 
     public void ResetMap(GrabController grabController)
     {
-        if (grabController.GetOppositeGrabController().currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.map)
+        if (grabController.GetOppositeGrabController().currentObjectGrabbed != ItemPoolManager.GrabbableItem.map)
         {
             if (_openedMapObject != null)
                 Destroy(_openedMapObject);

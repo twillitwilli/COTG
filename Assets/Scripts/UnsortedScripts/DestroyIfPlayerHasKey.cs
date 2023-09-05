@@ -6,6 +6,7 @@ public class DestroyIfPlayerHasKey : MonoBehaviour
 {
     private void LateUpdate()
     {
-        if (LocalGameManager.Instance.GetPlayerStats().GetCurrentKeys() > 0) { Destroy(gameObject); }
+        if (PlayerStats.Instance.GetCurrentKeys() > 0)
+            Destroy(gameObject);
     }
 }

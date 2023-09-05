@@ -1,35 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class TutorialAreaLoaded : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private AudioController _audioController;
-    private PlayerComponents _playerComponents;
 
     public List<GameObject> turnOnIfReturningPlayer;
 
-    private void Start()
+    private async void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
+        await Task.Delay(1000);
+
+        AreaLoaded();
 
         Invoke("AreaLoaded", 1);
     }
 
     public void AreaLoaded()
     {
-        _gameManager.AreaLoaded();
-        _gameManager.MovePlayer(1);
+        LocalGameManager.Instance.AreaLoaded();
+        LocalGameManager.Instance.MovePlayer(1);
 
-        _gameManager.GetGearController().GetSpellCasting().canUseSpellCasting = false;
+        PlayerStats.Instance.AdjustMaxHealth(1000);
+        PlayerStats.Instance.AdjustHealth(99999999, " ");
+        PlayerStats.Instance.AdjustArcaneCrystalAmount(-99);
 
-        _playerStats.AdjustMaxHealth(1000);
-        _playerStats.AdjustHealth(99999999, " ");
-        _playerStats.AdjustArcaneCrystalAmount(-99);
-
-        _audioController.ChangeMusic(AudioController.MusicTracks.Caves);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Caves);
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.Rendering;
 public class LightPedastal : MonoBehaviour
 {
     private Light lightSettings;
-    private VisualSettings _visualSettings;
 
     private void Awake()
     {
@@ -15,8 +14,8 @@ public class LightPedastal : MonoBehaviour
 
     private void Start()
     {
-        _visualSettings = LocalGameManager.Instance.GetVisualSettings();
-        _visualSettings.lightPedastals.Add(this);
+        VisualSettings.Instance.lightPedastals.Add(this);
+
         AdjustLight();
     }
 
@@ -30,21 +29,21 @@ public class LightPedastal : MonoBehaviour
 
     public void AdjustRange()
     {
-        lightSettings.range = _visualSettings.lightRange;
+        lightSettings.range = VisualSettings.Instance.lightRange;
     }
 
     public void AdjustIntensity()
     {
-        lightSettings.intensity = _visualSettings.brightness;
+        lightSettings.intensity = VisualSettings.Instance.brightness;
     }
 
     public void AdjustShadowType()
     {
-        lightSettings.shadows = _visualSettings.shadowSetting;
+        lightSettings.shadows = VisualSettings.Instance.shadowSetting;
     }
 
     public void AdjustShadowResolution()
     {
-        lightSettings.shadowResolution = (LightShadowResolution)_visualSettings.shadowQuality;
+        lightSettings.shadowResolution = (LightShadowResolution)VisualSettings.Instance.shadowQuality;
     }
 }

@@ -4,37 +4,46 @@ using UnityEngine;
 
 public class AimAtPlayer : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-    private VRPlayerController _player;
-    [HideInInspector] public EnemyController enemyController;
-    [HideInInspector] public Vector3 playerTarget;
+    [SerializeField] 
+    private Transform target;
+    
+    [HideInInspector] 
+    public EnemyController enemyController;
+    
+    [HideInInspector] 
+    public Vector3 playerTarget;
 
     private void Start()
     {
-        _player = LocalGameManager.Instance.player;
         enemyController = GetComponentInParent<EnemyController>();
     }
 
     private void Update()
     {
-        if (CoopManager.instance == null) { CurrentPlayerIsTarget(); }
+        if (!MultiplayerManager.Instance.coop)
+            CurrentPlayerIsTarget();
+
         else
         {
-            if (enemyController.agroCurrentPlayer) { CurrentPlayerIsTarget(); }
-            else { OtherPlayerIsTarget(); }
+            if (enemyController.agroCurrentPlayer)
+                CurrentPlayerIsTarget();
+
+            else
+                OtherPlayerIsTarget();
         }
     }
 
     public void CurrentPlayerIsTarget()
     {
-        playerTarget = _player.playerCollider.center;
+        playerTarget = LocalGameManager.Instance.player.playerCollider.center;
         target.position = new Vector3(playerTarget.x, playerTarget.y, playerTarget.z);
+
         AimAtTarget();
     }
 
     public void OtherPlayerIsTarget()
     {
-        target.position = CoopManager.instance.otherPlayerTargetPos;
+        target.position = MultiplayerManager.Instance.GetCoopManager().otherPlayerTargetPos;
         AimAtTarget();
     }
 

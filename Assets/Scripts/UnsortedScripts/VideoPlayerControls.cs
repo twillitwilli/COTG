@@ -6,23 +6,33 @@ using UnityEngine.UI;
 
 public class VideoPlayerControls : MonoBehaviour
 {
-    private AudioController _audioController;
+    public enum VideoPlayerButtons 
+    { 
+        play, 
+        stop, 
+        pause, 
+        volume
+    }
 
-    public enum VideoPlayerButtons { play, stop, pause, volume}
     public VideoPlayerButtons button;
 
-    [SerializeField] private VideoPlayer _videoPlayer;
-    [SerializeField] private Text _textDisplay;
-    [SerializeField] private bool _checkTextOnly;
-    [SerializeField] private float _valueAdjustment;
+    [SerializeField] 
+    private VideoPlayer _videoPlayer;
+    
+    [SerializeField] 
+    private Text _textDisplay;
+    
+    [SerializeField] 
+    private bool _checkTextOnly;
+    
+    [SerializeField] 
+    private float _valueAdjustment;
 
     private float _currentVolume;
 
     private void Start()
     {
-        _audioController = LocalGameManager.Instance.GetAudioController();
-
-        _currentVolume = _audioController.GetMusicVolume();
+        _currentVolume = AudioController.Instance.GetMusicVolume();
         _videoPlayer.SetDirectAudioVolume(0, _currentVolume);
         Play();
     }
@@ -51,20 +61,20 @@ public class VideoPlayerControls : MonoBehaviour
 
     private void Play()
     {
-        _audioController.StopMusic();
+        AudioController.Instance.StopMusic();
         _videoPlayer.Play();
     }
 
     private void Stop()
     {
         _videoPlayer.Stop();
-        _audioController.ChangeMusic(AudioController.MusicTracks.Forest);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
     }
 
     private void Pause()
     {
         _videoPlayer.Pause();
-        _audioController.ChangeMusic(AudioController.MusicTracks.Forest);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
     }
 
     private void Volume()

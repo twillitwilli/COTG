@@ -5,13 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 {
-    [SerializeField] 
-    private AudioController _audioController;
-
     private VRPlayerController _player;
-
-    [HideInInspector] 
-    public PlayerProgressStats progressionStats;
 
     [HideInInspector] 
     public NavMeshSurface enemyNavMesh;
@@ -83,7 +77,9 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
             int enemyLevel = EnemySpawnLevel(enemyName);
             EnemySpawn(spawnEnemy, enemyLevel, spawnLocation, networkSpawn, ID, roomID);
         }
-        else { EnemySpawn(enemy, levelOfEnemy, spawnLocation, networkSpawn, ID, roomID); }
+
+        else
+            EnemySpawn(enemy, levelOfEnemy, spawnLocation, networkSpawn, ID, roomID);
     }
 
     public void EnemySpawn(int enemy, int level, Transform spawnLocation, bool networkSpawn, int ID, int roomID)
@@ -102,13 +98,18 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
             EnemyTracker enemyTracker = newEnemy.GetComponent<EnemyTracker>();
             enemyTracker.otherPlayerSpawned = true;
             otherPlayerSpawnedEnemies.Add(newEnemy);
+
             EnemyController enemyController = newEnemy.GetComponent<EnemyController>();
             enemyController.spawnID = ID;
             enemyController.roomID = roomID;
             enemyController.enemyID = enemy;
             enemyController.enemyLevel = level;
-            if (_player.roomID == roomID) { newEnemy.gameObject.SetActive(true); }
-            else { newEnemy.gameObject.SetActive(false); }
+
+            if (_player.roomID == roomID)
+                newEnemy.gameObject.SetActive(true);
+
+            else
+                newEnemy.gameObject.SetActive(false);
         }
     }
 
@@ -131,7 +132,10 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 
     public int EnemySpawnLevel(EnemyController.Enemy enemyType)
     {
+        PlayerProgressStats progressionStats = PlayerProgressStats.Instance;
+
         int enemyLevel = 0;
+
         switch(enemyType)
         {
             case EnemyController.Enemy.bat:
@@ -162,6 +166,7 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
                 enemyLevel = Random.Range(0, progressionStats.wolfLevel);
                 break;
         }
+
         return enemyLevel;
     }
 
@@ -172,19 +177,23 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
             if (spawnedEnemies[i] != null)
             {
                 EnemyController enemy = spawnedEnemies[i].GetComponent<EnemyController>();
+
                 if (!enemy.idAssigned)
                 {
                     enemy.spawnID = i;
                     enemy.idAssigned = true;
                 }
             }
+
             else
             {
                 spawnedEnemies.Remove(spawnedEnemies[i]);
                 i--;
             }
         }
-        if (CoopManager.instance != null) { CoopManager.instance.coopEnemyController.SendEnemySpawnInfo(roomID); }
+
+        if (MultiplayerManager.Instance.coop)
+            MultiplayerManager.Instance.GetCoopManager().coopEnemyController.SendEnemySpawnInfo(roomID);
     }
 
     public void UpdateEnemyTracker(EnemyTracker enemyTracker, int enemyCount)
@@ -192,11 +201,14 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
         int previousEnemyCount = currentEnemies;
         currentEnemies += enemyCount;
 
-        if (currentEnemies > previousEnemyCount) { enemyTracker.spawnCount = currentEnemies; }
+        if (currentEnemies > previousEnemyCount)
+            enemyTracker.spawnCount = currentEnemies;
 
         if (!doorsLocked && currentEnemies > 0)
         {
-            if (currentBosses <= 0) { _audioController.ChangeMusic(AudioController.MusicTracks.Combat); }
+            if (currentBosses <= 0)
+                AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Combat);
+
             enemiesDead = false;
             doorsLocked = true;
         }
@@ -215,9 +227,10 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
         currentBosses += bossCount;
         if (currentBosses > 0)
         {
-            _audioController.ChangeMusic(AudioController.MusicTracks.Boss);
+            AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Boss);
             bossesDead = false;
         }
+
         else if (!bossesDead && currentBosses <= 0)
         {
             LocalGameManager.Instance.spawnedBossArena.GetComponent<BossSpawn>().BossDead();
@@ -233,22 +246,21 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
             for (int i = 0; i < spawnedEnemies.Count; i++)
             {
                 if (spawnedEnemies[i].GetComponent<EnemyController>().spawnID == spawnID)
-                {
                     return spawnedEnemies[i].GetComponent<EnemyController>();
-                }
             }
         }
+
         else
         {
             for (int i = 0; i < otherPlayerSpawnedEnemies.Count; i++)
             {
                 if (otherPlayerSpawnedEnemies[i].GetComponent<EnemyController>().spawnID == spawnID)
-                {
-                    return otherPlayerSpawnedEnemies[i].GetComponent<EnemyController>(); ;
-                }
+                    return otherPlayerSpawnedEnemies[i].GetComponent<EnemyController>();
             }
         }
+
         Debug.Log("no matching enemy found");
+
         return null;
     }
 
@@ -256,9 +268,11 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
     {
         if (currentBosses <= 0 && currentEnemies <= 0)
         {
-            if (currentEnemySpawner != null) { currentEnemySpawner.UnlockRoom(false); }
+            if (currentEnemySpawner != null)
+                currentEnemySpawner.UnlockRoom(false);
+
             enemyNavMesh.RemoveData();
-            _audioController.ChangeMusic(AudioController.MusicTracks.Forest);
+            AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
         }
     }
 
@@ -266,7 +280,11 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
     {
         if (spawnedEnemies.Count > 0)
         {
-            foreach (GameObject enemy in spawnedEnemies) { enemy.GetComponent<EnemyController>().EnemyDead(); }
+            foreach (GameObject enemy in spawnedEnemies) 
+            { 
+                enemy.GetComponent<EnemyController>().EnemyDead(); 
+            }
+
             spawnedEnemies.Clear();
         }
     }
@@ -278,6 +296,7 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 
     public void KillReaper()
     {
-        if (spawnedReaper) { Destroy(spawnedReaper); }
+        if (spawnedReaper)
+            Destroy(spawnedReaper);
     }
 }

@@ -116,22 +116,24 @@ public class LoadingPortal : MonoBehaviour
                 LocalGameManager.Instance.currentLevel++;
                 LocalGameManager.Instance.dungeonBuildCompleted = false;
 
-                if (CoopManager.instance != null) 
+                if (MultiplayerManager.Instance.coop) 
                 { 
                     if (LocalGameManager.Instance.isHost) 
                     {
-                        CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
-                        CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
-                        CoopManager.instance.MoveOtherPlayer();
+                        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.ClearDungeonRoomList();
+                        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonCompleted = false;
+                        MultiplayerManager.Instance.GetCoopManager().MoveOtherPlayer();
                     }
 
                     else 
                     {
-                        CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
-                        CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
+                        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.ClearDungeonRoomList();
+                        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonCompleted = false;
+
                         LocalGameManager.Instance.loadDungeon = true;
                         LocalGameManager.Instance.dungeonBuildCompleted = false;
-                        CoopManager.instance.coopDungeonBuild.CheckDungeonBuild(); 
+
+                        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.CheckDungeonBuild(); 
                     }
                 }
                 LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
@@ -166,13 +168,13 @@ public class LoadingPortal : MonoBehaviour
         LocalGameManager.Instance.dungeonBuildCompleted = false;
         LocalGameManager.Instance.currentLevel = 1;
         
-        if (CoopManager.instance != null)
+        if (MultiplayerManager.Instance.coop)
         {
             if (LocalGameManager.Instance.isHost)
                 CoopPortalSettings();
 
-            else 
-                CoopManager.instance.coopDungeonBuild.CheckDungeonBuild();
+            else
+                MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.CheckDungeonBuild();
         }
 
         BasePlayerSettings(_player);
@@ -183,11 +185,11 @@ public class LoadingPortal : MonoBehaviour
 
     private void CoopPortalSettings()
     {
-        CoopManager.instance.coopDungeonBuild.ClearDungeonRoomList();
-        CoopManager.instance.coopDungeonBuild.dungeonCompleted = false;
-        CoopManager.instance.isHardMode = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ? true : false;
-        CoopManager.instance.portalActive = true;
-        CoopManager.instance.PortalStatus();
+        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.ClearDungeonRoomList();
+        MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonCompleted = false;
+        MultiplayerManager.Instance.GetCoopManager().isHardMode = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ? true : false;
+        MultiplayerManager.Instance.GetCoopManager().portalActive = true;
+        MultiplayerManager.Instance.GetCoopManager().PortalStatus();
     }
 
     private void BasePlayerSettings(VRPlayerController player)

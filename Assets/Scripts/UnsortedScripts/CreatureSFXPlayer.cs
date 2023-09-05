@@ -6,6 +6,7 @@ public class CreatureSFXPlayer : MonoBehaviour
 {
     [HideInInspector]
     public AudioSource sfxPlayer;
+
     public AudioClip clip;
 
     private bool setCooldownTimer;
@@ -19,9 +20,7 @@ public class CreatureSFXPlayer : MonoBehaviour
     private void LateUpdate()
     {
         if (!CheckIfAudioPlaying() && RandomPlayCooldown())
-        {
             PlayAudio();
-        }
     }
 
     public bool RandomPlayCooldown()
@@ -31,18 +30,24 @@ public class CreatureSFXPlayer : MonoBehaviour
             cooldownTimer = Random.Range(4f, 8f);
             setCooldownTimer = false;
         }
-        if (cooldownTimer > 0) { cooldownTimer -= Time.deltaTime; }
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
         else if (cooldownTimer <= 0)
         {
             cooldownTimer = 0;
             return true;
         }
+
         return false;
     }
 
     public bool CheckIfAudioPlaying()
     {
-        if (sfxPlayer.isPlaying) { return true; }
+        if (sfxPlayer.isPlaying)
+            return true;
+
         else return false;
     }
 
@@ -50,7 +55,9 @@ public class CreatureSFXPlayer : MonoBehaviour
     {
         setCooldownTimer = true;
         sfxPlayer.clip = clip;
-        sfxPlayer.volume = LocalGameManager.Instance.GetAudioController().GetCreatureSFXVolume();
-        if (!sfxPlayer.isPlaying) { sfxPlayer.Play(); }
+        sfxPlayer.volume = AudioController.Instance.GetCreatureSFXVolume();
+
+        if (!sfxPlayer.isPlaying)
+            sfxPlayer.Play();
     }
 }

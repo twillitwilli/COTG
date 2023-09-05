@@ -7139,7 +7139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 2
@@ -7357,7 +7357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 7
+  portalLocation: 0
   movePlayerInScene: 0
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -12452,6 +12452,63 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &252520744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 252520745}
+  - component: {fileID: 252520746}
+  m_Layer: 0
+  m_Name: CoopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &252520745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252520744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1895959573}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &252520746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252520744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec3384bb566cc84b99ed79aa7a27fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherPlayerTracker: {fileID: 0}
+  photonComponent: {fileID: 0}
+  coopDungeonBuild: {fileID: 0}
+  coopEnemyController: {fileID: 0}
+  isMaster: 0
+  isDead: 0
+  playerIDCreated: 0
+  allPlayersDead: 0
+  portalActive: 0
+  isHardMode: 0
+  closeOtherPortals: 0
+  totalPlayers: 0
+  playerID: 0
+  otherPlayerTargetPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &254615028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58863,7 +58920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 2
@@ -59732,7 +59789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 0
+  portalLocation: 0
   movePlayerInScene: 0
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -75102,7 +75159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -75739,11 +75796,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639cb38604714a34d972ad8b5014f2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _magicController: {fileID: 3808152314172935080}
-  _audioController: {fileID: 3978024783409672211}
-  _visualSettings: {fileID: 1281396208}
-  _postProcessingController: {fileID: 1281396207}
-  _chatManager: {fileID: 7576350748578033934}
 --- !u!114 &1196699596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75756,9 +75808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47abf62129d67740a843bc7b9bbfcd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTimer: {fileID: 7576350748578033935}
-  _chatManager: {fileID: 7576350748578033934}
-  progressStats: {fileID: 5836403584199542906}
 --- !u!4 &1196699597
 Transform:
   m_ObjectHideFlags: 0
@@ -101715,6 +101764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb54d78e593ee047b01cbf84db195da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   startingPortal: {fileID: 1607630256}
   saveFileSelectors:
   - {fileID: 1224984694018261607}
@@ -102336,7 +102386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 11
+  portalLocation: 0
   movePlayerInScene: 0
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -113329,7 +113379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 1
+  portalLocation: 0
   movePlayerInScene: 0
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -118421,7 +118471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 1
@@ -119003,7 +119053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 2
+  portalLocation: 0
   movePlayerInScene: 0
   portalDisabled: 0
   whichSpawnLocation: 0
@@ -119080,6 +119130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1895959573}
+  - component: {fileID: 1895959574}
   m_Layer: 0
   m_Name: MultiPlayerManagers
   m_TagString: Untagged
@@ -119099,9 +119150,24 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 508716611}
+  - {fileID: 252520745}
   m_Father: {fileID: 7576350748578033923}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1895959574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895959572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b542046b4ccc7884cb7789e469202e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _networkManager: {fileID: 508716612}
+  _coopManager: {fileID: 252520746}
 --- !u!1 &1902800912
 GameObject:
   m_ObjectHideFlags: 0
@@ -126010,7 +126076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 1
@@ -127095,6 +127161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cee400704784c84187fa98e347a3f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 0}
   _playerStats: {fileID: 5656350061506029019}
   _enemyTrackerController: {fileID: 2290799596149010343}
   movementBoost: 0
@@ -127197,8 +127264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c7c3ef18cd47b48bf1ecc962afe01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioController: {fileID: 3978024783409672211}
-  progressionStats: {fileID: 0}
   enemyNavMesh: {fileID: 0}
   enemiesDead: 0
   bossesDead: 0
@@ -127207,6 +127272,7 @@ MonoBehaviour:
   currentEnemies: 0
   currentBosses: 0
   spawnedReaper: {fileID: 0}
+  enemySpawners: []
   spawnedEnemies: []
   otherPlayerSpawnedEnemies: []
   spawnedBoss: {fileID: 0}
@@ -137197,7 +137263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958e133857bdae4f87597eec5f76f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMode: 8
+  portalLocation: 0
   movePlayerInScene: 1
   portalDisabled: 0
   whichSpawnLocation: 1
@@ -145719,9 +145785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13fcd2fc9795484449376ca2511a2dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTotalStats: {fileID: 7323240045799168071}
-  _magicController: {fileID: 3808152314172935080}
-  _gearController: {fileID: 0}
   flightTesting: 0
   flightVelocity:
     serializedVersion: 2
@@ -145729,7 +145792,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _goldDisplay: {fileID: 0}
 --- !u!1 &5662983286246071457
 GameObject:
   m_ObjectHideFlags: 0
@@ -146522,9 +146584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47abf62129d67740a843bc7b9bbfcd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTimer: {fileID: 7576350748578033935}
-  _chatManager: {fileID: 7576350748578033934}
-  progressStats: {fileID: 5836403584199542906}
 --- !u!1 &7576350748048569620
 GameObject:
   m_ObjectHideFlags: 0
@@ -146644,24 +146703,6 @@ MonoBehaviour:
   - {fileID: 7576350748767286397}
   - {fileID: 7576350748984049316}
   - {fileID: 7576350748692006630}
-  _controllerType: {fileID: 8811556763134682000}
-  _optionsMenu: {fileID: 6706412052748087482}
-  _audioController: {fileID: 3978024783409672211}
-  _visualSettings: {fileID: 1281396208}
-  _postProcessingController: {fileID: 1281396207}
-  _playerPrefsSaveData: {fileID: 1196699595}
-  _gameTimer: {fileID: 7576350748578033935}
-  _playerCardController: {fileID: 3329444342601214217}
-  _playerStats: {fileID: 5656350061506029019}
-  _playerTotalStats: {fileID: 7323240045799168071}
-  _magicController: {fileID: 3808152314172935080}
-  _gearController: {fileID: 0}
-  _potionController: {fileID: 2051965269452596534}
-  _curseController: {fileID: 1909296053652716493}
-  _enemyTrackerController: {fileID: 2290799596149010343}
-  _followerPetController: {fileID: 6589030644320620372}
-  _networkManager: {fileID: 0}
-  _chatManager: {fileID: 7576350748578033934}
   hasCalibrated: 0
   isHost: 0
   dungeonBuildCompleted: 0
@@ -147164,7 +147205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25f5c46e2930c649b6cb72da13deaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentControllerType: 0
   controllerName: 
   controllerID: 0
   roomID: 0

@@ -7,27 +7,18 @@ public class SacrificialTrigger : MonoBehaviour
     private Animator _animator;
     private bool _sacrificeTriggered;
 
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-
     private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (!_sacrificeTriggered && other.gameObject.GetComponent<VRPlayerController>())
+        VRPlayerController player;
+        if (!_sacrificeTriggered && other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
             _animator.Play("SpikesUp");
-            VRPlayerController player = other.gameObject.GetComponent<VRPlayerController>();
-            _playerStats.AdjustHealth(-10, "Sacrificed Your Life");
+            PlayerStats.Instance.AdjustHealth(-10, "Sacrificed Your Life");
             _sacrificeTriggered = true;
         }
     }

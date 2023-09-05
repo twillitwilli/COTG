@@ -83,7 +83,7 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     public void DropBombCrystal()
     {
-        if (_bombHand.GetGrabController().currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.bomb)
+        if (_bombHand.GetGrabController().currentObjectGrabbed == ItemPoolManager.GrabbableItem.bomb)
             SpawnBombCrystalOnHand();
     }
 

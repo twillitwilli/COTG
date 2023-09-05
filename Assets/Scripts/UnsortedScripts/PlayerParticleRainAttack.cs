@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerParticleRainAttack : MonoBehaviour
 {
     public ParticleSystem[] particlesEffectedByAttack;
 
-    [SerializeField] private PlayerStats _playerStats;
-
-    public void Start()
+    public async void Start()
     {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-        Invoke("StartDelay", 0.1f);
+        await Task.Delay(100);
+
+        StartDelay();    
     }
 
     private void StartDelay()
@@ -22,20 +22,19 @@ public class PlayerParticleRainAttack : MonoBehaviour
 
     public virtual void ParticleAttackChanges()
     {
-        for(int i = 0; i < particlesEffectedByAttack.Length; i++)
+        for (int i = 0; i < particlesEffectedByAttack.Length; i++)
         {
-            if(particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>()) 
-            {
-                particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>().healthAdjustment = (_playerStats.GetAttackDamage() / -5);
-            }
+            if (particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>())
+                particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>().healthAdjustment = (PlayerStats.Instance.GetAttackDamage() / -5);
         }
-        float scaleWithAttack = (0.75f + (0.1f * _playerStats.GetDamageUpgrades()));
+
+        float scaleWithAttack = (0.75f + (0.1f * PlayerStats.Instance.GetDamageUpgrades()));
         particlesEffectedByAttack[0].transform.localScale = new Vector3(scaleWithAttack, scaleWithAttack, scaleWithAttack);
     }
 
     public virtual void ParticleRangeChanges()
     {
-        float scaleWithRange = (0.75f + (0.1f * _playerStats.GetRangeUpgrades()));
+        float scaleWithRange = (0.75f + (0.1f * PlayerStats.Instance.GetRangeUpgrades()));
         transform.localScale = new Vector3(scaleWithRange, scaleWithRange, scaleWithRange);
     }
 }

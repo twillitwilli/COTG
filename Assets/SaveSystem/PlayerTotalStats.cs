@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
 {
-    private LocalGameManager _gameManager;
-
-    [SerializeField] 
-    private GameTimer _gameTimer;
-    
-    [SerializeField] 
-    private ChatManager _chatManager;
-
     public enum StatType 
     { 
         totalRuns, 
@@ -45,10 +37,8 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
         babyReaperKills, 
         princeReapersKilled, 
         godReapersKilled, 
-        magicSealsBroken }
-
-    public PlayerProgressStats progressStats;
-
+        magicSealsBroken 
+    }
 
     // Player Stats
     public float totalPlayTime { get; private set; }
@@ -94,17 +84,12 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
     public int princeReapersKilled { get; private set; }
     public int godReapersKilled { get; private set; }
 
-
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-    }
-
     public void AdjustStats(StatType statType, int value = 0)
     {
-        if (_gameManager.currentGameMode != LocalGameManager.GameMode.tutorial || _gameManager.currentGameMode != LocalGameManager.GameMode.inLobby)
+        if (LocalGameManager.Instance.currentGameMode != LocalGameManager.GameMode.tutorial || LocalGameManager.Instance.currentGameMode != LocalGameManager.GameMode.inLobby)
         {
             Debug.Log("Adjusting Progress Stat");
+
             switch (statType)
             {
                 case StatType.totalRuns:
@@ -240,7 +225,7 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
 
     public void SavePlayerProgress(int saveFileIndex)
     {
-        _chatManager.DebugMessage("Saving File: " + saveFileIndex);
+        ChatManager.Instance.DebugMessage("Saving File: " + saveFileIndex);
 
         BinarySaveSystem.SavePlayerProgressStats(CreateNewSaveData(), saveFileIndex);
     }
@@ -294,7 +279,7 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
 
     public void LoadPlayerProgress(int saveFileIndex)
     {
-        _chatManager.DebugMessage("Save File " + saveFileIndex + " Loading");
+        ChatManager.Instance.DebugMessage("Save File " + saveFileIndex + " Loading");
 
         PlayerProgressSaveData loadedData = BinarySaveSystem.LoadPlayerProgressStats(saveFileIndex);
 
@@ -340,11 +325,11 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
 
         CheckProgressUnlocks();
 
-        _chatManager.DebugMessage("Player Progress Stats Loaded");
+        ChatManager.Instance.DebugMessage("Player Progress Stats Loaded");
     }
 
     public void CheckProgressUnlocks()
     {
-        progressStats.CheckUnlocks(this);
+        PlayerProgressStats.Instance.CheckUnlocks(this);
     }
 }

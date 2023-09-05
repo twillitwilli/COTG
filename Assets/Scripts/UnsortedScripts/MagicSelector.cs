@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class MagicSelector : MonoBehaviour
 {
-    [SerializeField] private MagicController.MagicType magicSelection;
-    private MagicController _magicController;
+    [SerializeField] 
+    private MagicController.MagicType magicSelection;
 
     public GameObject[] enableObjs, disableObjs;
 
-    private void Start()
-    {
-        _magicController = LocalGameManager.Instance.GetMagicController();
-    }
-
     public void ChangeMagic()
     {
-        _magicController.SetToSpecificMagic(magicSelection);
+        MagicController.Instance.SetToSpecificMagic(magicSelection);
 
-        foreach (GameObject obj in enableObjs) { obj.SetActive(true); }
-        foreach (GameObject obj in disableObjs) { obj.SetActive(false); }
+        foreach (GameObject obj in enableObjs) 
+        { 
+            obj.SetActive(true); 
+        }
+        
+        foreach (GameObject obj in disableObjs) 
+        { 
+            obj.SetActive(false); 
+        }
     }
 }

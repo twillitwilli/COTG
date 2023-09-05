@@ -4,25 +4,7 @@ using UnityEngine;
 
 public class PlayerItemGrabbable : MonoBehaviour
 {
-    public enum GrabbableItems 
-    { 
-        nothing, 
-        map, 
-        wallet, 
-        bomb, 
-        key, 
-        potion, 
-        staff, 
-        bow, 
-        bowString, 
-        rune, 
-        climbable, 
-        jar,
-        classCard, 
-        ignitedBomb 
-    }
-
-    public GrabbableItems whichItem;
+    public ItemPoolManager.GrabbableItem grabbableItem;
 
     public bool canBePlacedInPocket, throwableObject;
 
@@ -44,6 +26,7 @@ public class PlayerItemGrabbable : MonoBehaviour
     [Header("Telekinetic Settings")]
     public bool canTelekineticGrab;
     public GameObject telekineticGrabEffect;
+    public List<TelekinesisRaycast> activeTelekinesis = new List<TelekinesisRaycast>();
 
     private void Awake()
     {
@@ -62,6 +45,6 @@ public class PlayerItemGrabbable : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (currentHand != null) { currentHand.GetGrabController().GrabbableReset(); }
+        if (currentHand != null) { currentHand.GetGrabController().ClearAllGrabbableInfo(); }
     }
 }

@@ -129,14 +129,14 @@ public class PlayerStats : MonoSingleton<PlayerStats>
         _playerComponents.onScreenText.PrintText(deathMessage, true);
         _isDead = true;
 
-        if (CoopManager.instance == null) 
+        if (!MultiplayerManager.Instance.coop) 
         {
             PlayerTotalStats.Instance.SavePlayerProgress(saveFile);
             _playerComponents.resetPlayer.ResetPlayer(true); 
         }
 
         else
-            CoopManager.instance.PlayerDied();
+            MultiplayerManager.Instance.GetCoopManager().PlayerDied();
     }
 
     public void AdjustAttackDamage(float adjustmentValue)

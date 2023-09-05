@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class TrophyRoomUnlockCheck : MonoBehaviour
 {
-    private PlayerTotalStats _totalStats;
-
     private void Start()
     {
-        _totalStats = LocalGameManager.Instance.GetTotalStats();
-
-        if (_totalStats.enemiesKilled > 1) { gameObject.SetActive(false); }
+        if (PlayerTotalStats.Instance.enemiesKilled > 1)
+            gameObject.SetActive(false);
     }
 }

@@ -4,68 +4,57 @@ using UnityEngine;
 
 public class PlayerStaff : MonoBehaviour
 {
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-    private PlayerMagicController _playerMagicController;
-    private StaffMagicController _staffController;
-    private VRPlayerController _player;
-
-    [SerializeField] private BoxCollider _staffTrigger;
-    [SerializeField] private bool _setAttackCooldown, _spellCharged;
-    [SerializeField] private Transform _spellSpawn, _magicFocusSpawn, _magicCircleSpawn, _spellChargingSpawn;
+    [SerializeField] 
+    private BoxCollider _staffTrigger;
+    
+    [SerializeField] 
+    private bool _setAttackCooldown, _spellCharged;
+    
+    [SerializeField] 
+    private Transform _spellSpawn, _magicFocusSpawn, _magicCircleSpawn, _spellChargingSpawn;
 
     private GameObject _currentMagicCircle, _currentSpellChargeEffect;
     private float _cooldownTimer;
     private ParticleSystem _magicFocus;
 
-    private void Start()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
-        _magicController = _gameManager.GetMagicController();
-        _playerMagicController = MasterManager.playerMagicController;
-        _gearController = _gameManager.GetGearController();
-        _staffController = _gearController.GetStaffController();
-
-        _player = _gameManager.player;
-    }
-
     public void AdjustMagicFocus()
     {
         if (_magicFocus == null)
         {
-            GameObject newParticles = Instantiate(_playerMagicController.spellCharges[_magicController.magicIdx], _magicFocusSpawn);
+            GameObject newParticles = Instantiate(MasterManager.Instance.magicController.spellCharges[MagicController.Instance.magicIdx], _magicFocusSpawn);
             _magicFocus = newParticles.GetComponent<ParticleSystem>();
         }
 
         var maxParticles = _magicFocus.main;
-        maxParticles.maxParticles = Mathf.RoundToInt(_playerStats.GetMagicFocus());
+        maxParticles.maxParticles = Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus());
     }
 
     public bool AttackCharge()
     {
-        int currentSpell = _magicController.magicIdx;
+        int currentSpell = MagicController.Instance.magicIdx;
 
         if (_setAttackCooldown)
         {
-            if (_currentSpellChargeEffect == null) { _currentSpellChargeEffect = Instantiate(_playerMagicController.chargedVisual[currentSpell], _spellChargingSpawn); }
+            if (_currentSpellChargeEffect == null) { _currentSpellChargeEffect = Instantiate(MasterManager.Instance.magicController.chargedVisual[currentSpell], _spellChargingSpawn); }
             
             _currentSpellChargeEffect.transform.SetParent(_spellChargingSpawn);
             _currentSpellChargeEffect.transform.localPosition = new Vector3(0, 0, 0);
             _currentSpellChargeEffect.transform.localEulerAngles = new Vector3(0, 0, 0);
             _currentSpellChargeEffect.transform.localScale = new Vector3(2, 2, 2);
 
-            _cooldownTimer = _playerStats.GetAttackCooldown();
+            _cooldownTimer = PlayerStats.Instance.GetAttackCooldown();
             _setAttackCooldown = false;
         }
 
-        if (_cooldownTimer > 0) { _cooldownTimer -= Time.deltaTime; }
+        if (_cooldownTimer > 0)
+            _cooldownTimer -= Time.deltaTime;
+
         else if (_cooldownTimer <= 0)
         {
-            if (_currentSpellChargeEffect != null) { Destroy(_currentSpellChargeEffect); }
+            if (_currentSpellChargeEffect != null)
+                Destroy(_currentSpellChargeEffect);
 
-            _currentMagicCircle = Instantiate(_playerMagicController.magicCircles[currentSpell], _magicCircleSpawn);
+            _currentMagicCircle = Instantiate(MasterManager.Instance.magicController.magicCircles[currentSpell], _magicCircleSpawn);
             _currentMagicCircle.transform.localScale = new Vector3(3, 3, 3);
 
             _cooldownTimer = 0;
@@ -78,37 +67,42 @@ public class PlayerStaff : MonoBehaviour
     {
         if (_spellCharged)
         {
-            if (_currentMagicCircle != null) { Destroy(_currentMagicCircle); }
+            if (_currentMagicCircle != null)
+                Destroy(_currentMagicCircle);
+
             GameObject newProjectile;
-            switch (_magicController.currentCastingType)
+            switch (MagicController.Instance.currentCastingType)
             {
                 case MagicController.CastingType.charge:
-                    newProjectile = Instantiate(_playerMagicController.wizardChargedSpells[_magicController.magicIdx], _spellSpawn);
+                    newProjectile = Instantiate(MasterManager.Instance.magicController.wizardChargedSpells[MagicController.Instance.magicIdx], _spellSpawn);
 
                     BasicProjectile chargedAttack = newProjectile.GetComponent<BasicProjectile>();
-                    chargedAttack.player = _player;
+                    chargedAttack.player = LocalGameManager.Instance.player;
                     chargedAttack.spawnParent = transform;
 
                     _spellCharged = false;
                     break;
 
                 case MagicController.CastingType.beam:
-                    newProjectile = Instantiate(_playerMagicController.wizardConstantSpells[_magicController.magicIdx], _spellSpawn);
+                    newProjectile = Instantiate(MasterManager.Instance.magicController.wizardConstantSpells[MagicController.Instance.magicIdx], _spellSpawn);
                     break;
 
                 case MagicController.CastingType.rapidFire:
-                    newProjectile = Instantiate(_playerMagicController.wizardRapidFireSpells[_magicController.magicIdx], _spellSpawn);
+                    newProjectile = Instantiate(MasterManager.Instance.magicController.wizardRapidFireSpells[MagicController.Instance.magicIdx], _spellSpawn);
 
                     BasicProjectile rapidFireAttack = newProjectile.GetComponent<BasicProjectile>();
-                    rapidFireAttack.player = _player;
+                    rapidFireAttack.player = LocalGameManager.Instance.player;
                     rapidFireAttack.spawnParent = transform;
                     _spellCharged = false;
                     break;
             }
         }
 
-        if (_currentMagicCircle != null) { Destroy(_currentMagicCircle); }
-        if (_currentSpellChargeEffect != null) { Destroy(_currentSpellChargeEffect); }
+        if (_currentMagicCircle != null)
+            Destroy(_currentMagicCircle);
+
+        if (_currentSpellChargeEffect != null)
+            Destroy(_currentSpellChargeEffect);
 
         _setAttackCooldown = true;
     }

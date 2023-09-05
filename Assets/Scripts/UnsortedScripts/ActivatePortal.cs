@@ -11,25 +11,22 @@ public class ActivatePortal : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (!portalActivated && CoopManager.instance != null && !LocalGameManager.Instance.isHost && CoopManager.instance.portalActive)
+        if (!portalActivated && MultiplayerManager.Instance.coop && !LocalGameManager.Instance.isHost && MultiplayerManager.Instance.GetCoopManager().portalActive)
         {
             EnableObjects(activatePortal, true);
-            if (CoopManager.instance.closeOtherPortals)
+
+            if (MultiplayerManager.Instance.GetCoopManager().closeOtherPortals)
             {
                 switch (LocalGameManager.Instance.currentGameMode)
                 {
                     case LocalGameManager.GameMode.master:
                         if (hardModePortal)
-                        {
                             EnableObjects(otherPortals, false);
-                        }
                         break;
 
                     default:
                         if (!hardModePortal)
-                        {
                             EnableObjects(otherPortals, false);
-                        }
                         break;
                 }
             }
@@ -39,6 +36,12 @@ public class ActivatePortal : MonoBehaviour
 
     public void EnableObjects(GameObject[] objects, bool enable)
     {
-        if (objects.Length > 0) { foreach (GameObject obj in objects) { obj.SetActive(enable); } }
+        if (objects.Length > 0) 
+        { 
+            foreach (GameObject obj in objects) 
+            { 
+                obj.SetActive(enable); 
+            } 
+        }
     }
 }

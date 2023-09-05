@@ -6,6 +6,6 @@ public class OnDestroyStartBGM : MonoBehaviour
 {
     private void OnDestroy()
     {
-        LocalGameManager.Instance.GetAudioController().ChangeMusic(AudioController.MusicTracks.Forest);
+        AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);
     }
 }

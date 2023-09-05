@@ -6,62 +6,81 @@ public class ItemDropSelection : MonoBehaviour
 {
     public GameObject dropParent;
     public bool spawnSpecificItem;
-    public enum ItemType { health, gold, arcaneEnergy, key, ritualRune, soul }
-    public ItemType itemType;
 
-    private int itemToSpawn;
+    public ItemPoolManager.DroppableItem droppableItem;
+
+    private GameObject newDrop;
 
     private void Start()
     {
-        if (!spawnSpecificItem) { RandomItem(); }
+        if (!spawnSpecificItem)
+            RandomItem();
+
         else
         {
-            switch (itemType)
+            switch (droppableItem)
             {
-                case ItemType.health:
-                    itemToSpawn = 2;
+                case ItemPoolManager.DroppableItem.health:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.health);
                     break;
-                case ItemType.gold:
-                    itemToSpawn = 0;
+
+                case ItemPoolManager.DroppableItem.gold:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.gold);
                     break;
-                case ItemType.arcaneEnergy:
-                    itemToSpawn = 1;
+
+                case ItemPoolManager.DroppableItem.arcaneEnergy:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.bombCrystal);
                     break;
-                case ItemType.key:
-                    itemToSpawn = 3;
+
+                case ItemPoolManager.DroppableItem.key:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.keyCrystal);
                     break;
-                case ItemType.ritualRune:
-                    itemToSpawn = 4;
+
+                case ItemPoolManager.DroppableItem.ritualRune:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.rune);
                     break;
-                case ItemType.soul:
-                    itemToSpawn = 5;
+
+                case ItemPoolManager.DroppableItem.soul:
+                    newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.soul);
                     break;
             }
-            ItemDrop(itemToSpawn);
+
+            ItemSettings();
         }
     }
 
     private void RandomItem()
     {
         int itemChance = Random.Range(1, 100);
+
         //gold chance
-        if (itemChance <= 65) { ItemDrop(0); }
+        if (itemChance <= 65)
+            newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.gold);
+
         ///arcane chance
-        else if (itemChance > 65 && itemChance <= 80) { ItemDrop(1); }
+        else if (itemChance > 65 && itemChance <= 80)
+            newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.bombCrystal);
+
         //health chance
-        else if (itemChance > 85 && itemChance <= 92) { ItemDrop(2); }
+        else if (itemChance > 85 && itemChance <= 92)
+            newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.health);
+
         //key chance
-        else if (itemChance > 92 && itemChance < 99) { ItemDrop(3); }
+        else if (itemChance > 92 && itemChance < 98)
+            newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.keyCrystal);
+
         //ritual rune chance
-        else if (itemChance == 99) { ItemDrop(4); }
+        else
+            newDrop = ItemPoolManager.Instance.GetItem(ItemPoolManager.ItemPoolType.rune);
+
+        ItemSettings();
     }
 
-    private void ItemDrop(int item)
+    private void ItemSettings()
     {
-        GameObject droppedItem = Instantiate(MasterManager.itemPool.droppableItems.droppableItem[item]);
-        droppedItem.GetComponent<Item>().dropParent = dropParent;
-        droppedItem.transform.SetParent(transform);
-        droppedItem.transform.localPosition = new Vector3(0, 0, 0);
-        droppedItem.transform.localEulerAngles = new Vector3(90, 0, 0);
+        newDrop.GetComponent<Item>().dropParent = dropParent;
+        newDrop.transform.SetParent(transform);
+        newDrop.transform.localPosition = new Vector3(0, 0, 0);
+        newDrop.transform.localEulerAngles = new Vector3(90, 0, 0);
     }
 }

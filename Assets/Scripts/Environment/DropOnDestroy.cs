@@ -19,7 +19,7 @@ public class DropOnDestroy : MonoBehaviour
         if (!disableDrop)
         {
             if (isEnemy)
-                LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.soul, transform);
+                LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.soul, transform);
 
             if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + PlayerStats.Instance.GetLuck()))
                 LocalGameManager.Instance.SpawnRandomDrop(transform);
@@ -29,19 +29,19 @@ public class DropOnDestroy : MonoBehaviour
                 switch (typeOfItem)
                 {
                     case DroppableItems.itemType.gold:
-                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.gold, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.gold, transform);
                         break;
 
                     case DroppableItems.itemType.key:
-                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.key, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.key, transform);
                         break;
 
                     case DroppableItems.itemType.arcaneOrb:
-                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.arcaneEnergy, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.arcaneEnergy, transform);
                         break;
 
                     case DroppableItems.itemType.health:
-                        LocalGameManager.Instance.SpawnSpecificItem(ItemDropSelection.ItemType.health, transform);
+                        LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.health, transform);
                         break;
                 }
             }

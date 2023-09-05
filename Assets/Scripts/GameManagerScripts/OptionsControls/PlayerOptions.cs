@@ -623,7 +623,8 @@ public class PlayerOptions : MonoBehaviour
                 case "Send":
                     ChatManager.Instance.ChatMessage("[You] " + _textBox.text);
 
-                    if (CoopManager.instance != null) { CoopManager.instance.SendChatMessage(_textBox.text); }
+                    if (MultiplayerManager.Instance.coop)
+                        MultiplayerManager.Instance.GetCoopManager().SendChatMessage(_textBox.text);
                     break;
 
                 default:
@@ -641,11 +642,11 @@ public class PlayerOptions : MonoBehaviour
         string newText;
 
         if (_checkStatusOnly)
-            newText = CoopManager.instance == null ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
+            newText = !MultiplayerManager.Instance.coop ? "Join/Create\n" + "Room" : "Leave\n" + "Room";
 
         else
         {
-            if (CoopManager.instance == null)
+            if (!MultiplayerManager.Instance.coop)
             {
                 network.roomName = _menu.multiplayerRoomName;
                 network.ConnectToServer();

@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class MinionAnimator : MonoBehaviour
 {
-    private MagicController _magicController;
-    private PlayerStats _playerStats;
-
     public MinionPetController minionController;
     public MinionMovementController minionModel;
-    public enum minionState { idle, walking, attacking, dying}
-    [HideInInspector] public minionState currentAnimation;
+
+    public enum minionState 
+    { 
+        idle, 
+        walking, 
+        attacking, 
+        dying
+    }
+    
+    [HideInInspector] 
+    public minionState currentAnimation;
+    
     public string idleClip, walkingClip, attackingClip, dyingClip;
     private Animator animator;
 
@@ -19,15 +26,10 @@ public class MinionAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-        _magicController = LocalGameManager.Instance.GetMagicController();
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
-    }
-
     public void ChangeAnimation(minionState whichAnimation)
     {
         currentAnimation = whichAnimation;
+
         switch (currentAnimation)
         {
             case minionState.idle:
@@ -55,15 +57,15 @@ public class MinionAnimator : MonoBehaviour
 
     public void ShootProjectile()
     {
-        GameObject newProjectile = Instantiate(MasterManager.playerMagicController.petAttack[_magicController.magicIdx], minionController.spellSpawnLocation);
+        GameObject newProjectile = Instantiate(MasterManager.playerMagicController.petAttack[MagicController.Instance.magicIdx], minionController.spellSpawnLocation);
         newProjectile.transform.SetParent(null);
+
         BasicProjectile projectileSettings = newProjectile.GetComponent<BasicProjectile>();
 
         projectileSettings.minionProjectile = true;
-        projectileSettings.player = minionController.player;
         projectileSettings.attackDamage = minionController.MinionAttackDamage();
-        projectileSettings.projectileRange = _playerStats.GetAttackRange();
-        projectileSettings.aimAssist = _playerStats.GetAimAssist();
+        projectileSettings.projectileRange = PlayerStats.Instance.GetAttackRange();
+        projectileSettings.aimAssist = PlayerStats.Instance.GetAimAssist();
         projectileSettings.disableCrit = true;
     }
 

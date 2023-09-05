@@ -6,32 +6,30 @@ using Photon.Realtime;
 
 public class CoopManager : MonoBehaviourPun
 {
-    private LocalGameManager _gameManager;
-    private VRPlayerController _currentPlayer;
-
-    public static CoopManager instance;
     public GameObject otherPlayerTracker;
 
-    [HideInInspector] public PhotonView photonComponent;
-    [HideInInspector] public CoopDungeonBuild coopDungeonBuild;
-    [HideInInspector] public CoopEnemyController coopEnemyController;
-    [HideInInspector] public bool isMaster, isDead, playerIDCreated, allPlayersDead, portalActive, isHardMode, closeOtherPortals;
-    [HideInInspector] public int totalPlayers, playerID;
-    [HideInInspector] public Vector3 otherPlayerTargetPos;
-
-    private void Awake()
-    {
-        _gameManager = LocalGameManager.Instance;
-        _currentPlayer = _gameManager.player;
-    }
+    [HideInInspector] 
+    public PhotonView photonComponent;
+    
+    [HideInInspector] 
+    public CoopDungeonBuild coopDungeonBuild;
+    
+    [HideInInspector] 
+    public CoopEnemyController coopEnemyController;
+    
+    [HideInInspector] 
+    public bool isMaster, isDead, playerIDCreated, allPlayersDead, portalActive, isHardMode, closeOtherPortals;
+    
+    [HideInInspector] 
+    public int totalPlayers, playerID;
+    
+    [HideInInspector] 
+    public Vector3 otherPlayerTargetPos;
 
     private void OnEnable()
     {
-        if (!instance) { instance = this; }
-        else Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
         isMaster = true;
-        _gameManager.isHost = true;
+        LocalGameManager.Instance.isHost = true;
 
         photonComponent = GetComponent<PhotonView>();
         coopDungeonBuild = GetComponent<CoopDungeonBuild>();
@@ -40,15 +38,22 @@ public class CoopManager : MonoBehaviourPun
 
     public void Update()
     {
-        if (!_gameManager.GetPlayerStats().IsPlayerDead())
+        if (!PlayerStats.Instance.IsPlayerDead())
         {
-            if (isMaster && totalPlayers > 0) { SendPlayerTrackingInfo(_currentPlayer.GetPlayerComponents().playerTarget.position); }
-            else if (!isMaster) { SendPlayerTrackingInfo(_currentPlayer.GetPlayerComponents().playerTarget.position); }
+            if (isMaster && totalPlayers > 0)
+                SendPlayerTrackingInfo(LocalGameManager.Instance.player.GetPlayerComponents().playerTarget.position);
+
+            else if (!isMaster)
+                SendPlayerTrackingInfo(LocalGameManager.Instance.player.GetPlayerComponents().playerTarget.position);
         }
+
         else
         {
-            if (isMaster && totalPlayers > 0) { SendPlayerTrackingInfo(new Vector3(10000, 10000, 10000)); }
-            else if (!isMaster) { SendPlayerTrackingInfo(new Vector3(10000, 10000, 10000)); }
+            if (isMaster && totalPlayers > 0)
+                SendPlayerTrackingInfo(new Vector3(10000, 10000, 10000));
+
+            else if (!isMaster)
+                SendPlayerTrackingInfo(new Vector3(10000, 10000, 10000));
         }
     }
 
@@ -60,7 +65,7 @@ public class CoopManager : MonoBehaviourPun
     [PunRPC]
     public void ChatMessage(string message)
     {
-        _gameManager.GetChatManager().ChatMessage("[From Other Player] " + message);
+        ChatManager.Instance.ChatMessage("[From Other Player] " + message);
     }
 
     public void SendPlayerTrackingInfo(Vector3 position)
@@ -78,9 +83,11 @@ public class CoopManager : MonoBehaviourPun
     public void NewPlayerJoined()
     {
         totalPlayers++;
+
         if (isMaster) 
         { 
             photonComponent.RPC("MasterClientExists", RpcTarget.Others);
+
             if (coopDungeonBuild.spawnedPrefabs.Count > 0)
             {
                 for (int i = 0; i < coopDungeonBuild.spawnedPrefabs.Count; i++)
@@ -103,46 +110,58 @@ public class CoopManager : MonoBehaviourPun
     {
         totalPlayers++;
         isMaster = false;
-        _gameManager.isHost = false;
+        LocalGameManager.Instance.isHost = false;
+
         CheckIfPortalActive();
     }
 
     public void PlayerLeft()
     {
         totalPlayers--;
+
         if (!isMaster)
         {
             isMaster = true;
-            _gameManager.isHost = true;
+            LocalGameManager.Instance.isHost = true;
         }
+
         otherPlayerTracker.transform.position = new Vector3(10000, 10000, 10000);
     }
 
     public void PlayerDied()
     {
-        if (isMaster && totalPlayers == 0) { AllPlayersDead(); }
-        else { photonComponent.RPC("OtherPlayerDied", RpcTarget.Others); }
+        if (isMaster && totalPlayers == 0)
+            AllPlayersDead();
+
+        else
+            photonComponent.RPC("OtherPlayerDied", RpcTarget.Others);
     }
 
     [PunRPC]
     public void OtherPlayerDied()
     {
-        if (isDead) { photonComponent.RPC("AllPlayersDead", RpcTarget.All); }
+        if (isDead)
+            photonComponent.RPC("AllPlayersDead", RpcTarget.All);
     }
 
     [PunRPC]
     public void AllPlayersDead()
     {
-        _gameManager.GetTotalStats().SavePlayerProgress(_gameManager.GetPlayerStats().saveFile);
-        _currentPlayer.GetPlayerComponents().resetPlayer.ResetPlayer(true);
+        PlayerTotalStats.Instance.SavePlayerProgress(PlayerStats.Instance.saveFile);
+        LocalGameManager.Instance.player.GetPlayerComponents().resetPlayer.ResetPlayer(true);
     }
 
     [PunRPC]
     public void NewObjectSettings(string spawnType, int spawnID, int spawnCountID)
     {
-        if (spawnType == "LoadingAreas") { SpawnNewObject(NetworkSpawnTemplate.SpawnType.loadingAreas, spawnID, spawnCountID); }
-        else if (spawnType == "Rooms") { SpawnNewObject(NetworkSpawnTemplate.SpawnType.rooms, spawnID, spawnCountID); }
-        else { Debug.Log("Network SpawnType no match found"); }
+        if (spawnType == "LoadingAreas")
+            SpawnNewObject(NetworkSpawnTemplate.SpawnType.loadingAreas, spawnID, spawnCountID);
+
+        else if (spawnType == "Rooms")
+            SpawnNewObject(NetworkSpawnTemplate.SpawnType.rooms, spawnID, spawnCountID);
+
+        else
+            Debug.Log("Network SpawnType no match found");
     }
 
     public void SpawnNewObject(NetworkSpawnTemplate.SpawnType spawnName, int spawnID, int spawnCountID)
@@ -162,7 +181,8 @@ public class CoopManager : MonoBehaviourPun
     [PunRPC]
     public void PortalStatus()
     {
-        if (portalActive) { photonComponent.RPC("PortalActive", RpcTarget.Others, portalActive, isHardMode); }
+        if (portalActive)
+            photonComponent.RPC("PortalActive", RpcTarget.Others, portalActive, isHardMode);
     }
 
     [PunRPC]
@@ -172,8 +192,11 @@ public class CoopManager : MonoBehaviourPun
         isHardMode = isHard;
         closeOtherPortals = true;
 
-        if (isHard) { _gameManager.currentGameMode = LocalGameManager.GameMode.master; }
-        else { _gameManager.currentGameMode = LocalGameManager.GameMode.normal; }
+        if (isHard)
+            LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.master;
+
+        else
+            LocalGameManager.Instance.currentGameMode = LocalGameManager.GameMode.normal;
     }
 
     public void MoveOtherPlayer()
@@ -186,8 +209,9 @@ public class CoopManager : MonoBehaviourPun
     {
         coopDungeonBuild.ClearDungeonRoomList();
         coopDungeonBuild.dungeonCompleted = false;
-        _gameManager.loadDungeon = true;
-        _gameManager.dungeonBuildCompleted = false;
-        _gameManager.Loading(LocalGameManager.SceneSelection.dungeon);
+
+        LocalGameManager.Instance.loadDungeon = true;
+        LocalGameManager.Instance.dungeonBuildCompleted = false;
+        LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
     }
 }

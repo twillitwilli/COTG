@@ -95,7 +95,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
 
-        CoopManager.instance.PlayerLeft();
+        MultiplayerManager.Instance.GetCoopManager().PlayerLeft();
         _onScreenText.PrintText("Left Multiplayer", true);
     }
 
@@ -107,6 +107,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         LocalGameManager.Instance.isHost = false;
 
-        Destroy(CoopManager.instance.gameObject);
+        MultiplayerManager.Instance.ToggleCoop(false);
     }
 }

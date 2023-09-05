@@ -38,7 +38,7 @@ public class ClimbingController : MonoBehaviour
         {
             _isClimbing = true;
 
-            if (_oppositeHand.GetGrabController().currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.climbable)
+            if (_oppositeHand.GetGrabController().currentObjectGrabbed == ItemPoolManager.GrabbableItem.climbable)
                 _oppositeHandClimbController.ClimbingReset();
 
             _handStartPos = _hand.transform.position;

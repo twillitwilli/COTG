@@ -18,17 +18,16 @@ public class DungeonGeneratorPrefabCaller : MonoSingleton<DungeonGeneratorPrefab
     {
         Instantiate(roomPrefabObjects);
 
-        if (CoopManager.instance == null || CoopManager.instance != null && LocalGameManager.Instance.isHost)
+        if (!MultiplayerManager.Instance.coop || MultiplayerManager.Instance.coop && LocalGameManager.Instance.isHost)
         {
             ChatManager.Instance.DebugMessage("Building Dungeon");
 
             int randomLoadingArea = Random.Range(0, loadingAreas.Length);
-
             Instantiate(loadingAreas[randomLoadingArea], transform.position, transform.rotation);
         }
         
-        else if (CoopManager.instance != null && !LocalGameManager.Instance.isHost)
-            CoopManager.instance.coopDungeonBuild.CheckSpawnedLoadingArea();
+        else if (MultiplayerManager.Instance.coop && !LocalGameManager.Instance.isHost)
+            MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.CheckSpawnedLoadingArea();
     }
 
     private void Start()

@@ -81,8 +81,8 @@ public class EnemySpawner : MonoBehaviour
 
         if (!room.otherPlayerEnteredRoom)
         {
-            if (CoopManager.instance != null)
-                CoopManager.instance.coopEnemyController.EnteredRoom(room.roomID);
+            if (MultiplayerManager.Instance.coop)
+                MultiplayerManager.Instance.GetCoopManager().coopEnemyController.EnteredRoom(room.roomID);
 
             int enemySpawnChance = unityEngine::Random.Range(0, 100);
 
@@ -246,8 +246,8 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
-            if (!room.otherPlayerEnteredRoom && CoopManager.instance != null)
-                CoopManager.instance.coopEnemyController.RoomCleared(room.roomID);
+            if (!room.otherPlayerEnteredRoom && MultiplayerManager.Instance.coop)
+                MultiplayerManager.Instance.GetCoopManager().coopEnemyController.RoomCleared(room.roomID);
         }
 
         Destroy(gameObject);

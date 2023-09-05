@@ -13,7 +13,7 @@ public class CoopEnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        coopManager = CoopManager.instance;
+        coopManager = MultiplayerManager.Instance.GetCoopManager();
         photonComponent = coopManager.photonComponent;
     }
 
@@ -54,7 +54,10 @@ public class CoopEnemyController : MonoBehaviour
                 EnemyController enemy = EnemyTrackerController.Instance.otherPlayerSpawnedEnemies[i].GetComponent<EnemyController>();
                 enemy.transform.position = position;
                 enemy.transform.localEulerAngles = rotation;
-                if (agro) { enemy.agroCurrentPlayer = false; }
+
+                if (agro)
+                    enemy.agroCurrentPlayer = false;
+
                 return;
             }
         }

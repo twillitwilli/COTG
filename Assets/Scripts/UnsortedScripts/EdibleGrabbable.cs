@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class EdibleGrabbable : MonoBehaviour
 {
-    private PlayerStats _playerStats;
-
-    public enum EdibleEffect { health }
-    public EdibleEffect effect;
-    public float value;
-
-    private void Start()
-    {
-        _playerStats = LocalGameManager.Instance.GetPlayerStats();
+    public enum EdibleEffect 
+    { 
+        health 
     }
+
+    public EdibleEffect effect;
+    
+    public float value;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,7 +20,7 @@ public class EdibleGrabbable : MonoBehaviour
             switch (effect)
             {
                 case EdibleEffect.health:
-                    _playerStats.AdjustHealth(value, "Food Poisoning");
+                    PlayerStats.Instance.AdjustHealth(value, "Food Poisoning");
                     break;
             }
         }

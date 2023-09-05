@@ -1,17 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum Enemy { bat, bee, bunny, goblin, mushroom, plant, wolf, golem, treant, dragon, babyReaper, princeReaper, godReaper }
+    public enum Enemy 
+    { 
+        bat, 
+        bee, 
+        bunny, 
+        goblin, 
+        mushroom, 
+        plant, 
+        wolf, 
+        golem, 
+        treant, 
+        dragon, 
+        babyReaper, 
+        princeReaper, 
+        godReaper 
+    }
+
     public Enemy enemyName;
 
-    public enum EnemyType { chaser, wanderer, stationary, teleporter }
+    public enum EnemyType 
+    { 
+        chaser, 
+        wanderer, 
+        stationary, 
+        teleporter 
+    }
+
     public EnemyType typeOfEnemy;
 
-    public enum EnemyState { spawn, idle, wandering, chasing, attacking, death }
+    public enum EnemyState 
+    { 
+        spawn, 
+        idle, 
+        wandering, 
+        chasing, 
+        attacking, 
+        death 
+    }
+
     public EnemyState currentEnemyState;
 
     public EnemyStats enemyStats;
@@ -31,15 +64,32 @@ public class EnemyController : MonoBehaviour
     public VRPlayerController player { get; private set; }
     private PlayerComponents _playerComponents;
 
-    [HideInInspector] public EnemyAnimationController animationController;
-    [HideInInspector] public EnemyTracker enemyTracker;
-    [HideInInspector] public EnemyAttack enemyAttack;
-    [HideInInspector] public DropOnDestroy dropScript;
-    [HideInInspector] public Transform playerTarget, currentTarget;
-    [HideInInspector] public NavMeshAgent agent;
-    [HideInInspector] public bool isDead, idleAnim, stopMovement, stopRotation, agroCurrentPlayer, otherPlayerSpawned, idAssigned;
-    [HideInInspector] public int spawnID, roomID, enemyID, enemyLevel;
-    [HideInInspector] public float currentPlayerDamage, otherPlayerDamage;
+    [HideInInspector] 
+    public EnemyAnimationController animationController;
+    
+    [HideInInspector] 
+    public EnemyTracker enemyTracker;
+    
+    [HideInInspector] 
+    public EnemyAttack enemyAttack;
+    
+    [HideInInspector] 
+    public DropOnDestroy dropScript;
+    
+    [HideInInspector] 
+    public Transform playerTarget, currentTarget;
+    
+    [HideInInspector] 
+    public NavMeshAgent agent;
+    
+    [HideInInspector] 
+    public bool isDead, idleAnim, stopMovement, stopRotation, agroCurrentPlayer, otherPlayerSpawned, idAssigned;
+    
+    [HideInInspector] 
+    public int spawnID, roomID, enemyID, enemyLevel;
+    
+    [HideInInspector] 
+    public float currentPlayerDamage, otherPlayerDamage;
 
     protected Rigidbody rb;
     protected bool gotToPoint, runningAnim, deadFailSafe;
@@ -62,21 +112,27 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public virtual void Start()
+    public async virtual void Start()
     {
         otherPlayerSpawned = enemyTracker.otherPlayerSpawned;
         animationController.ChangeAnimation(EnemyAnimationController.AnimationState.spawn);
         idleAnim = true;
         wanderPoint.SetParent(null);
 
-        if (CoopManager.instance == null) { playerTarget = _playerComponents.playerTarget; }
-        else if (CoopManager.instance != null && !otherPlayerSpawned && DistanceAgroCheck()) 
+        if (!MultiplayerManager.Instance.coop)
+            playerTarget = _playerComponents.playerTarget;
+
+        else if (MultiplayerManager.Instance.coop && !otherPlayerSpawned && DistanceAgroCheck()) 
         { 
-            if (DistanceAgroCheck()) { SetPlayerTarget(); }
-            else { ChangePlayerTarget(); }
+            if (DistanceAgroCheck())
+                SetPlayerTarget();
+
+            else
+                ChangePlayerTarget();
         }
 
-        if (!otherPlayerSpawned) { currentTarget = playerTarget; }
+        if (!otherPlayerSpawned)
+            currentTarget = playerTarget;
 
         if (!enemyTracker.otherPlayerSpawned)
         {
@@ -84,8 +140,14 @@ public class EnemyController : MonoBehaviour
             agent.isStopped = true;
             gotToPoint = true;
             rb.isKinematic = false;
-            Invoke("EnemyReady", Random.Range(.1f, 2));
+
+            int delayTimer = Mathf.RoundToInt(1000 * Random.Range(0.1f, 2f));
+
+            await Task.Delay(delayTimer);
+
+            EnemyReady();
         }
+
         else
         {
             Destroy(agent);
@@ -93,10 +155,8 @@ public class EnemyController : MonoBehaviour
             enemyReady = true;
         }
 
-        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master) 
-        { 
-            agent.speed += (agent.speed * 0.25f); 
-        }
+        if (LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master)
+            agent.speed += (agent.speed * 0.25f);
     }
 
     public void AdjustEnemyStats()
@@ -104,36 +164,51 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void FixedUpdate()
+    public async virtual void FixedUpdate()
     {
         if (!isDead)
         {
             if (!otherPlayerSpawned && playerTarget != null)
             {
                 distanceFromPlayer = Vector3.Distance(playerTarget.position, transform.position);
+
                 if (enemyReady && !enemyAttack.isAttacking)
                 {
-                    if (!stopMovement) { EnemyMovementController(); }
-                    if (!stopRotation) { FaceTarget(currentTarget); }
-                    enemyAttack.AttackController(distanceFromPlayer);
-                }
-                else if (enemyAttack.isAttacking)
-                {
-                    if (!stopRotation) { FaceTarget(currentTarget); }
-                    if (enemyAttack.moveWhileAttacking) { MoveWhileAttacking(); }
-                    else { stopMovement = true; agent.isStopped = true; }
+                    if (!stopMovement)
+                        EnemyMovementController();
+
+                    if (!stopRotation)
+                        FaceTarget(currentTarget);
+
                     enemyAttack.AttackController(distanceFromPlayer);
                 }
 
-                if (CoopManager.instance != null)
+                else if (enemyAttack.isAttacking)
                 {
-                    CoopManager.instance.coopEnemyController.SendTrackingInfo(spawnID, transform.position, transform.localEulerAngles, agroCurrentPlayer);
+                    if (!stopRotation)
+                        FaceTarget(currentTarget);
+
+                    if (enemyAttack.moveWhileAttacking)
+                        MoveWhileAttacking();
+
+                    else 
+                    { 
+                        stopMovement = true; 
+                        agent.isStopped = true; 
+                    }
+
+                    enemyAttack.AttackController(distanceFromPlayer);
                 }
+
+                if (MultiplayerManager.Instance.coop)
+                    MultiplayerManager.Instance.GetCoopManager().coopEnemyController.SendTrackingInfo(spawnID, transform.position, transform.localEulerAngles, agroCurrentPlayer);
             }
         }
+
         else 
         {
-            if (enemyAttack.castingSpellEffect.activeSelf) { enemyAttack.castingSpellEffect.SetActive(false); }
+            if (enemyAttack.castingSpellEffect.activeSelf)
+                enemyAttack.castingSpellEffect.SetActive(false);
 
             if (!otherPlayerSpawned)
             {
@@ -141,9 +216,13 @@ public class EnemyController : MonoBehaviour
                 agent.speed = 0;
             }
         }
+
         if (enemyHealth.currentHealth <= 0 && !deadFailSafe) 
-        { 
-            Invoke("DestroyEnemy", 3); 
+        {
+            await Task.Delay(3000);
+
+            DestroyEnemy();
+
             deadFailSafe = true; 
         }
     }
@@ -153,17 +232,22 @@ public class EnemyController : MonoBehaviour
         switch (typeOfEnemy)
         {
             case EnemyType.chaser:
-                if (agent.isStopped) agent.isStopped = false;
+                if (agent.isStopped)
+                    agent.isStopped = false;
+
                 ChaseController();
                 break;
 
             case EnemyType.wanderer:
-                if (agent.isStopped) agent.isStopped = false;
+                if (agent.isStopped)
+                    agent.isStopped = false;
+
                 WandererController();
                 break;
 
             case EnemyType.stationary:
-                if (!stopMovement) stopMovement = true;
+                if (!stopMovement)
+                    stopMovement = true;
                 break;
 
             case EnemyType.teleporter:
@@ -175,10 +259,13 @@ public class EnemyController : MonoBehaviour
     {
         if (distanceFromPlayer <= detectPlayerRange)
         {
-            if(currentTarget != playerTarget) currentTarget = playerTarget;
+            if(currentTarget != playerTarget)
+                currentTarget = playerTarget;
+
             WalkingRunningController(distanceFromPlayer);
             agent.SetDestination(playerTarget.position);
         }
+
         else if (distanceFromPlayer > detectPlayerRange)
         {
             agent.speed = agentStartSpeed;
@@ -194,20 +281,31 @@ public class EnemyController : MonoBehaviour
 
     public virtual void WandererController()
     {
-        if (CoopManager.instance != null) 
+        if (MultiplayerManager.Instance.coop) 
         {
-            if (DistanceAgroCheck()) { SetPlayerTarget(); }
-            else { ChangePlayerTarget(); }
+            if (DistanceAgroCheck())
+                SetPlayerTarget();
+
+            else
+                ChangePlayerTarget();
         }
-        if (gotToPoint) { CheckPathToNewPoint(CreateNewWanderPoint()); }
+
+        if (gotToPoint)
+            CheckPathToNewPoint(CreateNewWanderPoint());
+
         else
         {
-            if (lastPos == transform.position) { gotToPoint = true; }
+            if (lastPos == transform.position)
+                gotToPoint = true;
+
             currentTarget = wanderPoint;
             float distanceFromPoint = Vector3.Distance(wanderPoint.position, transform.position);
             WalkingRunningController(distanceFromPoint);
             agent.SetDestination(wanderPoint.position);
-            if (distanceFromPoint - 1 <= agent.stoppingDistance) { gotToPoint = true; }
+
+            if (distanceFromPoint - 1 <= agent.stoppingDistance)
+                gotToPoint = true;
+
             lastPos = transform.position;
         }
     }
@@ -216,11 +314,15 @@ public class EnemyController : MonoBehaviour
     {
         RaycastHit hit;
         float range = Vector3.Distance(checkPos, transform.position);
+
         if (Physics.Raycast(transform.position, checkPos - transform.position, out hit, range, -ignoreLayers))
         {
-            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Climb Point") || hit.collider.CompareTag("Ground")) { CreateNewWanderPoint(); }
+            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Climb Point") || hit.collider.CompareTag("Ground"))
+                CreateNewWanderPoint();
         }
-        else gotToPoint = false;
+
+        else 
+            gotToPoint = false;
     }
 
     public virtual Vector3 CreateNewWanderPoint()
@@ -228,6 +330,7 @@ public class EnemyController : MonoBehaviour
         float newX = transform.position.x + Random.Range(-20, 20);
         float newZ = transform.position.z + Random.Range(-20, 20);
         wanderPoint.position = new Vector3(newX, 46, newZ);
+
         return wanderPoint.position;
     }
 
@@ -236,16 +339,22 @@ public class EnemyController : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
+
         if (agent.isStopped && agent.speed == 0 && idleAnim && !enemyAttack.attackStarted)
         {
-            if (TurningRight(target.position)) { animationController.ChangeAnimation(EnemyAnimationController.AnimationState.turnRight); }
-            else { animationController.ChangeAnimation(EnemyAnimationController.AnimationState.turnLeft); }
+            if (TurningRight(target.position))
+                animationController.ChangeAnimation(EnemyAnimationController.AnimationState.turnRight);
+
+            else
+                animationController.ChangeAnimation(EnemyAnimationController.AnimationState.turnLeft);
         }
     }
 
     public virtual bool TurningRight(Vector3 target)
     {
-        if (transform.InverseTransformPoint(target).x > 0) { return true; }
+        if (transform.InverseTransformPoint(target).x > 0)
+            return true;
+
         else return false;
     }
 
@@ -253,6 +362,7 @@ public class EnemyController : MonoBehaviour
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-direction.x, 0, -direction.z));
+
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
     }
 
@@ -261,8 +371,12 @@ public class EnemyController : MonoBehaviour
         Vector3 currentPos = transform.position;
         Vector3 playerPos = new Vector3(playerTarget.position.x, transform.position.y, playerTarget.position.z);
         Vector3 direction = playerPos - currentPos;
+
         float viewRange = Vector3.Angle(transform.forward, direction);
-        if (viewRange < 45) return true;
+
+        if (viewRange < 45)
+            return true;
+
         else return false;
     }
 
@@ -271,6 +385,7 @@ public class EnemyController : MonoBehaviour
         if (canRun && distanceFromTarget > willWalkRange)
         {
             agent.speed = (agentStartSpeed + chaseSpeed);
+
             if (!runningAnim || idleAnim)
             {
                 animationController.ChangeAnimation(EnemyAnimationController.AnimationState.running);
@@ -278,9 +393,11 @@ public class EnemyController : MonoBehaviour
                 idleAnim = false;
             }
         }
+
         else
         {
             agent.speed = agentStartSpeed;
+
             if (runningAnim || idleAnim)
             {
                 animationController.ChangeAnimation(EnemyAnimationController.AnimationState.walking);
@@ -297,19 +414,24 @@ public class EnemyController : MonoBehaviour
 
     public float OtherPlayerDistance()
     {
-        return Vector3.Distance(transform.position, CoopManager.instance.otherPlayerTracker.transform.position);
+        return Vector3.Distance(transform.position, MultiplayerManager.Instance.GetCoopManager().otherPlayerTracker.transform.position);
     }
 
     public bool DistanceAgroCheck()
     {
-        if (CurrentPlayerDistance() < OtherPlayerDistance()) { return true; }
+        if (CurrentPlayerDistance() < OtherPlayerDistance())
+            return true;
+
         else return false;
     }
 
     public void DamageAgroCheck()
     {
-        if (currentPlayerDamage > otherPlayerDamage) { agroCurrentPlayer = true; }
-        else agroCurrentPlayer = false;
+        if (currentPlayerDamage > otherPlayerDamage)
+            agroCurrentPlayer = true;
+
+        else 
+            agroCurrentPlayer = false;
     }
 
     public void SetPlayerTarget()
@@ -320,7 +442,7 @@ public class EnemyController : MonoBehaviour
 
     public void ChangePlayerTarget()
     {
-        playerTarget = CoopManager.instance.otherPlayerTracker.transform;
+        playerTarget = MultiplayerManager.Instance.GetCoopManager().otherPlayerTracker.transform;
         agroCurrentPlayer = false;
     }
 
@@ -328,7 +450,9 @@ public class EnemyController : MonoBehaviour
     {
         isDead = true;
         Destroy(wanderPoint.gameObject);
-        if (!otherPlayerSpawned) { animationController.ChangeAnimation(EnemyAnimationController.AnimationState.death); }
+
+        if (!otherPlayerSpawned)
+            animationController.ChangeAnimation(EnemyAnimationController.AnimationState.death);
     }
 
     public virtual void DestroyEnemy()

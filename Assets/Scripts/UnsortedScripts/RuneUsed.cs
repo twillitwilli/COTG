@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class RuneUsed : MonoBehaviour
 {
-    private PlayerTotalStats _totalStats;
-
-    private void Start()
-    {
-        _totalStats = LocalGameManager.Instance.GetTotalStats();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("RitualRune"))
@@ -18,7 +11,7 @@ public class RuneUsed : MonoBehaviour
             switch (LocalGameManager.Instance.currentGameMode)
             {
                 case LocalGameManager.GameMode.master | LocalGameManager.GameMode.normal:
-                    _totalStats.AdjustStats(PlayerTotalStats.StatType.runesUsed);
+                    PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.runesUsed);
                     break;
             }
         }

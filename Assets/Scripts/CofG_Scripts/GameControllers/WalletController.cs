@@ -66,13 +66,13 @@ public class WalletController : MonoSingleton<WalletController>
 
         grabController.ParentGrabbable(_walletObject, walletPos, walletRot, walletScale);
 
-        if (grabController.GetOppositeGrabController().currentObjectGrabbed == PlayerItemGrabbable.PlayerItem.wallet)
+        if (grabController.GetOppositeGrabController().currentObjectGrabbed == ItemPoolManager.GrabbableItem.wallet)
             grabController.GetOppositeGrabController().ReleaseGrip();
     }
 
     public void ResetWallet(GrabController grabController)
     {
-        if (grabController.GetOppositeGrabController().currentObjectGrabbed != PlayerItemGrabbable.PlayerItem.wallet)
+        if (grabController.GetOppositeGrabController().currentObjectGrabbed != ItemPoolManager.GrabbableItem.wallet)
         {
             if (_walletObject != null)
                 Destroy(_walletObject);

@@ -30,13 +30,13 @@ public class DungeonBuildParent : MonoSingleton<DungeonBuildParent>
         ChatManager.Instance.DebugMessage("Dungeon Build Ready: Level " + LocalGameManager.Instance.currentLevel);
         Debug.Log("Dungeon Build Completed");
 
-        if (CoopManager.instance != null)
+        if (MultiplayerManager.Instance.coop)
         {
-            CoopManager.instance.coopDungeonBuild.dungeonFloorsCompleted.Add(true);
+            MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonFloorsCompleted.Add(true);
             if (LocalGameManager.Instance.isHost) 
             {
-                CoopManager.instance.coopDungeonBuild.dungeonCompleted = true;
-                CoopManager.instance.coopDungeonBuild.DungeonBuildCompleted(); 
+                MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonCompleted = true;
+                MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.DungeonBuildCompleted(); 
             }
         }
     }
@@ -60,8 +60,10 @@ public class DungeonBuildParent : MonoSingleton<DungeonBuildParent>
     {
         for (int i = 0; i < rooms.rooms.Count; i++)
         {
-            if (rooms.rooms[i]) { rooms.rooms[i].GetComponent<RoomModel>().rendererLink.renderedObjects.SetActive(false); }
+            if (rooms.rooms[i])
+                rooms.rooms[i].GetComponent<RoomModel>().rendererLink.renderedObjects.SetActive(false);
         }
+
         rooms.startingRoom.GetComponent<RoomModel>().rendererLink.renderedObjects.SetActive(true);
     }
 

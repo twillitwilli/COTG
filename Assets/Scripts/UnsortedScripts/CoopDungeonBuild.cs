@@ -1,25 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class CoopDungeonBuild : MonoBehaviour
 {
-    [HideInInspector] public CoopManager coopManager;
-    [HideInInspector] public PhotonView photonComponent;
-    [HideInInspector] public bool loadingAreaSpawned, dungeonCompleted;
-    [HideInInspector] public int spawnedObjects, spawnedLoadingArea;
-    [HideInInspector] public List<GameObject> spawnedPrefabs = new List<GameObject>();
-    [HideInInspector] public List<GameObject> spawnedRooms = new List<GameObject>();
-    [HideInInspector] public List<GameObject> assignedDungeonRooms = new List<GameObject>();
-    [HideInInspector] public List<bool> dungeonFloorsCompleted = new List<bool>();
+    [HideInInspector] 
+    public CoopManager coopManager;
+    
+    [HideInInspector] 
+    public PhotonView photonComponent;
+    
+    [HideInInspector] 
+    public bool loadingAreaSpawned, dungeonCompleted;
+    
+    [HideInInspector] 
+    public int spawnedObjects, spawnedLoadingArea;
+    
+    [HideInInspector] 
+    public List<GameObject> spawnedPrefabs = new List<GameObject>();
+    
+    [HideInInspector] 
+    public List<GameObject> spawnedRooms = new List<GameObject>();
+    
+    [HideInInspector] 
+    public List<GameObject> assignedDungeonRooms = new List<GameObject>();
+    
+    [HideInInspector] 
+    public List<bool> dungeonFloorsCompleted = new List<bool>();
+    
     //Dungeon Build
-    [HideInInspector] public int totalSpawnedRooms, whichRoom, dungeonRoomCount, nonHostDungeonCount;
-    [HideInInspector] public List<int> roomSpawnType = new List<int>();
-    [HideInInspector] public List<int> roomSpawnSelection = new List<int>();
-    [HideInInspector] public List<Vector3> roomSpawnPos = new List<Vector3>();
-    [HideInInspector] public List<Vector3> roomSpawnRot = new List<Vector3>();
+    [HideInInspector] 
+    public int totalSpawnedRooms, whichRoom, dungeonRoomCount, nonHostDungeonCount;
+    
+    [HideInInspector] 
+    public List<int> roomSpawnType = new List<int>();
+    
+    [HideInInspector] 
+    public List<int> roomSpawnSelection = new List<int>();
+    
+    [HideInInspector] 
+    public List<Vector3> roomSpawnPos = new List<Vector3>();
+    
+    [HideInInspector] 
+    public List<Vector3> roomSpawnRot = new List<Vector3>();
 
     private void OnEnable()
     {
@@ -35,7 +61,8 @@ public class CoopDungeonBuild : MonoBehaviour
     [PunRPC]
     public void SpawnedLoadingArea()
     {
-        if (coopManager.isMaster) { photonComponent.RPC("SpawnLoadingArea", RpcTarget.Others, spawnedLoadingArea); }
+        if (coopManager.isMaster)
+            photonComponent.RPC("SpawnLoadingArea", RpcTarget.Others, spawnedLoadingArea);
     }
 
     [PunRPC]
@@ -83,7 +110,8 @@ public class CoopDungeonBuild : MonoBehaviour
 
     public void DungeonBuildCompleted()
     {
-        if (coopManager.isMaster) { DungeonBuildStatus(); }
+        if (coopManager.isMaster)
+            DungeonBuildStatus();
     }
 
     [PunRPC]
@@ -96,12 +124,14 @@ public class CoopDungeonBuild : MonoBehaviour
             int totalDungeonRooms = dungeonRoomCount;
             int startingRoom = roomSpawnType[0];
             int startingRoomSelection = roomSpawnSelection[0];
+
             float posX = roomSpawnPos[0].x;
             float posY = roomSpawnPos[0].y;
             float posZ = roomSpawnPos[0].z;
             float rotX = roomSpawnRot[0].x;
             float rotY = roomSpawnRot[0].y;
             float rotZ = roomSpawnRot[0].z;
+
             photonComponent.RPC("StartCoopDungeonBuild", RpcTarget.Others, floorCompleted, totalRooms, totalDungeonRooms, startingRoom, startingRoomSelection, posX, posY, posZ, rotX, rotY, rotZ);
         }
     }
@@ -119,6 +149,7 @@ public class CoopDungeonBuild : MonoBehaviour
             float rotX = roomSpawnRot[whichRoom].x;
             float rotY = roomSpawnRot[whichRoom].y;
             float rotZ = roomSpawnRot[whichRoom].z;
+
             photonComponent.RPC("SpawnRoom", RpcTarget.Others, roomType, roomSelection, posX, posY, posZ, rotX, rotY, rotZ);
         }
     }
@@ -129,6 +160,7 @@ public class CoopDungeonBuild : MonoBehaviour
         LocalGameManager.Instance.currentLevel = floorCompleted;
         totalSpawnedRooms = totalRooms;
         dungeonRoomCount = totalDungeonRooms;
+
         SpawnRoom(startingRoom, startingSelection, posX, posY, posZ, rotX, rotY, rotZ);
     }
 
@@ -136,19 +168,22 @@ public class CoopDungeonBuild : MonoBehaviour
     public void SpawnRoom(int roomType, int roomSelection, float posX, float posY, float posZ, float rotX, float rotY, float rotZ)
     {
         whichRoom++;
+        
         if (whichRoom == totalSpawnedRooms)
-        {
             photonComponent.RPC("GetDungeonRooms", RpcTarget.Others);
-        }
+
         else
         {
             GameObject newRoomSpawn = Instantiate(RoomObjects.instance.roomPrefabs[LocalGameManager.Instance.dungeonType].roomLists[roomType].rooms[roomSelection]);
             DisableSpawning(newRoomSpawn);
+
             Vector3 pos = new Vector3(posX, posY, posZ);
             Vector3 rot = new Vector3(rotX, rotY, rotZ);
+
             newRoomSpawn.transform.localPosition = pos;
             newRoomSpawn.transform.localEulerAngles = rot;
-            newRoomSpawn.transform.SetParent(DungeonGenerationV3.instance.spawnedRooms.transform);
+            newRoomSpawn.transform.SetParent(DungeonGenerationV3.Instance.spawnedRooms.transform);
+
             photonComponent.RPC("BuildCoopDungeon", RpcTarget.Others, whichRoom);
         }
     }
@@ -160,9 +195,11 @@ public class CoopDungeonBuild : MonoBehaviour
             RoomControllerLink controllerLink = newRoom.GetComponent<RoomControllerLink>();
             controllerLink.roomController.disableSpawning = true;
         }
+
         else if (newRoom.GetComponent<SpecialRoom>())
         {
             SpecialRoom specialRoomSettings = newRoom.GetComponent<SpecialRoom>();
+
             foreach (RoomController controller in specialRoomSettings.roomControllers)
             {
                 controller.disableSpawning = true;
@@ -171,14 +208,16 @@ public class CoopDungeonBuild : MonoBehaviour
     }
 
     [PunRPC]
-    public void AssignDungeonRoom(int dungeonRoom)
+    public async void AssignDungeonRoom(int dungeonRoom)
     {
-        DungeonGenerationV3.instance.spawnedRooms.dungeonRooms.Add(spawnedRooms[dungeonRoom]);
+        DungeonGenerationV3.Instance.spawnedRooms.dungeonRooms.Add(spawnedRooms[dungeonRoom]);
         assignedDungeonRooms.Add(spawnedRooms[dungeonRoom]);
         nonHostDungeonCount++;
+
         if (nonHostDungeonCount == dungeonRoomCount)
         {
-            DungeonGenerationV3.instance.SpawnDungeonRooms();
+            await DungeonGenerationV3.Instance.SpawnDungeonRooms();
+
             dungeonCompleted = true;
         }
     }
@@ -193,9 +232,7 @@ public class CoopDungeonBuild : MonoBehaviour
                 for (int i2 = 0; i2 < spawnedRooms.Count; i2++)
                 {
                     if (spawnedRooms[i2] == assignedDungeonRooms[i])
-                    {
                         photonComponent.RPC("AssignDungeonRoom", RpcTarget.Others, i2);
-                    }
                 }
             }
         }
@@ -203,18 +240,20 @@ public class CoopDungeonBuild : MonoBehaviour
 
     public RoomModel GetLocalRoom(int roomID)
     {
-        if (DungeonBuildParent.instance != null)
+        if (DungeonBuildParent.Instance != null)
         {
-            for (int i = 0; i < DungeonBuildParent.instance.rooms.rooms.Count; i++)
+            for (int i = 0; i < DungeonBuildParent.Instance.rooms.rooms.Count; i++)
             {
-                if (roomID == DungeonBuildParent.instance.rooms.rooms[i].GetComponent<RoomModel>().roomID)
+                if (roomID == DungeonBuildParent.Instance.rooms.rooms[i].GetComponent<RoomModel>().roomID)
                 {
-                    RoomModel foundRoom = DungeonBuildParent.instance.rooms.rooms[i].GetComponent<RoomModel>();
+                    RoomModel foundRoom = DungeonBuildParent.Instance.rooms.rooms[i].GetComponent<RoomModel>();
                     return foundRoom;
                 }
             }
         }
+
         Debug.Log("Error Couldnt Find Room");
+
         return null;
     }
 }

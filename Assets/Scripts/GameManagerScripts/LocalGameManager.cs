@@ -198,7 +198,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
         }
     }
 
-    public void SpawnSpecificItem(ItemDropSelection.ItemType itemType, Transform spawnLocation)
+    public void SpawnSpecificItem(ItemPoolManager.DroppableItem itemType, Transform spawnLocation)
     {
         GameObject spawnedDrop = Instantiate(MasterManager.itemPool.droppableItems.dropTemplate, spawnLocation);
         spawnedDrop.transform.SetParent(null);

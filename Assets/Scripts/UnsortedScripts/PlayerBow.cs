@@ -6,25 +6,28 @@ public class PlayerBow : MonoBehaviour
 {
     private bool _holdingBow, _holdingString;
 
-    private LocalGameManager _gameManager;
-    private PlayerStats _playerStats;
-    private MagicController _magicController;
-    private PlayerMagicController _playerMagicController;
-    private BowMagicController _bowController;
-
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
     private VRPlayerHand _primaryHand, _offHand;
 
     private bool _setNormalChargeCooldown, _setDoubleChargeCooldown, _chargingArrow;
     private float _normalChargeTimer, _doubleChargeTimer, _stringPullDistance;
 
-    [SerializeField] private Transform _arrowSpellSpawn, _boneParent, _chargingEffectSpawn, _handOnStringSpawn;
-    [SerializeField] private GameObject _stringBone, _normalChargeArrow, _doubleChargeArrow, _arrowReady; 
-    [SerializeField] private Vector3 _offsetBowDirection;
-    [SerializeField] private BoxCollider _bowCollider;
-    [SerializeField] private CapsuleCollider _stringTrigger;
-    [SerializeField] private Transform _stringDefaultPos;
+    [SerializeField] 
+    private Transform _arrowSpellSpawn, _boneParent, _chargingEffectSpawn, _handOnStringSpawn;
+    
+    [SerializeField] 
+    private GameObject _stringBone, _normalChargeArrow, _doubleChargeArrow, _arrowReady; 
+    
+    [SerializeField] 
+    private Vector3 _offsetBowDirection;
+    
+    [SerializeField] 
+    private BoxCollider _bowCollider;
+    
+    [SerializeField] 
+    private CapsuleCollider _stringTrigger;
+    
+    [SerializeField] 
+    private Transform _stringDefaultPos;
 
     private bool _stringNormalCharge, _stringDoubleCharge, _removedFromParent, _grabbedString;
     private GameObject _spawnedChargingEffect;
@@ -32,15 +35,6 @@ public class PlayerBow : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = LocalGameManager.Instance;
-        _playerStats = _gameManager.GetPlayerStats();
-        _magicController = _gameManager.GetMagicController();
-        _playerMagicController = MasterManager.playerMagicController;
-        _gearController = _gameManager.GetGearController();
-        _bowController = _gearController.GetBowController();
-
-        _player = _gameManager.player;
-        _playerComponents = _player.GetPlayerComponents();
         SetHands();
 
         UpdateOffsetDirection();
@@ -53,11 +47,13 @@ public class PlayerBow : MonoBehaviour
     {
         if (_holdingBow && _holdingString)
         {
-            if (!_grabbedString) { GrabString(); }
+            if (!_grabbedString)
+                GrabString();
 
             HoldingString();
 
-            if (!_removedFromParent) { transform.SetParent(null); _removedFromParent = true; }
+            if (!_removedFromParent)
+                transform.SetParent(null); _removedFromParent = true;
 
             transform.position = _offHand.transform.position;
 
@@ -83,30 +79,37 @@ public class PlayerBow : MonoBehaviour
 
     private void SetHands()
     {
-        if (!_player.isLeftHanded)
+        PlayerComponents playerComponents = LocalGameManager.Instance.player.GetPlayerComponents();
+
+        if (!LocalGameManager.Instance.player.isLeftHanded)
         {
-            _primaryHand = _playerComponents.GetHand(1);
-            _offHand = _playerComponents.GetHand(0);
+            _primaryHand = playerComponents.GetHand(1);
+            _offHand = playerComponents.GetHand(0);
         }
+
         else
         {
-            _primaryHand = _playerComponents.GetHand(0);
-            _offHand = _playerComponents.GetHand(1);
+            _primaryHand = playerComponents.GetHand(0);
+            _offHand = playerComponents.GetHand(1);
         }
     }
 
     public void UpdateOffsetDirection()
     {
-        if (!_player.isLeftHanded) { _offsetBowDirection = new Vector3(0, 0, 180); }
+        if (!LocalGameManager.Instance.player.isLeftHanded)
+            _offsetBowDirection = new Vector3(0, 0, 180);
 
-        else { _offsetBowDirection = new Vector3(0, 0, 0); }
+        else
+            _offsetBowDirection = new Vector3(0, 0, 0);
     }
 
     public void FaceAwayFromObject()
     {
         //transform.LookAt(player.playerComponents.hand[player.primaryHand].transform.position, transform.forward);
+
         Vector3 direction = (_primaryHand.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
+
         transform.rotation = lookRotation;
         transform.localEulerAngles -= _offsetBowDirection;
     }
@@ -115,11 +118,13 @@ public class PlayerBow : MonoBehaviour
     {
         if (NormalChargeCooldown())
         {
-            int currentSpell = _magicController.magicIdx;
+            int currentSpell = MagicController.Instance.magicIdx;
 
-            if (DoubleChargeCooldown()) { ShootArrow(true, currentSpell); }
+            if (DoubleChargeCooldown())
+                ShootArrow(true, currentSpell);
 
-            else { ShootArrow(false, currentSpell); }
+            else
+                ShootArrow(false, currentSpell);
         }
 
         ResetString();
@@ -128,15 +133,17 @@ public class PlayerBow : MonoBehaviour
     public void ShootArrow(bool addPeircing, int whichSpell)
     {
         GameObject newProjectile;
-        switch (_magicController.currentCastingType)
+
+        switch (MagicController.Instance.currentCastingType)
         {
             case MagicController.CastingType.charge:
-                newProjectile = Instantiate(_playerMagicController.conjurerChargedSpells[_magicController.magicIdx], _arrowSpellSpawn.position, _arrowSpellSpawn.rotation);
+                newProjectile = Instantiate(MasterManager.Instance.magicController.conjurerChargedSpells[MagicController.Instance.magicIdx], _arrowSpellSpawn.position, _arrowSpellSpawn.rotation);
                 newProjectile.transform.SetParent(null);
 
                 BasicProjectile arrowAttack = newProjectile.GetComponent<BasicProjectile>();
 
-                if (_stringPullDistance > -0.03) { arrowAttack.rb.useGravity = true; }
+                if (_stringPullDistance > -0.03)
+                    arrowAttack.rb.useGravity = true;
 
                 if (addPeircing)
                 {
@@ -157,14 +164,18 @@ public class PlayerBow : MonoBehaviour
     {
         if (_setNormalChargeCooldown)
         {
-            _normalChargeTimer = _playerStats.GetAttackCooldown();
+            _normalChargeTimer = PlayerStats.Instance.GetAttackCooldown();
             _setNormalChargeCooldown = false;
         }
 
-        if (_normalChargeTimer > 0) { _normalChargeTimer -= Time.deltaTime; }
+        if (_normalChargeTimer > 0)
+            _normalChargeTimer -= Time.deltaTime;
+
         else if (_normalChargeTimer <= 0)
         {
-            if (_spawnedChargingEffect != null) { Destroy(_spawnedChargingEffect); }
+            if (_spawnedChargingEffect != null)
+                Destroy(_spawnedChargingEffect);
+
             _normalChargeTimer = 0;
             return true;
         }
@@ -176,14 +187,18 @@ public class PlayerBow : MonoBehaviour
     {
         if (_setDoubleChargeCooldown)
         {
-            _doubleChargeTimer = (_playerStats.GetAttackCooldown() + 1);
+            _doubleChargeTimer = (PlayerStats.Instance.GetAttackCooldown() + 1);
             _setDoubleChargeCooldown = false;
         }
 
-        if (_doubleChargeTimer > 0) { _doubleChargeTimer -= Time.deltaTime; }
+        if (_doubleChargeTimer > 0)
+            _doubleChargeTimer -= Time.deltaTime;
+
         else if (_doubleChargeTimer <= 0)
         {
-            if (_spawnedChargingEffect != null) { Destroy(_spawnedChargingEffect); }
+            if (_spawnedChargingEffect != null)
+                Destroy(_spawnedChargingEffect);
+
             _doubleChargeTimer = 0;
             return true;
         }
@@ -209,7 +224,7 @@ public class PlayerBow : MonoBehaviour
 
     public void GrabString()
     {
-        _spawnedChargingEffect = Instantiate(_playerMagicController.chargedVisual[_magicController.magicIdx], _chargingEffectSpawn);
+        _spawnedChargingEffect = Instantiate(MasterManager.Instance.magicController.chargedVisual[MagicController.Instance.magicIdx], _chargingEffectSpawn);
 
         _spawnedChargingEffect.transform.SetParent(_chargingEffectSpawn);
         _spawnedChargingEffect.transform.localScale = new Vector3(6, 6, 6);
@@ -219,8 +234,11 @@ public class PlayerBow : MonoBehaviour
         stringHand.transform.SetParent(_handOnStringSpawn);
         stringHand.transform.localPosition = new Vector3(0, 0, 0);
 
-        if (_player.isLeftHanded) { stringHand.transform.localEulerAngles = new Vector3(0, 0, 0); }
-        else { stringHand.transform.localEulerAngles = new Vector3(0, 180, 0); }
+        if (LocalGameManager.Instance.player.isLeftHanded)
+            stringHand.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        else
+            stringHand.transform.localEulerAngles = new Vector3(0, 180, 0);
 
         _primaryHand.GetHandAnimationState().SwitchHandState(HandAnimationState.HandState.holdingBowString);
 
@@ -240,7 +258,7 @@ public class PlayerBow : MonoBehaviour
         _bowCollider.enabled = true;
         _stringTrigger.enabled = false;
 
-        _bowController.ResetToBack();
+        BowMagicController.Instance.ResetToBack();
     }
 
     public void HoldingString()

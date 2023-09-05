@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BowMagicController : MonoBehaviour
+public class BowMagicController : MonoSingleton<BowMagicController>
 {
     private VRPlayerController _player;
     private PlayerComponents _playerComponenets;

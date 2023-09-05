@@ -18,6 +18,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         _player = player;
 
         await Task.Delay(5000);
+
         await SaveFileCheck();
     }
 
@@ -28,7 +29,9 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
             Debug.Log("New Player");
              _player.DefaultPlayerSettings();
         }
-        else { await LoadPlayerPrefs(); }
+
+        else
+            await LoadPlayerPrefs();
     }
 
     public async Task SavePlayerPrefs()
@@ -114,37 +117,40 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
 
     private void SaveClassInfo()
     {
-        PlayerPrefs.SetInt("PlayerClass", (int)_magicController.currentClass);
-        PlayerPrefs.SetInt("MagicType", (int)_magicController.currentMagic);
+        PlayerPrefs.SetInt("PlayerClass", (int)MagicController.Instance.currentClass);
+        PlayerPrefs.SetInt("MagicType", (int)MagicController.Instance.currentMagic);
     }
 
     private void LoadClassInfo()
     {
-        _magicController.LoadClass(CheckIfSaveFileExists("PlayerClass") ? PlayerPrefs.GetInt("PlayerClass") : 0);
+        MagicController.Instance.LoadClass(CheckIfSaveFileExists("PlayerClass") ? PlayerPrefs.GetInt("PlayerClass") : 0);
 
-        if (CheckIfSaveFileExists("MagicType")) { _magicController.UpdateMagic(true, PlayerPrefs.GetInt("MagicType")); }
-        else { _magicController.UpdateMagic(); }
+        if (CheckIfSaveFileExists("MagicType"))
+            MagicController.Instance.UpdateMagic(true, PlayerPrefs.GetInt("MagicType"));
+
+        else
+            MagicController.Instance.UpdateMagic();
     }
 
     private void SaveMultiplayerSettings()
     {
-        PlayerPrefs.SetInt("TextChat", (_chatManager.textChat ? 1 : 0));
-        PlayerPrefs.SetInt("DebugChat", (_chatManager.allowDebugMessages ? 1 : 0));
-        PlayerPrefs.SetInt("VoiceChat", (_chatManager.voiceChat ? 1 : 0));
-        PlayerPrefs.SetInt("Notifications", (_chatManager.notifications ? 1 : 0));
+        PlayerPrefs.SetInt("TextChat", (ChatManager.Instance.textChat ? 1 : 0));
+        PlayerPrefs.SetInt("DebugChat", (ChatManager.Instance.allowDebugMessages ? 1 : 0));
+        PlayerPrefs.SetInt("VoiceChat", (ChatManager.Instance.voiceChat ? 1 : 0));
+        PlayerPrefs.SetInt("Notifications", (ChatManager.Instance.notifications ? 1 : 0));
     }
 
     private void LoadMultiplayerSettings()
     {
-        _chatManager.textChat = CheckIfSaveFileExists("TextChat") ? (PlayerPrefs.GetInt("TextChat") != 0) : true;
-        _chatManager.allowDebugMessages = CheckIfSaveFileExists("DebugChat") ? (PlayerPrefs.GetInt("DebugChat") != 0) : false;
-        _chatManager.voiceChat = CheckIfSaveFileExists("VoiceChat") ? (PlayerPrefs.GetInt("VoiceChat") != 0) : true;
-        _chatManager.notifications = CheckIfSaveFileExists("Notifications") ? (PlayerPrefs.GetInt("Notifications") != 0) : true;
+        ChatManager.Instance.textChat = CheckIfSaveFileExists("TextChat") ? (PlayerPrefs.GetInt("TextChat") != 0) : true;
+        ChatManager.Instance.allowDebugMessages = CheckIfSaveFileExists("DebugChat") ? (PlayerPrefs.GetInt("DebugChat") != 0) : false;
+        ChatManager.Instance.voiceChat = CheckIfSaveFileExists("VoiceChat") ? (PlayerPrefs.GetInt("VoiceChat") != 0) : true;
+        ChatManager.Instance.notifications = CheckIfSaveFileExists("Notifications") ? (PlayerPrefs.GetInt("Notifications") != 0) : true;
     }
 
     private void SaveVisualSettings()
     {
-        switch (_visualSettings.shadowSetting)
+        switch (VisualSettings.Instance.shadowSetting)
         {
             case LightShadows.Soft:
                 PlayerPrefs.SetString("ShadowType", "Soft");
@@ -158,7 +164,8 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
                 PlayerPrefs.SetString("ShadowType", "None");
                 break;
         }
-        switch (_visualSettings.shadowQuality)
+
+        switch (VisualSettings.Instance.shadowQuality)
         {
             case ShadowResolution.VeryHigh:
                 PlayerPrefs.SetString("ShadowQuality", "VeryHigh");
@@ -173,22 +180,23 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
                 PlayerPrefs.SetString("ShadowQuality", "Low");
                 break;
         }
-        PlayerPrefs.SetFloat("LightRange", _visualSettings.lightRange);
-        PlayerPrefs.SetFloat("Brightness", _visualSettings.brightness);
+
+        PlayerPrefs.SetFloat("LightRange", VisualSettings.Instance.lightRange);
+        PlayerPrefs.SetFloat("Brightness", VisualSettings.Instance.brightness);
 
         //post processing
-        PlayerPrefs.SetInt("AmbientOcclusion", (_postProcessingController.ambientOcclusion ? 1 : 0));
-        PlayerPrefs.SetInt("Bloom", (_postProcessingController.bloom ? 1 : 0));
-        PlayerPrefs.SetInt("ColorGrading", (_postProcessingController.colorGrading ? 1 : 0));
+        PlayerPrefs.SetInt("AmbientOcclusion", (PostProcessingController.Instance.ambientOcclusion ? 1 : 0));
+        PlayerPrefs.SetInt("Bloom", (PostProcessingController.Instance.bloom ? 1 : 0));
+        PlayerPrefs.SetInt("ColorGrading", (PostProcessingController.Instance.colorGrading ? 1 : 0));
 
-        PlayerPrefs.SetFloat("AOIntensity", _postProcessingController.AOIntensity);
-        PlayerPrefs.SetFloat("Thickness", _postProcessingController.thickness);
+        PlayerPrefs.SetFloat("AOIntensity", PostProcessingController.Instance.AOIntensity);
+        PlayerPrefs.SetFloat("Thickness", PostProcessingController.Instance.thickness);
 
-        PlayerPrefs.SetFloat("BIntensity", _postProcessingController.Bintensity);
-        PlayerPrefs.SetFloat("Threshold", _postProcessingController.threshold);
-        PlayerPrefs.SetFloat("Diffusion", _postProcessingController.diffusion);
+        PlayerPrefs.SetFloat("BIntensity", PostProcessingController.Instance.Bintensity);
+        PlayerPrefs.SetFloat("Threshold", PostProcessingController.Instance.threshold);
+        PlayerPrefs.SetFloat("Diffusion", PostProcessingController.Instance.diffusion);
 
-        switch (_postProcessingController.tonemapping)
+        switch (PostProcessingController.Instance.tonemapping)
         {
             case UnityEngine.Rendering.PostProcessing.Tonemapper.None:
                 PlayerPrefs.SetString("Tonemapper", "None");
@@ -203,20 +211,20 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
                 break;
         }
 
-        PlayerPrefs.SetFloat("Temperature", _postProcessingController.temperature);
-        PlayerPrefs.SetFloat("Tint", _postProcessingController.tint);
-        PlayerPrefs.SetFloat("PostExposure", _postProcessingController.postExposure);
-        PlayerPrefs.SetFloat("HueShift", _postProcessingController.hueShift);
-        PlayerPrefs.SetFloat("Saturation", _postProcessingController.saturation);
-        PlayerPrefs.SetFloat("Contrast", _postProcessingController.contrast);
+        PlayerPrefs.SetFloat("Temperature", PostProcessingController.Instance.temperature);
+        PlayerPrefs.SetFloat("Tint", PostProcessingController.Instance.tint);
+        PlayerPrefs.SetFloat("PostExposure", PostProcessingController.Instance.postExposure);
+        PlayerPrefs.SetFloat("HueShift", PostProcessingController.Instance.hueShift);
+        PlayerPrefs.SetFloat("Saturation", PostProcessingController.Instance.saturation);
+        PlayerPrefs.SetFloat("Contrast", PostProcessingController.Instance.contrast);
     }
 
     private void LoadVisualSettings()
     {
         // Lighting //
 
-        _visualSettings.lightRange = CheckIfSaveFileExists("LightRange") ? PlayerPrefs.GetFloat("LightRange") : 30;
-        _visualSettings.brightness = CheckIfSaveFileExists("Brightness") ? PlayerPrefs.GetFloat("Brightness") : 1;
+        VisualSettings.Instance.lightRange = CheckIfSaveFileExists("LightRange") ? PlayerPrefs.GetFloat("LightRange") : 30;
+        VisualSettings.Instance.brightness = CheckIfSaveFileExists("Brightness") ? PlayerPrefs.GetFloat("Brightness") : 1;
 
         if (CheckIfSaveFileExists("ShadowType"))
         {
@@ -225,19 +233,21 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
             switch (shadowType)
             {
                 case "Soft":
-                    _visualSettings.shadowSetting = LightShadows.Soft;
+                    VisualSettings.Instance.shadowSetting = LightShadows.Soft;
                     break;
 
                 case "Hard":
-                    _visualSettings.shadowSetting = LightShadows.Hard;
+                    VisualSettings.Instance.shadowSetting = LightShadows.Hard;
                     break;
 
                 default:
-                    _visualSettings.shadowSetting = LightShadows.None;
+                    VisualSettings.Instance.shadowSetting = LightShadows.None;
                     break;
             }
         }
-        else { _visualSettings.shadowSetting = LightShadows.Soft; }
+
+        else
+            VisualSettings.Instance.shadowSetting = LightShadows.Soft;
 
         if (CheckIfSaveFileExists("ShadowQuality"))
         {
@@ -246,47 +256,50 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
             switch (shadowQuality)
             {
                 case "VeryHigh":
-                    _visualSettings.shadowQuality = ShadowResolution.VeryHigh;
+                    VisualSettings.Instance.shadowQuality = ShadowResolution.VeryHigh;
                     break;
 
                 case "High":
-                    _visualSettings.shadowQuality = ShadowResolution.High;
+                    VisualSettings.Instance.shadowQuality = ShadowResolution.High;
                     break;
 
                 case "Medium":
-                    _visualSettings.shadowQuality = ShadowResolution.Medium;
+                    VisualSettings.Instance.shadowQuality = ShadowResolution.Medium;
                     break;
 
-                default: _visualSettings.shadowQuality = ShadowResolution.Low;
+                default:
+                    VisualSettings.Instance.shadowQuality = ShadowResolution.Low;
                     break;
             }
         }
-        else { _visualSettings.shadowQuality = ShadowResolution.VeryHigh; }
+
+        else
+            VisualSettings.Instance.shadowQuality = ShadowResolution.VeryHigh;
 
         //Post Processing //
 
         /// Ambient Occlusion ///
-        
-        _postProcessingController.ambientOcclusion = CheckIfSaveFileExists("AmbientOcclusion") ? (PlayerPrefs.GetInt("AmbientOcclusion") != 0) : true;
-        _postProcessingController.AOIntensity = CheckIfSaveFileExists("AOIntensity") ? PlayerPrefs.GetFloat("AOIntensity") : 1.15f;
-        _postProcessingController.thickness = CheckIfSaveFileExists("Thickness") ? PlayerPrefs.GetFloat("Thickness") : 1;
+
+        PostProcessingController.Instance.ambientOcclusion = CheckIfSaveFileExists("AmbientOcclusion") ? (PlayerPrefs.GetInt("AmbientOcclusion") != 0) : true;
+        PostProcessingController.Instance.AOIntensity = CheckIfSaveFileExists("AOIntensity") ? PlayerPrefs.GetFloat("AOIntensity") : 1.15f;
+        PostProcessingController.Instance.thickness = CheckIfSaveFileExists("Thickness") ? PlayerPrefs.GetFloat("Thickness") : 1;
 
         /// Bloom ///
 
-        _postProcessingController.bloom = CheckIfSaveFileExists("Bloom") ? (PlayerPrefs.GetInt("Bloom") != 0) : true;
-        _postProcessingController.Bintensity = CheckIfSaveFileExists("BIntensity") ? PlayerPrefs.GetFloat("BIntensity") : 14;
-        _postProcessingController.threshold = CheckIfSaveFileExists("Threshold") ? PlayerPrefs.GetFloat("Threshold") : 1;
-        _postProcessingController.diffusion = CheckIfSaveFileExists("Diffusion") ? PlayerPrefs.GetFloat("Diffusion") : 7;
+        PostProcessingController.Instance.bloom = CheckIfSaveFileExists("Bloom") ? (PlayerPrefs.GetInt("Bloom") != 0) : true;
+        PostProcessingController.Instance.Bintensity = CheckIfSaveFileExists("BIntensity") ? PlayerPrefs.GetFloat("BIntensity") : 14;
+        PostProcessingController.Instance.threshold = CheckIfSaveFileExists("Threshold") ? PlayerPrefs.GetFloat("Threshold") : 1;
+        PostProcessingController.Instance.diffusion = CheckIfSaveFileExists("Diffusion") ? PlayerPrefs.GetFloat("Diffusion") : 7;
 
         /// Color Grading ///
 
-        _postProcessingController.colorGrading = CheckIfSaveFileExists("ColorGrading") ? (PlayerPrefs.GetInt("ColorGrading") != 0) : true;
-        _postProcessingController.temperature = CheckIfSaveFileExists("Temperature") ? PlayerPrefs.GetFloat("Temperature") : -75;
-        _postProcessingController.tint = CheckIfSaveFileExists("Tint") ? PlayerPrefs.GetFloat("Tint") : -55;
-        _postProcessingController.postExposure = CheckIfSaveFileExists("PostExposure") ? PlayerPrefs.GetFloat("PostExposure") : 0;
-        _postProcessingController.hueShift = CheckIfSaveFileExists("HueShift") ? PlayerPrefs.GetFloat("HueShift") : 0;
-        _postProcessingController.saturation = CheckIfSaveFileExists("Saturation") ? PlayerPrefs.GetFloat("Saturation") : 100;
-        _postProcessingController.contrast = CheckIfSaveFileExists("Contrast") ? PlayerPrefs.GetFloat("Contrast") : 20;
+        PostProcessingController.Instance.colorGrading = CheckIfSaveFileExists("ColorGrading") ? (PlayerPrefs.GetInt("ColorGrading") != 0) : true;
+        PostProcessingController.Instance.temperature = CheckIfSaveFileExists("Temperature") ? PlayerPrefs.GetFloat("Temperature") : -75;
+        PostProcessingController.Instance.tint = CheckIfSaveFileExists("Tint") ? PlayerPrefs.GetFloat("Tint") : -55;
+        PostProcessingController.Instance.postExposure = CheckIfSaveFileExists("PostExposure") ? PlayerPrefs.GetFloat("PostExposure") : 0;
+        PostProcessingController.Instance.hueShift = CheckIfSaveFileExists("HueShift") ? PlayerPrefs.GetFloat("HueShift") : 0;
+        PostProcessingController.Instance.saturation = CheckIfSaveFileExists("Saturation") ? PlayerPrefs.GetFloat("Saturation") : 100;
+        PostProcessingController.Instance.contrast = CheckIfSaveFileExists("Contrast") ? PlayerPrefs.GetFloat("Contrast") : 20;
 
         if (CheckIfSaveFileExists("Tonemapper")) 
         {
@@ -295,20 +308,23 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
             switch (tonemapping)
             {
                 case "None":
-                    _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.None;
+                    PostProcessingController.Instance.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.None;
                     break;
 
                 case "Neutral":
-                    _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral;
+                    PostProcessingController.Instance.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.Neutral;
                     break;
 
-                default: _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES;
+                default:
+                    PostProcessingController.Instance.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES;
                     break;
             }
         }
-        else { _postProcessingController.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES; }
 
-        _postProcessingController.LoadSettings();
+        else
+            PostProcessingController.Instance.tonemapping = UnityEngine.Rendering.PostProcessing.Tonemapper.ACES;
+
+        PostProcessingController.Instance.LoadSettings();
     }
 
     public bool CheckIfSaveFileExists(string saveFile)
