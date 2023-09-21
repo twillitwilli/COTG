@@ -57,9 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1201cfb43f9323142bdb5cdb5fc3c287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollParent: {fileID: 6829101370419629298}
-  itemScrollAbilities: {fileID: 4511933005819895810}
-  scrollPrice: 0
+  _scrollParent: {fileID: 0}
 --- !u!1 &3306832440629777551
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +229,6 @@ GameObject:
   - component: {fileID: 7538619348989525729}
   - component: {fileID: 1568810559647188183}
   - component: {fileID: 5114120565873768494}
-  - component: {fileID: 1768150793379875559}
   m_Layer: 8
   m_Name: BlankNormalScroll
   m_TagString: ItemScroll
@@ -307,26 +304,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1768150793379875559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6829101370419629298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fde9291bd45739442b5a5c7b28539658, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemScroll: {fileID: 0}
-  itemPicture: {fileID: 3306832440629777545}
-  itemDescription: {fileID: 5547319745378336183}
-  scrollAbilities: {fileID: 4511933005819895810}
-  cursedBlock: {fileID: 3933305443572835491}
-  trigger: {fileID: 1164427544}
-  isShopScroll: 0
-  scrollSpawner: {fileID: 0}
 --- !u!1 &7758071842641794975
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +313,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9164542286865615361}
-  - component: {fileID: 4511933005819895810}
   m_Layer: 8
   m_Name: ScrollAbilities
   m_TagString: Untagged
@@ -358,62 +334,6 @@ Transform:
   m_Father: {fileID: 7538619348989525729}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4511933005819895810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7758071842641794975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7c86f8daba64774fa9c8760ead9ef1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  changeSpell: 0
-  whichMagic: 0
-  addCollisionEffect: 0
-  piercing: 0
-  explosion: 0
-  burst: 0
-  bouncing: 0
-  aoeGround: 0
-  summoning: 0
-  rain: 0
-  addDashEffect: 0
-  dashPillar: 0
-  teleportBurst: 0
-  giveDungeonAbility: 0
-  tempMapReveal: 0
-  mapReveal: 0
-  tempCompassReveal: 0
-  compassReveal: 0
-  changeBaseStat: 0
-  movementSpeed: 0
-  currentHealth: 0
-  maxHealth: 0
-  attackDamage: 0
-  magicFocus: 0
-  attackRange: 0
-  attackCooldown: 0
-  gold: 0
-  arcaneOrb: 0
-  luck: 0
-  critChance: 0
-  aimAssist: 0
-  movementValue: 0
-  currentHealthValue: 0
-  maxHealthValue: 0
-  attackValue: 0
-  magicFocusValue: 0
-  rangeValue: 0
-  attackCDValue: 0
-  goldValue: 0
-  arcaneOrbValue: 0
-  luckValue: 0
-  critChanceValue: 0
-  aimAssistValue: 0
-  changePrimarySpell: 0
 --- !u!1 &8036343755048316586
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,11 +495,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee3b9b80d3ec1ee4091f5c2beb598672, type: 3}
---- !u!1 &3933305443572835491 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7869142312837106359, guid: ee3b9b80d3ec1ee4091f5c2beb598672, type: 3}
-  m_PrefabInstance: {fileID: 6602601734711946772}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8736700342209817331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2494952307843728615, guid: ee3b9b80d3ec1ee4091f5c2beb598672, type: 3}

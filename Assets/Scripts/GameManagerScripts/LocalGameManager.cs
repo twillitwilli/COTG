@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using QTArts.AbstractClasses;
 
 public class LocalGameManager : MonoSingleton<LocalGameManager>
 {
@@ -13,32 +15,36 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     }
     public GameMode currentGameMode;
 
+    public enum SceneSelection
+    {
+        testArea,
+        tutorial,
+        titleScene,
+        dungeon
+    }
+
+    public enum SpawnLocation
+    {
+        spawnPoint,
+        loadingAreaSpawn,
+        moveableSpawnPoint
+    }
+
     [SerializeField] 
-    private GameObject playerPrefab;
+    GameObject playerPrefab;
 
     public VRPlayerController player { get; private set; }
 
     public delegate void PlayerCreated(VRPlayerController newPlayer);
     public static event PlayerCreated playerCreated;
 
-    public enum SceneSelection 
-    { 
-        testArea, 
-        tutorial, 
-        titleScene, 
-        dungeon 
-    }
+    [SerializeField] 
+    bool hardResetPlayerData, devMode, demoMode;
 
     [SerializeField] 
-    private bool hardResetPlayerData, devMode, demoMode;
+    Camera _mapCamera;
 
-    [SerializeField] 
-    private Camera _mapCamera;
-
-    [SerializeField] 
-    private Transform[] _spawnLocations;
-
-    private EyeManager _eyeManager;
+    EyeManager _eyeManager;
 
     [HideInInspector] 
     public bool hasCalibrated, isHost, dungeonBuildCompleted, loadDungeon;
@@ -46,22 +52,22 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     [HideInInspector] 
     public List<Vector2Int> spawnedScrolls = new List<Vector2Int>();
 
+    [SerializeField]
+    public Transform moveableSpawnPoint;
+
     [HideInInspector] 
     public GameObject loadingBox, spawnedBossArena;
 
-    [HideInInspector] 
-    public int dungeonType, currentLevel;
+    public int dungeonType { get; set; }
+    public int currentLevel { get; set; }
+    public int saveFile { get; set; }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-
-        if (hardResetPlayerData && PlayerPrefsSaveData.Instance.CheckIfSaveFileExists("ReturningPlayer"))
-            PlayerPrefs.SetInt("ReturningPlayer", (false ? 1 : 0));
-    }
 
     private void Start()
     {
+        if (hardResetPlayerData && PlayerPrefsSaveData.Instance.CheckIfSaveFileExists("ReturningPlayer"))
+            PlayerPrefs.SetInt("ReturningPlayer", (false ? 1 : 0));
+
         if (player == null)
             PlayerSpawner();
 
@@ -85,7 +91,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
 
     public void PlayerSpawner()
     {
-        GameObject newPlayer = Instantiate(playerPrefab, _spawnLocations[0]);
+        GameObject newPlayer = Instantiate(playerPrefab);
         player = newPlayer.GetComponent<VRPlayerController>();
         newPlayer.transform.SetParent(null);
         DontDestroyOnLoad(newPlayer);
@@ -100,12 +106,18 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
         AreaLoaded();
     }
 
-    public void Loading(SceneSelection whichScene)
+    public async void Loading(SceneSelection whichScene)
     {
         Debug.Log("LoadingDungeon");
+
         Loader.Load(Loader.Scene.LoadingScreen);
-        MovePlayer(1);
-        Invoke("OpenEyes", 1);
+
+        MovePlayer(SpawnLocation.loadingAreaSpawn);
+
+        await Task.Delay(1000);
+
+        OpenEyes();
+
         ChangeScene(whichScene);
     }
 
@@ -124,10 +136,25 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
         EnemyTrackerController.Instance.enemyNavMesh.RemoveData();
     }
 
-    public void MovePlayer(int spawnLocation)
+    public void MovePlayer(SpawnLocation whichSpawnLocation)
     {
-        player.transform.position = _spawnLocations[spawnLocation].position;
-        player.transform.rotation = _spawnLocations[spawnLocation].rotation;
+        switch (whichSpawnLocation)
+        {
+            case SpawnLocation.spawnPoint:
+                player.transform.position = new Vector3(0, 0, 0);
+                player.transform.localEulerAngles = new Vector3(0, 0, 0);
+                break;
+
+            case SpawnLocation.loadingAreaSpawn:
+                player.transform.position = new Vector3(0, 0, 0);
+                player.transform.localEulerAngles = new Vector3(0, 0, 0);
+                break;
+
+            case SpawnLocation.moveableSpawnPoint:
+                player.transform.position = moveableSpawnPoint.transform.position;
+                player.transform.rotation = moveableSpawnPoint.transform.rotation;
+                break;
+        }
     }
 
     public void ResetPlayer()
@@ -171,9 +198,14 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
 
     public void CheckDungeonType()
     {
-        if (currentLevel == 0) { dungeonType = 0; }
-        else if (currentLevel > 0 && currentLevel < 4) { dungeonType = 1; }
-        else if (currentLevel > 3 && currentLevel < 7) { dungeonType = 2; }
+        if (currentLevel == 0)
+            dungeonType = 0;
+
+        else if (currentLevel > 0 && currentLevel < 4)
+            dungeonType = 1;
+
+        else if (currentLevel > 3 && currentLevel < 7)
+            dungeonType = 2;
     }
 
     public void SpawnRandomDrop(Transform spawnLocation)
@@ -209,13 +241,13 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     }
 
     public Camera GetMapCamera() { return _mapCamera; }
-    public Transform[] GetSpawnLocations() { return _spawnLocations; }
     public bool IsDemo() { return demoMode; }
     public bool IsDevMode() { return devMode; }
 
     public void ActivateDevMode()
     {
         devMode = true;
+
         Debug.Log("Player Activated Dev Mode");
         player.GetPlayerComponents().onScreenText.PrintText("Dev Mode Active", true);
     }

@@ -14,7 +14,7 @@ public class DropOnDestroy : MonoBehaviour
 
     public DroppableItems.itemType typeOfItem;
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         if (!disableDrop)
         {

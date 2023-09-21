@@ -15,8 +15,7 @@ public class DamageAndMovePlayer : MonoBehaviour
         {
             PlayerStats.Instance.AdjustHealth(-damageAmount, objectName);
 
-            player.transform.position = LocalGameManager.Instance.GetSpawnLocations()[3].position;
-            player.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[3].rotation;
+            LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.moveableSpawnPoint);
         }
     }
 }

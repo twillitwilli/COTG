@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 5995268887891400983}
   - component: {fileID: 3321356488980221287}
+  - component: {fileID: -5391845454890310348}
   - component: {fileID: -8341122160684523657}
   - component: {fileID: 7043093324542471910}
   - component: {fileID: 7886963248471422271}
@@ -117,6 +118,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-5391845454890310348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbad1cf510e40f489e615a47f3f51cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectData:
+    name: Potion
+    id: 7
 --- !u!114 &-8341122160684523657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fe6a531879b504ea8a97d4f9a3dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichItem: 5
+  grabbableItem: 11
   canBePlacedInPocket: 1
   throwableObject: 1
   currentHand: {fileID: 0}
@@ -140,6 +156,7 @@ MonoBehaviour:
   canGrabMat: {fileID: 2100000, guid: 794447b0b6f458f4889dd64fba8d9066, type: 2}
   canTelekineticGrab: 1
   telekineticGrabEffect: {fileID: 7981006751868843919, guid: 48fb13429b367224f94d2feff4f513b5, type: 3}
+  activeTelekinesis: []
 --- !u!114 &7043093324542471910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +299,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 214354330781041665}
-  - component: {fileID: 6125685525345275498}
   m_Layer: 2
   m_Name: Info Display
   m_TagString: Untagged
@@ -305,18 +321,6 @@ Transform:
   m_Father: {fileID: 400000}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
---- !u!114 &6125685525345275498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4171537226463811466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4fdeb7959ef094c983779bac22b4e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7031026383938788417
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,9 +481,21 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionType
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
       propertyPath: potionParent
       value: 
       objectReference: {fileID: 100000}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionParent
+      value: 
+      objectReference: {fileID: 100000}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionDescription
+      value: Health Potion
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
 --- !u!4 &3428261600691770737 stripped

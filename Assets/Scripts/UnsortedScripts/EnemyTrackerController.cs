@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using QTArts.AbstractClasses;
 
 public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 {

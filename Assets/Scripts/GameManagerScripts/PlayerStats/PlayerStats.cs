@@ -2,377 +2,356 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using QTArts.AbstractClasses;
+using QTArts.Interfaces;
 
-public class PlayerStats : MonoSingleton<PlayerStats>
+public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable<float>
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    [SerializeField]
+    VRPlayerController _player;
 
-    public float flightTesting;
-    public AnimationCurve flightVelocity;
-    private float _cooldownTimer;
-    private bool _iFrame, _setCoolDown, _isDead;
+    [SerializeField]
+    PlayerComponents _playerComponents;
 
-    // Base Stats
-    private float _maxHealth = 100, _currentHealth = 100, _playerSpeed = 4.0f, _sprintMultiplier = 2f, _crouchSpeedReduction = 2f, 
-        _jumpVelocity = 5f, _dashDistance = 8, _throwingForce = 3.5f;
+    public float cooldownTimer { get; set; }
+    public float Health { get; set; }
+    public bool godMode { get; set; }
 
-    //Attack Stats
-    private float _attackDamage, _minAttackDamage = 12, _maxAttackDamage = 16, _attackRange = 1, _attackCooldown = 6, _damageUpgrades, _rangeUpgrades, 
-        _magicFocus = 4, _elementalEffectChance = 10, _luck = 5, _critChance = 10, _critDamage = 0.25f, _specialEffectChance = 10, 
-        _aimAssist = 1, _currentMagicFocus;
+    public StatsData data { get; set; }
 
-    //Gold
-    private int _maxGold = 999, _currentGold;
+    float _minAttackDamage;
+    float _maxAttackDamage;
 
-    //Arcane Crystals
-    private int _maxArcaneCrystals = 16, _currentArcaneCrystals;
+    public int currentMagicFocus { get; set; }
 
-    //Keys
-    private int _maxKeys = 16, _currentKeys;
-
-    //Souls
-    private int _currentSouls;
-
-    //Save References
-    public int saveFile { get; private set; }
+    public int gold { get; set; }
+    public int arcaneCrystals { get; set; }
+    public int keyCrystals { get; set; }
+    public int souls { get; set; }
 
     private void Awake()
     {
-        LocalGameManager.playerCreated += SetNewPlayer;
+        data = new StatsData();
     }
 
     private void LateUpdate()
     {
-        if (_iFrame && IFrameCooldown()) { _iFrame = false; }
+        if (data.iFrame && CooldownDone())
+            data.iFrame = false;
     }
 
-    public void SetSaveFileIndex(int file) { saveFile = file;  }
-
-    public void SetNewPlayer(VRPlayerController player)
+    public void SetAllStats(StatsData newStats)
     {
-        _player = player;
-        _playerComponents = _player.GetPlayerComponents();
+        data = newStats;
+
+        SetAttackDamageRange();
     }
 
-    public float GetPlayerSpeed() { return _playerSpeed; }
-    public float GetSprintMultiplier() { return _sprintMultiplier; }
-    public float GetCrouchSpeedReduction() { return _crouchSpeedReduction; }
-    public float GetJumpVelocity() { return _jumpVelocity; }
-    public float GetDashDistance() { return _dashDistance; }
-    public float GetThrowingForce() { return _throwingForce; }
-
-    public void AdjustPlayerSpeed(float adjustmentValue)
+    public void AdjustSpecificStat(StatsData.StatAdjustmentType statToAdjust, float adjustmentValue)
     {
-        _playerSpeed += adjustmentValue;
-    }
-
-    public void StartIFrame()
-    {
-        _iFrame = true;
-        _cooldownTimer = 0.5f;
-    }
-
-    private bool IFrameCooldown()
-    {
-        if (_cooldownTimer > 0) { _cooldownTimer -= Time.deltaTime; }
-        if (_cooldownTimer <= 0)
+        switch (statToAdjust)
         {
-            _cooldownTimer = 0;
-            return true;
+            case StatsData.StatAdjustmentType.iFrameTime:
+
+                data.iFrameTime += adjustmentValue;
+
+                data.iFrameTime = CheckStatLimit(data.iFrameTime, 0.5f, 3);
+
+                break;
+
+            case StatsData.StatAdjustmentType.maxHealth:
+
+                data.maxHealth += adjustmentValue;
+
+                data.maxHealth = CheckStatLimit(data.maxHealth, 0, 1000);
+
+                Health = CheckStatLimit(Health, 0, data.maxHealth);
+
+                if (Health == 0)
+                    Death();
+
+                break;
+
+            case StatsData.StatAdjustmentType.playerSpeed:
+
+                data.playerSpeed += adjustmentValue;
+
+                data.playerSpeed = CheckStatLimit(data.playerSpeed, 3, 10);
+
+                break;
+
+            case StatsData.StatAdjustmentType.jumpVelocity:
+
+                data.jumpVelocity += adjustmentValue;
+
+                data.jumpVelocity = CheckStatLimit(data.jumpVelocity, 4, 15);
+
+                break;
+
+            case StatsData.StatAdjustmentType.dashDistance:
+
+                data.dashDistance += adjustmentValue;
+
+                data.dashDistance = CheckStatLimit(data.dashDistance, 6, 15);
+
+                break;
+
+            case StatsData.StatAdjustmentType.throwingForce:
+
+                data.throwingForce += adjustmentValue;
+
+                data.throwingForce = CheckStatLimit(data.throwingForce, 10, 20);
+
+                break;
+
+            case StatsData.StatAdjustmentType.attackDamage:
+
+                data.attackDamage += adjustmentValue;
+
+                data.attackDamage = CheckStatLimit(data.attackDamage, 0.5f, 150);
+
+                SetAttackDamageRange();
+
+                break;
+
+            case StatsData.StatAdjustmentType.attackRange:
+
+                data.attackRange += adjustmentValue;
+
+                data.attackRange = CheckStatLimit(data.attackRange, 1, 5);
+
+                break;
+
+            case StatsData.StatAdjustmentType.attackCooldown:
+
+                data.attackCooldown += adjustmentValue;
+
+                data.attackCooldown = CheckStatLimit(data.attackCooldown, 0.25f, 5);
+
+                break;
+
+            case StatsData.StatAdjustmentType.elementalEffectChance:
+
+                data.elementalEffectChance += adjustmentValue;
+
+                data.elementalEffectChance = CheckStatLimit(data.elementalEffectChance, 5, 100);
+
+                break;
+
+            case StatsData.StatAdjustmentType.luck:
+
+                data.luck += adjustmentValue;
+
+                data.luck = CheckStatLimit(data.luck, -10, 10);
+
+                break;
+
+            case StatsData.StatAdjustmentType.critChance:
+
+                data.critChance += adjustmentValue;
+
+                data.critChance = CheckStatLimit(data.critChance, 5, 100);
+
+                break;
+
+            case StatsData.StatAdjustmentType.critDamage:
+
+                data.critDamage += adjustmentValue;
+
+                data.critDamage = CheckStatLimit(data.critDamage, 10, 150);
+
+                break;
+
+            case StatsData.StatAdjustmentType.specialEffectChance:
+
+                data.specialEffectChance += adjustmentValue;
+
+                data.specialEffectChance = CheckStatLimit(data.specialEffectChance, 5, 100);
+
+                break;
+
+            case StatsData.StatAdjustmentType.aimAssist:
+
+                data.aimAssist += adjustmentValue;
+
+                data.aimAssist = CheckStatLimit(data.aimAssist, 0.5f, 3);
+
+                break;
+
+            case StatsData.StatAdjustmentType.magicFocus:
+
+                data.magicFocus += adjustmentValue;
+
+                data.magicFocus = CheckStatLimit(data.magicFocus, 1, 20);
+
+                break;
+
+            case StatsData.StatAdjustmentType.gold:
+
+                gold += (int)adjustmentValue;
+
+                gold = (int)CheckStatLimit(gold, 0, 999);
+
+                WalletController.Instance.UpdateGoldDisplay(gold);
+
+                break;
+
+            case StatsData.StatAdjustmentType.arcaneCrystals:
+
+                arcaneCrystals += (int)adjustmentValue;
+
+                arcaneCrystals = (int)CheckStatLimit(arcaneCrystals, 0, 16);
+
+                _playerComponents.bombKeyDisplay[_player.GetOffHandIndex()].AdjustDisplay(arcaneCrystals, 16);
+
+                break;
+
+            case StatsData.StatAdjustmentType.keys:
+
+                keyCrystals += (int)adjustmentValue;
+
+                keyCrystals = (int)CheckStatLimit(keyCrystals, 0, 16);
+
+                _playerComponents.bombKeyDisplay[_player.GetPrimaryHandIndex()].AdjustDisplay(keyCrystals, 16);
+
+                break;
         }
+    }
+
+    private float CheckStatLimit(
+        float currentValue, 
+        float minLimit, 
+        float maxLimit)
+    {
+        if (currentValue < minLimit)
+            return minLimit;
+
+        else if (currentValue > maxLimit)
+            return maxLimit;
+
+        else
+            return currentValue;
+    }
+
+    public bool CooldownDone(bool setTimer = false, float cooldownTime = 0.5f)
+    {
+        if (setTimer)
+            cooldownTimer = data.iFrameTime;
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
+        else
+            return true;
+
         return false;
     }
 
     public bool iFrame { get; private set; }
 
-    public float GetMaxHealth() { return _maxHealth; }
 
-    public void AdjustMaxHealth(float adjustmentValue)
+    public void Damage(float damageAmount)
     {
-        _maxHealth += adjustmentValue;
-        if (_currentHealth > _maxHealth) { AdjustHealth(-0.1f, "Sold Your Soul For Death"); }
-    }
-
-    public void AdjustHealth(float adjustmentValue, string deathMessage)
-    {
-        if (!_player.godMode && !_iFrame)
+        if (damageAmount < 0 && !godMode && !data.iFrame)
         {
-            if (adjustmentValue < 0) 
-            { 
-                _player.GetPlayerComponents().hitEffect.PlayerHit();
-                StartIFrame();
-            }
-            else
-                _playerComponents.hitEffect.CheckVision();
+            Health += damageAmount;
 
-            _currentHealth += adjustmentValue;
+            _player.GetPlayerComponents().hitEffect.PlayerHit();
 
-            if (_currentHealth <= 0)
-                PlayerDead(deathMessage);
+            data.iFrame = true;
 
-            else if (_currentHealth >= _maxHealth)
-                _currentHealth = _maxHealth;
+            if (Health <= 0)
+                Death();
+        }
 
-            foreach (PlayerHealthDisplay healthDisplay in _playerComponents.healthDisplay) { healthDisplay.AdjustHealthDisplay((_currentHealth / _maxHealth) * 100); }
+        else if (damageAmount > 0)
+            Health = CheckStatLimit(Health += damageAmount, 0, data.maxHealth);
+
+        foreach (PlayerHealthDisplay healthDisplay in _playerComponents.healthDisplay)
+        {
+            healthDisplay.AdjustHealthDisplay((Health / data.maxHealth) * 100);
         }
     }
 
-    public float GetCurrentHealth() { return _currentHealth; }
-
-    public bool IsPlayerDead() { return _isDead; }
-
-    public void PlayerDead(string deathMessage)
+    public void Death()
     {
         PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.deaths);
 
-        _playerComponents.onScreenText.PrintText(deathMessage, true);
-        _isDead = true;
+        data.isDead = true;
 
-        if (!MultiplayerManager.Instance.coop) 
+        if (!MultiplayerManager.Instance.coop)
         {
-            PlayerTotalStats.Instance.SavePlayerProgress(saveFile);
-            _playerComponents.resetPlayer.ResetPlayer(true); 
+            PlayerTotalStats.Instance.SavePlayerProgress(LocalGameManager.Instance.saveFile);
+            _playerComponents.resetPlayer.ResetPlayer(true);
         }
 
         else
             MultiplayerManager.Instance.GetCoopManager().PlayerDied();
     }
 
-    public void AdjustAttackDamage(float adjustmentValue)
+    public void Revive(float maxHealth, float health)
     {
-        _attackDamage += adjustmentValue;
-        _minAttackDamage = _attackDamage - 3;
-        _maxAttackDamage = _attackDamage + 3; 
+        data.isDead = false;
 
-        if (adjustmentValue > 0)
-            AdjustDamageUpgrades(1);
+        data.maxHealth = CheckStatLimit(maxHealth, 1, 100);
 
-        else
-            AdjustDamageUpgrades(-1);
-
-        if (_minAttackDamage <= 1f)
-            _minAttackDamage = 1f;
-
-        if (_maxAttackDamage <= 4f)
-            _maxAttackDamage = 4f;
+        Health = CheckStatLimit(health, 1, data.maxHealth);
     }
 
-    public float GetAttackDamage() { return _attackDamage; }
-
-    public float AttackDamage() { return Random.Range(_minAttackDamage, _maxAttackDamage); }
-
-    public float GetMinAttackDamage() { return _minAttackDamage; }
-    public float GetMaxAttackDamage() { return _maxAttackDamage; }
-
-    public void AdjustAttackRange(float adjustmentValue)
+    private void SetAttackDamageRange()
     {
-        _attackRange += adjustmentValue;
-
-        if (adjustmentValue > 0)
-            AdjustRangeUprades(1);
-
-        else AdjustRangeUprades(-1);
-
-        if (_attackRange <= 0.01f)
-            _attackRange = 0.01f;
+        _minAttackDamage = data.attackDamage * 0.9f;
+        _maxAttackDamage = data.attackDamage * 1.1f;
     }
 
-    public float GetAttackRange() { return _attackRange; }
+    public float AttackDamage() 
+    { 
+        float damageAmount = Random.Range(_minAttackDamage, _maxAttackDamage);
 
-    public void AdjustAttackCooldown(float adjustmentValue)
-    {
-        _attackCooldown += adjustmentValue;
-        if (_attackCooldown <= 0.01f)
-            _attackCooldown = 0.01f;
+        bool critHit = data.critChance > Random.Range(0, 100) ? true : false;
+
+        if (critHit)
+            damageAmount = (damageAmount * data.critDamage) + damageAmount;
+
+        return damageAmount;
     }
 
-    public float GetAttackCooldown() { return _attackCooldown; }
-
-    public void AdjustDamageUpgrades(float adjustmentValue)
+    public void ChargeMagicFocus()
     {
-        _damageUpgrades += adjustmentValue;
-
-        if (_damageUpgrades < 0)
-            _damageUpgrades = 0;
+        currentMagicFocus = (int)data.magicFocus;
     }
-
-    public float GetDamageUpgrades() { return _damageUpgrades; }
-
-    public void AdjustRangeUprades(float adjustmentValue)
-    {
-        _rangeUpgrades += adjustmentValue;
-
-        if (_rangeUpgrades < 0)
-            _rangeUpgrades = 0;
-    }
-
-    public float GetRangeUpgrades() { return _rangeUpgrades; }
- 
-    public void AdjustMagicFocus(int adjustmentValue)
-    {
-        _magicFocus += adjustmentValue;
-
-        if (_magicFocus <= 0)
-            _magicFocus = 1;
-
-        else if (_magicFocus >= 20)
-            _magicFocus = 20;
-
-        if (_playerComponents.minionSpawnLocation.currentMinion != null)
-            _playerComponents.minionSpawnLocation.CheckMinionStage();
-    }
-
-    public int GetMagicFocus() { return Mathf.RoundToInt(_magicFocus); }
-
-    public void AdjustCurrentMagicFocus(int adjustmentValue)
-    {
-        _currentMagicFocus += adjustmentValue;
-        if (_currentMagicFocus > _magicFocus) { _currentMagicFocus = _magicFocus; }
-    }
-
-    public int GetCurrentMagicFocus() { return Mathf.RoundToInt(_currentMagicFocus); }
-
-    public void AdjustElementalEffectChance(float adjustmentValue)
-    {
-        _elementalEffectChance += adjustmentValue;
-        if (_elementalEffectChance < 0) { _elementalEffectChance = 0; }
-    }
-
-    public float GetElementalEffectChance() { return _elementalEffectChance; }
-
-    public void AdjustLuck(float adjustmentValue)
-    {
-        _luck += adjustmentValue;
-        if (_luck < 0) { _luck = 0; }
-    }
-
-    public int GetLuck() { return Mathf.RoundToInt(_luck); }
-
-    public void AdjustCritChance(float adjustmentValue)
-    {
-        _critChance += adjustmentValue;
-        if (_critChance < 1) { _critChance = 1; }
-    }
-
-    public float GetCritChance() { return _critChance; }
-
-    public void AdjustCritDamage(float adjustmentValue)
-    {
-        _critDamage += adjustmentValue;
-        if (_critDamage < 0.1) { _critDamage = 0.1f; }
-    }
-
-    public float GetCritDamage() { return _critDamage; }
-
-    public void AdjustSpecialEffectChance(float adjustmentValue)
-    {
-        _specialEffectChance += adjustmentValue;
-        if (_specialEffectChance < 1) { _specialEffectChance = 1; }
-    }
-
-    public float GetSpecialChance() { return _specialEffectChance; }
-
-    public void AdjustAimAssist(float adjustmentValue)
-    {
-        _aimAssist += adjustmentValue;
-        if (_aimAssist < 0) { _aimAssist = 0; }
-    }
-
-    public float GetAimAssist() { return _aimAssist; }
-
-    public bool HitCrit()
-    {
-        int critHit = Random.Range(0, 100);
-        if (critHit < _critChance) { return true; }
-        else return false;
-    }
-
-    public bool SpecialAttack()
-    {
-        int specialHit = Random.Range(0, 100);
-
-        if (specialHit < _specialEffectChance) { return true; }
-        else return false;
-    }
-
-    public void AdjustGoldAmount(int gold)
-    {
-        _currentGold += gold;
-
-        if (_currentGold < 0) { _currentGold = 0; }
-        else if (_currentGold > _maxGold) { _currentGold = _maxGold; }
-
-        WalletController.Instance.UpdateGoldDisplay(_currentGold);
-    }
-
-    public int GetCurrentGold() { return _currentGold; }
-
-    public void AdjustArcaneCrystalAmount(int changeArcaneCrystalValue)
-    {
-        _currentArcaneCrystals += changeArcaneCrystalValue;
-
-        if (_currentArcaneCrystals < 0) { _currentArcaneCrystals = 0; }
-        else if (_currentArcaneCrystals > _maxArcaneCrystals) { _currentArcaneCrystals = _maxArcaneCrystals; }
-
-        _playerComponents.bombKeyDisplay[_player.GetOffHandIndex()].AdjustDisplay(_currentArcaneCrystals, _maxArcaneCrystals);
-    }
-
-    public int GetCurrentArcaneCrystals() { return _currentArcaneCrystals; }
-
-    public void AdjustKeyAmount(int changeKeyAmount)
-    {
-        _currentKeys += changeKeyAmount;
-
-        if (_currentKeys < 0) { _currentKeys = 0; }
-        else if (_currentKeys > _maxKeys) { _currentKeys = _maxKeys; }
-
-        _playerComponents.bombKeyDisplay[_player.GetPrimaryHandIndex()].AdjustDisplay(_currentKeys, _maxKeys);
-    }
-
-    public int GetCurrentKeys() { return _currentKeys; }
-
-    public void AdjustSoulAmount(int adjustmentValue)
-    {
-        _currentSouls += adjustmentValue;
-        if (_currentSouls < 0) { _currentSouls = 0; }
-    }
-
-    public int GetCurrentSouls() { return _currentSouls; }
 
     public async Task LoadStats(PlayerDungeonData loadedData)
     {
         // Base Stats
-        _maxHealth = loadedData.maxHealth;
-        _currentHealth = loadedData.currentHealth;
-        _playerSpeed = loadedData.playerSpeed;
-        _sprintMultiplier = loadedData.sprintMultiplier;
-        _crouchSpeedReduction = loadedData.crouchSpeedReduction;
-        _jumpVelocity = loadedData.jumpVelocity;
-        _dashDistance = loadedData.dashDistance;
+        data.maxHealth = loadedData.maxHealth;
+        Health = loadedData.currentHealth;
+        data.playerSpeed = loadedData.playerSpeed;
+        data.sprintSpeed = loadedData.sprintMultiplier;
+        data.crouchSpeed = loadedData.crouchSpeedReduction;
+        data.jumpVelocity = loadedData.jumpVelocity;
+        data.dashDistance = loadedData.dashDistance;
 
 
         // Attack Stats
-        _attackDamage = loadedData.attackDamage;
+        data.attackDamage = loadedData.attackDamage;
         _minAttackDamage = loadedData.minAttackDamage;
         _maxAttackDamage = loadedData.maxAttackDamage;
-        _attackRange = loadedData.attackRange;
-        _attackCooldown = loadedData.attackCooldown;
-        _damageUpgrades = loadedData.damageUpgrades;
-        _rangeUpgrades = loadedData.rangeUpgrades;
-        _magicFocus = loadedData.magicFocus;
-        _elementalEffectChance = loadedData.elementalEffectChance;
-        _luck = loadedData.luck;
-        _critChance = loadedData.critChance;
-        _critDamage = loadedData.critDamage;
-        _specialEffectChance = loadedData.specialEffectChance;
-        _aimAssist = loadedData.aimAssist;
+        data.attackRange = loadedData.attackRange;
+        data.attackCooldown = loadedData.attackCooldown;
+        data.magicFocus = loadedData.magicFocus;
+        data.elementalEffectChance = loadedData.elementalEffectChance;
+        data.luck = loadedData.luck;
+        data.critChance = loadedData.critChance;
+        data.critDamage = loadedData.critDamage;
+        data.specialEffectChance = loadedData.specialEffectChance;
+        data.aimAssist = loadedData.aimAssist;
 
 
         // Gold, Bombs, Keys, Souls
-        _currentGold = loadedData.currentGold;
-        _currentArcaneCrystals = loadedData.currentArcaneCrystals;
-        _currentKeys = loadedData.currentKeys;
-        _currentSouls = loadedData.currentSouls;
+        gold = loadedData.currentGold;
+        arcaneCrystals = loadedData.currentArcaneCrystals;
+        keyCrystals = loadedData.currentKeys;
+        souls = loadedData.currentSouls;
     }
 }

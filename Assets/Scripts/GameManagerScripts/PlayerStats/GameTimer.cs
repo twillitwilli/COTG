@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using QTArts.AbstractClasses;
 
 public class GameTimer : MonoSingleton<GameTimer>
 {

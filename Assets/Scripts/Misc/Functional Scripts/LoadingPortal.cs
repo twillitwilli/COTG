@@ -26,7 +26,7 @@ public class LoadingPortal : MonoBehaviour
     public PortalTo portalLocation;
 
     public bool movePlayerInScene, portalDisabled;
-    public int whichSpawnLocation;
+    public LocalGameManager.SpawnLocation whichSpawn;
 
     public List<GameObject> enableObjs, disableObjs;
 
@@ -141,7 +141,7 @@ public class LoadingPortal : MonoBehaviour
 
             case PortalTo.MoveToSpawn:
                 EnableObjects();
-                LocalGameManager.Instance.MovePlayer(whichSpawnLocation);
+                LocalGameManager.Instance.MovePlayer(whichSpawn);
                 DisableObjects();
                 break;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using unityEngine = UnityEngine;
+using QTArts.AbstractClasses;
 
 
 public class DungeonGenerationV3 : MonoSingleton<DungeonGenerationV3>

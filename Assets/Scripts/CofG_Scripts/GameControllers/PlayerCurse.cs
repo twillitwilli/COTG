@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.AbstractClasses;
 
 public class PlayerCurse : MonoSingleton<PlayerCurse>
 {
@@ -38,7 +39,7 @@ public class PlayerCurse : MonoSingleton<PlayerCurse>
     {
         if (!hasCurseImmunity)
         {
-            int applyCurse = Random.Range(1, 6 + PlayerStats.Instance.GetLuck());
+            int applyCurse = Random.Range(1, 6 + (int)PlayerStats.Instance.data.luck);
 
             if (applyCurse == 1)
             {
@@ -87,12 +88,16 @@ public class PlayerCurse : MonoSingleton<PlayerCurse>
         {
             case Curses.CurseOfUnknown:
                 return "Curse of Lost Knowledge";
+
             case Curses.CurseOfTheLost:
                 return "Curse of the Wanderer";
+
             case Curses.CurseOfDarkness:
                 return "Curse of Faded Sight";
+
             case Curses.CurseOfTheDungeon:
                 return "Curse of the Labyrinth";
+
             case Curses.CurseOfDispair:
                 return "Curse of Dispair";
         }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 8733107570246943544}
   - component: {fileID: 6009863590967200154}
+  - component: {fileID: -2651584981119869410}
   - component: {fileID: 328560854633263162}
   - component: {fileID: 5076811009595416196}
   - component: {fileID: 4354420082947660484}
@@ -117,6 +118,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2651584981119869410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbad1cf510e40f489e615a47f3f51cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectData:
+    name: Potion
+    id: 9
 --- !u!114 &328560854633263162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fe6a531879b504ea8a97d4f9a3dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichItem: 5
+  grabbableItem: 11
   canBePlacedInPocket: 1
   throwableObject: 1
   currentHand: {fileID: 0}
@@ -140,6 +156,7 @@ MonoBehaviour:
   canGrabMat: {fileID: 2100000, guid: eece88c146fbe74499ca229ab2eb1fc2, type: 2}
   canTelekineticGrab: 1
   telekineticGrabEffect: {fileID: 7981006751868843919, guid: 48fb13429b367224f94d2feff4f513b5, type: 3}
+  activeTelekinesis: []
 --- !u!114 &5076811009595416196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +205,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4833281685292012848}
-  - component: {fileID: 7175132952598757695}
   m_Layer: 2
   m_Name: Info Display
   m_TagString: Untagged
@@ -211,18 +227,6 @@ Transform:
   m_Father: {fileID: 400000}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
---- !u!114 &7175132952598757695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263751963239527128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4fdeb7959ef094c983779bac22b4e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4082394580382794425
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,9 +485,21 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionType
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
       propertyPath: potionParent
       value: 
       objectReference: {fileID: 100000}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionParent
+      value: 
+      objectReference: {fileID: 100000}
+    - target: {fileID: 6489828643089900032, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
+      propertyPath: _potionDescription
+      value: Lucky Potion
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a90f69767fd06be4db5ad7baa6317b21, type: 3}
 --- !u!4 &5586016145766640603 stripped

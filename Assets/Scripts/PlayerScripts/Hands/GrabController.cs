@@ -7,17 +7,18 @@ public class GrabController : MonoBehaviour
 {
     public Transform grabbableSpawnLocation;
 
-    [SerializeField]
-    private VRPlayerHand _hand, _oppositeHand;
+    private VRPlayerController _player;
+    private VRPlayerHand _hand;
+    private ClimbingController _climbController;
 
     [SerializeField]
-    private VRPlayerController _player;
+    private VRPlayerHand _oppositeHand;
 
     [SerializeField]
     private GrabController _oppositeHandGrabController;
 
     [SerializeField]
-    private ClimbingController _climbController, _oppositeHandClimbController;
+    private ClimbingController _oppositeHandClimbController;
 
     [SerializeField]
     private MenuRaycast _menuRaycast;
@@ -33,6 +34,13 @@ public class GrabController : MonoBehaviour
 
     public TelekinesisRaycast telekinesisController;
     public LayerMask ignoreLayers;
+
+    private void Awake()
+    {
+        _player = LocalGameManager.Instance.player;
+        _hand = GetComponent<VRPlayerHand>();
+        _climbController = GetComponent<ClimbingController>();
+    }
 
     public void UseGrabController(bool buttonDown)
     {

@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 5875809837745029033}
   - component: {fileID: 5875809837746027881}
   - component: {fileID: 5875809839798391647}
+  - component: {fileID: 7959824604869091383}
   - component: {fileID: 5875809839798391644}
   - component: {fileID: 2022724821061230104}
   m_Layer: 12
@@ -231,6 +232,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.06330057
   m_Center: {x: 0, y: 0.0000038146973, z: -0.0000002393499}
+--- !u!114 &7959824604869091383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5875809837748216745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbad1cf510e40f489e615a47f3f51cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectData:
+    name: Heart
+    id: 2
 --- !u!114 &5875809839798391644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,16 +259,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c5d62e2d1649549afb1d0a116e074b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
-  statDisplay: {fileID: 249630848858775620}
-  shopItem: 0
-  petHolding: 0
-  petCanPickup: 1
-  store: {fileID: 0}
   dropParent: {fileID: 0}
-  itemPrice: 0
-  valueOfItem: 0
-  pet: {fileID: 0}
+  itemType: 0
+  _statDisplay: {fileID: 0}
+  _shopItem: 0
+  _petHolding: 0
+  _petCanPickup: 0
 --- !u!114 &2022724821061230104
 MonoBehaviour:
   m_ObjectHideFlags: 0

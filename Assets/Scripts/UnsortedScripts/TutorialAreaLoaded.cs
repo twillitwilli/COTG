@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class TutorialAreaLoaded : MonoBehaviour
 {
-
     public List<GameObject> turnOnIfReturningPlayer;
 
     private async void Start()
@@ -13,14 +12,12 @@ public class TutorialAreaLoaded : MonoBehaviour
         await Task.Delay(1000);
 
         AreaLoaded();
-
-        Invoke("AreaLoaded", 1);
     }
 
     public void AreaLoaded()
     {
         LocalGameManager.Instance.AreaLoaded();
-        LocalGameManager.Instance.MovePlayer(1);
+        LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.spawnPoint);
 
         PlayerStats.Instance.AdjustMaxHealth(1000);
         PlayerStats.Instance.AdjustHealth(99999999, " ");

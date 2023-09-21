@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.Interfaces;
 
-public class DamageOverTimeNode : Cooldown
+public class DamageOverTimeNode : iCooldownable
 {
+    public float cooldownTimer { get; set; }
+
     [HideInInspector] 
     public bool forPlayer;
     
@@ -22,28 +25,37 @@ public class DamageOverTimeNode : Cooldown
     [HideInInspector] 
     public float damage;
 
-    public void Start()
+    private void Start()
     {
-        Destroy(gameObject, howLong);
+        
     }
 
     private void LateUpdate()
     {
-        if (!CooldownCompleted())
+        if (CooldownDone())
         {
             if (forPlayer)
-            {
                 PlayerStats.Instance.AdjustHealth(-damage, nameOfAttack);
 
-                CooldownCompleted(0.5f, true);
-            }
             else
-            {
                 enemy.enemyHealth.AdjustHealth(-damage, false);
 
-                CooldownCompleted(0.5f, true);
-            }
+            CooldownDone(true, 0.5f);
         }
+    }
+
+    public bool CooldownDone(bool setTimer = false, float cooldownTime = 0)
+    {
+        if (setTimer)
+            cooldownTimer = cooldownTime;
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
+        else
+            return true;
+
+        return false;
     }
 
     private void OnDestroy()

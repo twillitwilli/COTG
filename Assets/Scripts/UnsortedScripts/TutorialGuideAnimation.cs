@@ -1,17 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.Interfaces;
 
-public class TutorialGuideAnimation : Cooldown
+public class TutorialGuideAnimation : MonoBehaviour, iCooldownable
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private Cooldown cooldown;
-    [SerializeField] private Transform projectileSpawn;
-    [SerializeField] private GameObject projectilePrefab;
+    public float cooldownTimer { get; set; }
+
+    [SerializeField] 
+    private Animator animator;
+
+    [SerializeField] 
+    private Transform projectileSpawn;
+
+    [SerializeField] 
+    private GameObject projectilePrefab;
 
     public void LateUpdate()
     {
-        if (CooldownCompleted()) { Attack(); }
+        if (CooldownDone())
+            Attack();
+    }
+
+    public bool CooldownDone(bool setTimer = false, float cooldownTime = 0)
+    {
+        if (setTimer)
+            cooldownTimer = cooldownTime;
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
+        else
+            return true;
+
+        return false;
+    }
+
+    public void Attack()
+    {
+        ChangeAnimationClip("Attack1");
     }
 
     public void DisableSelf()
@@ -23,12 +50,7 @@ public class TutorialGuideAnimation : Cooldown
     {
         ChangeAnimationClip("Idle");
 
-        CooldownCompleted(1, true);
-    }
-
-    public void Attack()
-    {
-        ChangeAnimationClip("Attack1");
+        CooldownDone(true, 1);
     }
 
     public void ShootProjectile()

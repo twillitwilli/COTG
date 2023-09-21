@@ -46,7 +46,7 @@ public class SpellCasting : MonoBehaviour
             Vector3 centerPoint = (handCenter[0].position + handCenter[1].position) / 2;
             centerOfHands.position = centerPoint;
 
-            if (PlayerStats.Instance.GetCurrentMagicFocus() < PlayerStats.Instance.GetMagicFocus())
+            if (PlayerStats.Instance.currentMagicFocus < PlayerStats.Instance.data.magicFocus)
             {
                 float distance = Vector3.Distance(handCenter[0].position, handCenter[1].position);
 
@@ -84,7 +84,7 @@ public class SpellCasting : MonoBehaviour
                 SpawnSpellCharges(i, currentMagic);
 
             else
-                SetSpellFocus(_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual.GetComponent<ParticleSystem>(), Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus()));
+                SetSpellFocus(_playerComponents.GetHand(i).GetSpellCastingForHands().spellReadyVisual.GetComponent<ParticleSystem>(), (int)(PlayerStats.Instance.data.magicFocus));
 
             _playerComponents.GetHand(i).GetSpellCastingForHands().magicActive = true;
         }
@@ -99,7 +99,7 @@ public class SpellCasting : MonoBehaviour
         spellReady.transform.SetParent(_playerComponents.GetHand(hand).GetSpellCastingForHands().magicChargesSpawn);
         ResetTransform(spellReady);
         _playerComponents.GetHand(hand).GetSpellCastingForHands().spellReadyVisual = spellReady;
-        SetSpellFocus(spellReady.GetComponent<ParticleSystem>(), Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus()));
+        SetSpellFocus(spellReady.GetComponent<ParticleSystem>(), Mathf.RoundToInt(PlayerStats.Instance.data.magicFocus));
     }
 
     private void ResetTransform(GameObject obj)
@@ -120,7 +120,7 @@ public class SpellCasting : MonoBehaviour
         if (chargingSpell)
             Destroy(chargingSpell);
 
-        castTime = PlayerStats.Instance.GetAttackCooldown();
+        castTime = PlayerStats.Instance.data.attackCooldown;
     }
 
     public void CalibrateSettings()

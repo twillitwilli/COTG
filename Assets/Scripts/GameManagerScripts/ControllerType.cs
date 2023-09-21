@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using System.Threading.Tasks;
+using QTArts.AbstractClasses;
 
 public class ControllerType : MonoSingleton<ControllerType>
 {

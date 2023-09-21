@@ -1,18 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.AbstractClasses;
 
 public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 {
-    [SerializeField]
-    private LocalGameManager _gameManager;
-
-    [SerializeField] 
-    private PlayerStats _playerStats;
-
-    [SerializeField] 
-    private EnemyTrackerController _enemyTrackerController;
-
     private VRPlayerController _player;
 
     public enum PotionType 
@@ -84,7 +76,8 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
     {
         if (!drankRainbowPotion)
         {
-            if (_player == null) { _player = _gameManager.player; }
+            if (_player == null)
+                _player = LocalGameManager.Instance.player;
 
             lastPotionDrank = whichPotionEffect;
 
@@ -131,7 +124,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 
             case PotionType.health:
                 //onScreenText.PrintText("Blood of the fallen", true);
-                _playerStats.AdjustHealth(100, "Healing Item");
+                PlayerStats.Instance.AdjustHealth(100, "Healing Item");
                 break;
 
             case PotionType.angelic:
@@ -141,22 +134,23 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 
             case PotionType.lucky:
                 //onScreenText.PrintText("Seems lucky", true);
-                _playerStats.AdjustLuck(5);
+                PlayerStats.Instance.AdjustLuck(5);
                 break;
         }
     }
 
     public void DeathEffect()
     {
-        if (_enemyTrackerController.spawnedEnemies.Count > 0)
+        if (EnemyTrackerController.Instance.spawnedEnemies.Count > 0)
         {
-            foreach (GameObject enemy in _enemyTrackerController.spawnedEnemies) { enemy.GetComponentInChildren<EnemyHealth>().AdjustHealth(-375, _player); }
+            foreach (GameObject enemy in EnemyTrackerController.Instance.spawnedEnemies) 
+            { 
+                enemy.GetComponentInChildren<EnemyHealth>().AdjustHealth(-375, _player); 
+            }
         }
 
-        if (_enemyTrackerController.spawnedBoss != null)
-        {
-            _enemyTrackerController.spawnedBoss.GetComponentInChildren<EnemyHealth>().AdjustHealth(-375, _player);
-        }
+        if (EnemyTrackerController.Instance.spawnedBoss != null)
+            EnemyTrackerController.Instance.spawnedBoss.GetComponentInChildren<EnemyHealth>().AdjustHealth(-375, _player);
     }
 
     public void SightEffect()
@@ -204,7 +198,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
                 break;
 
             default:
-                _playerStats.AdjustLuck(5);
+                PlayerStats.Instance.AdjustLuck(5);
                 break;
         }
     }
@@ -216,13 +210,13 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
             case TempEffect.movement:
                 effectBoosts[0] = true;
                 movementBoost += 2;
-                _playerStats.AdjustPlayerSpeed(2);
+                PlayerStats.Instance.AdjustPlayerSpeed(2);
                 break;
 
             case TempEffect.strength:
                 effectBoosts[1] = true;
                 strengthBoost += 15;
-                _playerStats.AdjustAttackDamage(15);
+                PlayerStats.Instance.AdjustAttackDamage(15);
                 break;
 
             case TempEffect.flight:
@@ -233,7 +227,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
             case TempEffect.magicFocus:
                 effectBoosts[3] = true;
                 magicFocusBoost += 3;
-                _playerStats.AdjustMagicFocus(3);
+                PlayerStats.Instance.AdjustMagicFocus(3);
                 break;
 
             case TempEffect.godMode:
@@ -253,13 +247,13 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
     {
         if (effectBoosts[0])
         {
-            _playerStats.AdjustPlayerSpeed(-movementBoost);
+            PlayerStats.Instance.AdjustPlayerSpeed(-movementBoost);
             movementBoost = 0;
         }
 
         if (effectBoosts[1])
         {
-            _playerStats.AdjustAttackDamage(-strengthBoost);
+            PlayerStats.Instance.AdjustAttackDamage(-strengthBoost);
             strengthBoost = 0;
         }
 
@@ -270,7 +264,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 
         if (effectBoosts[3])
         {
-            _playerStats.AdjustMagicFocus(-Mathf.RoundToInt(magicFocusBoost));
+            PlayerStats.Instance.AdjustMagicFocus(-Mathf.RoundToInt(magicFocusBoost));
             magicFocusBoost = 0;
         }
 

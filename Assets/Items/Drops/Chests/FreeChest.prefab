@@ -140,12 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccabe0cb05246ea428f7e2cd1f9a93f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playOnStart: 1
-  playOnEnable: 0
-  sfxType: 
-  soundClips:
-  - {fileID: 8300000, guid: ff541754678c5864ebcf7a344e6e1c2e, type: 3}
-  sfxPlayer: {fileID: 0}
 --- !u!1 &5672723471085064910
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,6 +727,7 @@ GameObject:
   - component: {fileID: 5672723472025271670}
   - component: {fileID: 5672723471278590341}
   - component: {fileID: 5672723471278590342}
+  - component: {fileID: 4858973204733963884}
   - component: {fileID: 5672723471278590343}
   - component: {fileID: 5672723471278590456}
   - component: {fileID: 8329614155129501955}
@@ -813,6 +808,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &4858973204733963884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672723472032681662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbad1cf510e40f489e615a47f3f51cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectData:
+    name: Chest
+    id: 0
 --- !u!114 &5672723471278590343
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class SpecialAttack : MonoBehaviour
 
     public virtual void Explosion()
     {
-        float explosionDamage = PlayerStats.Instance.GetAttackDamage();
+        float explosionDamage = PlayerStats.Instance.AttackDamage();
         enemyHealthModifier.healthValue = (-1 * (explosionDamage + (explosionDamage * 0.5f)));
         Destroy(gameObject, 6);
     }
@@ -22,8 +22,8 @@ public class SpecialAttack : MonoBehaviour
     public virtual void Rain()
     {
         transform.localEulerAngles = new Vector3(-90, 0, 0);
-        _particleHitEnemy.healthAdjustment = (-1 * (PlayerStats.Instance.GetAttackDamage() * 0.65f));
-        Destroy(gameObject, PlayerStats.Instance.GetMagicFocus() * 2);
+        _particleHitEnemy.healthAdjustment = (-1 * (PlayerStats.Instance.AttackDamage() * 0.65f));
+        Destroy(gameObject, PlayerStats.Instance.data.magicFocus * 2);
     }
 
     public virtual void Summoning()
@@ -43,6 +43,6 @@ public class SpecialAttack : MonoBehaviour
 
     public virtual void AOEGround()
     {
-        Destroy(gameObject, PlayerStats.Instance.GetMagicFocus() * 2);
+        Destroy(gameObject, PlayerStats.Instance.data.magicFocus * 2);
     }
 }

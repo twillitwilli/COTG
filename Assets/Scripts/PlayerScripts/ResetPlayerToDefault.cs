@@ -31,8 +31,7 @@ public class ResetPlayerToDefault : MonoBehaviour
         foreach (VRPlayerHand hand in playerComponents.GetBothHands()) { hand.EmptyHand(); }
 
         //move player to spawn location
-        LocalGameManager.Instance.player.gameObject.transform.position = LocalGameManager.Instance.GetSpawnLocations()[0].position;
-        LocalGameManager.Instance.player.gameObject.transform.rotation = LocalGameManager.Instance.GetSpawnLocations()[0].rotation;
+        LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.spawnPoint);
 
         //reset music to default
         AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Forest);

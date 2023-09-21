@@ -109,16 +109,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c5d62e2d1649549afb1d0a116e074b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 4
-  statDisplay: {fileID: 0}
-  shopItem: 1
-  petHolding: 0
-  petCanPickup: 0
-  store: {fileID: 0}
   dropParent: {fileID: 0}
-  itemPrice: 0
-  valueOfItem: 0
-  pet: {fileID: 0}
+  itemType: 4
+  _statDisplay: {fileID: 0}
+  _shopItem: 0
+  _petHolding: 0
+  _petCanPickup: 0
 --- !u!1 &5222447434136830335
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +318,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7212655657650947321}
-  - component: {fileID: 3386644681021554974}
   m_Layer: 2
   m_Name: Info Display
   m_TagString: Untagged
@@ -345,15 +340,3 @@ Transform:
   m_Father: {fileID: 400000}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: -0.001, z: 180.001}
---- !u!114 &3386644681021554974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8200170232881634190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e4fdeb7959ef094c983779bac22b4e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

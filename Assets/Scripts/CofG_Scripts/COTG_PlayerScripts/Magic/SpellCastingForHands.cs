@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SpellCastingForHands : MonoBehaviour
@@ -73,7 +74,7 @@ public class SpellCastingForHands : MonoBehaviour
 
         var maxParticles = magicFocusCharges.main;
 
-        if (maxParticles.maxParticles == PlayerStats.Instance.GetMagicFocus()) { maxCharge = true; }
+        if (maxParticles.maxParticles == PlayerStats.Instance.data.magicFocus) { maxCharge = true; }
 
         else { maxCharge = false; }
 
@@ -102,16 +103,20 @@ public class SpellCastingForHands : MonoBehaviour
         }
     }
 
-    private void CastSorcererSpells()
+    private async void CastSorcererSpells()
     {
-        if (PlayerStats.Instance.GetCurrentMagicFocus() <= 0) { return; }
+        if (PlayerStats.Instance.currentMagicFocus <= 0)
+            return;
+
         else
         {
-            PlayerStats.Instance.AdjustCurrentMagicFocus(-1);
+            PlayerStats.Instance.currentMagicFocus--;
 
             CastChargedSpell(MagicController.Instance.magicIdx);
 
-            Invoke("CastSorcererSpells", 0.25f);
+            await Task.Delay(250);
+
+            CastSorcererSpells();
         }
     }
 
@@ -166,13 +171,16 @@ public class SpellCastingForHands : MonoBehaviour
             cooldownTimer = 2f;
             tickDownMagicFocus = false;
         }
-        if (cooldownTimer > 0) { cooldownTimer -= Time.deltaTime; }
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
         else if (cooldownTimer <= 0)
         {
             cooldownTimer = 0;
             var maxParticles = magicFocusCharges.main;
             maxParticles.maxParticles += -1;
-            PlayerStats.Instance.AdjustCurrentMagicFocus(-1);
+            PlayerStats.Instance.currentMagicFocus--;
             tickDownMagicFocus = true;
         }
     }

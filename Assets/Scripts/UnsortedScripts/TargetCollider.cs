@@ -16,6 +16,7 @@ public class TargetCollider : MonoBehaviour
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
+
         if (targetController != null)
         {
             targetController.targets.Add(gameObject);
@@ -30,12 +31,15 @@ public class TargetCollider : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (targetCooldown) { targetCooldown = TargetCooldown(); }
+        if (targetCooldown)
+            targetCooldown = TargetCooldown();
     }
 
     public void TargetHit()
     {
-        if (targetController != null) { targetController.TargetHit(gameObject); }
+        if (targetController != null)
+            targetController.TargetHit(gameObject);
+
         if (destroyOnHit) 
         {
             boxCollider.enabled = false;
@@ -43,6 +47,7 @@ public class TargetCollider : MonoBehaviour
             targetDestroyedEffect.SetActive(true);
             Destroy(gameObject, 3); 
         }
+
         else
         {
             boxCollider.enabled = false;
@@ -60,7 +65,10 @@ public class TargetCollider : MonoBehaviour
             cooldownTimer = cooldownBeforeRespawn;
             setCooldown = false;
         }
-        if (cooldownTimer > 0) { cooldownTimer -= Time.deltaTime; }
+
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
+
         else if (cooldownTimer <= 0)
         {
             cooldownTimer = 0;
@@ -69,6 +77,7 @@ public class TargetCollider : MonoBehaviour
             effect.SetActive(true);
             return false;
         }
+
         return true;
     }
 }

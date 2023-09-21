@@ -78,6 +78,7 @@ public class Item : MonoBehaviour
                 Debug.Log("Bad Luck");
                 _statDisplay.UpdateStateDisplay("Bad Luck");
             }
+
             else if (_valueOfItem < 0)
             {
                 Debug.Log("Cursed Luck");
