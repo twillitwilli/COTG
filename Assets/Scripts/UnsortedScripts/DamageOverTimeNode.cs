@@ -35,7 +35,7 @@ public class DamageOverTimeNode : iCooldownable
         if (CooldownDone())
         {
             if (forPlayer)
-                PlayerStats.Instance.AdjustHealth(-damage, nameOfAttack);
+                PlayerStats.Instance.Damage(-damage);
 
             else
                 enemy.enemyHealth.AdjustHealth(-damage, false);

@@ -26,7 +26,7 @@ public class PlayerStaff : MonoBehaviour
         }
 
         var maxParticles = _magicFocus.main;
-        maxParticles.maxParticles = Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus());
+        maxParticles.maxParticles = Mathf.RoundToInt(PlayerStats.Instance.data.magicFocus);
     }
 
     public bool AttackCharge()
@@ -42,7 +42,7 @@ public class PlayerStaff : MonoBehaviour
             _currentSpellChargeEffect.transform.localEulerAngles = new Vector3(0, 0, 0);
             _currentSpellChargeEffect.transform.localScale = new Vector3(2, 2, 2);
 
-            _cooldownTimer = PlayerStats.Instance.GetAttackCooldown();
+            _cooldownTimer = PlayerStats.Instance.data.attackCooldown;
             _setAttackCooldown = false;
         }
 

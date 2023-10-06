@@ -119,9 +119,9 @@ public class DevOptions : MonoBehaviour
 
     private void GiveItem()
     {
-        PlayerStats.Instance.AdjustGoldAmount(999);
-        PlayerStats.Instance.AdjustArcaneCrystalAmount(999);
-        PlayerStats.Instance.AdjustKeyAmount(999);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, 999);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.arcaneCrystals, 999);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.keys, 999);
     }
 
     private void KillEnemies()
@@ -136,7 +136,7 @@ public class DevOptions : MonoBehaviour
 
     private void GiveHealth()
     {
-        PlayerStats.Instance.AdjustHealth(9999, "*@#&$&%#&@!#@)*)#@!!");
+        PlayerStats.Instance.Damage(9999);
     }
 
     private void ResetPlayerSave()

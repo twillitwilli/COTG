@@ -2,21 +2,52 @@
 public class PlayerDungeonData
 {
     // Dungeon Stats
-    public int difficulty, dungeonType, currentLevel;
+    public int 
+        difficulty, 
+        dungeonType, 
+        currentLevel;
 
     // Base Stats
-    public float maxHealth, currentHealth, playerSpeed, sprintMultiplier, crouchSpeedReduction, jumpVelocity, dashDistance, throwingForce;
+    public float
+        maxHealth,
+        currentHealth,
+        playerSpeed,
+        sprintMultiplier,
+        crouchSpeedReduction,
+        jumpVelocity,
+        dashDistance,
+        throwingForce,
+        iFrameTime;
 
     //Attack Stats
-    public float attackDamage, minAttackDamage, maxAttackDamage, attackRange, attackCooldown, damageUpgrades, rangeUpgrades,
-        magicFocus, elementalEffectChance, luck, critChance, critDamage, specialEffectChance, aimAssist;
+    public float 
+        attackDamage, 
+        attackRange, 
+        attackCooldown, 
+        damageUpgrades, 
+        rangeUpgrades,
+        magicFocus, 
+        elementalEffectChance, 
+        luck, 
+        critChance, 
+        critDamage, 
+        specialEffectChance, 
+        aimAssist;
 
     //Gold, Bombs, Keys, Souls
-    public int currentGold;
-    public int currentArcaneCrystals;
-    public int currentKeys;
-    public int currentSouls;
+    public int 
+        currentGold,
+        currentArcaneCrystals,
+        currentKeys,
+        currentSouls;
 
     // Class & Magic Stats
-    public int playerClass, magicType, statusEffect, dashEffect, collisionEffect, specialEffect, castingType;
+    public int 
+        playerClass, 
+        magicType, 
+        statusEffect, 
+        dashEffect, 
+        collisionEffect, 
+        specialEffect, 
+        castingType;
 }

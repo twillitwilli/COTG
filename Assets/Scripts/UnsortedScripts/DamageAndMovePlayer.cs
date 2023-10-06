@@ -13,7 +13,7 @@ public class DamageAndMovePlayer : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
-            PlayerStats.Instance.AdjustHealth(-damageAmount, objectName);
+            PlayerStats.Instance.Damage(-damageAmount);
 
             LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.moveableSpawnPoint);
         }

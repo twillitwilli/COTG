@@ -64,8 +64,8 @@ public class MinionAnimator : MonoBehaviour
 
         projectileSettings.minionProjectile = true;
         projectileSettings.attackDamage = minionController.MinionAttackDamage();
-        projectileSettings.projectileRange = PlayerStats.Instance.GetAttackRange();
-        projectileSettings.aimAssist = PlayerStats.Instance.GetAimAssist();
+        projectileSettings.projectileRange = PlayerStats.Instance.data.attackRange;
+        projectileSettings.aimAssist = PlayerStats.Instance.data.aimAssist;
         projectileSettings.disableCrit = true;
     }
 

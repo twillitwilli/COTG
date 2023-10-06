@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private StorePrices _storePrices;
-    private PetPickup _pet;
+    StorePrices _storePrices;
+    PetPickup _pet;
 
     [HideInInspector] 
     public GameObject dropParent;
@@ -23,12 +23,17 @@ public class Item : MonoBehaviour
     public ItemType itemType;
 
     [SerializeField] 
-    private ItemStatDisplay _statDisplay;
+    ItemStatDisplay _statDisplay;
 
     [SerializeField] 
-    private bool _shopItem, _petHolding, _petCanPickup;
+    bool 
+        _shopItem, 
+        _petHolding, 
+        _petCanPickup;
 
-    private int _itemPrice, _valueOfItem;
+    int 
+        _itemPrice, 
+        _valueOfItem;
 
     public void Start()
     {
@@ -47,7 +52,7 @@ public class Item : MonoBehaviour
                     break;
 
                 case ItemType.arcaneEnergy:
-                    if (PlayerStats.Instance.GetLuck() > 0)
+                    if (PlayerStats.Instance.data.luck > 0)
                         _valueOfItem = ArcaneValue();
 
                     else
@@ -57,7 +62,7 @@ public class Item : MonoBehaviour
                     break;
 
                 case ItemType.key:
-                    if (PlayerStats.Instance.GetLuck() > 0)
+                    if (PlayerStats.Instance.data.luck > 0)
                         _valueOfItem = KeyValue();
 
                     else
@@ -118,11 +123,11 @@ public class Item : MonoBehaviour
             else
             {
                 WalletItem wallet;
-                if (other.gameObject.TryGetComponent<WalletItem>(out wallet) && PlayerStats.Instance.GetCurrentGold() >= _itemPrice)
+                if (other.gameObject.TryGetComponent<WalletItem>(out wallet) && PlayerStats.Instance.data.currentGold >= _itemPrice)
                 {
                     ChangeStat();
 
-                    PlayerStats.Instance.AdjustGoldAmount(-_itemPrice);
+                    PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -_itemPrice);
 
                     if (_storePrices.CheckStoreRefill())
                         _storePrices.StoreRefill();
@@ -194,11 +199,11 @@ public class Item : MonoBehaviour
         switch (itemType)
         {
             case ItemType.health:
-                PlayerStats.Instance.AdjustHealth(_valueOfItem, "Healing Item");
+                PlayerStats.Instance.Damage(_valueOfItem);
                 break;
 
             case ItemType.gold:
-                PlayerStats.Instance.AdjustGoldAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, _valueOfItem);
 
                 switch (LocalGameManager.Instance.currentGameMode)
                 {
@@ -210,11 +215,11 @@ public class Item : MonoBehaviour
                 break;
 
             case ItemType.arcaneEnergy:
-                PlayerStats.Instance.AdjustArcaneCrystalAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.arcaneCrystals, _valueOfItem);
                 break;
 
             case ItemType.key:
-                PlayerStats.Instance.AdjustKeyAmount(_valueOfItem);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.keys, _valueOfItem);
                 break;
 
             case ItemType.potion:
@@ -222,7 +227,7 @@ public class Item : MonoBehaviour
                 break;
 
             case ItemType.soul:
-                PlayerStats.Instance.AdjustSoulAmount(1);
+                PlayerStats.Instance.data.currentSouls++;
                 PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.totalSouls);
                 break;
         }
@@ -233,23 +238,23 @@ public class Item : MonoBehaviour
         int healthValue = LocalGameManager.Instance.currentGameMode == LocalGameManager.GameMode.master ?
             Random.Range(25, 35) : Random.Range(20, 25);
 
-        return Mathf.RoundToInt(healthValue + (PlayerStats.Instance.GetLuck() * 0.5f));
+        return Mathf.RoundToInt(healthValue + (PlayerStats.Instance.data.luck * 0.5f));
     }
 
     public int GoldValue()
     {
-        int goldValue = (Random.Range(3, 10) + Mathf.RoundToInt(PlayerStats.Instance.GetLuck() * 3));
+        int goldValue = (Random.Range(3, 10) + Mathf.RoundToInt(PlayerStats.Instance.data.luck * 3));
         return goldValue;
     }
 
     public int ArcaneValue()
     {
-        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.GetLuck())));
+        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.data.luck)));
     }
 
     public int KeyValue()
     {
-        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.GetLuck())));
+        return Random.Range(1, (Mathf.RoundToInt(PlayerStats.Instance.data.luck)));
     }
 }
 

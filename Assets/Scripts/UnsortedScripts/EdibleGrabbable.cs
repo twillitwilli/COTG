@@ -20,7 +20,7 @@ public class EdibleGrabbable : MonoBehaviour
             switch (effect)
             {
                 case EdibleEffect.health:
-                    PlayerStats.Instance.AdjustHealth(value, "Food Poisoning");
+                    PlayerStats.Instance.Damage(value);
                     break;
             }
         }

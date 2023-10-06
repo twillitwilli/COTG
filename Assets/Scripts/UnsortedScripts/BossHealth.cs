@@ -22,26 +22,26 @@ public class BossHealth : EnemyHealth
             if (adjustmentValue < 0)
                 WasHit();
 
-            currentHealth += adjustmentValue;
+            Health += adjustmentValue;
             
-            if (currentHealth <= 0)
+            if (Health <= 0)
             {
                 Debug.Log("Enemy Died");
 
                 if (!coopSync)
                     AdjustTotalStats();
 
-                Dead();
+                Death();
             }
 
-            else if (currentHealth >= maxHealth)
-                currentHealth = maxHealth;
+            else if (Health >= maxHealth)
+                Health = maxHealth;
 
             HealthDisplay();
         }
     }
 
-    public override void Dead()
+    public override void Death()
     {
         isDead = true;
         bossController.dropOnDestroy.disableDrop = false;

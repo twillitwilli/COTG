@@ -27,7 +27,7 @@ public class SaveFileManager : MonoBehaviour
 
     public void LoadFile(int file, bool fileExists)
     {
-        PlayerStats.Instance.SetSaveFileIndex(file);
+        player.playerSaveFile = file;
 
         if (fileExists)
         {

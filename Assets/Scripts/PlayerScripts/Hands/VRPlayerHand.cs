@@ -176,12 +176,12 @@ public class VRPlayerHand : MonoBehaviour
 
         if (!isTelekineticThrow)
         {
-            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up) * _handVel * PlayerStats.Instance.GetThrowingForce());
+            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up) * _handVel * PlayerStats.Instance.data.throwingForce);
             rb.angularVelocity = _handAngVel;
         }
 
         else
-            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up)) * _handVel * PlayerStats.Instance.GetThrowingForce() * 4;
+            rb.velocity = (Quaternion.AngleAxis(_player.transform.localEulerAngles.y, Vector3.up)) * _handVel * PlayerStats.Instance.data.throwingForce * 4;
     }
 
     public void HandIdleState()

@@ -18,7 +18,7 @@ public class SacrificialTrigger : MonoBehaviour
         if (!_sacrificeTriggered && other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
             _animator.Play("SpikesUp");
-            PlayerStats.Instance.AdjustHealth(-10, "Sacrificed Your Life");
+            PlayerStats.Instance.Damage(10);
             _sacrificeTriggered = true;
         }
     }

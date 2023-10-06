@@ -101,7 +101,7 @@ public class BasicEnemyProjectile : MonoBehaviour
 
     public virtual void HitPlayer()
     {
-        PlayerStats.Instance.AdjustHealth(-attackDamage, _deathMessage);
+        PlayerStats.Instance.Damage(-attackDamage);
     }
 
     public virtual void CollisionEffect()

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.Interfaces;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, iDamagable<float>
 {
     public EnemyController enemyController;
     public EnemyHealthDisplay healthDisplayController;
     public SkinnedMeshRenderer healthDisplay;
+
+    public float Health { get; set; }
 
     public bool isBoss;
     public float maxHealth;
@@ -18,11 +21,7 @@ public class EnemyHealth : MonoBehaviour
     [HideInInspector] 
     public EnemyStatusController statusController;
     
-    [HideInInspector] 
-    public bool isDead;
-    
-    [HideInInspector] 
-    public float currentHealth;
+    public bool isDead { get; set; }
 
     public virtual void Awake()
     {
@@ -34,8 +33,24 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        Health = maxHealth;
         HealthDisplay();
+    }
+
+    public void Damage(float damageAmount)
+    {
+        AdjustHealth(damageAmount, false);
+    }
+
+    public virtual void Death()
+    {
+        isDead = true;
+        enemyController.dropScript.disableDrop = false;
+
+        if (healthDisplay.gameObject)
+            Destroy(healthDisplay.gameObject);
+
+        enemyController.EnemyDead();
     }
 
     public virtual void AdjustHealth(float adjustmentValue, bool coopSync)
@@ -48,19 +63,19 @@ public class EnemyHealth : MonoBehaviour
             if (adjustmentValue < 0)
                 WasHit();
 
-            currentHealth += adjustmentValue;
+            Health += adjustmentValue;
 
-            if (currentHealth <= 0)
+            if (Health <= 0)
             {
                 Debug.Log("Enemy Died");
 
                 if (!coopSync)
                     AdjustTotalStats();
 
-                Dead();
+                Death();
             }
-            else if (currentHealth >= maxHealth)
-                currentHealth = maxHealth;
+            else if (Health >= maxHealth)
+                Health = maxHealth;
 
             HealthDisplay();
         }
@@ -68,10 +83,10 @@ public class EnemyHealth : MonoBehaviour
 
     public void HealthDisplay()
     {
-        float healthPercentage = (currentHealth / maxHealth);
+        float healthPercentage = (Health / maxHealth);
         float healthWholeNumber = healthPercentage * 100;
         healthDisplay.SetBlendShapeWeight(0, healthWholeNumber);
-        healthDisplayController.UpdateDisplay(Mathf.RoundToInt(currentHealth), Mathf.RoundToInt(maxHealth));
+        healthDisplayController.UpdateDisplay(Mathf.RoundToInt(Health), Mathf.RoundToInt(maxHealth));
     }
 
     public void WasHit()
@@ -145,16 +160,5 @@ public class EnemyHealth : MonoBehaviour
         }
 
         totalStats.AdjustStats(PlayerTotalStats.StatType.enemiesKilled);
-    }
-
-    public virtual void Dead()
-    {
-        isDead = true;
-        enemyController.dropScript.disableDrop = false;
-
-        if (healthDisplay.gameObject)
-            Destroy(healthDisplay.gameObject);
-
-        enemyController.EnemyDead();
     }
 }

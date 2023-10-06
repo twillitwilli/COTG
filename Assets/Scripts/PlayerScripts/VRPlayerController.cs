@@ -7,20 +7,52 @@ using UnityEngine;
 public class VRPlayerController : MonoBehaviour
 {
     [SerializeField] 
-    private PlayerComponents _playerComponents;
+    PlayerComponents _playerComponents;
     public PlayerComponents GetPlayerComponents() { return _playerComponents; }
+
+    [SerializeField]
+    PlayerStats _playerStats;
 
     public GameObject playSpace;
     public LayerMask ignoreLayers;
     public bool godMode;
 
     [HideInInspector] 
-    public float leftJoystickDeadzoneAdjustment = 0.25f, rightJoystickDeadzoneAdjustment = 0.5f, turnSpeedAdjustment = 1f, snapTurnRotationAdjustment = 45;
+    public float 
+        leftJoystickDeadzoneAdjustment = 0.25f, 
+        rightJoystickDeadzoneAdjustment = 0.5f, 
+        turnSpeedAdjustment = 1f, 
+        snapTurnRotationAdjustment = 45;
 
     [HideInInspector] 
-    public bool isLeftHanded, isGrounded, isCrouched, isSprinting, heightCheck, tutorial, menuSpawned, militaryTime, headOrientation, 
-        snapTurnOn, roomScale, toggleGrip, playerStanding, disableMovement, sprintEnabled, jumpControllerOn, climbOn, canFly, toggleSprint,
-        playerCalibrationOn, playerHandAdjusterOn, playerMoving, selectingClass, isGhost, physicalJumping, meditating, hasCustomHandSettings,
+    public bool 
+        isLeftHanded, 
+        isGrounded, 
+        isCrouched, 
+        isSprinting, 
+        heightCheck, 
+        tutorial, 
+        menuSpawned, 
+        militaryTime, 
+        headOrientation, 
+        snapTurnOn, 
+        roomScale, 
+        toggleGrip, 
+        playerStanding, 
+        disableMovement, 
+        sprintEnabled, 
+        jumpControllerOn, 
+        climbOn, 
+        canFly, 
+        toggleSprint,
+        playerCalibrationOn, 
+        playerHandAdjusterOn, 
+        playerMoving, 
+        selectingClass, 
+        isGhost, 
+        physicalJumping, 
+        meditating, 
+        hasCustomHandSettings,
         movementDisabled;
 
     [HideInInspector] 
@@ -36,20 +68,37 @@ public class VRPlayerController : MonoBehaviour
     public int playerSaveFile;
 
     [SerializeField] 
-    private float collisionRange = 0.75f;
+    float collisionRange = 0.75f;
     
-    private float playerMovement;
-    private bool floatPlayer, canSnapTurn, crouchSpeedSet;
-    private Transform playerOrientation;
+    float playerMovement;
+    
+    bool 
+        floatPlayer, 
+        canSnapTurn, 
+        crouchSpeedSet;
+
+    Transform playerOrientation;
     
     [HideInInspector] 
     public Animator sittingPlayerAnim;
 
     //dash controls
-    private bool setDashCooldown, canDash, runDashCooldown;
-    private float cooldownTimer, dashCooldownTime = 3;
-    private Vector2 leftJoystickPos;
-    private Vector3 dashPos, forwardMovement, rightMovement;
+    bool 
+        setDashCooldown, 
+        canDash, 
+        runDashCooldown;
+
+    float 
+        cooldownTimer, 
+        dashCooldownTime = 3;
+
+    Vector2 leftJoystickPos;
+
+    Vector3 
+        dashPos, 
+        forwardMovement, 
+        rightMovement;
+    // -------------
 
     public int roomID;
 
@@ -130,7 +179,7 @@ public class VRPlayerController : MonoBehaviour
         {
             //sets player movement to 0
             playerMoving = false;
-            playerMovement = PlayerStats.Instance.GetPlayerSpeed();
+            playerMovement = _playerStats.data.playerSpeed;
             isSprinting = false;
 
             //stop movement audio
@@ -249,7 +298,7 @@ public class VRPlayerController : MonoBehaviour
     {
         if (crouched)
         {
-            if (isSprinting) { playerMovement = PlayerStats.Instance.GetPlayerSpeed(); }
+            if (isSprinting) { playerMovement = _playerStats.data.playerSpeed; }
             isSprinting = false;
             CrouchSpeedReduction();
 
@@ -260,7 +309,7 @@ public class VRPlayerController : MonoBehaviour
 
         else
         {
-            playerMovement = PlayerStats.Instance.GetPlayerSpeed();
+            playerMovement = _playerStats.data.playerSpeed;
             isCrouched = false;
             ChangeMovementSFX();
         }
@@ -268,17 +317,17 @@ public class VRPlayerController : MonoBehaviour
 
     private void CrouchSpeedReduction()
     {
-        playerMovement = playerMovement / PlayerStats.Instance.GetCrouchSpeedReduction();
+        playerMovement = playerMovement / _playerStats.data.crouchSpeedReduction;
         crouchSpeedSet = true;
     }
 
     public void SprintController()
     {
-        if (!isCrouched && playerMovement == PlayerStats.Instance.GetPlayerSpeed() && !isSprinting)
+        if (!isCrouched && playerMovement == _playerStats.data.playerSpeed && !isSprinting)
         {
             isSprinting = true;
             ChangeMovementSFX();
-            playerMovement = playerMovement * PlayerStats.Instance.GetSprintMultiplier();
+            playerMovement = playerMovement * _playerStats.data.sprintMultiplier;
         }
     }
 
@@ -309,13 +358,13 @@ public class VRPlayerController : MonoBehaviour
     {
         if (!isCrouched && playerMoving && canDash && dashButton)
         {
-            PlayerStats.Instance.StartIFrame();
+            _playerStats.iFrame = true;
 
             if (Mathf.Abs(leftJoystickPos.y) >= leftJoystickDeadzoneAdjustment)
-                dashPos = DashDistanceCheck(transform.position + (forwardMovement * PlayerStats.Instance.GetDashDistance() * leftJoystickPos.y));
+                dashPos = DashDistanceCheck(transform.position + (forwardMovement * _playerStats.data.dashDistance * leftJoystickPos.y));
 
             else if (Mathf.Abs(leftJoystickPos.x) >= leftJoystickDeadzoneAdjustment)
-                dashPos = DashDistanceCheck(transform.position + (rightMovement * PlayerStats.Instance.GetDashDistance() * leftJoystickPos.x));
+                dashPos = DashDistanceCheck(transform.position + (rightMovement * _playerStats.data.dashDistance * leftJoystickPos.x));
 
             _playerComponents.dashEffect.gameObject.SetActive(true);
             _playerComponents.dashEffect.transform.localPosition = new Vector3(leftJoystickPos.x, 0, leftJoystickPos.y);
@@ -349,7 +398,7 @@ public class VRPlayerController : MonoBehaviour
     {
         if (!isCrouched && _playerComponents.GetGroundCheckController().GroundCheck())
         {
-            playerRB.velocity = new Vector3(playerRB.velocity.x, PlayerStats.Instance.GetJumpVelocity(), playerRB.velocity.z);
+            playerRB.velocity = new Vector3(playerRB.velocity.x, _playerStats.data.jumpVelocity, playerRB.velocity.z);
             isGrounded = false;
         }
     }
@@ -358,7 +407,7 @@ public class VRPlayerController : MonoBehaviour
     {
         if (jumpButtonDown)
         {
-            playerRB.velocity = new Vector3(playerRB.velocity.x, PlayerStats.Instance.GetJumpVelocity(), playerRB.velocity.z);
+            playerRB.velocity = new Vector3(playerRB.velocity.x, _playerStats.data.jumpVelocity, playerRB.velocity.z);
             floatPlayer = true;
         }
 
@@ -366,7 +415,7 @@ public class VRPlayerController : MonoBehaviour
             floatPlayer = false;
 
         if (floatPlayer)
-            playerRB.velocity = playerRB.velocity + new Vector3(0, PlayerStats.Instance.flightTesting, 0);
+            playerRB.velocity = playerRB.velocity + new Vector3(0, 10, 0);
     }
 
     public void OrientationSource()

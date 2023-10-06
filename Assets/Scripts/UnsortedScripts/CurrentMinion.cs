@@ -27,7 +27,7 @@ public class CurrentMinion : MonoBehaviour
 
     public int GetMinionStage()
     {
-        int magicFocus = Mathf.RoundToInt(PlayerStats.Instance.GetMagicFocus());
+        int magicFocus = (int)PlayerStats.Instance.data.magicFocus;
 
         if (magicFocus < 6)
             return 0;

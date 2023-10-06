@@ -19,10 +19,10 @@ public class ItemScrollTrigger : MonoBehaviour
         WalletItem wallet;
         if (other.gameObject.TryGetComponent<WalletItem>(out wallet))
         {
-            if (PlayerStats.Instance.GetCurrentGold() >= _scrollPrice)
+            if (PlayerStats.Instance.data.currentGold >= _scrollPrice)
             {
                 AbsorbScrollKnowledge();
-                PlayerStats.Instance.AdjustGoldAmount(-_scrollPrice);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -_scrollPrice);
                 PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.itemsBought);
             }
         }

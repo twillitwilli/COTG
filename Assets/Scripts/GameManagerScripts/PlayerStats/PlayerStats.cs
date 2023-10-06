@@ -13,45 +13,105 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
     [SerializeField]
     PlayerComponents _playerComponents;
 
+    public enum StatAdjustmentType
+    {
+        iFrameTime,
+        maxHealth,
+        playerSpeed,
+        jumpVelocity,
+        dashDistance,
+        throwingForce,
+        attackDamage,
+        attackRange,
+        attackCooldown,
+        elementalEffectChance,
+        luck,
+        critChance,
+        critDamage,
+        specialEffectChance,
+        aimAssist,
+        magicFocus,
+        gold,
+        arcaneCrystals,
+        keys,
+        souls
+    }
+
     public float cooldownTimer { get; set; }
     public float Health { get; set; }
     public bool godMode { get; set; }
+    public bool isDead { get; set; }
 
-    public StatsData data { get; set; }
+    public PlayerDungeonData data { get; set; }
 
-    float _minAttackDamage;
-    float _maxAttackDamage;
+    public float minAttackDamage { get; private set; }
+    public float maxAttackDamage { get; private set; }
 
     public int currentMagicFocus { get; set; }
 
-    public int gold { get; set; }
-    public int arcaneCrystals { get; set; }
-    public int keyCrystals { get; set; }
-    public int souls { get; set; }
+    public bool iFrame { get; set; }
 
     private void Awake()
     {
-        data = new StatsData();
+        data = new PlayerDungeonData();
+
+        DefaultStats();
     }
 
     private void LateUpdate()
     {
-        if (data.iFrame && CooldownDone())
-            data.iFrame = false;
+        if (iFrame && CooldownDone())
+            iFrame = false;
     }
 
-    public void SetAllStats(StatsData newStats)
+    private void DefaultStats()
+    {
+        // Base Stats
+        data.maxHealth = 100;
+        data.currentHealth = 100;
+        data.playerSpeed = 4;
+        data.sprintMultiplier = 2;
+        data.crouchSpeedReduction = 2;
+        data.jumpVelocity = 5;
+        data.dashDistance = 8;
+        data.throwingForce = 3.5f;
+        data.iFrameTime = 0.5f;
+
+        // Attack Stats
+        data.attackDamage = 10;
+        data.attackRange = 1;
+        data.attackCooldown = 6;
+        data.elementalEffectChance = 10;
+        data.luck = 5;
+        data.critChance = 10;
+        data.critDamage = 0.25f;
+        data.specialEffectChance = 10;
+        data.aimAssist = 1;
+        data.magicFocus = 4;
+
+        DefaultCollectableStat();
+    }
+
+    public void DefaultCollectableStat()
+    {
+        data.currentGold = 0;
+        data.currentArcaneCrystals = 0;
+        data.currentKeys = 0;
+        data.currentSouls = 0;
+    }
+
+    public void SetAllStats(PlayerDungeonData newStats)
     {
         data = newStats;
 
         SetAttackDamageRange();
     }
 
-    public void AdjustSpecificStat(StatsData.StatAdjustmentType statToAdjust, float adjustmentValue)
+    public void AdjustSpecificStat(StatAdjustmentType statToAdjust, float adjustmentValue)
     {
         switch (statToAdjust)
         {
-            case StatsData.StatAdjustmentType.iFrameTime:
+            case StatAdjustmentType.iFrameTime:
 
                 data.iFrameTime += adjustmentValue;
 
@@ -59,7 +119,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.maxHealth:
+            case StatAdjustmentType.maxHealth:
 
                 data.maxHealth += adjustmentValue;
 
@@ -72,7 +132,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.playerSpeed:
+            case StatAdjustmentType.playerSpeed:
 
                 data.playerSpeed += adjustmentValue;
 
@@ -80,7 +140,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.jumpVelocity:
+            case StatAdjustmentType.jumpVelocity:
 
                 data.jumpVelocity += adjustmentValue;
 
@@ -88,7 +148,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.dashDistance:
+            case StatAdjustmentType.dashDistance:
 
                 data.dashDistance += adjustmentValue;
 
@@ -96,7 +156,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.throwingForce:
+            case StatAdjustmentType.throwingForce:
 
                 data.throwingForce += adjustmentValue;
 
@@ -104,7 +164,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.attackDamage:
+            case StatAdjustmentType.attackDamage:
 
                 data.attackDamage += adjustmentValue;
 
@@ -114,7 +174,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.attackRange:
+            case StatAdjustmentType.attackRange:
 
                 data.attackRange += adjustmentValue;
 
@@ -122,7 +182,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.attackCooldown:
+            case StatAdjustmentType.attackCooldown:
 
                 data.attackCooldown += adjustmentValue;
 
@@ -130,7 +190,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.elementalEffectChance:
+            case StatAdjustmentType.elementalEffectChance:
 
                 data.elementalEffectChance += adjustmentValue;
 
@@ -138,7 +198,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.luck:
+            case StatAdjustmentType.luck:
 
                 data.luck += adjustmentValue;
 
@@ -146,7 +206,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.critChance:
+            case StatAdjustmentType.critChance:
 
                 data.critChance += adjustmentValue;
 
@@ -154,7 +214,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.critDamage:
+            case StatAdjustmentType.critDamage:
 
                 data.critDamage += adjustmentValue;
 
@@ -162,7 +222,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.specialEffectChance:
+            case StatAdjustmentType.specialEffectChance:
 
                 data.specialEffectChance += adjustmentValue;
 
@@ -170,7 +230,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.aimAssist:
+            case StatAdjustmentType.aimAssist:
 
                 data.aimAssist += adjustmentValue;
 
@@ -178,7 +238,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.magicFocus:
+            case StatAdjustmentType.magicFocus:
 
                 data.magicFocus += adjustmentValue;
 
@@ -186,33 +246,41 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
                 break;
 
-            case StatsData.StatAdjustmentType.gold:
+            case StatAdjustmentType.gold:
 
-                gold += (int)adjustmentValue;
+                data.currentGold += (int)adjustmentValue;
 
-                gold = (int)CheckStatLimit(gold, 0, 999);
+                data.currentGold = (int)CheckStatLimit(data.currentGold, 0, 999);
 
-                WalletController.Instance.UpdateGoldDisplay(gold);
-
-                break;
-
-            case StatsData.StatAdjustmentType.arcaneCrystals:
-
-                arcaneCrystals += (int)adjustmentValue;
-
-                arcaneCrystals = (int)CheckStatLimit(arcaneCrystals, 0, 16);
-
-                _playerComponents.bombKeyDisplay[_player.GetOffHandIndex()].AdjustDisplay(arcaneCrystals, 16);
+                WalletController.Instance.UpdateGoldDisplay(data.currentGold);
 
                 break;
 
-            case StatsData.StatAdjustmentType.keys:
+            case StatAdjustmentType.arcaneCrystals:
 
-                keyCrystals += (int)adjustmentValue;
+                data.currentArcaneCrystals += (int)adjustmentValue;
 
-                keyCrystals = (int)CheckStatLimit(keyCrystals, 0, 16);
+                data.currentArcaneCrystals = (int)CheckStatLimit(data.currentArcaneCrystals, 0, 16);
 
-                _playerComponents.bombKeyDisplay[_player.GetPrimaryHandIndex()].AdjustDisplay(keyCrystals, 16);
+                _playerComponents.bombKeyDisplay[_player.GetOffHandIndex()].AdjustDisplay(data.currentArcaneCrystals, 16);
+
+                break;
+
+            case StatAdjustmentType.keys:
+
+                data.currentKeys += (int)adjustmentValue;
+
+                data.currentKeys = (int)CheckStatLimit(data.currentKeys, 0, 16);
+
+                _playerComponents.bombKeyDisplay[_player.GetPrimaryHandIndex()].AdjustDisplay(data.currentKeys, 16);
+
+                break;
+
+            case StatAdjustmentType.souls:
+
+                data.currentSouls += (int)adjustmentValue;
+
+                data.currentSouls = (int)CheckStatLimit(data.currentSouls, 0, 9999999);
 
                 break;
         }
@@ -247,18 +315,15 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
         return false;
     }
 
-    public bool iFrame { get; private set; }
-
-
     public void Damage(float damageAmount)
     {
-        if (damageAmount < 0 && !godMode && !data.iFrame)
+        if (damageAmount < 0 && !godMode && !iFrame)
         {
             Health += damageAmount;
 
             _player.GetPlayerComponents().hitEffect.PlayerHit();
 
-            data.iFrame = true;
+            iFrame = true;
 
             if (Health <= 0)
                 Death();
@@ -277,7 +342,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
     {
         PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.deaths);
 
-        data.isDead = true;
+        isDead = true;
 
         if (!MultiplayerManager.Instance.coop)
         {
@@ -291,7 +356,7 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
     public void Revive(float maxHealth, float health)
     {
-        data.isDead = false;
+        isDead = false;
 
         data.maxHealth = CheckStatLimit(maxHealth, 1, 100);
 
@@ -300,25 +365,39 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
     private void SetAttackDamageRange()
     {
-        _minAttackDamage = data.attackDamage * 0.9f;
-        _maxAttackDamage = data.attackDamage * 1.1f;
+        minAttackDamage = data.attackDamage * 0.9f;
+        maxAttackDamage = data.attackDamage * 1.1f;
     }
 
     public float AttackDamage() 
     { 
-        float damageAmount = Random.Range(_minAttackDamage, _maxAttackDamage);
+        float damageAmount = Random.Range(minAttackDamage, maxAttackDamage);
 
-        bool critHit = data.critChance > Random.Range(0, 100) ? true : false;
-
-        if (critHit)
+        if (PercentChance(data.critChance))
             damageAmount = (damageAmount * data.critDamage) + damageAmount;
 
         return damageAmount;
     }
 
-    public void ChargeMagicFocus()
+    public bool SpecialAttack()
     {
-        currentMagicFocus = (int)data.magicFocus;
+        bool triggerSpecial = PercentChance(data.specialEffectChance);
+
+        return triggerSpecial;
+    }
+
+    public bool ElementalEffect()
+    {
+        bool triggerElementalEffect = PercentChance(data.elementalEffectChance);
+
+        return triggerElementalEffect;
+    }
+
+    bool PercentChance(float chance)
+    {
+        bool percentChance = chance < Random.Range(0, 100) ? true : false;
+
+        return percentChance;
     }
 
     public async Task LoadStats(PlayerDungeonData loadedData)
@@ -327,16 +406,15 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
         data.maxHealth = loadedData.maxHealth;
         Health = loadedData.currentHealth;
         data.playerSpeed = loadedData.playerSpeed;
-        data.sprintSpeed = loadedData.sprintMultiplier;
-        data.crouchSpeed = loadedData.crouchSpeedReduction;
+        data.sprintMultiplier = loadedData.sprintMultiplier;
+        data.crouchSpeedReduction = loadedData.crouchSpeedReduction;
         data.jumpVelocity = loadedData.jumpVelocity;
         data.dashDistance = loadedData.dashDistance;
+        data.iFrameTime = loadedData.iFrameTime;
 
 
         // Attack Stats
         data.attackDamage = loadedData.attackDamage;
-        _minAttackDamage = loadedData.minAttackDamage;
-        _maxAttackDamage = loadedData.maxAttackDamage;
         data.attackRange = loadedData.attackRange;
         data.attackCooldown = loadedData.attackCooldown;
         data.magicFocus = loadedData.magicFocus;
@@ -349,9 +427,9 @@ public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable
 
 
         // Gold, Bombs, Keys, Souls
-        gold = loadedData.currentGold;
-        arcaneCrystals = loadedData.currentArcaneCrystals;
-        keyCrystals = loadedData.currentKeys;
-        souls = loadedData.currentSouls;
+        data.currentGold = loadedData.currentGold;
+        data.currentArcaneCrystals = loadedData.currentArcaneCrystals;
+        data.currentKeys = loadedData.currentKeys;
+        data.currentSouls = loadedData.currentSouls;
     }
 }

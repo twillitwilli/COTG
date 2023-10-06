@@ -8,7 +8,7 @@ public class CheckSavedDungeon : MonoBehaviour
 
     private void Start()
     {
-        bool activatePortal = BinarySaveSystem.LoadDungeon(PlayerStats.Instance.saveFile) != null ? true : false;
+        bool activatePortal = BinarySaveSystem.LoadDungeon(LocalGameManager.Instance.player.playerSaveFile) != null ? true : false;
         portal.SetActive(activatePortal);
     }
 }

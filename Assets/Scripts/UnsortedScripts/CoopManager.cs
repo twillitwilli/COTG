@@ -38,7 +38,7 @@ public class CoopManager : MonoBehaviourPun
 
     public void Update()
     {
-        if (!PlayerStats.Instance.IsPlayerDead())
+        if (!PlayerStats.Instance.isDead)
         {
             if (isMaster && totalPlayers > 0)
                 SendPlayerTrackingInfo(LocalGameManager.Instance.player.GetPlayerComponents().playerTarget.position);
@@ -147,7 +147,7 @@ public class CoopManager : MonoBehaviourPun
     [PunRPC]
     public void AllPlayersDead()
     {
-        PlayerTotalStats.Instance.SavePlayerProgress(PlayerStats.Instance.saveFile);
+        PlayerTotalStats.Instance.SavePlayerProgress(LocalGameManager.Instance.player.playerSaveFile);
         LocalGameManager.Instance.player.GetPlayerComponents().resetPlayer.ResetPlayer(true);
     }
 

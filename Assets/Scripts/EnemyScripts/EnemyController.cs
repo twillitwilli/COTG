@@ -217,7 +217,7 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        if (enemyHealth.currentHealth <= 0 && !deadFailSafe) 
+        if (enemyHealth.Health <= 0 && !deadFailSafe) 
         {
             await Task.Delay(3000);
 

@@ -124,7 +124,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 
             case PotionType.health:
                 //onScreenText.PrintText("Blood of the fallen", true);
-                PlayerStats.Instance.AdjustHealth(100, "Healing Item");
+                PlayerStats.Instance.Damage(100);
                 break;
 
             case PotionType.angelic:
@@ -134,7 +134,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 
             case PotionType.lucky:
                 //onScreenText.PrintText("Seems lucky", true);
-                PlayerStats.Instance.AdjustLuck(5);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.luck, 5);
                 break;
         }
     }
@@ -198,7 +198,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
                 break;
 
             default:
-                PlayerStats.Instance.AdjustLuck(5);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.luck, 5);
                 break;
         }
     }
@@ -210,13 +210,13 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
             case TempEffect.movement:
                 effectBoosts[0] = true;
                 movementBoost += 2;
-                PlayerStats.Instance.AdjustPlayerSpeed(2);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.playerSpeed, 2);
                 break;
 
             case TempEffect.strength:
                 effectBoosts[1] = true;
                 strengthBoost += 15;
-                PlayerStats.Instance.AdjustAttackDamage(15);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.attackDamage, 15);
                 break;
 
             case TempEffect.flight:
@@ -227,7 +227,7 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
             case TempEffect.magicFocus:
                 effectBoosts[3] = true;
                 magicFocusBoost += 3;
-                PlayerStats.Instance.AdjustMagicFocus(3);
+                PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.magicFocus, 3);
                 break;
 
             case TempEffect.godMode:
@@ -247,31 +247,27 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
     {
         if (effectBoosts[0])
         {
-            PlayerStats.Instance.AdjustPlayerSpeed(-movementBoost);
+            PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.playerSpeed, -movementBoost);
             movementBoost = 0;
         }
 
         if (effectBoosts[1])
         {
-            PlayerStats.Instance.AdjustAttackDamage(-strengthBoost);
+            PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.attackDamage, -strengthBoost);
             strengthBoost = 0;
         }
 
         if (effectBoosts[2])
-        {
             _player.canFly = false;
-        }
 
         if (effectBoosts[3])
         {
-            PlayerStats.Instance.AdjustMagicFocus(-Mathf.RoundToInt(magicFocusBoost));
+            PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.magicFocus, -magicFocusBoost);
             magicFocusBoost = 0;
         }
 
         if (effectBoosts[4])
-        {
             _player.godMode = false;
-        }
 
         for (int i = 0; i < effectBoosts.Length; i++)
         {

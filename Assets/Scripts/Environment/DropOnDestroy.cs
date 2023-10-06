@@ -21,7 +21,7 @@ public class DropOnDestroy : MonoBehaviour
             if (isEnemy)
                 LocalGameManager.Instance.SpawnSpecificItem(ItemPoolManager.DroppableItem.soul, transform);
 
-            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + PlayerStats.Instance.GetLuck()))
+            if (!dropSpecificItem && Random.Range(0, 100) <= (dropPercentage + PlayerStats.Instance.data.luck))
                 LocalGameManager.Instance.SpawnRandomDrop(transform);
 
             else if (dropSpecificItem)

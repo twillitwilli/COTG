@@ -19,9 +19,8 @@ public class TutorialAreaLoaded : MonoBehaviour
         LocalGameManager.Instance.AreaLoaded();
         LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.spawnPoint);
 
-        PlayerStats.Instance.AdjustMaxHealth(1000);
-        PlayerStats.Instance.AdjustHealth(99999999, " ");
-        PlayerStats.Instance.AdjustArcaneCrystalAmount(-99);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.maxHealth, 1000);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.arcaneCrystals, -99);
 
         AudioController.Instance.ChangeMusic(AudioController.MusicTracks.Caves);
     }

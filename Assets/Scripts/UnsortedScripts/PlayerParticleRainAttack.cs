@@ -25,16 +25,16 @@ public class PlayerParticleRainAttack : MonoBehaviour
         for (int i = 0; i < particlesEffectedByAttack.Length; i++)
         {
             if (particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>())
-                particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>().healthAdjustment = (PlayerStats.Instance.GetAttackDamage() / -5);
+                particlesEffectedByAttack[i].gameObject.GetComponent<ParticleHitEnemy>().healthAdjustment = (PlayerStats.Instance.AttackDamage() / -5);
         }
 
-        float scaleWithAttack = (0.75f + (0.1f * PlayerStats.Instance.GetDamageUpgrades()));
+        float scaleWithAttack = (0.75f + (0.1f * PlayerStats.Instance.data.damageUpgrades));
         particlesEffectedByAttack[0].transform.localScale = new Vector3(scaleWithAttack, scaleWithAttack, scaleWithAttack);
     }
 
     public virtual void ParticleRangeChanges()
     {
-        float scaleWithRange = (0.75f + (0.1f * PlayerStats.Instance.GetRangeUpgrades()));
+        float scaleWithRange = (0.75f + (0.1f * PlayerStats.Instance.data.rangeUpgrades));
         transform.localScale = new Vector3(scaleWithRange, scaleWithRange, scaleWithRange);
     }
 }

@@ -26,8 +26,8 @@ public class BasicBeamAttack : MonoBehaviour
 
     private void StartDelay()
     {
-        particleDamager.healthAdjustment = (PlayerStats.Instance.GetAttackDamage() / -15);
+        particleDamager.healthAdjustment = (PlayerStats.Instance.AttackDamage() / -15);
         var particleMain = particle.main;
-        particleMain.startSpeed = (10f + (0.5f * PlayerStats.Instance.GetRangeUpgrades()));
+        particleMain.startSpeed = (10f + (0.5f * PlayerStats.Instance.data.rangeUpgrades));
     }
 }

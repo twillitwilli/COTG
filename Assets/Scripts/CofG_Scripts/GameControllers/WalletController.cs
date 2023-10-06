@@ -23,7 +23,7 @@ public class WalletController : MonoSingleton<WalletController>
     {
         _playerComponents = player.GetPlayerComponents();
 
-        SpawnNewWallet(PlayerStats.Instance.GetCurrentGold());
+        SpawnNewWallet(PlayerStats.Instance.data.currentGold);
     }
 
     public void SpawnNewWallet(int goldAmount)
@@ -78,7 +78,7 @@ public class WalletController : MonoSingleton<WalletController>
             if (_walletObject != null)
                 Destroy(_walletObject);
 
-            SpawnNewWallet(PlayerStats.Instance.GetCurrentGold());
+            SpawnNewWallet(PlayerStats.Instance.data.currentGold);
         }
     }
 

@@ -164,7 +164,7 @@ public class PlayerBow : MonoBehaviour
     {
         if (_setNormalChargeCooldown)
         {
-            _normalChargeTimer = PlayerStats.Instance.GetAttackCooldown();
+            _normalChargeTimer = PlayerStats.Instance.data.attackCooldown;
             _setNormalChargeCooldown = false;
         }
 
@@ -187,7 +187,7 @@ public class PlayerBow : MonoBehaviour
     {
         if (_setDoubleChargeCooldown)
         {
-            _doubleChargeTimer = (PlayerStats.Instance.GetAttackCooldown() + 1);
+            _doubleChargeTimer = (PlayerStats.Instance.data.attackCooldown + 1);
             _setDoubleChargeCooldown = false;
         }
 

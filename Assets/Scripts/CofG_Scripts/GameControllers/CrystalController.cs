@@ -70,7 +70,7 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     public void GrabBombCrystal(GrabController grabController)
     {
-        if (grabController.GetHand().IsPrimaryHand() && PlayerStats.Instance.GetCurrentArcaneCrystals() > 0)
+        if (grabController.GetHand().IsPrimaryHand() && PlayerStats.Instance.data.currentArcaneCrystals > 0)
         {
             Vector3 bombPos = new Vector3(0.0227f, -8.784453e-10f, 0.002f);
             Vector3 bombRot = new Vector3(0, 79.953f, 90);
@@ -91,7 +91,7 @@ public class CrystalController : MonoSingleton<CrystalController>
     public void IgniteBomb(GrabController grabController)
     {
         _currentBombCrystal.SetActive(false);
-        PlayerStats.Instance.AdjustArcaneCrystalAmount(-1);
+        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.arcaneCrystals, -1);
 
         _currentIgnitedBomb = Instantiate(_ignitedBombPrefabs[MagicController.Instance.magicIdx]);
 
@@ -147,7 +147,7 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     public void GrabKeyCrystal(GrabController grabController)
     {
-        if (!grabController.GetHand().IsPrimaryHand() && PlayerStats.Instance.GetCurrentKeys() > 0)
+        if (!grabController.GetHand().IsPrimaryHand() && PlayerStats.Instance.data.currentKeys > 0)
         {
             Vector3 keyPos = new Vector3(0, 0, 0);
             Vector3 keyRot = new Vector3(0, 0, 0);

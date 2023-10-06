@@ -6,6 +6,7 @@ public class ParticleHitPlayer : MonoBehaviour
 {
     public string objectName;
     public float healthAdjustment;
+
     public bool randomAmount;
     public float minAmount, maxAmount;
 
@@ -15,12 +16,12 @@ public class ParticleHitPlayer : MonoBehaviour
         if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
         {
             if (!randomAmount)
-                PlayerStats.Instance.AdjustHealth(healthAdjustment, objectName);
+                PlayerStats.Instance.Damage(healthAdjustment);
 
             else
             {
                 float randomValue = Random.Range(minAmount, maxAmount);
-                PlayerStats.Instance.AdjustHealth(randomValue, objectName);
+                PlayerStats.Instance.Damage(randomValue);
             }
         }
     }

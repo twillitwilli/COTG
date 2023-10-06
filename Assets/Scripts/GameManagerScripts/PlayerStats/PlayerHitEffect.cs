@@ -24,7 +24,7 @@ public class PlayerHitEffect : MonoBehaviour
 
     public bool CheckIfAlmostDead()
     {
-        float healthPercentage = (PlayerStats.Instance.GetCurrentHealth() / PlayerStats.Instance.GetMaxHealth());
+        float healthPercentage = (PlayerStats.Instance.Health / PlayerStats.Instance.data.maxHealth);
 
         if (healthPercentage > 0.15f)
             return true;

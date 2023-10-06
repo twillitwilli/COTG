@@ -51,7 +51,7 @@ public class MinionPetController : MonoBehaviour
 
             FollowPlayer();
 
-            minionHealth = PlayerStats.Instance.GetMagicFocus() * 60;
+            minionHealth = PlayerStats.Instance.data.magicFocus * 60;
 
             SetMagicFocus();
         }
@@ -166,13 +166,13 @@ public class MinionPetController : MonoBehaviour
     public float MinionAttackDamage()
     {
         if (minionStage == 0)
-            return PlayerStats.Instance.GetAttackDamage() * 0.75f;
+            return PlayerStats.Instance.data.attackDamage * 0.75f;
 
         else if (minionStage == 1)
-            return PlayerStats.Instance.GetAttackDamage();
+            return PlayerStats.Instance.data.attackDamage;
 
         else if (minionStage == 2)
-            return PlayerStats.Instance.GetAttackDamage() * 1.5f;
+            return PlayerStats.Instance.data.attackDamage * 1.5f;
 
         else return 0;
     }
@@ -180,13 +180,13 @@ public class MinionPetController : MonoBehaviour
     public float MinionAttackCooldown()
     {
         if (minionStage == 0)
-            return PlayerStats.Instance.GetAttackCooldown() * 2;
+            return PlayerStats.Instance.data.attackCooldown * 2;
 
         else if (minionStage == 1)
-            return PlayerStats.Instance.GetAttackCooldown() * 1.5f;
+            return PlayerStats.Instance.data.attackCooldown * 1.5f;
 
         else if (minionStage == 2)
-            return PlayerStats.Instance.GetAttackCooldown();
+            return PlayerStats.Instance.data.attackCooldown;
 
         else return 0;
     }
@@ -194,7 +194,7 @@ public class MinionPetController : MonoBehaviour
     public void SetMagicFocus()
     {
         var currentMagicFocus = magicFocusEffect.main;
-        currentMagicFocus.maxParticles = PlayerStats.Instance.GetMagicFocus();
+        currentMagicFocus.maxParticles = (int)PlayerStats.Instance.data.magicFocus;
     }
 
     public void LifeDrain()

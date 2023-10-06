@@ -45,9 +45,9 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void StatModifier()
     {
-        attackDamage = PlayerStats.Instance.GetAttackDamage();
-        projectileRange = PlayerStats.Instance.GetAttackRange();
-        aimAssist = PlayerStats.Instance.GetAimAssist();
+        attackDamage = PlayerStats.Instance.AttackDamage();
+        projectileRange = PlayerStats.Instance.data.attackRange;
+        aimAssist = PlayerStats.Instance.data.aimAssist;
 
         CheckAttackLevel();
     }
@@ -142,15 +142,7 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void HitEnemy(EnemyHealth enemy)
     {
-        if (!disableCrit && PlayerStats.Instance.HitCrit())
-        {
-            int critAttackDamage = Mathf.RoundToInt(attackDamage + (attackDamage * PlayerStats.Instance.GetCritDamage()));
-            enemy.AdjustHealth(-critAttackDamage, false);
-        }
-
-        else
-            enemy.AdjustHealth(-attackDamage, false);
-
+        enemy.Damage(attackDamage);
 
         if (PlayerStats.Instance.SpecialAttack())
             SpecialEffect();

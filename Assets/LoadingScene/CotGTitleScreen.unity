@@ -126880,7 +126880,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915206195160113567}
-  - component: {fileID: 5656350061506029019}
   - component: {fileID: 7323240045799168071}
   - component: {fileID: 5836403584199542906}
   m_Layer: 0
@@ -146302,25 +146301,6 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: -0.29, z: -0.00000008940697}
---- !u!114 &5656350061506029019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403011249699286715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13fcd2fc9795484449376ca2511a2dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flightTesting: 0
-  flightVelocity:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &5662983286246071457
 GameObject:
   m_ObjectHideFlags: 0
@@ -147098,8 +147078,6 @@ MonoBehaviour:
   normal: {fileID: 2100000, guid: 7561ce848385b1f44a72045d98748174, type: 2}
   wasHit: {fileID: 2100000, guid: ddf42d2f85d13bc4f81b83244db50513, type: 2}
   statusController: {fileID: 0}
-  isDead: 0
-  currentHealth: 0
   bossController: {fileID: 5493455785174803525}
 --- !u!114 &7323240045799168071
 MonoBehaviour:
@@ -147139,8 +147117,6 @@ MonoBehaviour:
   moveableSpawnPoint: {fileID: 1304052782}
   loadingBox: {fileID: 0}
   spawnedBossArena: {fileID: 0}
-  dungeonType: 0
-  currentLevel: 0
 --- !u!1 &7576350748578033922
 GameObject:
   m_ObjectHideFlags: 0

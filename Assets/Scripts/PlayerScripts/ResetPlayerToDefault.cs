@@ -16,10 +16,7 @@ public class ResetPlayerToDefault : MonoBehaviour
         PlayerCurse.Instance.RemoveCurse();
 
         //reset drops
-        PlayerStats.Instance.AdjustGoldAmount(-999999);
-        PlayerStats.Instance.AdjustArcaneCrystalAmount(-999999);
-        PlayerStats.Instance.AdjustArcaneCrystalAmount(1);
-        PlayerStats.Instance.AdjustKeyAmount(-999999);
+        PlayerStats.Instance.DefaultCollectableStat();
 
         //reset special stats
         LocalGameManager.Instance.player.canFly = false;

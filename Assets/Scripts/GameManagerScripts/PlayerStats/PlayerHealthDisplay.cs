@@ -29,6 +29,6 @@ public class PlayerHealthDisplay : MonoBehaviour
         }
 
         if (textBox != null)
-            textBox.text = PlayerStats.Instance.GetCurrentHealth() + "/" + PlayerStats.Instance.GetMaxHealth();
+            textBox.text = PlayerStats.Instance.Health + "/" + PlayerStats.Instance.data.maxHealth;
     }
 }

@@ -46,27 +46,27 @@ public class StatDisplay : MonoBehaviour
         switch (statDisplay)
         {
             case Stats.damage:
-                _thisDisplay.text = "Atk Dmg: " + stats.GetMinAttackDamage().ToString() + "-" + stats.GetMaxAttackDamage().ToString();
+                _thisDisplay.text = "Atk Dmg: " + stats.minAttackDamage.ToString() + "-" + stats.maxAttackDamage.ToString();
                 break;
 
             case Stats.magicFocus:
-                _thisDisplay.text = "Magic Focus: " + stats.GetMagicFocus().ToString();
+                _thisDisplay.text = "Magic Focus: " + stats.data.magicFocus.ToString();
                 break;
 
             case Stats.rateOfFire:
-                _thisDisplay.text = "Atk CD: " + stats.GetAttackCooldown().ToString();
+                _thisDisplay.text = "Atk CD: " + stats.data.attackCooldown.ToString();
                 break;
 
             case Stats.range:
-                _thisDisplay.text = "Atk Range: " + stats.GetAttackRange().ToString();
+                _thisDisplay.text = "Atk Range: " + stats.data.attackRange.ToString();
                 break;
 
             case Stats.movement:
-                _thisDisplay.text = "Movement: " + stats.GetPlayerSpeed().ToString();
+                _thisDisplay.text = "Movement: " + stats.data.playerSpeed.ToString();
                 break;
 
             case Stats.luck:
-                _thisDisplay.text = "Luck: " + stats.GetLuck().ToString();
+                _thisDisplay.text = "Luck: " + stats.data.luck.ToString();
                 break;
 
             case Stats.curse:
@@ -78,26 +78,22 @@ public class StatDisplay : MonoBehaviour
                 break;
 
             case Stats.hp:
-                int currentHealth = Mathf.RoundToInt(stats.GetCurrentHealth());
-                int maxHealth = Mathf.RoundToInt(stats.GetMaxHealth());
+                int currentHealth = (int)stats.Health;
+                int maxHealth = (int)stats.data.maxHealth;
 
                 _thisDisplay.text = "HP: " + currentHealth.ToString() + "/" + maxHealth.ToString();
                 break;
 
             case Stats.arcane:
-                _thisDisplay.text = "Arcane Crystals: " + stats.GetCurrentArcaneCrystals().ToString() + "/16";
+                _thisDisplay.text = "Arcane Crystals: " + stats.data.currentArcaneCrystals.ToString() + "/16";
                 break;
 
             case Stats.critChance:
-                _thisDisplay.text = "Crit Chance: " + stats.GetCritChance().ToString() + "%";
+                _thisDisplay.text = "Crit Chance: " + stats.data.critChance.ToString() + "%";
                 break;
 
             case Stats.aimAssist:
-                _thisDisplay.text = "Aim Assist: " + stats.GetAimAssist().ToString();
-                break;
-
-            case Stats.elementalEffect:
-                _thisDisplay.text = "Elemental Effect:\n" + stats.GetElementalEffectChance().ToString() + "%";
+                _thisDisplay.text = "Aim Assist: " + stats.data.aimAssist.ToString();
                 break;
 
             case Stats.playerClass:
@@ -113,11 +109,15 @@ public class StatDisplay : MonoBehaviour
                 break;
 
             case Stats.critDamage:
-                _thisDisplay.text = "Crit Dmg: " + Mathf.RoundToInt(stats.GetCritDamage() * 100).ToString();
+                _thisDisplay.text = "Crit Dmg: " + Mathf.RoundToInt(stats.data.critDamage * 100).ToString();
+                break;
+
+            case Stats.elementalEffect:
+                _thisDisplay.text = "Elemental Effect Chance: " + stats.data.elementalEffectChance.ToString() + "%";
                 break;
 
             case Stats.specialEffectChance:
-                _thisDisplay.text = "Special Effect Chance: " + stats.GetElementalEffectChance().ToString() + "%";
+                _thisDisplay.text = "Special Effect Chance: " + stats.data.specialEffectChance.ToString() + "%";
                 break;
         }
     }

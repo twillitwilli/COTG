@@ -18,7 +18,7 @@ public class CheckForKey : MonoBehaviour
 
             if (!justUseHand)
             {
-                if (PlayerStats.Instance.GetCurrentKeys() > 0)
+                if (PlayerStats.Instance.data.currentKeys > 0)
                 {
                     if (isForChest)
                     {
@@ -31,7 +31,7 @@ public class CheckForKey : MonoBehaviour
                     }
 
                     keyController.UnlockKeyLock();
-                    PlayerStats.Instance.AdjustKeyAmount(-1);
+                    PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.keys, -1);
                 }
             }
             else
