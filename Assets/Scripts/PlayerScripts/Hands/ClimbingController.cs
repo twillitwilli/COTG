@@ -4,21 +4,29 @@ using UnityEngine;
 
 public class ClimbingController : MonoBehaviour
 {
-    private VRPlayerHand _hand;
-    private VRPlayerController _player;
+    VRHand _hand;
+    VRPlayer _player;
 
-    private VRPlayerHand _oppositeHand;
-    private GrabController _oppositeHandGrabController;
-    private ClimbingController _oppositeHandClimbController;
+    VRHand _oppositeHand;
+    GrabController _oppositeHandGrabController;
+    ClimbingController _oppositeHandClimbController;
 
-    private Vector3 _handStartPos, _climbablePrevPos, _movement;
-    private bool _canClimbGrab, _canClimbTrigger, _isClimbing, _startPositionHand;
+    Vector3 
+        _handStartPos, 
+        _climbablePrevPos, 
+        _movement;
 
-    private Transform _climbableObject;
+    bool 
+        _canClimbGrab, 
+        _canClimbTrigger, 
+        _isClimbing, 
+        _startPositionHand;
 
-    private void Start()
+    Transform _climbableObject;
+
+    void Start()
     {
-        _hand = GetComponent<VRPlayerHand>();
+        _hand = GetComponent<VRHand>();
         _player = _hand.GetPlayer();
 
         _oppositeHand = _hand.GetOppositeHand();
@@ -76,7 +84,7 @@ public class ClimbingController : MonoBehaviour
         _climbablePrevPos = _climbableObject.position;
     }
 
-    private void ThrustPlayer()
+    void ThrustPlayer()
     {
 
     }

@@ -5,21 +5,21 @@ using UnityEngine;
 public class ItemScrollTrigger : MonoBehaviour
 {
     [SerializeField] 
-    private GameObject _scrollParent;
+    GameObject _scrollParent;
 
-    private int _scrollPrice;
+    int _scrollPrice;
 
     public void SetScrollPrice(int scrollPrice)
     {
         _scrollPrice = scrollPrice;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        WalletItem wallet;
-        if (other.gameObject.TryGetComponent<WalletItem>(out wallet))
+        PlayerItemGrabbable grabbableItem;
+        if (other.gameObject.TryGetComponent<PlayerItemGrabbable>(out grabbableItem))
         {
-            if (PlayerStats.Instance.data.currentGold >= _scrollPrice)
+            if (grabbableItem.grabbableItem == ItemPoolManager.GrabbableItem.wallet && PlayerStats.Instance.data.currentGold >= _scrollPrice)
             {
                 AbsorbScrollKnowledge();
                 PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -_scrollPrice);

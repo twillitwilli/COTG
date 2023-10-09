@@ -6,19 +6,23 @@ using QTArts.AbstractClasses;
 
 public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
+
+    public NavMeshSurface enemyNavMesh { get; set; }
 
     [HideInInspector] 
-    public NavMeshSurface enemyNavMesh;
+    public bool 
+        enemiesDead, 
+        bossesDead, 
+        reaperExists, 
+        doorsLocked;
 
     [HideInInspector] 
-    public bool enemiesDead, bossesDead, reaperExists, doorsLocked;
+    public int 
+        currentEnemies, 
+        currentBosses;
 
-    [HideInInspector] 
-    public int currentEnemies, currentBosses;
-
-    [HideInInspector] 
-    public GameObject spawnedReaper;
+    public GameObject spawnedReaper { get; set; }
 
     [HideInInspector]
     public List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
@@ -29,11 +33,9 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
     [HideInInspector] 
     public List<GameObject> otherPlayerSpawnedEnemies = new List<GameObject>();
 
-    [HideInInspector] 
-    public GameObject spawnedBoss;
+    public GameObject spawnedBoss { get; set; }
 
-    [HideInInspector] 
-    public EnemySpawner currentEnemySpawner;
+    public EnemySpawner currentEnemySpawner { get; set; }
 
     public bool hasEnemyHealthReveal { get; private set; }
 
@@ -42,14 +44,16 @@ public class EnemyTrackerController : MonoSingleton<EnemyTrackerController>
         hasEnemyHealthReveal = hasHealthReveal;
     }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         enemyNavMesh = GetComponent<NavMeshSurface>();
 
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    private void NewPlayerCreated(VRPlayerController player)
+    void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }

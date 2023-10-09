@@ -7,11 +7,11 @@ public class DamageAndMovePlayer : MonoBehaviour
     public string objectName;
     public float damageAmount;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
+        VRPlayer player;
 
-        if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
+        if (other.gameObject.TryGetComponent<VRPlayer>(out player))
         {
             PlayerStats.Instance.Damage(-damageAmount);
 

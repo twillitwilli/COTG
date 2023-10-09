@@ -6,21 +6,17 @@ using QTArts.AbstractClasses;
 
 public class VisualSettings : MonoSingleton<VisualSettings>
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
-    [HideInInspector] 
-    public PostProcessingController postProcessingController;
+    public PostProcessingController postProcessingController { get; set; }
+    public LightShadows shadowSetting { get; set; }
+    public ShadowResolution shadowQuality { get; set; }
     
     [HideInInspector] 
-    public LightShadows shadowSetting;
+    public float 
+        lightRange = 27.5f, 
+        brightness = 1;
     
-    [HideInInspector] 
-    public ShadowResolution shadowQuality;
-    
-    [HideInInspector] 
-    public float lightRange = 27.5f, brightness = 1;
-    
-    [HideInInspector] 
     public enum LightAdjustment 
     { 
         shadowType, 
@@ -32,12 +28,14 @@ public class VisualSettings : MonoSingleton<VisualSettings>
     [HideInInspector] 
     public List<LightPedastal> lightPedastals = new List<LightPedastal>();
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }
@@ -66,19 +64,31 @@ public class VisualSettings : MonoSingleton<VisualSettings>
             switch (adjustmentType)
             {
                 case LightAdjustment.shadowType:
-                    foreach (LightPedastal lights in lightPedastals) { lights.AdjustShadowType(); }
+                    foreach (LightPedastal lights in lightPedastals) 
+                    { 
+                        lights.AdjustShadowType(); 
+                    }
                     break;
 
                 case LightAdjustment.shadowResolution:
-                    foreach (LightPedastal lights in lightPedastals) { lights.AdjustShadowResolution(); }
+                    foreach (LightPedastal lights in lightPedastals) 
+                    { 
+                        lights.AdjustShadowResolution(); 
+                    }
                     break;
 
                 case LightAdjustment.range:
-                    foreach (LightPedastal lights in lightPedastals) { lights.AdjustRange(); }
+                    foreach (LightPedastal lights in lightPedastals) 
+                    { 
+                        lights.AdjustRange(); 
+                    }
                     break;
 
                 case LightAdjustment.intensity:
-                    foreach (LightPedastal lights in lightPedastals) { lights.AdjustIntensity(); }
+                    foreach (LightPedastal lights in lightPedastals) 
+                    { 
+                        lights.AdjustIntensity(); 
+                    }
                     break;
             }
         }

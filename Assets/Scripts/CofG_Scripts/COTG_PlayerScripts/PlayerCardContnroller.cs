@@ -6,9 +6,9 @@ using QTArts.AbstractClasses;
 public class PlayerCardContnroller : MonoSingleton<PlayerCardContnroller>
 {
     [SerializeField] 
-    private GameObject[] _playerCards;
+    PlayerCard[] _playerCards;
 
-    private GameObject _currentPlayerCard;
+    PlayerCard _currentPlayerCard;
 
     // Sorcerer Only
     public delegate void SorcererSelected(Sorcerer sorcererController);
@@ -16,44 +16,35 @@ public class PlayerCardContnroller : MonoSingleton<PlayerCardContnroller>
 
     public void ChangePlayerCard(MagicController.ClassType newClass)
     {
-        Destroy(_currentPlayerCard);
+        _currentPlayerCard = _playerCards[(int)newClass];
 
-        switch (newClass)
-        {
-            case MagicController.ClassType.Wizard:
-                _currentPlayerCard = Instantiate(_playerCards[0]);
-                break;
+        ClassDefaultStats();
+    }
 
-            case MagicController.ClassType.Conjurer:
-                _currentPlayerCard = Instantiate(_playerCards[1]);
-                break;
+    public void ClassDefaultStats()
+    {
+        PlayerStats playerStats = PlayerStats.Instance;
 
-            case MagicController.ClassType.Sorcerer:
-                _currentPlayerCard = Instantiate(_playerCards[2]);
-                newSorcerer(_currentPlayerCard.GetComponent<Sorcerer>());
-                break;
+        playerStats.data.maxHealth = _currentPlayerCard.classStats.maxHealth;
+        playerStats.data.currentHealth = _currentPlayerCard.classStats.currentHealth;
+        playerStats.data.playerSpeed = _currentPlayerCard.classStats.playerSpeed;
+        playerStats.data.sprintMultiplier = _currentPlayerCard.classStats.sprintMultiplier;
+        playerStats.data.crouchSpeedReduction = _currentPlayerCard.classStats.crouchSpeedReduction;
+        playerStats.data.jumpVelocity = _currentPlayerCard.classStats.jumpVelocity;
+        playerStats.data.dashDistance = _currentPlayerCard.classStats.dashDistance;
+        playerStats.data.throwingForce = _currentPlayerCard.classStats.throwingForce;
+        playerStats.data.iFrameTime = _currentPlayerCard.classStats.iFrameTime;
 
-            case MagicController.ClassType.Mage:
-                _currentPlayerCard = Instantiate(_playerCards[3]);
-                break;
-
-            case MagicController.ClassType.Enchanter:
-                _currentPlayerCard = Instantiate(_playerCards[4]);
-                break;
-
-            case MagicController.ClassType.Warlock:
-                _currentPlayerCard = Instantiate(_playerCards[5]);
-                break;
-
-            case MagicController.ClassType.Witch:
-                _currentPlayerCard = Instantiate(_playerCards[6]);
-                break;
-
-            case MagicController.ClassType.Tarot:
-                _currentPlayerCard = Instantiate(_playerCards[7]);
-                break;
-        }
-
-        _currentPlayerCard.transform.SetParent(LocalGameManager.Instance.player.transform);
+        // Attack Stats
+        playerStats.data.attackDamage = _currentPlayerCard.classStats.attackDamage;
+        playerStats.data.attackRange = _currentPlayerCard.classStats.attackRange;
+        playerStats.data.attackCooldown = _currentPlayerCard.classStats.attackCooldown;
+        playerStats.data.elementalEffectChance = _currentPlayerCard.classStats.elementalEffectChance;
+        playerStats.data.luck = _currentPlayerCard.classStats.luck;
+        playerStats.data.critChance = _currentPlayerCard.classStats.critChance;
+        playerStats.data.critDamage = _currentPlayerCard.classStats.critDamage;
+        playerStats.data.specialEffectChance = _currentPlayerCard.classStats.specialEffectChance;
+        playerStats.data.aimAssist = _currentPlayerCard.classStats.aimAssist;
+        playerStats.data.magicFocus = _currentPlayerCard.classStats.magicFocus;
     }
 }

@@ -5,12 +5,42 @@ using QTArts.AbstractClasses;
 
 public class PlayerProgressStats : MonoSingleton<PlayerProgressStats>
 {
+    [HideInInspector]
     public float totalPlayTimeLevel;
 
-    public int totalRunsLevel, completedRunsLevel, bestRunStreakLevel, deathLevel, goldLevel, soulLevel, runeLevel, scrollLevel, itemLevel,
-        potionLevel, chestLevel, roomLevel, puzzleLevel, enemyLevel, bossLevel, reaperLevel, jarLevel, rockLevel,
-        batLevel, beeLevel, bunnyLevel, goblinLevel, mushroomLevel, plantLevel, wolfLevel, golemLevel, treantGuardLevel,
-        dragonLevel, babyReaperLevel, princeReaperLevel, godReaperLevel;
+    [HideInInspector]
+    public int 
+        totalRunsLevel, 
+        completedRunsLevel, 
+        bestRunStreakLevel, 
+        deathLevel, 
+        goldLevel, 
+        soulLevel, 
+        runeLevel, 
+        scrollLevel, 
+        itemLevel,
+        potionLevel, 
+        chestLevel, 
+        roomLevel, 
+        puzzleLevel, 
+        enemyLevel, 
+        bossLevel,
+        reaperLevel, 
+        jarLevel, 
+        rockLevel,
+        batLevel, 
+        beeLevel, 
+        bunnyLevel, 
+        goblinLevel, 
+        mushroomLevel, 
+        plantLevel, 
+        wolfLevel, 
+        golemLevel, 
+        treantGuardLevel,
+        dragonLevel, 
+        babyReaperLevel, 
+        princeReaperLevel, 
+        godReaperLevel;
 
     public void SaveCurrentStatsAndReset()
     {
@@ -215,19 +245,19 @@ public class PlayerProgressStats : MonoSingleton<PlayerProgressStats>
 
     private int SpecificEnemyLevelCheck(int enemiesKilled)
     {
-        if (enemiesKilled >= 25 && enemiesKilled < 50) { return 1; }
-        else if (enemiesKilled >= 50 && enemiesKilled < 100) { return 2; }
-        else if (enemiesKilled >= 100 && enemiesKilled < 250) { return 3; }
-        else if (enemiesKilled >= 250) { return 4; }
+        if (enemiesKilled >= 250 && enemiesKilled < 500) { return 1; }
+        else if (enemiesKilled >= 500 && enemiesKilled < 1000) { return 2; }
+        else if (enemiesKilled >= 1000 && enemiesKilled < 2500) { return 3; }
+        else if (enemiesKilled >= 2500) { return 4; }
         return 0;
     }
 
     private int BossLevelCheck(int bossesKilled)
     {
-        if (bossesKilled >= 5 && bossesKilled < 15) { return 1; }
-        else if (bossesKilled >= 15 && bossesKilled < 30) { return 2; }
-        else if (bossesKilled >= 30 && bossesKilled < 100) { return 3; }
-        else if (bossesKilled >= 100) { return 4; }
+        if (bossesKilled >= 10 && bossesKilled < 30) { return 1; }
+        else if (bossesKilled >= 30 && bossesKilled < 60) { return 2; }
+        else if (bossesKilled >= 60 && bossesKilled < 200) { return 3; }
+        else if (bossesKilled >= 200) { return 4; }
         return 0;
     }
 }

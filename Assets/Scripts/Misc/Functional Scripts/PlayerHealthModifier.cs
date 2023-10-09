@@ -8,7 +8,7 @@ public class PlayerHealthModifier : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<VRPlayerController>())
+        if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<VRPlayer>())
             PlayerStats.Instance.Damage(healthValue);
     }
 }

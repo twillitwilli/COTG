@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public enum WeaponType { staff, bow, hands, wand, sword, gems, book }
-    [SerializeField] private WeaponType _weaponType;
-    [SerializeField] private GameObject[] weapon;
+    public enum WeaponType 
+    { 
+        staff, 
+        bow, 
+        hands, 
+        wand, 
+        sword, 
+        gems, 
+        book 
+    }
 
-    private GameObject _currentWeapon;
+    [SerializeField] 
+    WeaponType _weaponType;
+
+    [SerializeField] 
+    GameObject[] weapon;
+
+    GameObject _currentWeapon;
 }

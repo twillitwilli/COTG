@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class HandAdjustmentController : MonoBehaviour
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
 
-    [HideInInspector] public GameObject menu;
+    public GameObject menu { get; set; }
 
     public GameObject[] controllerOrigins;
     public HandAdjustment[] handAdjusters;
 
-    private void Start()
+    void Start()
     {
         _player = LocalGameManager.Instance.player;
 
@@ -31,10 +31,13 @@ public class HandAdjustmentController : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         PlayerMenu.Instance.ClosePlayerMenu();
 
-        foreach (GameObject obj in controllerOrigins) { Destroy(obj); }
+        foreach (GameObject obj in controllerOrigins) 
+        { 
+            Destroy(obj); 
+        }
     }
 }

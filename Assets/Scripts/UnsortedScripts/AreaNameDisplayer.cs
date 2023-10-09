@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class AreaNameDisplayer : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
-        if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
-        {
+        VRPlayer player;
+
+        if (other.gameObject.TryGetComponent<VRPlayer>(out player))
             DisplayAreaName(player);
-        }
     }
 
-    private void DisplayAreaName(VRPlayerController player)
+    void DisplayAreaName(VRPlayer player)
     {
         if (LocalGameManager.Instance.currentLevel > 0 && LocalGameManager.Instance.currentLevel < 4)
         {

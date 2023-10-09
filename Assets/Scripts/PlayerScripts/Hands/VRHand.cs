@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
-public class VRPlayerHand : MonoBehaviour
+public class VRHand : MonoBehaviour
 {
     [SerializeField] 
     private bool _isRightHand;
@@ -15,10 +15,10 @@ public class VRPlayerHand : MonoBehaviour
     private SpellCastingForHands _spellCasting;
     
     [SerializeField] 
-    private VRPlayerController _player;
+    private VRPlayer _player;
 
     [SerializeField] 
-    private VRPlayerHand _oppositeHand;
+    private VRHand _oppositeHand;
 
     [SerializeField] 
     private SkinnedMeshRenderer _handRenderer;
@@ -287,8 +287,8 @@ public class VRPlayerHand : MonoBehaviour
         HandIdleState();
     }
 
-    public VRPlayerController GetPlayer() { return _player; }
-    public VRPlayerHand GetOppositeHand() { return _oppositeHand; }
+    public VRPlayer GetPlayer() { return _player; }
+    public VRHand GetOppositeHand() { return _oppositeHand; }
     public SkinnedMeshRenderer GetHandRenderer() { return _handRenderer; }
     public bool IsRightHand() { return _isRightHand; }
     public bool IsPrimaryHand()

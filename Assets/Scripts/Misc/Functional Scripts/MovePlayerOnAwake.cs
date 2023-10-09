@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MovePlayerOnAwake : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
-    private void Awake()
+    void Awake()
     {
         _player = LocalGameManager.Instance.player;
 

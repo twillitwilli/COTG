@@ -33,13 +33,16 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     [SerializeField] 
     GameObject playerPrefab;
 
-    public VRPlayerController player { get; private set; }
+    public VRPlayer player { get; private set; }
 
-    public delegate void PlayerCreated(VRPlayerController newPlayer);
+    public delegate void PlayerCreated(VRPlayer newPlayer);
     public static event PlayerCreated playerCreated;
 
     [SerializeField] 
-    bool hardResetPlayerData, devMode, demoMode;
+    bool 
+        hardResetPlayerData, 
+        devMode, 
+        demoMode;
 
     [SerializeField] 
     Camera _mapCamera;
@@ -47,7 +50,11 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     EyeManager _eyeManager;
 
     [HideInInspector] 
-    public bool hasCalibrated, isHost, dungeonBuildCompleted, loadDungeon;
+    public bool 
+        hasCalibrated, 
+        isHost, 
+        dungeonBuildCompleted, 
+        loadDungeon;
 
     [HideInInspector] 
     public List<Vector2Int> spawnedScrolls = new List<Vector2Int>();
@@ -56,14 +63,16 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     public Transform moveableSpawnPoint;
 
     [HideInInspector] 
-    public GameObject loadingBox, spawnedBossArena;
+    public GameObject 
+        loadingBox, 
+        spawnedBossArena;
 
     public int dungeonType { get; set; }
     public int currentLevel { get; set; }
     public int saveFile { get; set; }
 
 
-    private void Start()
+    void Start()
     {
         if (hardResetPlayerData && PlayerPrefsSaveData.Instance.CheckIfSaveFileExists("ReturningPlayer"))
             PlayerPrefs.SetInt("ReturningPlayer", (false ? 1 : 0));
@@ -92,9 +101,11 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
     public void PlayerSpawner()
     {
         GameObject newPlayer = Instantiate(playerPrefab);
-        player = newPlayer.GetComponent<VRPlayerController>();
+        player = newPlayer.GetComponent<VRPlayer>();
         newPlayer.transform.SetParent(null);
         DontDestroyOnLoad(newPlayer);
+
+        _eyeManager = player.GetPlayerComponents().GetEyeManager();
 
         playerCreated(player);
     }
@@ -126,7 +137,7 @@ public class LocalGameManager : MonoSingleton<LocalGameManager>
         _eyeManager.EyesClosing();
     }
 
-    private void OpenEyes()
+    void OpenEyes()
     {
         _eyeManager.EyesOpening();
     }

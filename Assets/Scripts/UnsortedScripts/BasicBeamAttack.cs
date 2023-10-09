@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class BasicBeamAttack : MonoBehaviour
 {
-    [HideInInspector] 
-    public VRPlayerController player;
+    public VRPlayer player { get; set; }
     
-    private ParticleHitEnemy particleDamager;
-    private ParticleSystem particle;
+    ParticleHitEnemy _particleDamager;
+    ParticleSystem _particle;
 
     public void Awake()
     {
-        particleDamager = GetComponent<ParticleHitEnemy>();
-        particle = GetComponent<ParticleSystem>();
+        _particleDamager = GetComponent<ParticleHitEnemy>();
+        _particle = GetComponent<ParticleSystem>();
     }
 
     public async void Start()
@@ -24,10 +23,10 @@ public class BasicBeamAttack : MonoBehaviour
         StartDelay();
     }
 
-    private void StartDelay()
+    void StartDelay()
     {
-        particleDamager.healthAdjustment = (PlayerStats.Instance.AttackDamage() / -15);
-        var particleMain = particle.main;
+        _particleDamager.healthAdjustment = (PlayerStats.Instance.AttackDamage() / -15);
+        var particleMain = _particle.main;
         particleMain.startSpeed = (10f + (0.5f * PlayerStats.Instance.data.rangeUpgrades));
     }
 }

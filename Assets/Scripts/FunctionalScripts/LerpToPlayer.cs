@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class LerpToPlayer : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
+    
     public float speed;
 
-    private void Start()
+    void Start()
     {
         _player = LocalGameManager.Instance.player;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         float xPos = Mathf.Lerp(transform.position.x, _player.playerCollider.center.x, Time.deltaTime / speed);
         float yPos = Mathf.Lerp(transform.position.y, _player.playerCollider.center.y, Time.deltaTime / speed);

@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class CheckPlayStyle : MonoBehaviour
 {
-    [SerializeField] private PlayerMenu menu;
-    private VRPlayerController player;
+    [SerializeField] 
+    PlayerMenu menu;
+    
+    VRPlayer player;
 
-    public GameObject standingPlayerObjs;
-    public GameObject sittingPlayerObjs;
+    public GameObject 
+        standingPlayerObjs, 
+        sittingPlayerObjs;
 
-    private void Start()
+    void Start()
     {
         player = LocalGameManager.Instance.player;
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         if (player.playerStanding)
         {
             standingPlayerObjs.SetActive(true);
             sittingPlayerObjs.SetActive(false);
         }
+
         else
         {
             sittingPlayerObjs.SetActive(true);

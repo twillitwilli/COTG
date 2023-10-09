@@ -6,15 +6,25 @@ using UnityEngine;
 public class BasicEnemyProjectile : MonoBehaviour
 {
     [SerializeField] 
-    private string _deathMessage;
+    string _deathMessage;
 
-    public float attackDamage = 30f, projectileSpeed = 15f, projectileRange = 5f;
+    public float 
+        attackDamage = 30f, 
+        projectileSpeed = 15f, 
+        projectileRange = 5f;
+
     public LayerMask ignoreLayers;
     public GameObject collisionEffect;
 
     protected Rigidbody rb;
-    protected bool rayHit, hitObject, triggerHit, delayDestruction;
-    protected VRPlayerController player;
+
+    protected bool 
+        rayHit, 
+        hitObject, 
+        triggerHit, 
+        delayDestruction;
+
+    protected VRPlayer player;
 
     public virtual void Awake()
     {
@@ -46,9 +56,10 @@ public class BasicEnemyProjectile : MonoBehaviour
                 if (hit.collider.CompareTag("Player"))
                 {
                     rayHit = true;
-                    VRPlayerController player = hit.collider.gameObject.GetComponent<VRPlayerController>();
+                    VRPlayer player = hit.collider.gameObject.GetComponent<VRPlayer>();
                     HitPlayer();
                 }
+
                 else if (hit.collider)
                 {
                     Destroy(gameObject);
@@ -68,9 +79,9 @@ public class BasicEnemyProjectile : MonoBehaviour
     {
         if(!rayHit && !triggerHit)
         {
-            VRPlayerController player;
+            VRPlayer player;
 
-            if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
+            if (other.gameObject.TryGetComponent<VRPlayer>(out player))
             {
                 HitPlayer();
                 triggerHit = true;

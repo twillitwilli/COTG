@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class GetItem : MonoBehaviour
 {
-    [SerializeField] private VRPlayerController player;
+    [SerializeField] 
+    VRPlayer player;
+    
     public LayerMask ignoreLayers;
     public Transform raycastDirection;
     public GameObject effect;
 
-    //[HideInInspector]
     public int handCheck;
-    [HideInInspector]
-    public bool canGetItem;
+    
+    public bool canGetItem { get; set; }
 
-    private bool onlyRunOnce;
-    private float range;
+    bool onlyRunOnce;
+    float range;
 
-    private void Update()
+    void Update()
     {
         if (canGetItem)
         {
@@ -38,7 +39,7 @@ public class GetItem : MonoBehaviour
         else if (handCheck < 2) { canGetItem = false; }
     }
 
-    private void ShootRayCast()
+    void ShootRayCast()
     {
         if (canGetItem)
         {

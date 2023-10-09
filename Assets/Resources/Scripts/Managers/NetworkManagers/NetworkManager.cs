@@ -6,27 +6,30 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    private OnScreenText _onScreenText;
+    OnScreenText _onScreenText;
 
     public bool autoConnect;
     public bool sendChatMessage;
     public string chatMessage;
 
-    [HideInInspector] 
-    public string roomName;
+    public string roomName { get; set; }
     
     [HideInInspector] 
-    public GameObject networkPlayer, coopManager;
+    public GameObject 
+        networkPlayer, 
+        coopManager;
     
     [HideInInspector] 
-    public int connectedPlayers, networkSpawnedObjects;
+    public int 
+        connectedPlayers, 
+        networkSpawnedObjects;
 
     private void Awake()
     {
         LocalGameManager.playerCreated += ConfigureSettingsForNewPlayer;
     }
 
-    public void ConfigureSettingsForNewPlayer(VRPlayerController player)
+    public void ConfigureSettingsForNewPlayer(VRPlayer player)
     {
         _onScreenText = player.GetPlayerComponents().onScreenText;
 

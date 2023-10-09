@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ChangingClassTrigger : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<VRPlayerController>())
+        if (other.gameObject.GetComponent<VRPlayer>())
         {
-            VRPlayerController player = other.gameObject.GetComponent<VRPlayerController>();
+            VRPlayer player = other.gameObject.GetComponent<VRPlayer>();
             player.selectingClass = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<VRPlayerController>())
+        if (other.gameObject.GetComponent<VRPlayer>())
         {
-            VRPlayerController player = other.gameObject.GetComponent<VRPlayerController>();
+            VRPlayer player = other.gameObject.GetComponent<VRPlayer>();
             player.selectingClass = false;
         }
     }

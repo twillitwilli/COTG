@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class MediationState : MonoBehaviour
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
 
-    [HideInInspector] public bool playerMeditating;
+    public bool playerMeditating { get; set; }
+
     public GameObject[] magicCircles;
     private Vector3 previousHeadPosition;
     private Animator animator;
@@ -16,13 +17,13 @@ public class MediationState : MonoBehaviour
     public float distanceOfHeadPos;
 
     //timer
-    private TimeSpan timePlaying;
-    private bool timerGoing, timerStarted, mindFocused;
-    private float elapsedTime;
+    TimeSpan timePlaying;
+    bool timerGoing, timerStarted, mindFocused;
+    float elapsedTime;
 
     public double currentTime;
 
-    private void Start()
+    void Start()
     {
         animator = GetComponent<Animator>();
         _player = LocalGameManager.Instance.player;
@@ -31,7 +32,7 @@ public class MediationState : MonoBehaviour
         timerGoing = false;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         if (playerMeditating)
         {
@@ -91,7 +92,7 @@ public class MediationState : MonoBehaviour
         StartCoroutine(UpdateTimer());
     }
 
-    private IEnumerator UpdateTimer()
+    IEnumerator UpdateTimer()
     {
         while (timerGoing)
         {

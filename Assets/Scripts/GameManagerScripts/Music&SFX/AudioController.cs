@@ -6,7 +6,7 @@ using QTArts.AbstractClasses;
 public class AudioController : MonoSingleton<AudioController>
 {
     [SerializeField] 
-    private PlayerPrefsSaveData _playerPrefSaveData;
+    PlayerPrefsSaveData _playerPrefSaveData;
 
     public enum MusicTracks 
     { 
@@ -18,27 +18,31 @@ public class AudioController : MonoSingleton<AudioController>
     }
 
     [SerializeField] 
-    private GameObject _sfxPlayerObj;
+    GameObject _sfxPlayerObj;
 
     public float musicVolume { get; private set; }
     public float sfxVolume { get; private set; }
     public float creatureSFXVolume { get; private set; }
 
-    private AudioSource _musicPlayer;
+    AudioSource _musicPlayer;
 
     [SerializeField] 
-    private AudioClip[] _musicClips, _playerSFXclips;
+    AudioClip[] 
+        _musicClips, 
+        _playerSFXclips;
 
-    private List<GameObject> _sfxPlayers = new List<GameObject>();
+    List<GameObject> _sfxPlayers = new List<GameObject>();
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
 
         DefaultAudioSettings();
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _musicPlayer = player.GetPlayerComponents().GetMusicPlayer();
     }

@@ -61,7 +61,7 @@ public class EnemyController : MonoBehaviour
     [Header("Raycast Layers")]
     public LayerMask ignoreLayers;
 
-    public VRPlayerController player { get; private set; }
+    public VRPlayer player { get; private set; }
     private PlayerComponents _playerComponents;
 
     [HideInInspector] 

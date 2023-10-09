@@ -5,21 +5,23 @@ using QTArts.AbstractClasses;
 
 public class WalletController : MonoSingleton<WalletController>
 {
-    private PlayerComponents _playerComponents;
+    PlayerComponents _playerComponents;
 
     [SerializeField]
-    private GameObject _walletPrefab;
+    GameObject _walletPrefab;
 
-    private GameObject _walletObject;
+    GameObject _walletObject;
 
-    private CurrentGoldDisplay _goldDisplay;
+    CurrentGoldDisplay _goldDisplay;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public async void NewPlayerCreated(VRPlayerController player)
+    public async void NewPlayerCreated(VRPlayer player)
     {
         _playerComponents = player.GetPlayerComponents();
 

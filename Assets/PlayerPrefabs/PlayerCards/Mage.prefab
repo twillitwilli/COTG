@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9107156419431533634}
-  - component: {fileID: 437444048072704192}
   - component: {fileID: 2308677014571243868}
+  - component: {fileID: 437444048072704192}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Untagged
@@ -28,47 +28,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6197749792748990941}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &437444048072704192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593946058670496957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  playerSpeed: 0
-  sprintMultiplier: 0
-  _crouchSpeedReduction: 0
-  jumpVelocity: 0
-  dashDistance: 0
-  throwingForce: 0
-  minAttackDamage: 0
-  maxAttackDamage: 0
-  attackRange: 0
-  attackCooldown: 0
-  damageUpgrades: 0
-  rangeUpgrades: 0
-  magicFocus: 0
-  elementalEffectChance: 0
-  luck: 0
-  critChance: 0
-  critDamage: 0
-  specialEffectChance: 0
-  aimAssist: 0
-  currentMagicFocus: 0
-  weapons:
-  - {fileID: 6199734279487407351}
 --- !u!114 &2308677014571243868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,70 +44,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfeb056dd3d0d7f4f831511f32b66199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &8509483289784742627
-PrefabInstance:
+--- !u!114 &437444048072704192
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 9107156419431533634}
-    m_Modifications:
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00076
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00362
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.00035
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.5731358
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5767206
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.4181071
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.40508673
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 161.196
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 89.102
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90.399
-      objectReference: {fileID: 0}
-    - target: {fileID: 2314323049602954772, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-      propertyPath: m_Name
-      value: MageWand
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
---- !u!1 &6199734279487407351 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2314323049602954772, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-  m_PrefabInstance: {fileID: 8509483289784742627}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6197749792748990941 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2311777550045545278, guid: d37ff854114e467498f2a5dc087f3b88, type: 3}
-  m_PrefabInstance: {fileID: 8509483289784742627}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593946058670496957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 0}
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0

@@ -7,16 +7,22 @@ using QTArts.AbstractClasses;
 public class ChatManager : MonoSingleton<ChatManager>
 {
     [HideInInspector] 
-    public bool textChat, allowDebugMessages, voiceChat, notifications, chatOnRightHand;
+    public bool 
+        textChat, 
+        allowDebugMessages, 
+        voiceChat, 
+        notifications, 
+        chatOnRightHand;
 
-    [HideInInspector] 
-    public string displayMessage;
+    public string displayMessage { get; set; }
     
     [HideInInspector] 
     public List<string> messageHistory = new List<string>();
     
     [HideInInspector] 
-    public int totalMessages = -1, currentMessage = -1;
+    public int 
+        totalMessages = -1, 
+        currentMessage = -1;
 
     public void DefaultChatSettings()
     {
@@ -70,7 +76,7 @@ public class ChatManager : MonoSingleton<ChatManager>
 
     public void UpdateDisplayMessage(string message)
     {
-        foreach (VRPlayerHand hand in LocalGameManager.Instance.player.GetPlayerComponents().GetBothHands())
+        foreach (VRHand hand in LocalGameManager.Instance.player.GetPlayerComponents().GetBothHands())
         {
             if (hand.chatDisplay.chatSystem != null)
             {

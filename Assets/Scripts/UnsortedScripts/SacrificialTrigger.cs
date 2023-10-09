@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class SacrificialTrigger : MonoBehaviour
 {
-    private Animator _animator;
-    private bool _sacrificeTriggered;
+    Animator _animator;
+    bool _sacrificeTriggered;
 
-    private void Awake()
+    void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
-        if (!_sacrificeTriggered && other.gameObject.TryGetComponent<VRPlayerController>(out player))
+        VRPlayer player;
+
+        if (!_sacrificeTriggered && other.gameObject.TryGetComponent<VRPlayer>(out player))
         {
             _animator.Play("SpikesUp");
             PlayerStats.Instance.Damage(10);
@@ -23,9 +24,9 @@ public class SacrificialTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (_sacrificeTriggered && other.gameObject.GetComponent<VRPlayerController>())
+        if (_sacrificeTriggered && other.gameObject.GetComponent<VRPlayer>())
         {
             _animator.Play("SpikesDown");
             _sacrificeTriggered = false;

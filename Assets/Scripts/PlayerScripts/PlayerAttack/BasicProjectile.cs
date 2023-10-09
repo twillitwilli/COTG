@@ -5,19 +5,26 @@ using UnityEngine;
 public class BasicProjectile : MonoBehaviour
 {
     public bool forDemoOnly;
-    public float attackDamage, projectileSpeed, projectileRange, aimAssist;
+
+    public float 
+        attackDamage, 
+        projectileSpeed, 
+        projectileRange, 
+        aimAssist;
+
     public LayerMask ignoreLayers;
     public GameObject collisionEffect;
     public GameObject[] attackLevelEffects;
 
-    [HideInInspector] 
-    public VRPlayerController player;
+    public VRPlayer player { get; set; }
+    
+    public Transform spawnParent { get; set; }
     
     [HideInInspector] 
-    public Transform spawnParent;
-    
-    [HideInInspector] 
-    public bool tempPeircing, disableCrit, minionProjectile;
+    public bool 
+        tempPeircing, 
+        disableCrit, 
+        minionProjectile;
     
     [HideInInspector] 
     public Rigidbody rb;

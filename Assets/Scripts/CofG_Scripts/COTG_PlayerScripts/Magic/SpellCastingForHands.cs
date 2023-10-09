@@ -5,34 +5,49 @@ using UnityEngine;
 
 public class SpellCastingForHands : MonoBehaviour
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
-    private VRPlayerHand _hand;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
+    VRHand _hand;
 
-    private PlayerMagicController _magicObjects;
-    private SpellCasting _spellCasting;
+    PlayerMagicController _magicObjects;
+    SpellCasting _spellCasting;
 
-    public Transform magicCircleSpawn, magicChargesSpawn, magicProjectileSpawn, magicAccelEffectSpawn, effectBurstWhenCast;
+    public Transform 
+        magicCircleSpawn, 
+        magicChargesSpawn, 
+        magicProjectileSpawn, 
+        magicAccelEffectSpawn, 
+        effectBurstWhenCast;
     
     [HideInInspector] 
-    public bool magicActive, canCastSpell, concentrationSpell, castingSpell, maxCharge;
+    public bool 
+        magicActive, 
+        canCastSpell, 
+        concentrationSpell, 
+        castingSpell, 
+        maxCharge;
     
     [HideInInspector] 
-    public GameObject spellReadyVisual, sorcerySpellReadyEffect;
+    public GameObject 
+        spellReadyVisual, 
+        sorcerySpellReadyEffect;
    
-    private Vector3 startSpellPos, startConcentrationPos;
-    private ParticleSystem magicFocusCharges;
-    private bool tickDownMagicFocus;
-    private float cooldownTimer;
-    public int currentMagic;
-    private GameObject currentConcentrationSpell;
+    Vector3 
+        startSpellPos, 
+        startConcentrationPos;
+
+    ParticleSystem magicFocusCharges;
+    bool tickDownMagicFocus;
+    float cooldownTimer;
+    int currentMagic;
+    GameObject currentConcentrationSpell;
 
     private void Start()
     {
         _player = LocalGameManager.Instance.player;
 
         _playerComponents = _player.GetPlayerComponents();
-        _hand = GetComponent<VRPlayerHand>();
+        _hand = GetComponent<VRHand>();
 
         _magicObjects = MasterManager.playerMagicController;
 

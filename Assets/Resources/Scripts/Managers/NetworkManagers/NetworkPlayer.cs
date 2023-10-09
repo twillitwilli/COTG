@@ -6,17 +6,23 @@ using Photon.Pun;
 
 public class NetworkPlayer : MonoBehaviour
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
 
     public NetworkPlayerComponents components;
+    
     private PhotonView photonView;
-    private Transform headRig, leftHandRig, rightHandRig, playerTargeting;
+    
+    private Transform 
+        headRig, 
+        leftHandRig, 
+        rightHandRig, 
+        playerTargeting;
 
     //add health and arcane stats for hand display
-    [HideInInspector] public bool isDead;
+    public bool isDead { get; set; }
 
-    private void Start()
+    void Start()
     {
         DontDestroyOnLoad(gameObject);
 
@@ -29,6 +35,7 @@ public class NetworkPlayer : MonoBehaviour
         leftHandRig = _playerComponents.GetHand(0).GetHandModel().transform;
         rightHandRig = _playerComponents.GetHand(1).GetHandModel().transform;
         playerTargeting = _playerComponents.playerTarget;
+
         if (photonView.IsMine)
         {
             foreach (var meshRenderers in GetComponentsInChildren<Renderer>())
@@ -49,7 +56,7 @@ public class NetworkPlayer : MonoBehaviour
         }
     }
 
-    private void MapPosition(Transform target, Transform rigTransform)
+    void MapPosition(Transform target, Transform rigTransform)
     {
         target.position = rigTransform.position;
         target.rotation = rigTransform.rotation;

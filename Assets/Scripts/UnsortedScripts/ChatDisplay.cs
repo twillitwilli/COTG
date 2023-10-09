@@ -8,17 +8,18 @@ public class ChatDisplay : MonoBehaviour
     public GameObject chatSystem;
 
     [HideInInspector] 
-    public bool chatOpened, isRightHand;
+    public bool 
+        chatOpened, 
+        isRightHand;
     
-    [HideInInspector] 
-    public GameObject spawnedChat;
+    public GameObject spawnedChat { get; set; }
 
-    public void Start()
+    void Start()
     {
-        isRightHand = GetComponentInParent<VRPlayerHand>().IsRightHand();
+        isRightHand = GetComponentInParent<VRHand>().IsRightHand();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (ChatManager.Instance.textChat)
         {
@@ -42,7 +43,7 @@ public class ChatDisplay : MonoBehaviour
         }
     }
 
-    private void SpawnChat()
+    void SpawnChat()
     {
         spawnedChat = Instantiate(chatSystem, transform.position, transform.rotation);
         spawnedChat.transform.SetParent(this.transform);
@@ -51,7 +52,7 @@ public class ChatDisplay : MonoBehaviour
         chatOpened = true;
     }
 
-    private void CloseChat()
+    void CloseChat()
     {
         Destroy(spawnedChat);
         chatOpened = false;

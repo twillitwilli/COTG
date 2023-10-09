@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.AbstractClasses;
 
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class VRPlayerController : MonoBehaviour
+public class VRPlayer : MonoSingleton<VRPlayer>
 {
     [SerializeField] 
     PlayerComponents _playerComponents;
@@ -55,17 +56,10 @@ public class VRPlayerController : MonoBehaviour
         hasCustomHandSettings,
         movementDisabled;
 
-    [HideInInspector] 
-    public Rigidbody playerRB = null;
-    
-    [HideInInspector] 
-    public CapsuleCollider playerCollider;
-    
-    [HideInInspector] 
-    public Transform head = null;
-    
-    [HideInInspector] 
-    public int playerSaveFile;
+    public Rigidbody playerRB { get; set; }    
+    public CapsuleCollider playerCollider { get; set; }
+    public Transform head { get; set; }
+    public int playerSaveFile { get; set; }
 
     [SerializeField] 
     float collisionRange = 0.75f;
@@ -79,8 +73,7 @@ public class VRPlayerController : MonoBehaviour
 
     Transform playerOrientation;
     
-    [HideInInspector] 
-    public Animator sittingPlayerAnim;
+    public Animator sittingPlayerAnim { get; set; }
 
     //dash controls
     bool 
@@ -100,11 +93,11 @@ public class VRPlayerController : MonoBehaviour
         rightMovement;
     // -------------
 
-    public int roomID;
+    public int roomID { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
-        if (LocalGameManager.Instance.player != null) { Destroy(gameObject); }
+        base.Awake();
 
         playerRB = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
@@ -113,7 +106,7 @@ public class VRPlayerController : MonoBehaviour
         playerOrientation = head;
     }
 
-    private void Start()
+    void Start()
     {
         heightCheck = true;
         OrientationSource();
@@ -128,12 +121,12 @@ public class VRPlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         PlayerColliderTracking();
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         if (!isSprinting && toggleSprint)
             SprintController();
@@ -147,7 +140,7 @@ public class VRPlayerController : MonoBehaviour
         PlayerBounds();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (!isGrounded && collision.gameObject.CompareTag("Ground")) 
         { 
@@ -156,7 +149,7 @@ public class VRPlayerController : MonoBehaviour
         }
     }
 
-    private void PlayerColliderTracking()
+    void PlayerColliderTracking()
     {
         Vector3 colliderCenter = Vector3.zero;
 
@@ -253,7 +246,7 @@ public class VRPlayerController : MonoBehaviour
         }
     }
 
-    private void StandingHeightController()
+    void StandingHeightController()
     {
         if (heightCheck) 
         {
@@ -315,7 +308,7 @@ public class VRPlayerController : MonoBehaviour
         }
     }
 
-    private void CrouchSpeedReduction()
+    void CrouchSpeedReduction()
     {
         playerMovement = playerMovement / _playerStats.data.crouchSpeedReduction;
         crouchSpeedSet = true;
@@ -507,7 +500,7 @@ public class VRPlayerController : MonoBehaviour
             return 0;
     }
 
-    private void PlayerBounds()
+    void PlayerBounds()
     {
         if (transform.position.y < -1500 || transform.position.y > 1500)
             LocalGameManager.Instance.MovePlayer(0);

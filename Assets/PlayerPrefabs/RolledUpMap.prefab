@@ -108,14 +108,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fe6a531879b504ea8a97d4f9a3dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichItem: 1
+  grabbableItem: 1
   canBePlacedInPocket: 0
   throwableObject: 0
-  currentHand: {fileID: 0}
-  attachedToPocket: 0
   hasImpactSound: 0
   impactSound: {fileID: 0}
   normalMat: {fileID: 0}
   canGrabMat: {fileID: 0}
   canTelekineticGrab: 0
   telekineticGrabEffect: {fileID: 0}
+  activeTelekinesis: []

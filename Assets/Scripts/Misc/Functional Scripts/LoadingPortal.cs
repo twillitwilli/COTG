@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LoadingPortal : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
     public enum PortalTo 
     { 
@@ -25,17 +25,22 @@ public class LoadingPortal : MonoBehaviour
 
     public PortalTo portalLocation;
 
-    public bool movePlayerInScene, portalDisabled;
+    public bool 
+        movePlayerInScene, 
+        portalDisabled;
+
     public LocalGameManager.SpawnLocation whichSpawn;
 
-    public List<GameObject> enableObjs, disableObjs;
+    public List<GameObject> 
+        enableObjs, 
+        disableObjs;
 
-    private void Awake()
+    void Awake()
     {
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    private void Start()
+    void Start()
     {
         switch(portalLocation)
         {
@@ -47,16 +52,16 @@ public class LoadingPortal : MonoBehaviour
         }
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }
 
-    private async void OnTriggerEnter(Collider other)
+    async void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
+        VRPlayer player;
 
-        if (other.TryGetComponent<VRPlayerController>(out player)) 
+        if (other.TryGetComponent<VRPlayer>(out player)) 
         {
             if (!movePlayerInScene)
             {
@@ -183,7 +188,7 @@ public class LoadingPortal : MonoBehaviour
         LocalGameManager.Instance.Loading(LocalGameManager.SceneSelection.dungeon);
     }
 
-    private void CoopPortalSettings()
+    void CoopPortalSettings()
     {
         MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.ClearDungeonRoomList();
         MultiplayerManager.Instance.GetCoopManager().coopDungeonBuild.dungeonCompleted = false;
@@ -192,7 +197,7 @@ public class LoadingPortal : MonoBehaviour
         MultiplayerManager.Instance.GetCoopManager().PortalStatus();
     }
 
-    private void BasePlayerSettings(VRPlayerController player)
+    void BasePlayerSettings(VRPlayer player)
     {
         player.GetPlayerComponents().resetPlayer.ResetPlayer(false);
     }

@@ -6,15 +6,15 @@ using QTArts.AbstractClasses;
 
 public class PostProcessingController : MonoSingleton<PostProcessingController>
 {
-    private PostProcessLayer _postProcessLayer;
-    private PostProcessVolume _postProcessVolume;
-    private AmbientOcclusion _ambientOcclusionEffect;
-    private Bloom _bloomEffect;
-    private ColorGrading _colorGradingEffect;
+    PostProcessLayer _postProcessLayer;
+    PostProcessVolume _postProcessVolume;
+    AmbientOcclusion _ambientOcclusionEffect;
+    Bloom _bloomEffect;
+    ColorGrading _colorGradingEffect;
 
     //Post Processing Options
 
-    [HideInInspector] public enum PostEffectAdjustment 
+    public enum PostEffectAdjustment 
     { 
         ambientOcc, 
         bloomEffect, 
@@ -37,7 +37,9 @@ public class PostProcessingController : MonoSingleton<PostProcessingController>
     public float Bintensity = 14;
     
     [HideInInspector] 
-    public float threshold = 1, diffusion = 7;
+    public float 
+        threshold = 1, 
+        diffusion = 7;
 
     //Color Grading Settings
     public bool colorGrading { get; set; }
@@ -46,14 +48,22 @@ public class PostProcessingController : MonoSingleton<PostProcessingController>
     public Tonemapper tonemapping;
     
     [HideInInspector] 
-    public float temperature = -75, tint = -55, postExposure = 0, hueShift = 0, saturation = 100, contrast = 20;
+    public float 
+        temperature = -75, 
+        tint = -55, 
+        postExposure = 0, 
+        hueShift = 0, 
+        saturation = 100, 
+        contrast = 20;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         PostProcessingComponents postProcessingComponents = player.GetPlayerComponents().postProcessingComponents;
 

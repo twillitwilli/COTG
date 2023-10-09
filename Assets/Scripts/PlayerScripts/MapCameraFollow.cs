@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MapCameraFollow : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
-    private void Awake()
+    void Awake()
     {
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }
@@ -19,8 +19,6 @@ public class MapCameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         if (_player != null)
-        {
             transform.position = new Vector3(_player.transform.position.x, 152, _player.transform.position.z);
-        }
     }
 }

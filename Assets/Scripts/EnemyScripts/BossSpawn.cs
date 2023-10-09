@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class BossSpawn : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
     [SerializeField] 
-    private GameObject _portalPrefab, _endOfDemoPrefab;
+    GameObject 
+        _portalPrefab, 
+        _endOfDemoPrefab;
 
     [SerializeField] 
-    private Transform _portalSpawnLocation, _bossSpawnLocation;
+    Transform 
+        _portalSpawnLocation, 
+        _bossSpawnLocation;
 
-    [HideInInspector]
-    public GameObject spawnedBoss;
+    public GameObject spawnedBoss { get; set; }
 
     public async void Start()
     {
@@ -47,7 +50,7 @@ public class BossSpawn : MonoBehaviour
         }
     }
 
-    private void PortalSettings(GameObject portal)
+    void PortalSettings(GameObject portal)
     {
         portal.transform.SetParent(_portalSpawnLocation);
         portal.transform.localPosition = new Vector3(0, 0, 0);

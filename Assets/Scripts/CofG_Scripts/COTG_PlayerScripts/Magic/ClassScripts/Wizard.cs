@@ -1,22 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QTArts.AbstractClasses;
 
-public class Wizard : MonoBehaviour
+public class Wizard : MonoSingleton<Wizard>
 {
-    public static Wizard instance;
     [SerializeField] private StaffMagicController _staffController;
 
-    private void Start()
-    {
-        if (!instance) { instance = this; }
-        else { Destroy(gameObject); }
-    }
-
     public StaffMagicController GetStaffController() { return _staffController; }
-
-    private void OnDestroy()
-    {
-        if (instance == this) { instance = null; }
-    }
 }

@@ -6,11 +6,11 @@ public class EnemySpawnTrigger : MonoBehaviour
 {
     [SerializeField] private EnemySpawner enemySpawner;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            if (other.gameObject.GetComponent<VRPlayerController>()) { other.gameObject.GetComponent<VRPlayerController>().roomID = enemySpawner.room.roomID; }
+            if (other.gameObject.GetComponent<VRPlayer>()) { other.gameObject.GetComponent<VRPlayer>().roomID = enemySpawner.room.roomID; }
             enemySpawner.ExploredRoom(false);
             enemySpawner.SpawnType(false); 
         }

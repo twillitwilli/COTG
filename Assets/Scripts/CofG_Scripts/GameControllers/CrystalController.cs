@@ -6,26 +6,36 @@ using QTArts.AbstractClasses;
 
 public class CrystalController : MonoSingleton<CrystalController>
 {
-    private PlayerComponents _playerComponents;
-    private VRPlayerHand _bombHand, _keyHand;
+    PlayerComponents _playerComponents;
+    
+    VRHand 
+        _bombHand, 
+        _keyHand;
 
     [SerializeField]
-    private GameObject _currentBombCrystal, _currentKeyCrystal;
+    GameObject 
+        _currentBombCrystal, 
+        _currentKeyCrystal;
 
     [SerializeField]
-    private Material _bombCrystalMat, _keyCrystalMat, _depletedMaterial;
+    Material 
+        _bombCrystalMat, 
+        _keyCrystalMat, 
+        _depletedMaterial;
 
     [SerializeField]
-    private GameObject[] _ignitedBombPrefabs;
+    GameObject[] _ignitedBombPrefabs;
 
-    private GameObject _currentIgnitedBomb;
+    GameObject _currentIgnitedBomb;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public async void NewPlayerCreated(VRPlayerController player)
+    public async void NewPlayerCreated(VRPlayer player)
     {
         _playerComponents = player.GetPlayerComponents();
 
@@ -44,7 +54,7 @@ public class CrystalController : MonoSingleton<CrystalController>
 
     // BOMB CRYSTAL SETTINGS
 
-    private void SpawnBombCrystalOnHand()
+    void SpawnBombCrystalOnHand()
     {
         _currentBombCrystal.SetActive(true);
         _currentBombCrystal.GetComponent<BoxCollider>().enabled = true;
@@ -102,7 +112,7 @@ public class CrystalController : MonoSingleton<CrystalController>
         grabController.ParentGrabbable(_currentIgnitedBomb, bombPos, bombRot, bombScale);
     }
 
-    public void ThrowBomb(VRPlayerHand currentHand)
+    public void ThrowBomb(VRHand currentHand)
     {
         Collider collider = _currentIgnitedBomb.GetComponent<Collider>();
         collider.isTrigger = false;

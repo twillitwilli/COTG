@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class ControllerInputManager : MonoBehaviour
 {
     [SerializeField] 
-    private VRPlayerController _player;
+    VRPlayer _player;
 
     [SerializeField]
-    private GrabController[] _grabControllers;
+    GrabController[] _grabControllers;
 
     public VRInputs controls;
 
@@ -68,17 +68,17 @@ public class ControllerInputManager : MonoBehaviour
         SetPrimaryButtonDown(0, false);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         controls.Disable();
     }
 
-    private void Update()
+    void Update()
     {
         JoystickPosition();
     }
 
-    private void JoystickPosition()
+    void JoystickPosition()
     {
         if (!_player.movementDisabled)
         {
@@ -138,13 +138,13 @@ public class ControllerInputManager : MonoBehaviour
         else _player.CrouchController(buttonClicked);
     }
 
-    private void SetPrimaryButtonDown(int hand, bool buttonDown)
+    void SetPrimaryButtonDown(int hand, bool buttonDown)
     {
         if (hand == 1)
             _player.DashController(buttonDown);
     }
 
-    private bool CheckIfBothHandsEmpty()
+    bool CheckIfBothHandsEmpty()
     {
         foreach (GrabController grabController in _grabControllers)
         {

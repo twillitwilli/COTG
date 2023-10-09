@@ -6,31 +6,14 @@ using QTArts.Interfaces;
 public class DamageOverTimeNode : iCooldownable
 {
     public float cooldownTimer { get; set; }
+    public bool forPlayer { get; set; }
+    public VRPlayer player { get; set; }
+    public EnemyController enemy { get; set; }
+    public string nameOfAttack { get; set; }
+    public float howLong { get; set; }
+    public float damage { get; set; }
 
-    [HideInInspector] 
-    public bool forPlayer;
-    
-    [HideInInspector] 
-    public VRPlayerController player;
-    
-    [HideInInspector] 
-    public EnemyController enemy;
-    
-    [HideInInspector] 
-    public string nameOfAttack;
-    
-    [HideInInspector] 
-    public float howLong;
-    
-    [HideInInspector] 
-    public float damage;
-
-    private void Start()
-    {
-        
-    }
-
-    private void LateUpdate()
+    void LateUpdate()
     {
         if (CooldownDone())
         {
@@ -58,30 +41,29 @@ public class DamageOverTimeNode : iCooldownable
         return false;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
-        if (nameOfAttack == "Burning")
+        switch (nameOfAttack)
         {
-            enemy.enemyHealth.statusController.burnEffect.SetActive(false);
-            enemy.enemyHealth.statusController.isBurning = false;
-        }
+            case "Burning":
+                enemy.enemyHealth.statusController.burnEffect.SetActive(false);
+                enemy.enemyHealth.statusController.isBurning = false;
+                break;
 
-        else if (nameOfAttack == "Eletrocuted")
-        {
-            enemy.enemyHealth.statusController.electrocutedEffect.SetActive(false);
-            enemy.enemyHealth.statusController.isElectrocuted = false;
-        }
+            case "Electrocuted":
+                enemy.enemyHealth.statusController.electrocutedEffect.SetActive(false);
+                enemy.enemyHealth.statusController.isElectrocuted = false;
+                break;
 
-        else if (nameOfAttack == "Life Drained")
-        {
-            enemy.enemyHealth.statusController.lifeDrainEffect.SetActive(false);
-            enemy.enemyHealth.statusController.isLifeDraining = false;
-        }
+            case "Life Drained":
+                enemy.enemyHealth.statusController.lifeDrainEffect.SetActive(false);
+                enemy.enemyHealth.statusController.isLifeDraining = false;
+                break;
 
-        else if (nameOfAttack == "Poisoned")
-        {
-            enemy.enemyHealth.statusController.poisonEffect.SetActive(false);
-            enemy.enemyHealth.statusController.isPoisoned = false;
+            case "Poisoned":
+                enemy.enemyHealth.statusController.poisonEffect.SetActive(false);
+                enemy.enemyHealth.statusController.isPoisoned = false;
+                break;
         }
     }
 }

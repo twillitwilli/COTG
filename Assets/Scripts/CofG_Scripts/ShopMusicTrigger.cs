@@ -7,11 +7,11 @@ public class ShopMusicTrigger : MonoBehaviour
     public bool enteredTrigger;
     public GameObject oppositeTrigger;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
+        VRPlayer player;
 
-        if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
+        if (other.gameObject.TryGetComponent<VRPlayer>(out player))
         {
             if (enteredTrigger) 
             {
@@ -27,7 +27,7 @@ public class ShopMusicTrigger : MonoBehaviour
         }
     }
 
-    private void TriggerSettings()
+    void TriggerSettings()
     {
         oppositeTrigger.SetActive(true);
         gameObject.SetActive(false);

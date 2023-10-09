@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class VRSockets : MonoBehaviour
 {
-    [SerializeField] private VRPlayerHand socketHand;
-    [HideInInspector] public Vector3 originalScale;
+    public Vector3 originalScale { get; set; }
 
     public void AttachObject(PlayerItemGrabbable obj)
     {

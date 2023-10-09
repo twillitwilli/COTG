@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class SaveFileManager : MonoBehaviour
 {
-    [HideInInspector]
-    public VRPlayerController player;
+    public VRPlayer player { get; set; }
 
     public StartingPortal startingPortal;
     public SaveFileSelector[] saveFileSelectors;
@@ -16,7 +15,7 @@ public class SaveFileManager : MonoBehaviour
         LocalGameManager.playerCreated += CheckSaveFiles;
     }
 
-    public void CheckSaveFiles(VRPlayerController newPlayer)
+    public void CheckSaveFiles(VRPlayer newPlayer)
     {
         player = newPlayer;
 

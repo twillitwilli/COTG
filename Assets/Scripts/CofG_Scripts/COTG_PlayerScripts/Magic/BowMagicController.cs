@@ -5,18 +5,18 @@ using QTArts.AbstractClasses;
 
 public class BowMagicController : MonoSingleton<BowMagicController>
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponenets;
+    VRPlayer _player;
+    PlayerComponents _playerComponenets;
 
-    private PlayerBow _currentBow;
+    PlayerBow _currentBow;
 
-    private void OnEnable()
+    void OnEnable()
     {
         _player = LocalGameManager.Instance.player;
         _playerComponenets = _player.GetPlayerComponents();
     }
 
-    public void GrabBow(VRPlayerHand hand, GameObject bowObj)
+    public void GrabBow(VRHand hand, GameObject bowObj)
     {
         Vector3 pos;
         Vector3 rot;
@@ -51,11 +51,12 @@ public class BowMagicController : MonoSingleton<BowMagicController>
     {
         for (int i = 0; i < 2; i++)
         {
-            VRPlayerHand hand = _playerComponenets.GetHand(i);
+            VRHand hand = _playerComponenets.GetHand(i);
             hand.EmptyHand();
         }
 
-        if (_currentBow != null) { Destroy(_currentBow.gameObject); }
+        if (_currentBow != null)
+            Destroy(_currentBow.gameObject);
 
         SpawnBow();
     }
@@ -82,6 +83,7 @@ public class BowMagicController : MonoSingleton<BowMagicController>
             _playerComponenets.GetHand(i).EmptyHand();
         }
 
-        if (_currentBow != null) Destroy(_currentBow.gameObject);
+        if (_currentBow != null)
+            Destroy(_currentBow.gameObject);
     }
 }

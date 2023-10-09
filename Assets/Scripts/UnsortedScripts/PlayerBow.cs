@@ -4,36 +4,63 @@ using UnityEngine;
 
 public class PlayerBow : MonoBehaviour
 {
-    private bool _holdingBow, _holdingString;
+    bool 
+        _holdingBow, 
+        _holdingString;
 
-    private VRPlayerHand _primaryHand, _offHand;
+    VRHand 
+        _primaryHand, 
+        _offHand;
 
-    private bool _setNormalChargeCooldown, _setDoubleChargeCooldown, _chargingArrow;
-    private float _normalChargeTimer, _doubleChargeTimer, _stringPullDistance;
+    bool 
+        _setNormalChargeCooldown, 
+        _setDoubleChargeCooldown, 
+        _chargingArrow;
+
+    float 
+        _normalChargeTimer, 
+        _doubleChargeTimer, 
+        _stringPullDistance;
 
     [SerializeField] 
-    private Transform _arrowSpellSpawn, _boneParent, _chargingEffectSpawn, _handOnStringSpawn;
+    Transform 
+        _arrowSpellSpawn, 
+        _boneParent, 
+        _chargingEffectSpawn, 
+        _handOnStringSpawn;
     
     [SerializeField] 
-    private GameObject _stringBone, _normalChargeArrow, _doubleChargeArrow, _arrowReady; 
+    GameObject 
+        _stringBone, 
+        _normalChargeArrow, 
+        _doubleChargeArrow, 
+        _arrowReady; 
     
     [SerializeField] 
-    private Vector3 _offsetBowDirection;
+    Vector3 _offsetBowDirection;
     
     [SerializeField] 
-    private BoxCollider _bowCollider;
+    BoxCollider _bowCollider;
     
     [SerializeField] 
-    private CapsuleCollider _stringTrigger;
+    CapsuleCollider _stringTrigger;
     
     [SerializeField] 
-    private Transform _stringDefaultPos;
+    Transform _stringDefaultPos;
 
-    private bool _stringNormalCharge, _stringDoubleCharge, _removedFromParent, _grabbedString;
-    private GameObject _spawnedChargingEffect;
-    private Vector3 _defaultPos, _defaultRot;
+    bool 
+        _stringNormalCharge, 
+        _stringDoubleCharge, 
+        _removedFromParent, 
+        _grabbedString;
 
-    private void Start()
+    GameObject _spawnedChargingEffect;
+    
+    Vector3 
+        _defaultPos, 
+        _defaultRot;
+
+    void Start()
     {
         SetHands();
 
@@ -77,7 +104,7 @@ public class PlayerBow : MonoBehaviour
         }
     }
 
-    private void SetHands()
+    void SetHands()
     {
         PlayerComponents playerComponents = LocalGameManager.Instance.player.GetPlayerComponents();
 

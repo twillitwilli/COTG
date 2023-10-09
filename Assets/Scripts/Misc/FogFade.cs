@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FogFade : MonoBehaviour
 {
-    private VRPlayerController _player;
+    private VRPlayer _player;
 
     public GameObject backing;
     public Material fog;

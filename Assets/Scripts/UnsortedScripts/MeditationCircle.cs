@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class MeditationCircle : MonoBehaviour
 {
-    [SerializeField] private MediationState meditationState;
+    [SerializeField] 
+    MediationState meditationState;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<VRPlayerController>())
+        if (other.gameObject.GetComponent<VRPlayer>())
         {
             transform.SetParent(null);
             meditationState.playerMeditating = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<VRPlayerController>()) meditationState.playerMeditating = false;
+        if (other.gameObject.GetComponent<VRPlayer>()) 
+            meditationState.playerMeditating = false;
     }
 }

@@ -6,7 +6,8 @@ public class WandController : MonoBehaviour
 {
     // --- FOR MAGE ONLY ---
 
-    [SerializeField] private VRPlayerController player;
+    VRPlayer _player;
+
     public Transform[] backWandSpawn;
 
     private void OnEnable()

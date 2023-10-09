@@ -5,24 +5,30 @@ using QTArts.AbstractClasses;
 
 public class MapController : MonoSingleton<MapController>
 {
-    private PlayerComponents _playerComponents;
+    PlayerComponents _playerComponents;
 
     public bool hasMapReveal;
 
     [SerializeField]
-    private GameObject _rolledUpMapPrefab, _openedMapPrefab;
+    GameObject 
+        _rolledUpMapPrefab, 
+        _openedMapPrefab;
 
-    private GameObject _rolledUpMapObject, _openedMapObject;
+    GameObject 
+        _rolledUpMapObject, 
+        _openedMapObject;
 
     [HideInInspector]
     public List<GameObject> mapBlocks = new List<GameObject>();
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public async void NewPlayerCreated(VRPlayerController player)
+    public async void NewPlayerCreated(VRPlayer player)
     {
         _playerComponents = player.GetPlayerComponents();
 

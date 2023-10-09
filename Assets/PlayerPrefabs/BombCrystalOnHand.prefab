@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fe6a531879b504ea8a97d4f9a3dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichItem: 3
+  grabbableItem: 3
   canBePlacedInPocket: 0
   throwableObject: 0
   currentHand: {fileID: 0}
@@ -119,3 +119,4 @@ MonoBehaviour:
   canGrabMat: {fileID: 2100000, guid: 49c4c4df64bdd8544b93ed85461c22e2, type: 2}
   canTelekineticGrab: 0
   telekineticGrabEffect: {fileID: 0}
+  activeTelekinesis: []

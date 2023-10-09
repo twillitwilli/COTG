@@ -466,6 +466,86 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5585791246178758659, guid: 703d51c7980b3ca47ae97be302d7bbdc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 703d51c7980b3ca47ae97be302d7bbdc, type: 3}
+--- !u!1 &36257624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36257625}
+  - component: {fileID: 36257626}
+  m_Layer: 0
+  m_Name: Tarot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &36257625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36257624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &36257626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36257624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1 &47773933
 GameObject:
   m_ObjectHideFlags: 0
@@ -18150,6 +18230,86 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5785024724163929087, guid: 5a7193b88ce93fd45ab1d0b1a42f4d35, type: 3}
   m_PrefabInstance: {fileID: 307018917}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &307410796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307410797}
+  - component: {fileID: 307410798}
+  m_Layer: 0
+  m_Name: Mage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &307410797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307410796}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &307410798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307410796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1001 &308752780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19324,6 +19484,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407417376}
   m_CullTransparentMesh: 0
+--- !u!1 &415008002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415008003}
+  - component: {fileID: 415008004}
+  m_Layer: 0
+  m_Name: Enchanter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415008003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415008002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &415008004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415008002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1001 &415036316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59754,6 +59994,86 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024709537}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1036072607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036072608}
+  - component: {fileID: 1036072609}
+  m_Layer: 0
+  m_Name: Sorcerer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1036072608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036072607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1036072609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036072607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 125
+    currentHealth: 125
+    playerSpeed: 5
+    sprintMultiplier: 2
+    crouchSpeedReduction: 2
+    jumpVelocity: 5
+    dashDistance: 10
+    throwingForce: 5
+    iFrameTime: 0.5
+    attackDamage: 15
+    attackRange: 1
+    attackCooldown: 6
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 3
+    elementalEffectChance: 10
+    luck: 0
+    critChance: 20
+    critDamage: 35
+    specialEffectChance: 20
+    aimAssist: 1.5
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1001 &1038610292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76075,6 +76395,7 @@ GameObject:
   - component: {fileID: 1196699597}
   - component: {fileID: 1196699595}
   - component: {fileID: 1196699596}
+  - component: {fileID: 1196699598}
   m_Layer: 0
   m_Name: SaveSystem
   m_TagString: Untagged
@@ -76120,6 +76441,50 @@ Transform:
   m_Father: {fileID: 762727604}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196699598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196699594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d242e7ca2a5c6e45af4819daa9188f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalPlayTimeLevel: 0
+  totalRunsLevel: 0
+  completedRunsLevel: 0
+  bestRunStreakLevel: 0
+  deathLevel: 0
+  goldLevel: 0
+  soulLevel: 0
+  runeLevel: 0
+  scrollLevel: 0
+  itemLevel: 0
+  potionLevel: 0
+  chestLevel: 0
+  roomLevel: 0
+  puzzleLevel: 0
+  enemyLevel: 0
+  bossLevel: 0
+  reaperLevel: 0
+  jarLevel: 0
+  rockLevel: 0
+  batLevel: 0
+  beeLevel: 0
+  bunnyLevel: 0
+  goblinLevel: 0
+  mushroomLevel: 0
+  plantLevel: 0
+  wolfLevel: 0
+  golemLevel: 0
+  treantGuardLevel: 0
+  dragonLevel: 0
+  babyReaperLevel: 0
+  princeReaperLevel: 0
+  godReaperLevel: 0
 --- !u!1 &1203485176
 GameObject:
   m_ObjectHideFlags: 0
@@ -87881,6 +88246,86 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1332311321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1332311322}
+  - component: {fileID: 1332311323}
+  m_Layer: 0
+  m_Name: Witch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1332311322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332311321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1332311323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332311321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1 &1334528330
 GameObject:
   m_ObjectHideFlags: 0
@@ -89165,6 +89610,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1388454067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1388454068}
+  - component: {fileID: 1388454069}
+  m_Layer: 0
+  m_Name: Warlock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1388454068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388454067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388454069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388454067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1 &1394907095
 GameObject:
   m_ObjectHideFlags: 0
@@ -96250,6 +96775,87 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552353632}
   m_Mesh: {fileID: 4300000, guid: d5a86f60b4e067246ab8459fac534c6f, type: 3}
+--- !u!1 &1569520311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569520312}
+  - component: {fileID: 1569520313}
+  m_Layer: 0
+  m_Name: Conjurer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1569520312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569520311}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569520313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569520311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 788389096327949333, guid: cb91cf9e4fc9a2240ab696019c9e528f, type: 3}
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 90
+    currentHealth: 90
+    playerSpeed: 5
+    sprintMultiplier: 2
+    crouchSpeedReduction: 2
+    jumpVelocity: 7
+    dashDistance: 8
+    throwingForce: 5
+    iFrameTime: 0.5
+    attackDamage: 13
+    attackRange: 2
+    attackCooldown: 1.5
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 5
+    elementalEffectChance: 10
+    luck: 1
+    critChance: 20
+    critDamage: 25
+    specialEffectChance: 10
+    aimAssist: 1
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1 &1575401090
 GameObject:
   m_ObjectHideFlags: 0
@@ -102612,6 +103218,87 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 793887876428796570, guid: 0575c526387ce444eba501ac4a030a2e, type: 3}
   m_PrefabInstance: {fileID: 1626264283}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1628817159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628817160}
+  - component: {fileID: 1628817161}
+  m_Layer: 0
+  m_Name: Wizard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1628817160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628817159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6293602411912059489}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1628817161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628817159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 2314323049602954772, guid: eb053a9cbca759a4591e45abe5184a2d, type: 3}
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 100
+    currentHealth: 100
+    playerSpeed: 4
+    sprintMultiplier: 2
+    crouchSpeedReduction: 2
+    jumpVelocity: 5
+    dashDistance: 8
+    throwingForce: 5
+    iFrameTime: 0.5
+    attackDamage: 12
+    attackRange: 1.5
+    attackCooldown: 1.5
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 4
+    elementalEffectChance: 10
+    luck: 1
+    critChance: 15
+    critDamage: 20
+    specialEffectChance: 20
+    aimAssist: 2
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0
 --- !u!1001 &1635307781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102968,13 +103655,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683224119}
-  m_LocalRotation: {x: -0.9930975, y: -0, z: -0, w: 0.11729217}
+  m_LocalRotation: {x: -0.9930951, y: -0.002176117, z: -0.00025701555, w: 0.11729188}
   m_LocalPosition: {x: 0, y: 0.678, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 613887214}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -166.528, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -166.528, y: 0, z: -0.25100708}
 --- !u!108 &1683224121
 Light:
   m_ObjectHideFlags: 0
@@ -126880,8 +127567,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915206195160113567}
-  - component: {fileID: 7323240045799168071}
-  - component: {fileID: 5836403584199542906}
   m_Layer: 0
   m_Name: PlayerStats
   m_TagString: Untagged
@@ -137725,7 +138410,7 @@ Transform:
   m_GameObject: {fileID: 2557667313974597600}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.003074866, y: 2.22, z: 0}
-  m_LocalScale: {x: 1, y: 4.9432306, z: 4.0110693}
+  m_LocalScale: {x: 0.76404, y: 4.9432306, z: 3.8907373}
   m_Children: []
   m_Father: {fileID: 6841293911111206491}
   m_RootOrder: 1
@@ -143026,14 +143711,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCards:
-  - {fileID: 539026631362538693, guid: fe59fda86144a8e4999628cd87aed224, type: 3}
-  - {fileID: 3314325853875416173, guid: 33c4951e17c567346b84ff7b119518a3, type: 3}
-  - {fileID: 4538361369709691806, guid: 0b5fde5261586244bb4a1d121b42f21d, type: 3}
-  - {fileID: 593946058670496957, guid: 356d9ed6253e7da47b4892ea9f26acce, type: 3}
-  - {fileID: 8994748435291108957, guid: 0fc050e1d99a8634eaead266e2511d65, type: 3}
-  - {fileID: 2779093898297609041, guid: 44b8de17eb30de548ab2bdc4a953f454, type: 3}
-  - {fileID: 570659068830074948, guid: 8bce31d006e19a64da1a7bf1528df01e, type: 3}
-  - {fileID: 4967466426528633855, guid: 9f3a6fa7531ba1c4394f9da440094050, type: 3}
+  - {fileID: 1628817161}
+  - {fileID: 1569520313}
+  - {fileID: 1036072609}
+  - {fileID: 307410798}
+  - {fileID: 415008004}
+  - {fileID: 1388454069}
+  - {fileID: 1332311323}
+  - {fileID: 36257626}
 --- !u!1 &3403403096835889164
 GameObject:
   m_ObjectHideFlags: 0
@@ -146670,50 +147355,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5836403584199542906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403011249699286715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d242e7ca2a5c6e45af4819daa9188f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalPlayTimeLevel: 0
-  totalRunsLevel: 0
-  completedRunsLevel: 0
-  bestRunStreakLevel: 0
-  deathLevel: 0
-  goldLevel: 0
-  soulLevel: 0
-  runeLevel: 0
-  scrollLevel: 0
-  itemLevel: 0
-  potionLevel: 0
-  chestLevel: 0
-  roomLevel: 0
-  puzzleLevel: 0
-  enemyLevel: 0
-  bossLevel: 0
-  reaperLevel: 0
-  jarLevel: 0
-  rockLevel: 0
-  batLevel: 0
-  beeLevel: 0
-  bunnyLevel: 0
-  goblinLevel: 0
-  mushroomLevel: 0
-  plantLevel: 0
-  wolfLevel: 0
-  golemLevel: 0
-  treantGuardLevel: 0
-  dragonLevel: 0
-  babyReaperLevel: 0
-  princeReaperLevel: 0
-  godReaperLevel: 0
 --- !u!1001 &5911156864327096980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146851,7 +147492,15 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1628817160}
+  - {fileID: 1569520312}
+  - {fileID: 1036072608}
+  - {fileID: 307410797}
+  - {fileID: 415008003}
+  - {fileID: 1388454068}
+  - {fileID: 1332311322}
+  - {fileID: 36257625}
   m_Father: {fileID: 1263501287}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147079,18 +147728,6 @@ MonoBehaviour:
   wasHit: {fileID: 2100000, guid: ddf42d2f85d13bc4f81b83244db50513, type: 2}
   statusController: {fileID: 0}
   bossController: {fileID: 5493455785174803525}
---- !u!114 &7323240045799168071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403011249699286715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47abf62129d67740a843bc7b9bbfcd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7576350748578033920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147185,8 +147822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80dda43c4e606f84cb7b7e19b69533ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 0
-  currentTimeDisplay: 
 --- !u!4 &7580838875745592351
 Transform:
   m_ObjectHideFlags: 0
@@ -147511,9 +148146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25f5c46e2930c649b6cb72da13deaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerName: 
-  controllerID: 0
-  roomID: 0
 --- !u!4 &8860301013097018124
 Transform:
   m_ObjectHideFlags: 0

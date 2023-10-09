@@ -193,8 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayGold: {fileID: 340550111612795898}
-  player: {fileID: 0}
-  walletInHand: 0
 --- !u!1 &5068696499015348743
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +234,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8784154098372101829}
   - component: {fileID: 6570572777828988001}
-  - component: {fileID: 7459530687778902297}
   - component: {fileID: 4368164306695621051}
   m_Layer: 15
   m_Name: Wallet
@@ -274,19 +271,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.01, z: 0.02}
   m_Center: {x: 0, y: 0, z: -0.001}
---- !u!114 &7459530687778902297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5745691818160567510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716d60ea32c610449a2a85f0e8792a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &4368164306695621051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fe6a531879b504ea8a97d4f9a3dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whichItem: 2
+  grabbableItem: 2
   canBePlacedInPocket: 0
   throwableObject: 0
   currentHand: {fileID: 0}
@@ -310,6 +294,7 @@ MonoBehaviour:
   canGrabMat: {fileID: 0}
   canTelekineticGrab: 0
   telekineticGrabEffect: {fileID: 0}
+  activeTelekinesis: []
 --- !u!1001 &8942176350789667563
 PrefabInstance:
   m_ObjectHideFlags: 0

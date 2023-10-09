@@ -6,7 +6,9 @@ public class DaggerController : MonoBehaviour
 {
     // --- FOR ENCHANTER ONLY ---
 
-    [SerializeField] private VRPlayerController player;
+    [SerializeField] 
+    private VRPlayer _player;
+    
     public Transform[] daggerSpawnLocation;
 
 }

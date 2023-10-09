@@ -5,11 +5,13 @@ using UnityEngine;
 public class TelekineticGrab : MonoBehaviour
 {
     [SerializeField] 
-    private VRPlayerHand hand;
+    VRHand hand;
 
-    public float range = 1, diameter = 0.5f;
+    public float 
+        range = 1, 
+        diameter = 0.5f;
 
-    private PlayerItemGrabbable closestObject;
+    PlayerItemGrabbable closestObject;
 
     public PlayerItemGrabbable TelekinesisGrab()
     {

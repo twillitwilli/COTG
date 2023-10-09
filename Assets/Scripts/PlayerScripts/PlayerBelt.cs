@@ -4,37 +4,46 @@ using UnityEngine;
 
 public class PlayerBelt : MonoBehaviour
 {
-    [SerializeField] private VRPlayerController _player;
+    [SerializeField] private VRPlayer _player;
+
     [Range(-1f, 1f)]
     public float backAttachments;
+
     [Range(0, 1f)]
     public float heightStandingPlayer;
+
     [Range(0, 1f)]
     public float heightSittingPlayer;
+
     [Range(0, 1f)]
     public float zAdjustmentForSittingPlayer;
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         PositionUnderHead();
         HeightUnderHead();
         RotateWithHead();
     }
 
-    private void PositionUnderHead()
+    void PositionUnderHead()
     {
-        if (_player.playerStanding) { transform.localPosition = new Vector3(_player.head.localPosition.x, HeightUnderHead(), _player.head.localPosition.z); }
-        else { transform.localPosition = new Vector3(_player.head.localPosition.x, HeightUnderHead(), (_player.head.localPosition.z + zAdjustmentForSittingPlayer)); }
+        if (_player.playerStanding)
+            transform.localPosition = new Vector3(_player.head.localPosition.x, HeightUnderHead(), _player.head.localPosition.z);
+
+        else
+            transform.localPosition = new Vector3(_player.head.localPosition.x, HeightUnderHead(), (_player.head.localPosition.z + zAdjustmentForSittingPlayer));
     }
 
-    private float HeightUnderHead()
+    float HeightUnderHead()
     {
         Vector3 adjustedHeight = _player.head.localPosition;
+
         if (_player.playerStanding)
         {   
             adjustedHeight.y = Mathf.Lerp(0, adjustedHeight.y, heightStandingPlayer);
             return adjustedHeight.y;
         }
+
         else
         {
             if (!_player.isCrouched)
@@ -42,6 +51,7 @@ public class PlayerBelt : MonoBehaviour
                 adjustedHeight.y = Mathf.Lerp(0, adjustedHeight.y, heightSittingPlayer);
                 return adjustedHeight.y;
             }
+
             else
             {
                 adjustedHeight.y = Mathf.Lerp(0, adjustedHeight.y, 0);
@@ -50,7 +60,7 @@ public class PlayerBelt : MonoBehaviour
         }
     }
 
-    private void RotateWithHead()
+    void RotateWithHead()
     {
         transform.localEulerAngles = new Vector3(0, (_player.head.eulerAngles.y - _player.head.eulerAngles.z) - _player.transform.eulerAngles.y, 0);
     }

@@ -231,7 +231,7 @@ public class PlayerTotalStats : MonoSingleton<PlayerTotalStats>
         BinarySaveSystem.SavePlayerProgressStats(CreateNewSaveData(), saveFileIndex);
     }
 
-    private PlayerProgressSaveData CreateNewSaveData()
+    PlayerProgressSaveData CreateNewSaveData()
     {
         PlayerProgressSaveData newData = new PlayerProgressSaveData();
 

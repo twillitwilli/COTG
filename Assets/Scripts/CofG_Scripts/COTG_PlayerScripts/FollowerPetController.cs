@@ -5,11 +5,11 @@ using QTArts.AbstractClasses;
 
 public class FollowerPetController : MonoSingleton<FollowerPetController>
 {
-    private Transform _petSpawn;
-    private GameObject _currentPet;
-    private PlayerPetController _petController;
+    Transform _petSpawn;
+    GameObject _currentPet;
+    PlayerPetController _petController;
 
-    public void SpawnPet(VRPlayerController player)
+    public void SpawnPet(VRPlayer player)
     {
         if (_currentPet == null)
         {

@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerHitEffect : MonoBehaviour
 {
     [SerializeField] 
-    private VRPlayerController player;
+    VRPlayer player;
 
     [SerializeField] 
-    private Animator hitEffect;
+    Animator hitEffect;
 
     public void PlayerHit()
     {

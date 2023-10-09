@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5843133744082031961}
-  - component: {fileID: 4269329623787243033}
   - component: {fileID: 2363627159562990205}
+  - component: {fileID: 4269329623787243033}
   m_Layer: 0
   m_Name: Warlock
   m_TagString: Untagged
@@ -32,41 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4269329623787243033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2779093898297609041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  playerSpeed: 0
-  sprintMultiplier: 0
-  _crouchSpeedReduction: 0
-  jumpVelocity: 0
-  dashDistance: 0
-  throwingForce: 0
-  minAttackDamage: 0
-  maxAttackDamage: 0
-  attackRange: 0
-  attackCooldown: 0
-  damageUpgrades: 0
-  rangeUpgrades: 0
-  magicFocus: 0
-  elementalEffectChance: 0
-  luck: 0
-  critChance: 0
-  critDamage: 0
-  specialEffectChance: 0
-  aimAssist: 0
-  currentMagicFocus: 0
-  weapons: []
 --- !u!114 &2363627159562990205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,3 +44,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9750e1c6e8e67a646b0e1c149b47ba29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4269329623787243033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2779093898297609041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7b53c8626fcf94884e99643ab22442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  classStats:
+    difficulty: 0
+    dungeonType: 0
+    currentLevel: 0
+    maxHealth: 0
+    currentHealth: 0
+    playerSpeed: 0
+    sprintMultiplier: 0
+    crouchSpeedReduction: 0
+    jumpVelocity: 0
+    dashDistance: 0
+    throwingForce: 0
+    iFrameTime: 0
+    attackDamage: 0
+    attackRange: 0
+    attackCooldown: 0
+    damageUpgrades: 0
+    rangeUpgrades: 0
+    magicFocus: 0
+    elementalEffectChance: 0
+    luck: 0
+    critChance: 0
+    critDamage: 0
+    specialEffectChance: 0
+    aimAssist: 0
+    currentGold: 0
+    currentArcaneCrystals: 0
+    currentKeys: 0
+    currentSouls: 0
+    playerClass: 0
+    magicType: 0
+    statusEffect: 0
+    dashEffect: 0
+    collisionEffect: 0
+    specialEffect: 0
+    castingType: 0

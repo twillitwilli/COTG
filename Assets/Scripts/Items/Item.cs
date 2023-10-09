@@ -7,8 +7,7 @@ public class Item : MonoBehaviour
     StorePrices _storePrices;
     PetPickup _pet;
 
-    [HideInInspector] 
-    public GameObject dropParent;
+    public GameObject dropParent { get; set; }
 
     public enum ItemType 
     {
@@ -99,16 +98,16 @@ public class Item : MonoBehaviour
         _itemPrice = itemPrice;
     }
 
-    private void OnTriggerEnter (Collider other)
+    void OnTriggerEnter (Collider other)
     {
         if (!_petHolding)
         {
             if (!_shopItem)
             {
-                VRPlayerController player;
-                VRPlayerHand hand;
+                VRPlayer player;
+                VRHand hand;
 
-                if (other.gameObject.TryGetComponent<VRPlayerController>(out player) || other.gameObject.TryGetComponent<VRPlayerHand>(out hand))
+                if (other.gameObject.TryGetComponent<VRPlayer>(out player) || other.gameObject.TryGetComponent<VRHand>(out hand))
                 {
                     ChangeStat();
 
@@ -122,29 +121,33 @@ public class Item : MonoBehaviour
             
             else
             {
-                WalletItem wallet;
-                if (other.gameObject.TryGetComponent<WalletItem>(out wallet) && PlayerStats.Instance.data.currentGold >= _itemPrice)
+                PlayerItemGrabbable grabbableItem;
+                if (other.gameObject.TryGetComponent<PlayerItemGrabbable>(out grabbableItem))
                 {
-                    ChangeStat();
-
-                    PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -_itemPrice);
-
-                    if (_storePrices.CheckStoreRefill())
-                        _storePrices.StoreRefill();
-
-                    switch (LocalGameManager.Instance.currentGameMode)
+                    if (grabbableItem.grabbableItem == ItemPoolManager.GrabbableItem.wallet && PlayerStats.Instance.data.currentGold >= _itemPrice)
                     {
-                        case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
-                            PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.itemsBought);
-                            break;
+                        ChangeStat();
+
+                        PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -_itemPrice);
+
+                        if (_storePrices.CheckStoreRefill())
+                            _storePrices.StoreRefill();
+
+                        switch (LocalGameManager.Instance.currentGameMode)
+                        {
+                            case LocalGameManager.GameMode.normal | LocalGameManager.GameMode.master:
+                                PlayerTotalStats.Instance.AdjustStats(PlayerTotalStats.StatType.itemsBought);
+                                break;
+                        }
                     }
                 }
             }
         }
         else
         {
-            VRPlayerHand hand;
-            if (other.gameObject.TryGetComponent<VRPlayerHand>(out hand))
+            VRHand hand;
+
+            if (other.gameObject.TryGetComponent<VRHand>(out hand))
             {
                 ChangeStat();
                 _pet.isHoldingItem = false;
@@ -181,7 +184,7 @@ public class Item : MonoBehaviour
         if (dropParent != null) { Destroy(dropParent); }
     }
 
-    private void PetHoldingItemSettings(int whichItem)
+    void PetHoldingItemSettings(int whichItem)
     {
         GameObject newItem = Instantiate(_pet.petHoldingItems[whichItem], _pet.spawnLocation);
 

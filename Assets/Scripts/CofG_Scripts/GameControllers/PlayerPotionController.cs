@@ -5,7 +5,7 @@ using QTArts.AbstractClasses;
 
 public class PlayerPotionController : MonoSingleton<PlayerPotionController>
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
     public enum PotionType 
     { 
@@ -32,24 +32,29 @@ public class PlayerPotionController : MonoSingleton<PlayerPotionController>
     }
 
     [HideInInspector] 
-    public float movementBoost, strengthBoost, magicFocusBoost;
+    public float 
+        movementBoost, 
+        strengthBoost, 
+        magicFocusBoost;
 
     public bool[] effectBoosts;
 
     [HideInInspector] 
     public PotionType lastPotionDrank;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }
 
-    public void GrabPotion(VRPlayerHand hand, GameObject potionObj)
+    public void GrabPotion(VRHand hand, GameObject potionObj)
     {
         Vector3 pos;
         Vector3 rot;

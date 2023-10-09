@@ -6,59 +6,87 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class RealTimeDisplay : MonoBehaviour
 {
-    [SerializeField] private PlayerMenu playerMenu;
-    [SerializeField] private Text textBox;
-    [SerializeField] private GameObject currentTimeObject;
+    [SerializeField] 
+    PlayerMenu playerMenu;
 
-    private VRPlayerController _player;
-    private CurrentTime currentTime;
+    [SerializeField] 
+    Text textBox;
 
-    private void Awake()
+    [SerializeField] 
+    GameObject currentTimeObject;
+
+    VRPlayer _player;
+    CurrentTime currentTime;
+
+    void Awake()
     {
         if (!CurrentTime.instance) { Instantiate(currentTimeObject); }
     }
 
-    private void Start()
+    void Start()
     {
         _player = LocalGameManager.Instance.player;
         currentTime = CurrentTime.instance;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
-        if (!_player.militaryTime) { TweleveHourClock(); }
-        else TwentyFourHourClock();
+        if (!_player.militaryTime)
+            TweleveHourClock();
+
+        else 
+            TwentyFourHourClock();
     }
 
-    private void TweleveHourClock()
+    void TweleveHourClock()
     {
         if (currentTime.hour <= 11 && currentTime.hour > 0)
         {
-            if (currentTime.minutes <= 9) { textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes + "AM"; }
-            else if (currentTime.minutes >= 10) { textBox.text = "" + currentTime.hour + ":" + currentTime.minutes + "AM"; }
+            if (currentTime.minutes <= 9)
+                textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes + "AM";
+
+            else if (currentTime.minutes >= 10)
+                textBox.text = "" + currentTime.hour + ":" + currentTime.minutes + "AM";
         }
+
         else if (currentTime.hour >= 13)
         {
             int alteredHour = currentTime.hour - 12;
-            if (currentTime.minutes <= 9) { textBox.text = "" + alteredHour + ":0" + currentTime.minutes + "PM"; }
-            else if (currentTime.minutes >= 10) { textBox.text = "" + alteredHour + ":" + currentTime.minutes + "PM"; }
+
+            if (currentTime.minutes <= 9)
+                textBox.text = "" + alteredHour + ":0" + currentTime.minutes + "PM";
+
+            else if (currentTime.minutes >= 10)
+                textBox.text = "" + alteredHour + ":" + currentTime.minutes + "PM";
         }
+
         else if (currentTime.hour == 0)
         {
             int alteredHour = 12;
-            if (currentTime.minutes <= 9) { textBox.text = "" + alteredHour + ":0" + currentTime.minutes + "AM"; }
-            else if (currentTime.minutes >= 10) { textBox.text = "" + alteredHour + ":" + currentTime.minutes + "AM"; }
+
+            if (currentTime.minutes <= 9)
+                textBox.text = "" + alteredHour + ":0" + currentTime.minutes + "AM";
+
+            else if (currentTime.minutes >= 10)
+                textBox.text = "" + alteredHour + ":" + currentTime.minutes + "AM";
         }
+
         else if (currentTime.hour == 12)
         {
-            if (currentTime.minutes <= 9) { textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes + "PM"; }
-            else if (currentTime.minutes >= 10) { textBox.text = "" + currentTime.hour + ":" + currentTime.minutes + "PM"; }
+            if (currentTime.minutes <= 9)
+                textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes + "PM";
+
+            else if (currentTime.minutes >= 10)
+                textBox.text = "" + currentTime.hour + ":" + currentTime.minutes + "PM";
         }
     }
 
-    private void TwentyFourHourClock()
+    void TwentyFourHourClock()
     {
-        if (currentTime.minutes <= 9) { textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes; }
-        else if (currentTime.minutes >= 10) { textBox.text = "" + currentTime.hour + ":" + currentTime.minutes; }
+        if (currentTime.minutes <= 9)
+            textBox.text = "" + currentTime.hour + ":0" + currentTime.minutes;
+
+        else if (currentTime.minutes >= 10)
+            textBox.text = "" + currentTime.hour + ":" + currentTime.minutes;
     }
 }

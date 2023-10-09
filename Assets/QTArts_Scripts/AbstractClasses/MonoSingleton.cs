@@ -16,7 +16,7 @@ namespace QTArts.AbstractClasses
             }
         }
 
-        private void Awake()
+        public virtual void Awake()
         {
             _instance = this as T;
 

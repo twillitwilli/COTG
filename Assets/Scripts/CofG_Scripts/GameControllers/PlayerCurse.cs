@@ -5,7 +5,7 @@ using QTArts.AbstractClasses;
 
 public class PlayerCurse : MonoSingleton<PlayerCurse>
 {
-    private OnScreenText _onScreenText;
+    OnScreenText _onScreenText;
 
     public bool hasCurseImmunity { get; private set; }
 
@@ -18,14 +18,17 @@ public class PlayerCurse : MonoSingleton<PlayerCurse>
         CurseOfTheDungeon, 
         CurseOfDispair 
     }
+
     public Curses currentCurseEffect { get; private set; }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _onScreenText = player.GetPlayerComponents().onScreenText;
     }
@@ -76,7 +79,7 @@ public class PlayerCurse : MonoSingleton<PlayerCurse>
         }
     }
 
-    private void ChangeCurrentCurse(Curses curse, string description)
+    void ChangeCurrentCurse(Curses curse, string description)
     {
         currentCurseEffect = curse;
         _onScreenText.PrintText(description, true);

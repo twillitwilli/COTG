@@ -7,27 +7,35 @@ using QTArts.AbstractClasses;
 public class OptionsMenu : MonoSingleton<OptionsMenu>
 {
     [SerializeField] 
-    private GameObject _menuPrefab;
+    GameObject _menuPrefab;
 
     [SerializeField] 
-    private PlayerPrefsSaveData _playerPrefSaveData;
+    PlayerPrefsSaveData _playerPrefSaveData;
 
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
 
     [Header("Secondary Menus")]
     public Transform secondaryMenuSpawnLocation;
-    public GameObject handAdjusterPrefab, playerCalibrationPrefab;
+
+    public GameObject 
+        handAdjusterPrefab, 
+        playerCalibrationPrefab;
 
     [HideInInspector] 
-    public GameObject spawnedMenu, spawnedHandAdjuster, spawnedPlayerCalibration;
+    public GameObject 
+        spawnedMenu, 
+        spawnedHandAdjuster, 
+        spawnedPlayerCalibration;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public void NewPlayerCreated(VRPlayerController player)
+    public void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
     }
@@ -35,7 +43,7 @@ public class OptionsMenu : MonoSingleton<OptionsMenu>
     public void OpenMenu()
     {
         _playerComponents = _player.GetPlayerComponents();
-        VRPlayerHand menuHand = _player.isLeftHanded ? _playerComponents.GetHand(1) : _playerComponents.GetHand(0);
+        VRHand menuHand = _player.isLeftHanded ? _playerComponents.GetHand(1) : _playerComponents.GetHand(0);
 
         if (spawnedMenu == null)
         {

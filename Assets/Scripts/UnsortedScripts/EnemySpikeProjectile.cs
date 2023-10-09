@@ -29,13 +29,20 @@ public class EnemySpikeProjectile : BasicEnemyProjectile
     {
         if (!hitObject && (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Head")))
         {
-            if (other.gameObject.GetComponent<VRPlayerController>()) player = other.gameObject.GetComponent<VRPlayerController>();
-            else player = GetComponentInParent<VRPlayerController>();
+            if (other.gameObject.GetComponent<VRPlayer>()) 
+                player = other.gameObject.GetComponent<VRPlayer>();
+            
+            else 
+                player = GetComponentInParent<VRPlayer>();
+            
             HitPlayer();
         }
+
         else if (!hitObject && other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Ground"))
         {
-            if (collisionEffect != null) { CollisionEffect(); }
+            if (collisionEffect != null)
+                CollisionEffect();
+
             rb.velocity = new Vector3(0, 0, 0);
         }
     }

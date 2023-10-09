@@ -6,15 +6,17 @@ using QTArts.AbstractClasses;
 
 public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponents;
+    VRPlayer _player;
+    PlayerComponents _playerComponents;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
     }
 
-    public async void NewPlayerCreated(VRPlayerController player)
+    public async void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
 
@@ -51,7 +53,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         SaveVisualSettings();
     }
 
-    public async Task LoadPlayerPrefs()
+    async Task LoadPlayerPrefs()
     {
         _playerComponents = _player.GetPlayerComponents();
 
@@ -66,7 +68,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         LoadVisualSettings();
     }
 
-    public void SaveBasePlayerSettings()
+    void SaveBasePlayerSettings()
     {
         PlayerPrefs.SetInt("ReturningPlayer", (true ? 1 : 0));
 
@@ -92,7 +94,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         PlayerPrefs.SetFloat("CrouchSittingOffset", _playerComponents.belt.zAdjustmentForSittingPlayer);
     }
 
-    public void LoadBasePlayerSettings()
+    void LoadBasePlayerSettings()
     {
         _player.leftJoystickDeadzoneAdjustment = CheckIfSaveFileExists("LeftDeadzone") ? PlayerPrefs.GetFloat("LeftDeadzone") : 0.25f;
         _player.rightJoystickDeadzoneAdjustment = CheckIfSaveFileExists("RightDeadzone") ? PlayerPrefs.GetFloat("RightDeadzone") : 0.5f;
@@ -116,13 +118,13 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         _playerComponents.belt.AdjustBackAttachments();
     }
 
-    private void SaveClassInfo()
+    void SaveClassInfo()
     {
         PlayerPrefs.SetInt("PlayerClass", (int)MagicController.Instance.currentClass);
         PlayerPrefs.SetInt("MagicType", (int)MagicController.Instance.currentMagic);
     }
 
-    private void LoadClassInfo()
+    void LoadClassInfo()
     {
         MagicController.Instance.LoadClass(CheckIfSaveFileExists("PlayerClass") ? PlayerPrefs.GetInt("PlayerClass") : 0);
 
@@ -133,7 +135,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
             MagicController.Instance.UpdateMagic();
     }
 
-    private void SaveMultiplayerSettings()
+    void SaveMultiplayerSettings()
     {
         PlayerPrefs.SetInt("TextChat", (ChatManager.Instance.textChat ? 1 : 0));
         PlayerPrefs.SetInt("DebugChat", (ChatManager.Instance.allowDebugMessages ? 1 : 0));
@@ -141,7 +143,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         PlayerPrefs.SetInt("Notifications", (ChatManager.Instance.notifications ? 1 : 0));
     }
 
-    private void LoadMultiplayerSettings()
+    void LoadMultiplayerSettings()
     {
         ChatManager.Instance.textChat = CheckIfSaveFileExists("TextChat") ? (PlayerPrefs.GetInt("TextChat") != 0) : true;
         ChatManager.Instance.allowDebugMessages = CheckIfSaveFileExists("DebugChat") ? (PlayerPrefs.GetInt("DebugChat") != 0) : false;
@@ -149,7 +151,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         ChatManager.Instance.notifications = CheckIfSaveFileExists("Notifications") ? (PlayerPrefs.GetInt("Notifications") != 0) : true;
     }
 
-    private void SaveVisualSettings()
+    void SaveVisualSettings()
     {
         switch (VisualSettings.Instance.shadowSetting)
         {
@@ -220,7 +222,7 @@ public class PlayerPrefsSaveData : MonoSingleton<PlayerPrefsSaveData>
         PlayerPrefs.SetFloat("Contrast", PostProcessingController.Instance.contrast);
     }
 
-    private void LoadVisualSettings()
+    void LoadVisualSettings()
     {
         // Lighting //
 

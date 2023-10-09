@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class StaffMagicController : MonoBehaviour
 {
-    private VRPlayerController _player;
-    private PlayerComponents _playerComponenets;
+    VRPlayer _player;
+    PlayerComponents _playerComponenets;
 
-    private PlayerStaff _currentStaff;
+    PlayerStaff _currentStaff;
 
-    private void OnEnable()
+    void OnEnable()
     {
         _player = LocalGameManager.Instance.player;
         _playerComponenets = _player.GetPlayerComponents();
     }
 
-    public void GrabStaff(VRPlayerHand hand, GameObject staffObj)
+    public void GrabStaff(VRHand hand, GameObject staffObj)
     {
         Vector3 pos;
         Vector3 rot;
@@ -49,7 +49,7 @@ public class StaffMagicController : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            VRPlayerHand hand = _playerComponenets.GetHand(i);
+            VRHand hand = _playerComponenets.GetHand(i);
             hand.EmptyHand();
         }
 
@@ -65,7 +65,7 @@ public class StaffMagicController : MonoBehaviour
 
     public PlayerStaff GetPlayerStaff() { return _currentStaff; }
 
-    private void OnDisable()
+    void OnDisable()
     {
         for (int i = 0; i < 2; i++)
         {

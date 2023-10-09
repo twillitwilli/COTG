@@ -12,10 +12,12 @@ public class MultiplayerManager : MonoSingleton<MultiplayerManager>
     }
 
     [SerializeField]
-    private NetworkManager _networkManager;
+    NetworkManager _networkManager;
+
     public NetworkManager GetNetworkManager() { return _networkManager; }
 
     [SerializeField]
-    private CoopManager _coopManager;
+    CoopManager _coopManager;
+
     public CoopManager GetCoopManager() { return _coopManager; }
 }

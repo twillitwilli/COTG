@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class MoveToPlayer : MonoBehaviour
 {
-    private VRPlayerController _player;
-    [SerializeField] private float _speed;
+    VRPlayer _player;
 
-    private void Start()
+    [SerializeField] 
+    float _speed;
+
+    void Start()
     {
         _player = LocalGameManager.Instance.player;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, Time.deltaTime * _speed);
     }

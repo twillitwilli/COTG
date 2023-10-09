@@ -15,9 +15,6 @@ public class ResetPlayerToDefault : MonoBehaviour
         PlayerCurse.Instance.ToggleCurseImmunity(false);
         PlayerCurse.Instance.RemoveCurse();
 
-        //reset drops
-        PlayerStats.Instance.DefaultCollectableStat();
-
         //reset special stats
         LocalGameManager.Instance.player.canFly = false;
 
@@ -25,7 +22,7 @@ public class ResetPlayerToDefault : MonoBehaviour
         foreach (VRSockets pocket in playerComponents.GetAllSockets()) { pocket.EmptyPockets(); }
 
         //hand reset
-        foreach (VRPlayerHand hand in playerComponents.GetBothHands()) { hand.EmptyHand(); }
+        foreach (VRHand hand in playerComponents.GetBothHands()) { hand.EmptyHand(); }
 
         //move player to spawn location
         LocalGameManager.Instance.MovePlayer(LocalGameManager.SpawnLocation.spawnPoint);
@@ -40,8 +37,11 @@ public class ResetPlayerToDefault : MonoBehaviour
         //Pet Reset
         FollowerPetController.Instance.GetPet().ResetPet();
 
+        //reset drops
+        PlayerStats.Instance.DefaultCollectableStat();
+
         //reset class stats
-        
+        PlayerCardContnroller.Instance.ClassDefaultStats();
 
         //reset game manager
         EnemyTrackerController.Instance.enemyNavMesh.RemoveData();

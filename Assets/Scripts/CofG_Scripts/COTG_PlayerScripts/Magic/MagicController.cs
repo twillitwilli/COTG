@@ -117,35 +117,35 @@ public class MagicController : MonoSingleton<MagicController>
                 break;
 
             case 1:
-                currentClass = ClassType.Wizard;
+                ChangeClass(ClassType.Wizard);
                 break;
 
             case 2:
-                currentClass = ClassType.Conjurer;
+                ChangeClass(ClassType.Conjurer);
                 break;
 
             case 3:
-                currentClass = ClassType.Sorcerer;
+                ChangeClass(ClassType.Sorcerer);
                 break;
 
             case 4:
-                currentClass = ClassType.Mage;
+                ChangeClass(ClassType.Mage);
                 break;
 
             case 5:
-                currentClass = ClassType.Enchanter;
+                ChangeClass(ClassType.Enchanter);
                 break;
 
             case 6:
-                currentClass = ClassType.Warlock;
+                ChangeClass(ClassType.Warlock);
                 break;
 
             case 7:
-                currentClass = ClassType.Witch;
+                ChangeClass(ClassType.Witch);
                 break;
 
             case 8:
-                currentClass = ClassType.Tarot;
+                ChangeClass(ClassType.Tarot);
                 break;
         }
     }
@@ -154,35 +154,7 @@ public class MagicController : MonoSingleton<MagicController>
     {
         currentClass = newClass;
 
-        switch (currentClass)
-        {
-            case ClassType.Wizard:
-                break;
-
-            case ClassType.Conjurer:
-                break;
-
-            case ClassType.Sorcerer:
-                break;
-
-            case ClassType.Mage:
-                break;
-
-            case ClassType.Enchanter:
-                break;
-
-            case ClassType.Warlock:
-                break;
-
-            case ClassType.Witch:
-                break;
-
-            case ClassType.Tarot:
-                break;
-
-            case ClassType.none:
-                break;
-        }
+        PlayerCardContnroller.Instance.ChangePlayerCard(currentClass);
     }
 
     public bool CheckPlayerClass(ClassType classCheck)
@@ -214,7 +186,7 @@ public class MagicController : MonoSingleton<MagicController>
         UpdateMagic();
     }
 
-    private void SetMagicProperties(string name, int index)
+    void SetMagicProperties(string name, int index)
     {
         magicName = name;
         magicIdx = index;

@@ -7,14 +7,14 @@ using QTArts.AbstractClasses;
 
 public class GameTimer : MonoSingleton<GameTimer>
 {
-    private TimeSpan timePlaying;
-    private bool timerGoing;
-    private float elapsedTime;
+    TimeSpan timePlaying;
+    bool timerGoing;
+    float elapsedTime;
 
-    public double currentTime;
-    public string currentTimeDisplay;
+    public double currentTime { get; set; }
+    public string currentTimeDisplay { get; set; }
 
-    private void Start()
+    void Start()
     {
         timerGoing = false;
     }
@@ -31,7 +31,7 @@ public class GameTimer : MonoSingleton<GameTimer>
         timerGoing = false;
     }
 
-    private IEnumerator UpdateTimer()
+    IEnumerator UpdateTimer()
     {
         while (timerGoing)
         {

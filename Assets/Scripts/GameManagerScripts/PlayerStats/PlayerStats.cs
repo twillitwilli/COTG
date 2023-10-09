@@ -8,7 +8,7 @@ using QTArts.Interfaces;
 public class PlayerStats : MonoSingleton<PlayerStats>, iCooldownable, iDamagable<float>
 {
     [SerializeField]
-    VRPlayerController _player;
+    VRPlayer _player;
 
     [SerializeField]
     PlayerComponents _playerComponents;

@@ -10,8 +10,8 @@ public class ControllerType : MonoSingleton<ControllerType>
     public string currentController { get; private set; }
     public string controllerFullName { get; private set; }
 
-    private CheckControllerType _controllerType;
-    private VRPlayerController _player;
+    CheckControllerType _controllerType;
+    VRPlayer _player;
 
     public enum controllerType 
     { 
@@ -25,16 +25,16 @@ public class ControllerType : MonoSingleton<ControllerType>
     
     public controllerType currentControllerType { get; private set; }
     
-    [HideInInspector] 
-    public string controllerName;
+    public string controllerName { get; set; }
     
-    [HideInInspector] 
-    public int controllerID; //0 = oculus, 1 = index, 2 = wmr, 3 = vive
+    public int controllerID { get; set; } //0 = oculus, 1 = index, 2 = wmr, 3 = vive
 
-    [HideInInspector] public int roomID;
+    public int roomID { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         LocalGameManager.playerCreated += NewPlayerCreated;
 
         _controllerType = MasterManager.controllerType;
@@ -51,7 +51,7 @@ public class ControllerType : MonoSingleton<ControllerType>
     //    Debug.Log("controller name: " + rightInput.manufacturer);
     //}
 
-    public async void NewPlayerCreated(VRPlayerController player)
+    public async void NewPlayerCreated(VRPlayer player)
     {
         _player = player;
 
@@ -71,14 +71,14 @@ public class ControllerType : MonoSingleton<ControllerType>
         SetController(currentController);
     }
 
-    public async Task RecheckController(VRPlayerController player)
+    public async Task RecheckController(VRPlayer player)
     {
         await Task.Delay(3000);
 
         NewPlayerCreated(player);
     }
 
-    public void OculusReset(VRPlayerHand hand)
+    public void OculusReset(VRHand hand)
     {
         if (!hand.IsRightHand())
             HandAlignmentReset(hand, _controllerType.oculusPos[0], _controllerType.oculusRot[0]);
@@ -87,7 +87,7 @@ public class ControllerType : MonoSingleton<ControllerType>
             HandAlignmentReset(hand, _controllerType.oculusPos[1], _controllerType.oculusRot[1]);
     }
 
-    public void IndexReset(VRPlayerHand hand)
+    public void IndexReset(VRHand hand)
     {
         if (!hand.IsRightHand())
             HandAlignmentReset(hand, _controllerType.indexPos[0], _controllerType.indexRot[0]);
@@ -96,7 +96,7 @@ public class ControllerType : MonoSingleton<ControllerType>
             HandAlignmentReset(hand, _controllerType.indexPos[1], _controllerType.indexRot[1]);
     }
 
-    public void WMRReset(VRPlayerHand hand)
+    public void WMRReset(VRHand hand)
     {
         if (!hand.IsRightHand())
             HandAlignmentReset(hand, _controllerType.wmrPos[0], _controllerType.wmrRot[0]);
@@ -105,7 +105,7 @@ public class ControllerType : MonoSingleton<ControllerType>
             HandAlignmentReset(hand, _controllerType.wmrPos[1], _controllerType.wmrRot[1]);
     }
 
-    public void ViveReset(VRPlayerHand hand)
+    public void ViveReset(VRHand hand)
     {
         if (!hand.IsRightHand())
             HandAlignmentReset(hand, _controllerType.vivePos[0], _controllerType.viveRot[0]);
@@ -114,7 +114,7 @@ public class ControllerType : MonoSingleton<ControllerType>
             HandAlignmentReset(hand, _controllerType.vivePos[1], _controllerType.viveRot[1]);
     }
 
-    public void OculusQuest2Reset(VRPlayerHand hand)
+    public void OculusQuest2Reset(VRHand hand)
     {
         if (!hand.IsRightHand())
             HandAlignmentReset(hand, _controllerType.quest2Pos[0], _controllerType.quest2Rot[0]);
@@ -123,13 +123,13 @@ public class ControllerType : MonoSingleton<ControllerType>
             HandAlignmentReset(hand, _controllerType.quest2Pos[1], _controllerType.quest2Rot[1]);
     }
 
-    public void CustomHandAlignment(VRPlayerHand hand)
+    public void CustomHandAlignment(VRHand hand)
     {
         if (!hand.IsRightHand()) { }
         else { }
     }
 
-    public void HandAlignmentReset(VRPlayerHand hand, Vector3 pos, Vector3 rot)
+    public void HandAlignmentReset(VRHand hand, Vector3 pos, Vector3 rot)
     {
         hand.defaultHandPos = pos;
         hand.defaultHandRot = rot;
@@ -156,7 +156,7 @@ public class ControllerType : MonoSingleton<ControllerType>
 
         PlayerComponents playerComponents = _player.GetPlayerComponents();
 
-        foreach (VRPlayerHand hand in playerComponents.GetBothHands())
+        foreach (VRHand hand in playerComponents.GetBothHands())
         {
             ResetHandToControllerDefault(hand);
         }
@@ -164,7 +164,7 @@ public class ControllerType : MonoSingleton<ControllerType>
         playerComponents.GetControllerInputManager().EnableControls();
     }
 
-    public void ResetHandToControllerDefault(VRPlayerHand hand)
+    public void ResetHandToControllerDefault(VRHand hand)
     {
         switch (currentControllerType)
         {

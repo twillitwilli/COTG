@@ -5,33 +5,28 @@ using UnityEngine;
 public class TelekinesisRaycast : MonoBehaviour
 {
     [SerializeField] 
-    private VRPlayerController player;
+    VRPlayer player;
     
-    public VRPlayerHand hand;
+    public VRHand hand;
     public Transform telekineticHold;
     
     [SerializeField] 
-    private GameObject rayEffect;
+    GameObject rayEffect;
     
     public GameObject telekineticGrabEffect;
     public float range;
     public LayerMask ignoreLayers;
     
-    [HideInInspector] 
-    public PlayerItemGrabbable selectedGrabbable;
+    public PlayerItemGrabbable selectedGrabbable { get; set; }
 
     public float cooldownTimer;
     
-    [HideInInspector] 
-    public float maxTimer;
+    public float maxTimer { get; set; }
+    public bool setCooldown { get; set; }
     
-    [HideInInspector] 
-    public bool setCooldown;
-    
-    [HideInInspector] 
-    public PlayerItemGrabbable heldObject;
+    public PlayerItemGrabbable heldObject { get; set; }
 
-    private void Awake()
+    void Awake()
     {
         maxTimer = cooldownTimer;
     }
@@ -89,7 +84,7 @@ public class TelekinesisRaycast : MonoBehaviour
         return false;
     }
 
-    private void SelectNewGrabbable(PlayerItemGrabbable newGrabbable)
+    void SelectNewGrabbable(PlayerItemGrabbable newGrabbable)
     {
         selectedGrabbable = newGrabbable;
         if (!selectedGrabbable.activeTelekinesis.Contains(this)) 

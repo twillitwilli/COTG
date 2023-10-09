@@ -5,7 +5,7 @@ using UnityEngine;
 public class LockUnderHeadPosition : MonoBehaviour
 {
     [SerializeField]
-    private VRPlayerController player;
+    VRPlayer player;
 
     private void LateUpdate()
     {

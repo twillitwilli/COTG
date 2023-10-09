@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GoldSteal : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        VRPlayerController player;
+        VRPlayer player;
 
-        if (other.gameObject.TryGetComponent<VRPlayerController>(out player))
+        if (other.gameObject.TryGetComponent<VRPlayer>(out player))
             PlayerStats.Instance.AdjustSpecificStat(PlayerStats.StatAdjustmentType.gold, -RandomGoldAmount());
     }
 
-    private int RandomGoldAmount()
+    int RandomGoldAmount()
     {
         return Random.Range(1, 6);
     }

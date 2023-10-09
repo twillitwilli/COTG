@@ -6,13 +6,13 @@ public class PlayerItemGrabbable : MonoBehaviour
 {
     public ItemPoolManager.GrabbableItem grabbableItem;
 
-    public bool canBePlacedInPocket, throwableObject;
+    public bool 
+        canBePlacedInPocket, 
+        throwableObject;
 
-    [HideInInspector] 
-    public VRPlayerHand currentHand;
+    public VRHand currentHand { get; set; }
 
-    [HideInInspector] 
-    public bool attachedToPocket;
+    public bool attachedToPocket { get; set; }
 
     [Header("Has Impact sound")]
     public bool hasImpactSound;
@@ -21,19 +21,20 @@ public class PlayerItemGrabbable : MonoBehaviour
     [Header("Materials To Change For Grab")]
     public Material normalMat;
     public Material canGrabMat;
-    private MeshRenderer meshRenderer;
+
+    MeshRenderer meshRenderer;
 
     [Header("Telekinetic Settings")]
     public bool canTelekineticGrab;
     public GameObject telekineticGrabEffect;
     public List<TelekinesisRaycast> activeTelekinesis = new List<TelekinesisRaycast>();
 
-    private void Awake()
+    void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    private void OnCollisionEnter(Collision col)
+    void OnCollisionEnter(Collision col)
     {
         if (hasImpactSound && !impactSound.isPlaying && col.relativeVelocity.magnitude >= 0.3f)
         {
@@ -43,8 +44,9 @@ public class PlayerItemGrabbable : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
-        if (currentHand != null) { currentHand.GetGrabController().ClearAllGrabbableInfo(); }
+        if (currentHand != null)
+            currentHand.GetGrabController().ClearAllGrabbableInfo();
     }
 }

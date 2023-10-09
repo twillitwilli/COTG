@@ -7,30 +7,29 @@ public class GrabController : MonoBehaviour
 {
     public Transform grabbableSpawnLocation;
 
-    private VRPlayerController _player;
-    private VRPlayerHand _hand;
-    private ClimbingController _climbController;
+    VRPlayer _player;
+    VRHand _hand;
+    ClimbingController _climbController;
 
     [SerializeField]
-    private VRPlayerHand _oppositeHand;
+    VRHand _oppositeHand;
 
     [SerializeField]
-    private GrabController _oppositeHandGrabController;
+    GrabController _oppositeHandGrabController;
 
     [SerializeField]
-    private ClimbingController _oppositeHandClimbController;
+    ClimbingController _oppositeHandClimbController;
 
     [SerializeField]
-    private MenuRaycast _menuRaycast;
+    MenuRaycast _menuRaycast;
 
     [SerializeField]
-    private HandAnimationState _handAnimations;
+    HandAnimationState _handAnimations;
 
     public ItemPoolManager.GrabbableItem currentObjectGrabbed { get; private set; }
-    private GameObject _currentGrabbedObj;
+    GameObject _currentGrabbedObj;
 
-    [HideInInspector] 
-    public bool holdingIgnitedBomb;
+    public bool holdingIgnitedBomb { get; set; }
 
     public TelekinesisRaycast telekinesisController;
     public LayerMask ignoreLayers;
@@ -38,7 +37,7 @@ public class GrabController : MonoBehaviour
     private void Awake()
     {
         _player = LocalGameManager.Instance.player;
-        _hand = GetComponent<VRPlayerHand>();
+        _hand = GetComponent<VRHand>();
         _climbController = GetComponent<ClimbingController>();
     }
 
@@ -334,7 +333,7 @@ public class GrabController : MonoBehaviour
         return holdingItem;
     }
 
-    public VRPlayerHand GetHand() { return _hand; }
+    public VRHand GetHand() { return _hand; }
 
     public ClimbingController GetClimbingController() { return _climbController; }
 

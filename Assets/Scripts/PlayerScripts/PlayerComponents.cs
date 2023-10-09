@@ -5,36 +5,54 @@ using UnityEngine;
 public class PlayerComponents : MonoBehaviour
 {
     [Header("--Player Origins--")]
-    [SerializeField] private GameObject[] _originPoints;
+    [SerializeField] 
+    private GameObject[] _originPoints;
+
     public GameObject[] GetAllOriginPoints() { return _originPoints; }
     public GameObject GetOriginPoint(int whichPoint) { return _originPoints[whichPoint]; }
 
 
     [Header("--Base Player Components--")]
-    [SerializeField] private ControllerInputManager _controllerInput;
+    [SerializeField] 
+    private ControllerInputManager _controllerInput;
+
     public ControllerInputManager GetControllerInputManager() { return _controllerInput; }
 
-    [SerializeField] private PlayerGroundChecker _groundCheckController;
+    [SerializeField] 
+    private PlayerGroundChecker _groundCheckController;
+
     public PlayerGroundChecker GetGroundCheckController() { return _groundCheckController; }
 
-    [SerializeField] private GameObject _head;
+    [SerializeField] 
+    private GameObject _head;
+
     public GameObject GetHead() { return _head; }
 
-    [SerializeField] private VRPlayerHand[] _hand;
-    public VRPlayerHand[] GetBothHands() { return _hand; }
-    public VRPlayerHand GetHand(int whichHand) { return _hand[whichHand]; }
+    [SerializeField] 
+    private VRHand[] _hand;
 
-    [SerializeField] private Transform[] _secondaryItemSlot;
+    public VRHand[] GetBothHands() { return _hand; }
+    public VRHand GetHand(int whichHand) { return _hand[whichHand]; }
+
+    [SerializeField] 
+    private Transform[] _secondaryItemSlot;
+
     public Transform GetAccessoryItemSlot(int whichSlot) { return _secondaryItemSlot[whichSlot]; }
 
-    [SerializeField] private VRSockets[] _handSocket;
+    [SerializeField] 
+    private VRSockets[] _handSocket;
+
     public VRSockets[] GetAllSockets() { return _handSocket; }
     public VRSockets GetHandSocket(int whichSocket) { return _handSocket[whichSocket]; }
 
-    [SerializeField] private EyeManager _eyeManager;
+    [SerializeField] 
+    private EyeManager _eyeManager;
+
     public EyeManager GetEyeManager() { return _eyeManager; }
 
-    [SerializeField] private AudioSource _musicPlayer;
+    [SerializeField] 
+    private AudioSource _musicPlayer;
+
     public AudioSource GetMusicPlayer() { return _musicPlayer; }
 
     public PlayerBelt belt;

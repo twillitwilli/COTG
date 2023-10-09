@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class DestroyAfterDistanceFromPlayer : MonoBehaviour
 {
-    private VRPlayerController _player;
+    VRPlayer _player;
 
     public float distanceFromPlayer;
 
-    private void Start()
+    void Start()
     {
         _player = LocalGameManager.Instance.player;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         float distance = Vector3.Distance(_player.transform.position, transform.position);
-        if (distance >= distanceFromPlayer) { Destroy(gameObject); }
+
+        if (distance >= distanceFromPlayer)
+            Destroy(gameObject);
     }
 }
